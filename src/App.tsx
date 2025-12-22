@@ -5,7 +5,7 @@ import About from './pages/About/About'
 import DataPlatform from './pages/DataPlatform/DataPlatform'
 import UseCases from './pages/UseCases/UseCases'
 import TechnologyStack from './pages/TechnologyStack/TechnologyStack'
-import Partners from './pages/Partners/Partners'
+// import Partners from './pages/Partners/Partners'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
 
@@ -53,7 +53,7 @@ function App() {
               <Route path="/data-platform" element={<DataPlatform />} />
               <Route path="/use-cases" element={<UseCases />} />
               <Route path="/technology-stack" element={<TechnologyStack />} />
-              <Route path="/partners" element={<Partners />} />
+              {/* <Route path="/partners" element={<Partners />} /> */}
               <Route path="/docs" element={<DocsRedirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -14,7 +14,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
     { to: '/data-platform', label: 'Data Platform' },
     { to: '/use-cases', label: 'Use Cases' },
     { to: '/docs', label: 'Docs' },
-    { to: '/partners', label: 'Our partners' },
+    // { to: '/partners', label: 'Our partners' },
   ]
 
   return (
