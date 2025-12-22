@@ -17,6 +17,14 @@ const DocsRedirect = () => {
   return null
 }
 
+const NotFound = () => {
+  return (
+    <div className="not-found">
+      <h1>This strikerobot.ai page can’t be found</h1>
+    </div>
+  )
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -47,6 +55,7 @@ function App() {
               <Route path="/technology-stack" element={<TechnologyStack />} />
               <Route path="/partners" element={<Partners />} />
               <Route path="/docs" element={<DocsRedirect />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
         </>
