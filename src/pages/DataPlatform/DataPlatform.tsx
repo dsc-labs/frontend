@@ -30,7 +30,7 @@ const DataPlatform = () => {
             <div className='dp-panel-inner-content'>
               <div className="dp-title-wrap">
                 <img src="/data_image_right.png" className='dp-image-right' alt="Decorative Rect Top" />
-                <h1>Decentralized Robotics Data Platform</h1>
+                <h1>Decentralized Robotics Data Marketplace</h1>
                 <p className="dp-sub">
                   High-quality data is a critical requirement for embodied intelligence, yet robotics data is expensive and difficult to scale. STRIKEROBOT.AI addresses this challenge through a decentralized data-labeling platform tailored specifically to robotics.
                 </p>

@@ -9,6 +9,14 @@ import Partners from './pages/Partners/Partners'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
 
+const DocsRedirect = () => {
+  useEffect(() => {
+    window.location.href = 'https://strikerobot.gitbook.io/strikerobot/'
+  }, [])
+
+  return null
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
 
@@ -38,6 +46,7 @@ function App() {
               <Route path="/use-cases" element={<UseCases />} />
               <Route path="/technology-stack" element={<TechnologyStack />} />
               <Route path="/partners" element={<Partners />} />
+              <Route path="/docs" element={<DocsRedirect />} />
             </Routes>
           </Router>
         </>

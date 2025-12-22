@@ -29,7 +29,7 @@ const TechnologyStack = () => {
     },
     {
       id: 4,
-      title: 'Decentralized Robotics Data Platform',
+      title: 'Decentralized Robotics Data Marketplace',
       isActive: false,
     },
   ]
