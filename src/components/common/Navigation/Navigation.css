@@ -1,0 +1,138 @@
+.navigation {
+  justify-self: end;
+  grid-column: 3;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 160px 80px;
+  align-items: start;
+}
+
+.nav-column {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.nav-link {
+  font-size: 16px;
+  color: #1d1d1d;
+  text-decoration: none;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #1d1d1d;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #333;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Desktop (1440px - 1919px) */
+@media (max-width: 1919px) and (min-width: 1440px) {
+  .nav-grid {
+    gap: 120px 60px;
+  }
+}
+
+/* Tablet Large (1024px - 1439px) */
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .nav-grid {
+    gap: 80px 40px;
+  }
+
+  .nav-column {
+    gap: 28px;
+  }
+
+  .nav-link {
+    font-size: 15px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .navigation {
+    justify-self: center;
+    width: 100%;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(3, auto);
+    gap: 40px 30px;
+    justify-content: center;
+  }
+
+  .nav-column {
+    gap: 20px;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+/* Mobile Large (480px - 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+  .navigation {
+    justify-self: center;
+    width: 100%;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(3, auto);
+    gap: 20px 16px;
+    justify-content: center;
+  }
+
+  .nav-column {
+    gap: 12px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
+/* Mobile Small (below 480px) */
+@media (max-width: 479px) {
+  .navigation {
+    justify-self: center;
+    width: 100%;
+  }
+
+  .nav-grid {
+    grid-template-columns: repeat(2, auto);
+    gap: 16px 12px;
+    justify-content: center;
+  }
+
+  .nav-column {
+    gap: 10px;
+  }
+
+  .nav-link {
+    font-size: 11px;
+    text-align: center;
+  }
+}
+

@@ -1,0 +1,30 @@
+.strike-text-svg {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  pointer-events: none;
+  user-select: none;
+  width: 50vw;
+  height: 50vh;
+  min-width: 800px;
+  max-width: 1400px;
+  opacity: 0.2;
+}
+
+@media (max-width: 767px) {
+  .strike-text-svg {
+    min-width: 300px;
+    position: absolute;
+    transform: translateY(-50%);
+  }
+}
+
+.strike-svg {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  opacity: 0.03;
+}
+

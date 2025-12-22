@@ -1,0 +1,30 @@
+.robot-text-svg {
+  position: absolute;
+  right: 0;
+  top: 80%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  width: 40vw;
+  height: 50vh;
+  min-width: 600px;
+  max-width: 1000px;
+  opacity: 0.2;
+  
+}
+
+.robot-svg {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  opacity: 0.03;
+}
+
+@media (max-width: 767px) {
+  .robot-text-svg {
+    min-width: 250px;
+    position: absolute;
+    transform: translateY(-50%);
+  }
+}

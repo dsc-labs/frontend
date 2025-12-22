@@ -1,0 +1,68 @@
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.menu-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 320px;
+  height: 100%;
+  background: #ffffff;
+  z-index: 1000;
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 80px 24px 24px;
+  gap: 8px;
+}
+
+.menu-link {
+  display: block;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #1d1d1d;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu-link::after {
+  content: '';
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+  width: 0;
+  height: 1px;
+  background-color: #1d1d1d;
+  transition: width 0.3s ease;
+}
+
+.menu-link:hover {
+  background: rgba(29, 29, 29, 0.05);
+  color: #333;
+}
+
+.menu-link:hover::after {
+  width: calc(100% - 40px);
+}
+
+.menu-link:active {
+  background: rgba(29, 29, 29, 0.1);
+}
+

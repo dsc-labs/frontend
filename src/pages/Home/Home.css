@@ -1,0 +1,373 @@
+.home-page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #E1E1E1;
+}
+
+/* Mobile - Allow scrolling */
+@media (max-width: 1023px) {
+  .home-page {
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.home-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 2;
+  overflow: visible;
+}
+
+/* Removed - now using StrikeText and RobotText components */
+
+/* Header styles moved to src/components/common/Header/Header.css */
+
+.robot-container {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(868px, 80vw);
+  height: min(80vh, calc(868px * 1.2));
+  max-width: 868px;
+  max-height: 80vh;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.robot-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.robot-image img {
+  width: 100%;
+  height: 100%;
+  max-width: 868px;
+  max-height: 80vh;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+  display: block;
+}
+
+/* Removed strike-text SVG as it's now in background */
+
+.cta-section {
+  position: absolute;
+  right: 142px;
+  top: 391px;
+  width: 411px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  gap: 24px;
+}
+
+.cta-description {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1d1d1d;
+  font-weight: 400;
+  margin: 0;
+}
+
+.cta-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 250px;
+  height: 46px;
+  background-color: #1D1D1D;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: auto;
+  margin-right: 0;
+  position: relative;
+  overflow: visible;
+  /* Hexagon shape với góc cắt chéo */
+  clip-path: polygon(
+    12px 0%,
+    calc(100% - 12px) 0%,
+    100% 50%,
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0% 50%
+  );
+  /* Bo góc nhẹ ở các góc nơi cạnh thẳng gặp cạnh chéo */
+  border-radius: 2px;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cta-button:hover {
+  background-color: #ffffff;
+  color: #1d1d1d;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:hover svg {
+  stroke: #1d1d1d;
+}
+
+.cta-button svg {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.cta-button span {
+  pointer-events: none;
+}
+
+/* Large Desktop (1920px and above) */
+@media (min-width: 1920px) {
+  .robot-container {
+    width: min(868px, 80vw);
+    height: min(80vh, calc(868px * 1.2));
+    max-width: 868px;
+    max-height: 80vh;
+  }
+  
+  .robot-image img {
+    max-width: 868px;
+    max-height: 80vh;
+  }
+}
+
+/* Desktop (1440px - 1919px) */
+@media (max-width: 1919px) and (min-width: 1440px) {
+  .robot-container {
+    width: min(650px, 80vw);
+    height: min(80vh, calc(650px * 1.2));
+    max-width: 650px;
+    max-height: 80vh;
+  }
+  
+  .robot-image img {
+    max-width: 650px;
+    max-height: 80vh;
+  }
+  
+  .cta-section {
+    right: 80px;
+  }
+}
+
+/* Tablet Large (1024px - 1439px) */
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .page-header {
+    padding: 32px 80px;
+  }
+  
+  .robot-container {
+    width: min(500px, 80vw);
+    height: min(80vh, calc(500px * 1.2));
+    max-width: 500px;
+    max-height: 80vh;
+  }
+  
+  .robot-image img {
+    max-width: 500px;
+    max-height: 80vh;
+  }
+  
+  .cta-section {
+    right: 60px;
+    width: 350px;
+    top: 350px;
+  }
+  
+  .strike-background-text {
+    font-size: 300px;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  
+  .robot-container {
+    width: min(400px, 80vw);
+    height: min(80vh, calc(400px * 1.2));
+    max-width: 400px;
+    max-height: 80vh;
+  }
+  
+  .robot-image img {
+    max-width: 400px;
+    max-height: 80vh;
+  }
+  
+  .cta-section {
+    right: 40px;
+    width: 300px;
+    top: 300px;
+  }
+  
+  .strike-background-text {
+    font-size: 250px;
+  }
+  
+  .hero-section {
+    left: 40px;
+    top: 150px;
+  }
+}
+
+/* Mobile - Thu nhỏ nhưng giữ nguyên layout, cho phép scroll */
+@media (max-width: 1023px) {
+  .home-page {
+    min-height: 100vh;
+    height: auto;
+    overflow: visible;
+  }
+
+  .home-background {
+    position: absolute;
+  }
+
+  .page-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 20px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+
+  .robot-container {
+    position: relative;
+    transform-origin: center top;
+    max-width: 400px;
+  }
+
+  .cta-section {
+    position: relative;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 400px;
+    margin: 40px auto;
+    text-align: center;
+    transform: scale(0.7);
+    transform-origin: center;
+  }
+
+  .hero-section {
+    position: relative;
+    left: auto;
+    top: auto;
+    max-width: 100%;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+  }
+
+  .video-card {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 400px;
+    margin: 40px auto;
+    transform: scale(0.7);
+    transform-origin: center;
+  }
+}
+
+/* Mobile Large (480px - 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+  .page-header {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .robot-container {
+    left: 50%;
+  }
+
+  .cta-section {
+    transform: scale(0.6);
+  }
+
+  .hero-section {
+    transform: scale(0.6);
+  }
+
+  .video-card {
+    transform: scale(0.6);
+  }
+}
+
+/* Mobile Small (below 480px) */
+@media (max-width: 479px) {
+  .page-header {
+    padding: 10px 12px;
+    gap: 10px;
+    align-items: center;
+    display: flex;
+  }
+
+  .robot-container {
+    left: 50%;
+    height: auto;
+  }
+
+  .cta-section {
+    transform: scale(0.55);
+  }
+
+  .hero-section {
+    transform: scale(0.55);
+  }
+
+  .video-card {
+    transform: scale(0.55);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+

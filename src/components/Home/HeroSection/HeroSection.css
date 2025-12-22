@@ -1,0 +1,96 @@
+.hero-section {
+  position: absolute;
+  top: 10%;
+  left: 145px;
+  z-index: 10;
+  max-width: 800px;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.hero-line {
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: #0a0a0a;
+  margin: 0;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+}
+
+/* Dòng đầu - căn trái */
+.hero-line:nth-child(1) {
+  text-align: right;
+}
+.hero-line:nth-child(3) {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Dòng cuối - căn phải */
+.hero-line:nth-child(4) {
+  text-align: center;
+}
+
+.char {
+  display: inline-block;
+}
+
+@media (max-width: 1440px) {
+  .hero-line {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-line {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-section {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+
+  .hero-title {
+    width: 100%;
+  }
+
+  .hero-line {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 26px;
+    letter-spacing: -1px;
+  }
+
+  .char {
+    will-change: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-line {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 479px) {
+  .hero-line {
+    font-size: 22px;
+  }
+}

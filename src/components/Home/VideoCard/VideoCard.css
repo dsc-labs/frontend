@@ -1,0 +1,144 @@
+.video-card {
+  position: absolute;
+  left: 123px;
+  bottom: 64px;
+  width: 253px;
+  height: 178.3125px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+}
+
+.video-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 142.3125px;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.video-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.play-button-container {
+  position: absolute;
+  top: 39px;
+  left: 95px;
+  cursor: pointer;
+}
+
+.play-button-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(217, 217, 217, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.play-button-container:hover .play-button-circle {
+  background-color: rgba(217, 217, 217, 0.6);
+}
+
+/* Pulse & Glow Effect */
+.pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  animation: pulse-glow 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.pulse-ring-1 {
+  animation-delay: 0s;
+}
+
+.pulse-ring-2 {
+  animation-delay: 0.67s;
+}
+
+.pulse-ring-3 {
+  animation-delay: 1.33s;
+}
+
+@keyframes pulse-glow {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  50% {
+    opacity: 0.4;
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+    border-color: rgba(255, 255, 255, 0);
+  }
+}
+
+.play-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.video-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  width: 237px;
+  height: 24px;
+}
+
+.video-info svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.video-title {
+  font-size: 16px;
+  color: #1d1d1d;
+  font-weight: 400;
+  line-height: 1.2;
+  width: 205px;
+  height: 19px;
+  display: flex;
+  align-items: center;
+}
+
+/* Mobile responsive */
+@media (max-width: 767px) {
+  .video-info {
+    justify-content: center;
+    margin: 0 auto;
+  }
+}

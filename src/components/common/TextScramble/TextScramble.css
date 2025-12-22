@@ -1,0 +1,9 @@
+.text-scramble {
+  display: inline-block;
+  letter-spacing: 0.02em;
+}
+
+.scramble-char {
+  display: inline-block;
+}
+
