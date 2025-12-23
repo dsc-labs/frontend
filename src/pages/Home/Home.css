@@ -96,12 +96,14 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 250px;
+  width: auto;
+  min-width: 280px;
+  padding: 0 20px;
   height: 46px;
   background-color: #1D1D1D;
   color: white;
   border: none;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -109,6 +111,7 @@
   margin-right: 0;
   position: relative;
   overflow: visible;
+  white-space: nowrap;
   /* Hexagon shape với góc cắt chéo */
   clip-path: polygon(
     12px 0%,
