@@ -56,6 +56,46 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Hover Effects */
+.model-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.model-card:hover .model-card-image {
+  transform: scale(1.1);
+}
+
+.model-card:hover .model-card-image-1 {
+  transform: scale(1.1) translateX(-5px);
+}
+
+.model-card:hover .model-card-image-2 {
+  transform: scale(1.1) translateX(5px);
+}
+
+.model-card:hover .model-card-title-box {
+  background: #0a0a0a;
+  transform: translateX(4px);
+}
+
+.model-card:hover .model-card-title-text {
+  color: #ffffff;
+}
+
+.model-card:hover .model-metric-primary,
+.model-card:hover .model-metric-secondary {
+  transform: translateX(2px);
+  color: #0a0a0a;
+}
+
+.model-card:hover .model-card-description {
+  color: #666666;
 }
 
 /* Card 2 (Kích thước) - Offset down for zigzag layout */
@@ -75,6 +115,7 @@
   width: fit-content;
   z-index: 2;
   position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .model-card-title-text {
@@ -82,6 +123,7 @@
   font-weight: 400;
   color: #1d1d1d;
   line-height: 19px;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Card Content */
@@ -301,6 +343,7 @@
   font-weight: 600;
   color: #1d1d1d;
   line-height: 1.2;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .model-card:nth-child(2) .model-metric-primary,
@@ -329,6 +372,7 @@
   color: #858585;
   margin: 0;
   line-height: 1.5;
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .model-card:nth-child(2) .model-card-description {
@@ -368,6 +412,7 @@
   background-repeat: no-repeat;
   background-position: right center;
   z-index: 1;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Card Specific Styles */
@@ -440,6 +485,7 @@
   background-size: contain;
   background-position: right bottom;
   background-repeat: no-repeat;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .model-card:nth-child(3) .model-card-image-2 {
@@ -449,6 +495,7 @@
   background-position: top;
   background-repeat: no-repeat;
   margin-left: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Card 4: Momen xoắn */
@@ -484,7 +531,7 @@
   width: 225px;
   height: 220px;
   right: 39px;
-  top: 1px;
+  top: -11px;
 }
 
 .model-card:nth-child(5) .model-card-image {
@@ -592,6 +639,16 @@
     margin-top: 0;
   }
 
+  /* Reduce hover effects on tablet */
+  .model-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .model-card:hover .model-card-image {
+    transform: scale(1.05);
+  }
+
   .model-metric-primary,
   .model-metric-secondary {
     font-size: 32px;
@@ -600,6 +657,37 @@
 
 /* Mobile (below 768px) */
 @media (max-width: 767px) {
+  /* Disable hover effects on mobile */
+  .model-card:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .model-card:hover .model-card-image,
+  .model-card:hover .model-card-image-1,
+  .model-card:hover .model-card-image-2 {
+    transform: none;
+  }
+
+  .model-card:hover .model-card-title-box {
+    background: #f5f5f5;
+    transform: none;
+  }
+
+  .model-card:hover .model-card-title-text {
+    color: #1d1d1d;
+  }
+
+  .model-card:hover .model-metric-primary,
+  .model-card:hover .model-metric-secondary {
+    transform: none;
+    color: #1d1d1d;
+  }
+
+  .model-card:hover .model-card-description {
+    color: #858585;
+  }
+
   .model-card:nth-child(1) .model-card-image {
     right: 0;
   }
