@@ -573,39 +573,161 @@
 }
 
 /* Desktop (1440px - 1919px) */
-@media (max-width: 1919px) and (min-width: 1440px) {
+/* Compact Desktop (1024px - 1536px) */
+@media (max-width: 1536px) and (min-width: 1024px) {
   .models-container {
-    padding: 150px 80px 80px;
-  }
-
-  .models-grid {
-    gap: 32px;
-  }
-}
-
-/* Tablet Large (1024px - 1439px) */
-@media (max-width: 1439px) and (min-width: 1024px) {
-  .models-container {
-    padding: 120px 60px 60px;
+    padding: 100px 32px 60px;
   }
 
   .models-title {
-    font-size: 48px;
+    font-size: 42px;
   }
 
   .models-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
     max-width: 100%;
   }
 
   .model-card {
     width: 100%;
-    min-height: 300px;
+    min-height: 280px;
+    padding: 16px;
   }
 
-  .model-card:nth-child(5) {
-    margin-top: 0;
+  /* Reset offsets for this compact view to align grid */
+  .model-card:nth-child(even),
+  /* target 2, 4, 6 if needed or specific ones */
+  .model-card:nth-child(odd) {
+    margin-top: 0 !important;
+  }
+
+  /* Scale down internal content */
+  .model-card-title-text {
+    font-size: 14px;
+  }
+
+  .model-metric-primary,
+  .model-metric-secondary {
+    font-size: 24px;
+  }
+
+  .model-card-description {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* Adjust Image Wrappers */
+  /* Card 1 */
+  .model-card:nth-child(1) .model-card-image-wrapper {
+    width: 300px;
+    height: 220px;
+    right: -20px;
+    top: 60px;
+  }
+
+  .model-card:nth-child(1) .model-card-image-bg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .model-card:nth-child(1) .model-card-image {
+    width: 180px;
+    height: 130px;
+  }
+
+  /* Card 2 */
+  .model-card:nth-child(2) {
+    height: 380px;
+  }
+
+  .model-card:nth-child(2) .model-card-text-wrapper {
+    /* width: 140px; */
+    padding-left: 16px;
+    padding-top: 16px;
+    z-index: 10;
+    background-color: transparent;
+  }
+
+  .model-card:nth-child(2) .model-card-image-wrapper {
+    /* width: 200px; */
+    right: -10px;
+  }
+
+  /* Scale metrics in Card 2 */
+  .model-card:nth-child(2) .model-metric-primary,
+  .model-card:nth-child(2) .model-metric-secondary {
+    font-size: 13px;
+    min-height: 50px;
+  }
+
+  .model-card:nth-child(2) .model-metric-primary span,
+  .model-card:nth-child(2) .model-metric-secondary span {
+    font-size: 18px;
+  }
+
+  /* Card 3 */
+  .model-card:nth-child(3) .model-card-text-wrapper {
+    width: 140px;
+    left: 16px;
+  }
+
+  .model-card:nth-child(3) .model-card-image-wrapper {
+    width: 220px;
+    height: 300px;
+  }
+
+  .model-card:nth-child(3) .model-card-image-1 {
+    width: 80px;
+  }
+
+  .model-card:nth-child(3) .model-card-image-2 {
+    width: 120px;
+  }
+
+  .model-card:nth-child(3) .model-metric-primary {
+    margin-top: 50px;
+    font-size: 26px;
+  }
+
+  /* Card 4 */
+  .model-card:nth-child(4) .model-card-text-wrapper {
+    left: 0;
+    padding-left: 16px;
+  }
+
+  .model-card:nth-child(4) .model-card-image-wrapper {
+    width: 180px;
+    height: 180px;
+    right: 10px;
+  }
+
+  .model-card:nth-child(4) .model-metric-primary {
+    margin-top: 50px;
+    font-size: 26px;
+  }
+
+  /* Card 5 */
+  .model-card:nth-child(5) .model-card-image-wrapper {
+    width: 140px;
+    height: 140px;
+    right: 10px;
+  }
+
+  .model-card:nth-child(5) .model-metric-primary {
+    margin-top: 50px;
+    font-size: 26px;
+  }
+
+  /* Card 6 */
+  .model-card:nth-child(6) {
+    padding-top: 10px;
+  }
+
+  .model-card:nth-child(6) .model-card-image-wrapper {
+    width: 240px;
+    height: 180px;
+    top: 100px;
   }
 }
 
@@ -657,6 +779,7 @@
 
 /* Mobile (below 768px) */
 @media (max-width: 767px) {
+
   /* Disable hover effects on mobile */
   .model-card:hover {
     transform: none;

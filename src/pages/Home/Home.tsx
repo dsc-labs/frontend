@@ -39,7 +39,7 @@ const Home = () => {
       {/* Robot Image */}
       <div className="robot-container">
         <div className="robot-image">
-          <img src="/robot.png" alt="Robot" />
+          <img src="/update_logo.png" alt="Robot" />
         </div>
       </div>
 

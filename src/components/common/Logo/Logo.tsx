@@ -11,7 +11,10 @@ const Logo = () => {
       transition={{ duration: 0.6, delay: 0.2 }}
     >
       <Link to="/" className="logo-link">
-        <img src="/logo.png" alt="Logo" />
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/logo_mobile.png" />
+          <img src="/update.png" alt="Logo" />
+        </picture>
       </Link>
     </motion.div>
   )
