@@ -16,9 +16,10 @@ const HeroSection = () => {
   }, [])
 
   const titleLines = [
-    'EMBODIED HUMANOID',
-    'COMBAT INTELLIGENCE',
-    'PLATFORM',
+    'Embodied Humanoid',
+    'Combat Intelligence',
+    'Platform for Physical AI',
+    'Business Process Outsourcing',
   ]
 
   return (

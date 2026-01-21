@@ -8,28 +8,38 @@ const TechnologyStack = () => {
   const listRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(listRef, { once: true, margin: '-100px' })
 
-  const romanNumerals = ['I', 'II', 'III', 'IV']
+  const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI']
 
   const technologies = [
     {
       id: 1,
-      title: 'Multi-Style Martial Arts Reasoning',
+      title: 'Perception Layer',
       isActive: true, // Item đầu tiên có background đen khi hover
       image: '/tech-1.jpg', // Optional background image
     },
     {
       id: 2,
-      title: 'Fighter-Signature Training',
+      title: 'Understanding Layer',
       isActive: false,
     },
     {
       id: 3,
-      title: 'Sensor-Driven Autonomous Combat',
+      title: 'Object Metadata Layer',
       isActive: false,
     },
     {
       id: 4,
-      title: 'Decentralized Robotics Data Platform',
+      title: 'Decision Layer - The Agentic System',
+      isActive: false,
+    },
+    {
+      id: 5,
+      title: 'Planning Layer',
+      isActive: false,
+    },
+    {
+      id: 6,
+      title: 'Action Layer - MMA-Inspired Action Learning',
       isActive: false,
     },
   ]
@@ -47,8 +57,9 @@ const TechnologyStack = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="technology-stack-title">Core Framework</h1>
-          <p className="technology-stack-subtitle">The STRIKEROBOT.AI platform is structured around four core pillars that together enable expressive, autonomous, and scalable humanoid combat intelligence. Each pillar addresses a distinct challenge in embodied AI, while remaining tightly integrated with the others.</p>
+          <h1 className="technology-stack-title">Six-Layer Architecture</h1>
+          <p className="technology-stack-subtitle">The system operates through a hierarchical pipeline where each layer communicates seamlessly for real-time, intelligent behavior.
+          </p>
         </motion.div>
 
         {/* Technology Items List */}

@@ -89,7 +89,7 @@ const UseCases = () => {
   const useCases = [
     {
       id: 1,
-      title: 'Security & Protection Robots',
+      title: 'A rigorous benchmark for embodied intelligence',
       image: '/robot_1.png', // Background image
       video: '/use-case-1-video.mp4', // Optional video for hover
       position: 'top-left',
@@ -97,7 +97,7 @@ const UseCases = () => {
     },
     {
       id: 2,
-      title: 'MMA/Fighting Robots Benchmark',
+      title: 'A shared library of physical interaction primitives',
       image: '/robot_2.png',
       video: '/use-case-2-video.mp4',
       position: 'top-right',
@@ -105,7 +105,7 @@ const UseCases = () => {
     },
     {
       id: 3,
-      title: 'Training & Dojo Simulations',
+      title: 'A scalable data flywheel for humanoid learning',
       image: '/robot_3.png',
       video: '/use-case-3-video.mp4',
       position: 'bottom-left',
@@ -113,7 +113,7 @@ const UseCases = () => {
     },
     {
       id: 4,
-      title: 'Simulation-to-Real RL Research',
+      title: 'A path from narrow skills to general physical intelligence',
       image: '/robot_4.png',
       video: '/use-case-4-video.mp4',
       position: 'bottom-right',
@@ -134,8 +134,9 @@ const UseCases = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="use-cases-title">USE CASES</h1>
-          <p className="use-cases-subtitle">The combat-data layer for robotics.</p>
+          <h1 className="use-cases-title">What STRIKEROBOT.AI Aims to Unlock</h1>
+          <p className="use-cases-subtitle">By grounding intelligence in real-world constraints and adversarial interaction, the platform aims to move humanoid robotics from impressive demos toward reliable, interpretable, and robust behavior. Security operations in high-risk environments is simply where the truth becomes impossible to hide. STRIKEROBOT.AI exists to create:
+          </p>
         </motion.div>
 
         {/* Cards Grid */}

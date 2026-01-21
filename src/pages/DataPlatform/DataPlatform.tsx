@@ -30,9 +30,9 @@ const DataPlatform = () => {
             <div className='dp-panel-inner-content'>
               <div className="dp-title-wrap">
                 <img src="/data_image_right.png" className='dp-image-right' alt="Decorative Rect Top" />
-                <h1>Decentralized Robotics Data Platform</h1>
+                <h1>Decentralized Robotics Data Marketplace</h1>
                 <p className="dp-sub">
-                  High-quality data is a critical requirement for embodied intelligence, yet robotics data is expensive and difficult to scale. STRIKEROBOT.AI addresses this challenge through a decentralized data-labeling platform tailored specifically to robotics.
+                  To scale embodied AI, STRIKEROBOT.AI includes a decentralized marketplace for motion, perception, interaction, and security data. Contributors monetize uploads (e.g., trajectories, contact events) via incentives, creating a flywheel: more data improves models, driving demand and ecosystem growth. This supports operator-signature training, where expert patterns (navigation, inspections) are distilled into personalized policies for expressive, interpretable behaviors.
                 </p>
               </div>
 
@@ -48,9 +48,9 @@ const DataPlatform = () => {
               </div>
 
               <div className='dp-cta-wrap'>
-                <a 
-                  href="https://strikerobot.gitbook.io/strikerobot" 
-                  target="_blank" 
+                <a
+                  href="https://strikerobot.gitbook.io/strikerobot"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="cta-button magnetic"
                 >

@@ -5,9 +5,13 @@ import ConcentricCircles from '../../components/Home/ConcentricCircles/Concentri
 
 const About = () => {
   const capabilities = [
-    { label: 'Martial-arts reasoning' },
-    { label: 'Fighting-style emulation' },
-    { label: 'Autonomous engagement' },
+    {
+      label: 'Emergency Intervention',
+    },
+    { label: 'Distance Switching' },
+    {
+      label: 'Safe Contact Protocol',
+    },
   ]
 
   const trainingCards = [
@@ -15,7 +19,7 @@ const About = () => {
       id: 1,
       title: 'Style Reasoning Engine',
       description:
-        'Teach robots to reason in distinct martial arts frameworks.',
+        'Physics-accurate modeling of Unitree G1 dynamics, actuator limits, contact forces, latency, and sensor noise',
       image: '/about-card-1.png',
       tone: 'dark',
     },
@@ -23,7 +27,7 @@ const About = () => {
       id: 2,
       title: 'Legendary Fighting Styles',
       description:
-        'Emulate the signature movements of iconic fighters.',
+        'Industrial environments with stairs, catwalks, confined spaces, hazards (smoke, heat sources, simulated leaks)',
       image: '/about-card-2.png',
       tone: 'light',
     },
@@ -31,7 +35,7 @@ const About = () => {
       id: 3,
       title: 'Autonomous Engagement Engine',
       description:
-        'Perceive. Decide. Act. Repeat.',
+        'Multi-robot fleet scenarios for collective intelligence testing',
       image: '/about-card-3.png',
       tone: 'light',
     },
@@ -57,12 +61,13 @@ const About = () => {
             <div className="about-headline">
               <h1 className="about-title">WHAT WE DO</h1>
               <p className="about-subtitle">
-                STRIKEROBOT.AI trains humanoid robots through three core intelligence pillars, turning combat into a benchmark for real-world embodied AI. We do not teach robots scripted motions. We teach them how to reason, adapt, and act physically under adversarial, dynamic conditions.
+                STRIKEROBOT.AI is a full-stack embodied intelligence platform building humanoid robots framework for Physical AI Business Process Outsourcing (BPO), focused on security and safety in high-risk environments like nuclear plants, high-voltage facilities, and radiation zones.
               </p>
             </div>
 
             <div className="capabilities-tags">
-              <p className="capabilities-label">Core pillars:</p>
+              <p className="capabilities-label">Core rules ensure predictability:
+              </p>
               {capabilities.map((cap, index) => (
                 <motion.div
                   key={cap.label}
@@ -86,7 +91,7 @@ const About = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <h2 className="training-engine-title">TRAINING ENGINE</h2>
+          <h2 className="training-engine-title">TRAINING METHODOLOGY</h2>
 
           <div className="training-cards">
             {trainingCards.map((card, index) => (

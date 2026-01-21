@@ -51,8 +51,7 @@ const Home = () => {
         transition={{ delay: 1, duration: 0.8 }}
       >
         <p className="cta-description">
-          Train robots to fight, protect, and reason through martial arts — from
-          simulation to real-world autonomy.
+          Our agentic security fleet (SafeGuard ASF) integrates real-time perception, tactical reasoning, learning-based motion control, and scalable data infrastructure to patrol, monitor, and intervene autonomously or via teleoperation.
         </p>
         <motion.button
           className="cta-button magnetic"
