@@ -31,8 +31,8 @@ const Navigation = () => {
           <Link to="/docs" className="nav-link magnetic">
             Docs
           </Link>
-          <Link to="/partners" className="nav-link magnetic">
-            Our partners
+          <Link to="/models" className="nav-link magnetic">
+            Models
           </Link>
         </div>
       </div>

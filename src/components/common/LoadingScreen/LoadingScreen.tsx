@@ -48,7 +48,7 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             >
               <div className={`logo-container-loading ${showGlitch ? 'glitch' : ''}`}>
                 <div className="logo-text">
-                  <img src="/logo.png" alt="Strike" />
+                  <img src="/update.png" alt="Strike" />
                 </div>
               </div>
             </motion.div>
