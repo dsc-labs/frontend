@@ -5,9 +5,25 @@ import About from './pages/About/About'
 import DataPlatform from './pages/DataPlatform/DataPlatform'
 import UseCases from './pages/UseCases/UseCases'
 import TechnologyStack from './pages/TechnologyStack/TechnologyStack'
-import Models from './pages/Models/Models'
+// import Partners from './pages/Partners/Partners'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
+
+const DocsRedirect = () => {
+  useEffect(() => {
+    window.location.href = 'https://strikerobot.gitbook.io/strikerobot/'
+  }, [])
+
+  return null
+}
+
+const NotFound = () => {
+  return (
+    <div className="not-found">
+      <h1>This strikerobot.ai page can't be found</h1>
+    </div>
+  )
+}
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
@@ -37,7 +53,9 @@ function App() {
               <Route path="/data-platform" element={<DataPlatform />} />
               <Route path="/use-cases" element={<UseCases />} />
               <Route path="/technology-stack" element={<TechnologyStack />} />
-              <Route path="/models" element={<Models />} />
+              {/* <Route path="/partners" element={<Partners />} /> */}
+              <Route path="/docs" element={<DocsRedirect />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Router>
         </>

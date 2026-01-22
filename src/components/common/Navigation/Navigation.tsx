@@ -31,9 +31,9 @@ const Navigation = () => {
           <Link to="/docs" className="nav-link magnetic">
             Docs
           </Link>
-          <Link to="/models" className="nav-link magnetic">
-            Models
-          </Link>
+          {/* <Link to="/partners" className="nav-link magnetic">
+            Our partners
+          </Link> */}
         </div>
       </div>
     </motion.nav>
