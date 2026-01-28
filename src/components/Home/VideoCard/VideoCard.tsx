@@ -10,10 +10,6 @@ const VideoCard = () => {
   // YouTube thumbnail - using maxresdefault for best quality, with fallback to hqdefault
   const youtubeThumbnail = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`
 
-  const handleClick = () => {
-    setIsPlaying(true)
-  }
-
   return (
     <motion.div
       className="video-card magnetic"
