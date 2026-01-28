@@ -27,7 +27,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  cursor: pointer;
+  cursor: default;
 }
 
 .video-image img {
@@ -56,7 +56,8 @@
   position: absolute;
   top: 39px;
   left: 95px;
-  cursor: pointer;
+  cursor: default;
+  pointer-events: none;
 }
 
 .play-button-circle {

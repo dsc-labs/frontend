@@ -24,19 +24,17 @@
   width: 100%;
 }
 
-/* Dòng đầu - căn trái */
+/* Line alignment for desktop */
 .hero-line:nth-child(1) {
   text-align: right;
 }
-.hero-line:nth-child(3) {
+.hero-line:nth-child(2) {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
-
-/* Dòng cuối - căn phải */
-.hero-line:nth-child(4) {
-  text-align: center;
+.hero-line:nth-child(3) {
+  text-align: left;
 }
 
 .char {
@@ -45,13 +43,22 @@
 
 @media (max-width: 1440px) {
   .hero-line {
-    font-size: 44px;
+    font-size: 36px;
+  }
+  
+  .hero-section {
+    left: 100px;
   }
 }
 
 @media (max-width: 1024px) {
   .hero-line {
-    font-size: 34px;
+    font-size: 32px;
+  }
+  
+  .hero-section {
+    left: 60px;
+    max-width: 600px;
   }
 }
 

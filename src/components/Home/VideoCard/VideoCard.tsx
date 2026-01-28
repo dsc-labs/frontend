@@ -22,7 +22,7 @@ const VideoCard = () => {
       transition={{ delay: 1.2, duration: 0.8 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ cursor: isPlaying ? 'default' : 'pointer' }}
+      style={{ cursor: 'default' }}
     >
       <div className="video-thumbnail">
         <AnimatePresence mode="wait">
@@ -33,7 +33,6 @@ const VideoCard = () => {
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              onClick={handleClick}
             >
               <img 
                 src={youtubeThumbnail} 
