@@ -1,14 +1,27 @@
-import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import './VideoCard.css'
+
+const YOUTUBE_VIDEO_ID = 'ML76zIddNcA'
 
 const VideoCard = () => {
   const [isHovered, setIsHovered] = useState(false)
-  const youtubeVideoId = 'fD_hJmBtKhA'
-  // YouTube thumbnail - using maxresdefault for best quality, with fallback to hqdefault
-  const youtubeThumbnail = `https://img.youtube.com/vi/${youtubeVideoId}/maxresdefault.jpg`
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [videoTitle, setVideoTitle] = useState<string>('')
+  const youtubeEmbedUrl = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1`
+  const youtubeThumbnail = `https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/maxresdefault.jpg`
+
+  useEffect(() => {
+    fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}&format=json`
+    )
+      .then((res) => res.json())
+      .then((data) => setVideoTitle(data.title))
+      .catch(() => setVideoTitle('Video'))
+  }, [])
 
   return (
+    <>
     <motion.div
       className="video-card magnetic"
       initial={{ opacity: 0, y: 30 }}
@@ -16,7 +29,8 @@ const VideoCard = () => {
       transition={{ delay: 1.2, duration: 0.8 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ cursor: 'default' }}
+      onClick={() => setIsPlaying(true)}
+      style={{ cursor: 'pointer' }}
     >
       <div className="video-thumbnail">
         <motion.div
@@ -30,8 +44,8 @@ const VideoCard = () => {
             onError={(e) => {
               // Fallback to hqdefault if maxresdefault doesn't exist
               const target = e.target as HTMLImageElement
-              if (target.src !== `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`) {
-                target.src = `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`
+              if (target.src !== `https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg`) {
+                target.src = `https://img.youtube.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg`
               }
             }}
           />
@@ -72,9 +86,46 @@ const VideoCard = () => {
       </div>
       <div className="video-info">
         <img src="/youtube-icon.png" alt="Youtube Icon" />
-        <span className="video-title">Strike Robot Intro</span>
+        <span className="video-title">{videoTitle || 'Video'}</span>
       </div>
     </motion.div>
+
+    <AnimatePresence>
+    {isPlaying && (
+      <motion.div
+        className="video-modal-overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setIsPlaying(false)}
+      >
+        <motion.div
+          className="video-modal"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            className="video-modal-close"
+            onClick={() => setIsPlaying(false)}
+            aria-label="Close video"
+          >
+            ×
+          </button>
+          <div className="video-embed">
+            <iframe
+              src={youtubeEmbedUrl}
+              title={videoTitle || 'Video'}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    )}
+    </AnimatePresence>
+    </>
   )
 }
 
