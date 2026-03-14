@@ -10,7 +10,7 @@ const SocialIcons = () => {
       transition={{ delay: 0.5, duration: 0.6 }}
     >
       <motion.a
-        href="https://twitter.com"
+        href="https://x.com/StrikeRobot_ai"
         target="_blank"
         rel="noopener noreferrer"
         className="social-icon magnetic"
@@ -23,7 +23,7 @@ const SocialIcons = () => {
 
       </motion.a>
       <motion.a
-        href="https://github.com"
+        href="https://strikerobot.gitbook.io/strikerobot"
         target="_blank"
         rel="noopener noreferrer"
         className="social-icon magnetic"
