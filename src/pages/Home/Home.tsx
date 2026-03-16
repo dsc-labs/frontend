@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
 import HeroSection from '../../components/Home/HeroSection/HeroSection'
@@ -55,12 +54,12 @@ const Home = () => {
           Our agentic security fleet (SafeGuard ASF) integrates real-time perception, tactical reasoning, learning-based motion control, and scalable data infrastructure to patrol, monitor, and intervene autonomously or via teleoperation.
         </p>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link to="/simulation" className="cta-button magnetic">
+          <a href="/simulation" className="cta-button magnetic">
             <span>Strike Robot Simulation</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9.28125 2.625L17.5014 10.8451C18.0872 11.4309 18.0872 12.3807 17.5014 12.9664L9.28125 21.1866" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-          </Link>
+          </a>
         </motion.div>
       </motion.div>
 
