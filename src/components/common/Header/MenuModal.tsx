@@ -13,8 +13,6 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
     { to: '/technology-stack', label: 'Technology' },
     { to: '/data-platform', label: 'Data Platform' },
     { to: '/use-cases', label: 'Use Cases' },
-    { to: '/models', label: 'Models' },
-    { to: '/partners', label: 'Our partners' },
   ]
 
   return (
