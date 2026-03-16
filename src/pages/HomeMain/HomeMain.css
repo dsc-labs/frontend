@@ -31,15 +31,11 @@
 
 .home-main-subtitle {
   font-size: 18px;
-  line-height: 1.5;
+  line-height: 29.25px;
   color: rgba(0, 0, 0, 0.6);
   margin: 0;
   font-weight: 400;
-  font-style: Regular;
-  font-family: 'Roboto';
-  line-height: 29.25px;
   letter-spacing: -0.44px;
-
 }
 
 .home-main-actions {
@@ -276,13 +272,11 @@
   font-size: 16px;
   line-height: 1.5;
   color: #383838;
-  font-family: 'Roboto';
   margin: 0;
 }
 
 .capability-list {
   font-size: 16px;
-  font-family: 'Roboto';
   line-height: 1.5;
   color: #383838;
   margin: 0;
@@ -467,7 +461,6 @@
   color: rgba(0, 0, 0, 0.5);
   max-width: 220px;
   margin: 0;
-  font-family: 'Roboto';
 }
 
 .footer-heading {
@@ -488,7 +481,6 @@
 
 .footer-list li a {
   font-size: 14px;
-  font-family: 'Roboto';
   color: rgba(0, 0, 0, 0.5);
   text-decoration: none;
   cursor: pointer;
@@ -499,7 +491,6 @@
   padding-top: 16px;
   display: flex;
   justify-content: space-between;
-  font-family: 'Roboto';
   align-items: center;
 }
 

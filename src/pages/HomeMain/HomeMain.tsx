@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import Header from '../../components/common/Header/Header'
 import './HomeMain.css'
 
@@ -113,6 +114,8 @@ const HomeMain = () => {
     window.open(YOUTUBE_DEMO_URL, '_blank', 'noopener,noreferrer')
   }
 
+  const [isHeroCtaHovered, setIsHeroCtaHovered] = useState(false)
+
   return (
     <div className="home-main-page font-orbitron">
       <main className="home-main-content">
@@ -152,7 +155,7 @@ const HomeMain = () => {
           >
             <motion.button
               type="button"
-              className="home-main-btn home-main-btn-light font-orbitron"
+              className="home-main-btn home-main-btn-light"
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -163,12 +166,14 @@ const HomeMain = () => {
 
             <motion.button
               type="button"
-              className="home-main-btn home-main-btn-dark font-orbitron"
+              className="home-main-btn home-main-btn-dark"
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
+              onMouseEnter={() => setIsHeroCtaHovered(true)}
+              onMouseLeave={() => setIsHeroCtaHovered(false)}
             >
-              <span>COMING SOON</span>
+              <span>{isHeroCtaHovered ? 'COMING SOON' : 'ENTER SR PLATFORM'}</span>
             </motion.button>
           </motion.div>
         </motion.section>
@@ -273,7 +278,7 @@ const HomeMain = () => {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
         >
-          USER CASES
+          USE CASES
         </motion.h2>
         <div className="usercases-grid">
           {userCases.map((uc) => (
@@ -337,7 +342,7 @@ const HomeMain = () => {
           >
             <motion.button
               type="button"
-              className="home-main-btn home-main-btn-light font-orbitron"
+              className="home-main-btn home-main-btn-light"
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
@@ -347,12 +352,14 @@ const HomeMain = () => {
             </motion.button>
             <motion.button
               type="button"
-              className="home-main-btn home-main-btn-dark font-orbitron"
+              className="home-main-btn home-main-btn-dark"
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
+              onMouseEnter={() => setIsHeroCtaHovered(true)}
+              onMouseLeave={() => setIsHeroCtaHovered(false)}
             >
-              <span>Join Early Access</span>
+              <span>{isHeroCtaHovered ? 'COMING SOON' : 'ENTER SR PLATFORM'}</span>
             </motion.button>
           </motion.div>
 
@@ -370,55 +377,13 @@ const HomeMain = () => {
       <section className="home-main-footer">
         <div className="footer-inner">
           <div className="footer-top">
-            {/* Cột brand / description */}
             <div className="footer-col footer-brand">
               <img src="/update.png" alt="Logo" />
-              <p className="footer-tagline">
-                The fastest reinforcement learning platform for robotics.
-              </p>
-            </div>
-
-            {/* Cột Product */}
-            <div className="footer-col">
-              <h4 className="footer-heading">Product</h4>
-              <ul className="footer-list">
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">Documentation</a></li>
-                <li><a href="#">API Reference</a></li>
-              </ul>
-            </div>
-
-            {/* Cột Company */}
-            <div className="footer-col">
-              <h4 className="footer-heading">Company</h4>
-              <ul className="footer-list">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </div>
-
-            {/* Cột Resources */}
-            <div className="footer-col">
-              <h4 className="footer-heading">Resources</h4>
-              <ul className="footer-list">
-                <li><a href="#">Tutorials</a></li>
-                <li><a href="#">Examples</a></li>
-                <li><a href="#">Community</a></li>
-                <li><a href="#">Support</a></li>
-              </ul>
             </div>
           </div>
 
           <div className="footer-bottom">
             <p className="footer-copy">© 2026 STRIKEROBOT.AI. All rights reserved.</p>
-            <div className="footer-links">
-              <a>Privacy</a>
-              <a>Terms</a>
-              <a>Security</a>
-            </div>
           </div>
         </div>
       </section>
