@@ -28,9 +28,6 @@ const Navigation = () => {
           </Link>
         </div>
         <div className="nav-column">
-          <Link to="/data-platform" className="nav-link magnetic">
-            Data Platform
-          </Link>
           <Link to="/use-cases" className="nav-link magnetic">
             Use Cases
           </Link>
