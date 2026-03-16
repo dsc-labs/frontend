@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
@@ -7,10 +7,20 @@ import VideoCard from '../../components/Home/VideoCard/VideoCard'
 import StrikeText from '../../components/Home/StrikeText/StrikeText'
 import RobotText from '../../components/Home/RobotText/RobotText'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
+import LoadingScreen from '../../components/common/LoadingScreen/LoadingScreen'
 import './Home.css'
 
 const Home = () => {
   const backgroundRef = useRef<HTMLDivElement>(null)
+  const [showSimulationLoader, setShowSimulationLoader] = useState(false)
+
+  const handleSimulationClick = () => {
+    setShowSimulationLoader(true)
+  }
+
+  const handleSimulationLoadingComplete = () => {
+    window.location.href = '/simulation'
+  }
 
   return (
     <div className="home-page">
@@ -55,17 +65,20 @@ const Home = () => {
           Our agentic security fleet (SafeGuard ASF) integrates real-time perception, tactical reasoning, learning-based motion control, and scalable data infrastructure to patrol, monitor, and intervene autonomously or via teleoperation.
         </p>
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Link to="/simulation" className="cta-button magnetic">
+          <button type="button" className="cta-button magnetic" onClick={handleSimulationClick}>
             <span>Strike Robot Simulation</span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M9.28125 2.625L17.5014 10.8451C18.0872 11.4309 18.0872 12.3807 17.5014 12.9664L9.28125 21.1866" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
-          </Link>
+          </button>
         </motion.div>
       </motion.div>
 
       {/* Video Card */}
       <VideoCard />
+
+      {/* Simulation Loading Overlay */}
+      {showSimulationLoader && <LoadingScreen onComplete={handleSimulationLoadingComplete} />}
     </div>
   )
 }
