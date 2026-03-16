@@ -168,7 +168,7 @@ const HomeMain = () => {
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
             >
-              <span>Enter SR Platform</span>
+              <span>COMING SOON</span>
             </motion.button>
           </motion.div>
         </motion.section>
