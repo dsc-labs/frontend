@@ -106,7 +106,13 @@ const userCases = [
   },
 ]
 
+const YOUTUBE_DEMO_URL = 'https://www.youtube.com/watch?v=ML76zIddNcA'
+
 const HomeMain = () => {
+  const handleWatchDemoClick = () => {
+    window.open(YOUTUBE_DEMO_URL, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <div className="home-main-page font-orbitron">
       <main className="home-main-content">
@@ -150,6 +156,7 @@ const HomeMain = () => {
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
+              onClick={handleWatchDemoClick}
             >
               <span>WATCH DEMO</span>
             </motion.button>
@@ -334,6 +341,7 @@ const HomeMain = () => {
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
+              onClick={handleWatchDemoClick}
             >
               <span>WATCH DEMO</span>
             </motion.button>
