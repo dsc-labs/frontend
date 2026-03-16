@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
 import HeroSection from '../../components/Home/HeroSection/HeroSection'
