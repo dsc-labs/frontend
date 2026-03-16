@@ -9,6 +9,8 @@ interface MenuModalProps {
 
 const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
   const navLinks = [
+    { to: '/', label: 'Agentic SR' },
+    { to: '/home-main', label: 'Agentic Platform' },
     { to: '/about', label: 'Training Engine' },
     { to: '/technology-stack', label: 'Technology' },
     { to: '/data-platform', label: 'Data Platform' },

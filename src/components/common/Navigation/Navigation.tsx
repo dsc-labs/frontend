@@ -12,6 +12,14 @@ const Navigation = () => {
     >
       <div className="nav-grid">
         <div className="nav-column">
+          <Link to="/" className="nav-link magnetic">
+            Agentic SR
+          </Link>
+          <Link to="/home-main" className="nav-link magnetic">
+            Agentic Platform
+          </Link>
+        </div>
+        <div className="nav-column">
           <Link to="/about" className="nav-link magnetic">
             Training Engine
           </Link>
