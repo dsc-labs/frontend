@@ -64,10 +64,17 @@ const Header = ({ showSocialIcons = true }: HeaderProps) => {
                         onClick={toggleMenu}
                         aria-label="Open menu"
                     >
+                        {/* Desktop icon */}
                         <img
                             src="/icon_header_right.png"
                             alt=""
-                            className="header-plugin-icon"
+                            className="header-plugin-icon header-plugin-icon-desktop"
+                        />
+                        {/* Mobile icon */}
+                        <img
+                            src="/mobile_icon.png"
+                            alt=""
+                            className="header-plugin-icon header-plugin-icon-mobile"
                         />
                     </button>
                 </div>

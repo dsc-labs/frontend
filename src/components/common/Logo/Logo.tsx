@@ -12,7 +12,7 @@ const Logo = () => {
     >
       <Link to="/" className="logo-link">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/logo_mobile.png" />
+          <source media="(max-width: 767px)" srcSet="/logo_mobile_2.png" />
           <img src="/update.png" alt="Logo" />
         </picture>
       </Link>

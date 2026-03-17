@@ -89,31 +89,31 @@ const UseCases = () => {
   const useCases = [
     {
       id: 1,
-      title: 'A rigorous benchmark for embodied intelligence',
+      title: 'Security & Protection Robots',
       image: '/robot_1.png', // Background image
       video: '/use-case-1-video.mp4', // Optional video for hover
       position: 'top-left',
-      background: '/background_1.jpg',
-    },
-    {
-      id: 2,
-      title: 'A shared library of physical interaction primitives',
-      image: '/robot_2.png',
-      video: '/use-case-2-video.mp4',
-      position: 'top-right',
-      background: '/background_2.jpg',
-    },
-    {
-      id: 3,
-      title: 'A scalable data flywheel for humanoid learning',
-      image: '/robot_3.png',
-      video: '/use-case-3-video.mp4',
-      position: 'bottom-left',
       background: '/background_3.jpg',
     },
     {
+      id: 2,
+      title: 'MMA/Fighting Robots Benchmark',
+      image: '/robot_2.png',
+      video: '/use-case-2-video.mp4',
+      position: 'top-right',
+      background: '/background_1.jpg',
+    },
+    {
+      id: 3,
+      title: 'Training & Dojo Simulations',
+      image: '/robot_3.png',
+      video: '/use-case-3-video.mp4',
+      position: 'bottom-left',
+      background: '/background_2.jpg',
+    },
+    {
       id: 4,
-      title: 'A path from narrow skills to general physical intelligence',
+      title: 'Simulation-to-Real RL Research',
       image: '/robot_4.png',
       video: '/use-case-4-video.mp4',
       position: 'bottom-right',

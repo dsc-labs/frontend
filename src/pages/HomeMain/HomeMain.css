@@ -245,12 +245,12 @@
 
 @media (min-width: 1200px) {
   .capability-card--tall {
-    max-height: 215px;
+    max-height: 250px;
   }
 
   .capability-card--cao {
-    max-height: 270px;
-    margin-top: -60px;
+    max-height: 330px;
+    margin-top: -80px;
   }
 }
 
@@ -303,6 +303,10 @@
   width: 100%;
   height: auto;
 }
+
+.capability-bg-desktop {}
+
+.capability-bg-mobile {}
 
 .capability-extra {
   margin-top: 12px;
@@ -407,6 +411,7 @@
 .about-subtitle {
   font-size: 16px;
   line-height: 1.5;
+  font-family: 'Roboto';
   color: rgba(0, 0, 0, 0.7);
   margin: 0;
 }
@@ -419,6 +424,7 @@
 
 .about-footnote {
   font-size: 13px;
+  font-family: 'Roboto';
   color: rgba(0, 0, 0, 0.5);
   margin-top: 8px;
 }
@@ -535,7 +541,10 @@
   }
 
   .home-main-subtitle {
-    max-width: 520px;
+    max-width: 70%;
+    font-size: 13px;
+    letter-spacing: -0.44px;
+    line-height: 140%;
   }
 
   .home-main-pipeline {
@@ -573,6 +582,11 @@
 @media (max-width: 767px) {
   .home-main-content {
     padding: 100px 20px 48px;
+    /* Dùng background riêng cho mobile để không bị co giãn sai */
+    background-image: url('/background_home_main_mobile.png');
+    background-size: cover;
+    height: 100%;
+    background-position: top center;
   }
 
   .home-main-title {
@@ -582,6 +596,7 @@
 
   .home-main-hero {
     max-width: 100%;
+    gap: 16px;
   }
 
   .home-main-actions {
@@ -594,7 +609,7 @@
   }
 
   .home-main-pipeline {
-    padding: 56px 20px;
+    padding: 40px 16px;
   }
 
   .pipeline-grid {
@@ -603,7 +618,13 @@
 
   .pipeline-card {
     width: 100%;
-    max-width: 320px;
+    background-position: initial;
+  }
+
+  .pipeline-title,
+  .capabilities-title,
+  .usercases-title {
+    font-size: 18px;
   }
 
   .home-main-capabilities {
@@ -620,6 +641,46 @@
 
   .capability-card-content {
     max-width: 100%;
+  }
+
+  /* Mobile: override background cho capabilities id 2-6 bằng robot background,
+     và ẩn img gốc để không bị chồng lên */
+  .capability-card--id-2,
+  .capability-card--id-3,
+  .capability-card--id-4,
+  .capability-card--id-5,
+  .capability-card--id-6 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .capability-card--id-2 {
+    background-image: url('/1_background_robot.png');
+  }
+
+  .capability-card--id-3 {
+    background-image: url('/2_background_robot.png');
+  }
+
+  .capability-card--id-4 {
+    background-image: url('/3_background_robot.png');
+  }
+
+  .capability-card--id-5 {
+    background-image: url('/4_background_robot.png');
+  }
+
+  .capability-card--id-6 {
+    background-image: url('/5_background_robot.png');
+  }
+
+  .capability-card--id-2 .capability-bg,
+  .capability-card--id-3 .capability-bg,
+  .capability-card--id-4 .capability-bg,
+  .capability-card--id-5 .capability-bg,
+  .capability-card--id-6 .capability-bg {
+    display: none;
   }
 
   .home-main-usercases {
@@ -641,16 +702,32 @@
   }
 
   .home-main-about {
-    padding: 80px 20px;
+    padding: 60px 16px;
     min-height: 0;
+    /* Dùng background riêng cho mobile */
+    background-image: url('/WHAT WE DO mobile.png');
+    background-size: cover;
+    background-position: center;
   }
 
   .about-inner {
     padding: 32px 16px 24px;
+    gap: 35px;
+  }
+
+  .pipeline-card-content {
+    padding-left: 20px;
+    padding-top: 40px;
   }
 
   .about-title-line {
-    font-size: 32px;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: -0.85px;
+  }
+
+  .about-subtitle {
+    font-size: 13px !important;
   }
 
   .about-actions {
@@ -663,6 +740,15 @@
 
   .footer-top {
     grid-template-columns: 1fr;
+  }
+
+  /* Mobile: dùng logo mobile, giữ kích thước nguyên bản ảnh */
+  .footer-logo-desktop {
+    display: none;
+  }
+
+  .footer-logo-mobile {
+    display: block;
   }
 
   .footer-bottom {

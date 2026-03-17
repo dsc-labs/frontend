@@ -57,6 +57,15 @@
   display: block;
 }
 
+/* Mặc định: chỉ hiển thị icon desktop */
+.header-plugin-icon-desktop {
+  display: block;
+}
+
+.header-plugin-icon-mobile {
+  display: none;
+}
+
 .menu-icon {
   display: none;
   flex-direction: column;
@@ -135,6 +144,23 @@
     /* Hiển thị menu icon trên mobile */
     width: 24px;
     height: 24px;
+  }
+
+  /* Trên mobile: dùng trực tiếp mobile_icon.png, không viền/nền đen */
+  .header-plugin-button {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .header-plugin-icon-desktop {
+    display: none;
+  }
+
+  .header-plugin-icon-mobile {
+    display: block;
   }
 }
 

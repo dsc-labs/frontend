@@ -234,7 +234,7 @@ const HomeMain = () => {
             {capabilities.map((item) => (
               <motion.div
                 key={item.id}
-                className={`capability-card ${item.id === 2 ? 'capability-card--text-center' : ''} ${item.id === 1 || item.id === 4 ? 'capability-card--text' : ''} ${item.id === 5 ? 'capability-card--cao' : ''} ${item.id === 4 || item.id === 6 || item.id === 2 ? 'capability-card--tall' : ''}`}
+                className={`capability-card capability-card--id-${item.id} ${item.id === 2 ? 'capability-card--text-center' : ''} ${item.id === 1 || item.id === 4 ? 'capability-card--text' : ''} ${item.id === 5 ? 'capability-card--cao' : ''} ${item.id === 4 || item.id === 6 || item.id === 2 ? 'capability-card--tall' : ''}`}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
@@ -329,8 +329,7 @@ const HomeMain = () => {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ delay: 0.2, duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
           >
-            Join leading robotics companies using STRIKEROBOT.AI to accelerate simulation-to-real
-            training, deployment, and continuous improvement of humanoid fleets.
+            Join leading robotics companies using RoboRL to accelerate their development cycles.
           </motion.p>
 
           <motion.div

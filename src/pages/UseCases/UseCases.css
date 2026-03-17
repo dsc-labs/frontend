@@ -48,8 +48,8 @@
   height: 261px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -80,17 +80,17 @@
   background-repeat: no-repeat;
   /* z-index: 0; */
 }
+
 .use-case-image {
   position: absolute;
   inset: 0;
   /* width: 100%; */
   /* margin-top: 10%; */
   bottom: 0;
-  background-size: 50%;
   background-position: right bottom;
   background-repeat: no-repeat;
   transition: filter 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Static image - Grayscale by default */
@@ -135,11 +135,9 @@
 .use-case-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(29, 29, 29, 0.3) 0%,
-    rgba(29, 29, 29, 0) 30%
-  );
+  background: linear-gradient(90deg,
+      rgba(29, 29, 29, 0.3) 0%,
+      rgba(29, 29, 29, 0) 30%);
   z-index: 1;
 }
 
@@ -167,6 +165,7 @@
   bottom: 0;
   top: 47px;
   left: 31px;
+  width: 50%;
   font-size: 24px;
   font-weight: 600;
   color: #FFFFFF;
@@ -243,12 +242,20 @@
   .use-case-card {
     height: 260px;
   }
+
+  /* Giảm kích thước robot image trên mobile */
+  .use-case-image {
+    background-size: 65%;
+    background-position: right bottom;
+  }
 }
 
 @media (max-width: 479px) {
   .use-cases-container {
     padding: 70px 16px 30px;
   }
+
+
 
   .use-cases-title {
     font-size: 32px;
@@ -262,6 +269,11 @@
     height: 120px;
   }
 
+  /* Màn rất nhỏ: robot nhỏ hơn nữa để đỡ chiếm chỗ */
+  .use-case-image {
+    background-size: 55%;
+  }
+
   .use-case-title {
     font-size: 20px;
     left: 16px;
@@ -273,8 +285,9 @@
     width: 50%;
     max-width: 50%;
     height: 18px;
+    bottom: -5px;
   }
-  
+
   .use-case-corner-cut img {
     width: 100%;
     height: auto;
