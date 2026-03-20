@@ -15,6 +15,12 @@ export default defineConfig({
         drop_console: true,
       },
     },
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        srPlatform: 'sr-platform/index.html',
+      },
+    },
   },
 })
 

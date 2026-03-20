@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/sr-platform",
+      "destination": "/sr-platform/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
