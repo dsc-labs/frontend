@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
 import './About.css'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 
 const About = () => {
   const capabilities = [
@@ -43,6 +44,7 @@ const About = () => {
 
   return (
     <div className="about-page">
+      <DefaultPageSEO path="/about" />
       {/* Concentric Circles Background */}
       <ConcentricCircles />
       <Header />

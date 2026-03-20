@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import Header from '../../components/common/Header/Header'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
 import './TechnologyStack.css'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 
 const TechnologyStack = () => {
   const listRef = useRef<HTMLDivElement>(null)
@@ -46,6 +47,7 @@ const TechnologyStack = () => {
 
   return (
     <div className="technology-stack-page">
+      <DefaultPageSEO path="/technology-stack" />
       <ConcentricCircles />
       <Header showSocialIcons />
 

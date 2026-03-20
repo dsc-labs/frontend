@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import Header from '../../components/common/Header/Header'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
 import './UseCases.css'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 
 interface UseCaseCardProps {
   useCase: {
@@ -123,6 +124,7 @@ const UseCases = () => {
 
   return (
     <div className="use-cases-page">
+      <DefaultPageSEO path="/use-cases" />
       <ConcentricCircles />
       <Header showSocialIcons />
 

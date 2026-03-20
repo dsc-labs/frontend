@@ -6,6 +6,7 @@ import VideoCard from '../../components/Home/VideoCard/VideoCard'
 import StrikeText from '../../components/Home/StrikeText/StrikeText'
 import RobotText from '../../components/Home/RobotText/RobotText'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 import './Home.css'
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
 
   return (
     <div className="home-page">
+      <DefaultPageSEO path="/" />
       {/* Concentric Circles Background */}
       <ConcentricCircles />
 

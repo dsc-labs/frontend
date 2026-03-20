@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
 import './Partners.css'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 
 const Partners = () => {
   const partners = [
@@ -59,6 +60,7 @@ const Partners = () => {
 
   return (
     <div className="partners-page">
+      <DefaultPageSEO path="/partners" />
       <ConcentricCircles />
       <Header showSocialIcons />
 

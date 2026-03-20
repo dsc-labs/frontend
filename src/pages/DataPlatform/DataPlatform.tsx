@@ -2,10 +2,12 @@ import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
 import './DataPlatform.css'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 
 const DataPlatform = () => {
   return (
     <div className="data-platform-page">
+      <DefaultPageSEO path="/data-platform" />
       {/* Concentric Circles Background */}
       <ConcentricCircles />
       <Header showSocialIcons />

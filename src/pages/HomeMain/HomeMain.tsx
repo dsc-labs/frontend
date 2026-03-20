@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Header from '../../components/common/Header/Header'
+import {
+  PageSEO,
+  SR_PLATFORM_SEO_DESCRIPTION,
+  SR_PLATFORM_SEO_TITLE,
+} from '../../components/common/PageSEO/PageSEO'
 import './HomeMain.css'
 
 const pipelineSteps = [
@@ -118,6 +123,11 @@ const HomeMain = () => {
 
   return (
     <div className="home-main-page font-orbitron">
+      <PageSEO
+        title={SR_PLATFORM_SEO_TITLE}
+        metaDescription={SR_PLATFORM_SEO_DESCRIPTION}
+        path="/sr-platform"
+      />
       <main className="home-main-content">
         <Header showSocialIcons />
         <motion.section

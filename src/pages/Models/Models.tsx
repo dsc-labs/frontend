@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import Header from '../../components/common/Header/Header'
 import ConcentricCircles from '../../components/Home/ConcentricCircles/ConcentricCircles'
 import './Models.css'
+import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 
 interface ModelCard {
   id: number
@@ -64,6 +65,7 @@ const Models = () => {
 
   return (
     <div className="models-page">
+      <DefaultPageSEO path="/models" />
       <ConcentricCircles />
       <Header showSocialIcons />
 
