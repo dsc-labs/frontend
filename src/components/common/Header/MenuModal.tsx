@@ -7,13 +7,25 @@ interface MenuModalProps {
   onClose: () => void
 }
 
+type NavLinkItem =
+  | { to: string; label: string }
+  | { href: string; label: string }
+
 const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
-  const navLinks = [
+  const navLinks: NavLinkItem[] = [
     { to: '/', label: 'SR Agentic' },
     { to: '/sr-platform', label: 'SR Platform' },
     { to: '/about', label: 'Training Engine' },
     { to: '/technology-stack', label: 'Technology' },
     { to: '/use-cases', label: 'Use Cases' },
+    {
+      href: 'https://github.com/orgs/StrikeRobot/repositories',
+      label: 'Public Repos',
+    },
+    {
+      href: 'https://arxiv.org/abs/2603.25353',
+      label: 'Publications',
+    },
   ]
 
   return (
@@ -52,18 +64,30 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
             <nav className="menu-nav">
               {navLinks.map((link, index) => (
                 <motion.div
-                  key={link.to}
+                  key={'to' in link ? link.to : link.href}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Link
-                    to={link.to}
-                    className="menu-link"
-                    onClick={onClose}
-                  >
-                    {link.label}
-                  </Link>
+                  {'to' in link ? (
+                    <Link
+                      to={link.to}
+                      className="menu-link"
+                      onClick={onClose}
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="menu-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={onClose}
+                    >
+                      {link.label}
+                    </a>
+                  )}
                   {index < navLinks.length - 1 && <div className="menu-divider" />}
                 </motion.div>
               ))}
