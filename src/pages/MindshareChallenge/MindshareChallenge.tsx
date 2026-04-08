@@ -129,7 +129,7 @@ const MindshareChallenge = () => {
             <li>Ensure your X account has been active for over 3 months and is verified</li>
           </ul>
           <p>Submit your contribution via the form below:</p>
-          <p>
+          <p className="mindshare-submit-row">
             <a
               href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
               target="_blank"
@@ -137,6 +137,10 @@ const MindshareChallenge = () => {
               className="mindshare-submit-link"
             >
               <strong>Submit your Mindshare</strong>
+              <span aria-hidden="true" className="mindshare-submit-arrow">
+                {' '}
+                →
+              </span>
             </a>
           </p>
 
