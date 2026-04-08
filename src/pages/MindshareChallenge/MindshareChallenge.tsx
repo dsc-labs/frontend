@@ -136,7 +136,7 @@ const MindshareChallenge = () => {
               rel="noopener noreferrer"
               className="mindshare-submit-link"
             >
-              <strong>Submit your Mindshare</strong>
+              <strong>Submit Your Mindshare</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
                 {' '}
                 →
