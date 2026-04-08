@@ -40,6 +40,29 @@
   gap: 20px;
 }
 
+.header-mindshare-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid #111111;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.header-mindshare-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
 .header-plugin-button {
   display: inline-flex;
   align-items: center;
@@ -161,6 +184,12 @@
 
   .header-plugin-icon-mobile {
     display: block;
+  }
+
+  .header-mindshare-button {
+    height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
   }
 }
 

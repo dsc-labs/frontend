@@ -77,18 +77,17 @@ const MindshareChallenge = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="mindshare-title">Mindshare Challenge</h1>
+          <h1 className="mindshare-title">STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH 1</h1>
           <MindshareCountdown />
         </motion.div>
 
         <article className="mindshare-article">
-          <h2>STRIKE ROBOT MINDSHARE CAMPAIGN - EPOCH 1</h2>
           <p>
-            Epoch 1 marks the beginning of the Strikerobot contributor program - an initiative
+            Epoch 1 marks the beginning of the <strong>Strike Robot</strong> contributor program - an initiative
             designed to grow the ecosystem through community-driven content and shared mindshare.
           </p>
           <p>
-            In this phase, contributors create and distribute content around Strikerobot, helping
+            In this phase, contributors create and distribute content around <strong>Strike Robot</strong>, helping
             expand awareness, attract new builders, and shape the narrative of the network. In
             return, participants earn <strong>Mindshare points</strong>, reflecting the reach and
             impact of their contributions, and gain access to early-stage rewards.
@@ -98,60 +97,65 @@ const MindshareChallenge = () => {
             created not only by building, but also by sharing, educating, and amplifying.
           </p>
 
-          <h3>EPOCH 1 BREAKDOWN</h3>
-          <h4>Duration</h4>
-          <p>
-            Epoch 1 runs for <strong>2 weeks</strong> starting at 17:00 UTC on April 8, 2026. All
+          <p className="mindshare-submit-row">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mindshare-submit-link"
+              >
+                <strong>Submit Your Mindshare</strong>
+                <span aria-hidden="true" className="mindshare-submit-arrow">
+                  {' '}
+                  →
+                </span>
+              </a>
+            </p>
+
+          <h2>EPOCH 1 BREAKDOWN</h2>
+          <h3>Duration</h3>
+          <p className="mindshare-duration-box">
+            Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All
             submissions within this period will be counted.
           </p>
 
-          <h4>Reward Pool</h4>
-          <p>
-            Total rewards equal to <strong>2% of total supply.</strong> Distribution is based on{' '}
-            <strong>Mindshare points earned during the epoch.</strong>
-          </p>
+          <h3>Reward Pool</h3>
+          <div className="mindshare-duration-box">
+            <p>
+              Total rewards equal to 2% of the total supply allocated across all Epochs.{' '}
+              Distribution is based on Mindshare points earned during each epoch.
+            </p>
+          </div>
 
-          <h4>Criteria</h4>
-          <p>Mindshare is evaluated based on:</p>
+          <h3>Criteria</h3>
           <ul>
             <li>Impact - reach and influence of the content</li>
             <li>Quality - clarity, depth, and value of the writing</li>
-            <li>
-              Consistency - frequency of high-quality posts and sustained contribution over time
-            </li>
+            <li>Consistency - frequency of high-quality posts and sustained contribution over time</li>
           </ul>
 
-          <h4>Submission Requirements</h4>
-          <p>All submissions must include:</p>
+          <h3>Submission Requirements</h3>
           <ul>
-            <li>Deliver valuable and relevant content related to Strikerobot</li>
+            <li>Deliver valuable and relevant content related to <strong>Strike Robot</strong></li>
             <li>Be written in any language, not limited to English</li>
             <li>Ensure your X account has been active for over 3 months and is verified</li>
           </ul>
-          <p>Submit your contribution via the form below:</p>
-          <p className="mindshare-submit-row">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mindshare-submit-link"
-            >
-              <strong>Submit Your Mindshare</strong>
-              <span aria-hidden="true" className="mindshare-submit-arrow">
-                {' '}
-                →
-              </span>
-            </a>
-          </p>
 
-          <p>
-            Epoch 1 is your opportunity to be part of Strikerobot from the very beginning - to
-            contribute, shape the narrative, and earn from the network's early growth.
-          </p>
-          <p>
-            Start creating, contribute to real-world robotics, and become part of the Strikerobot
-            ecosystem.
-          </p>
+          <h3>Submit your contribution via the form below</h3>
+          <p className="mindshare-submit-row">
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mindshare-submit-link"
+              >
+                <strong>Submit Your Mindshare</strong>
+                <span aria-hidden="true" className="mindshare-submit-arrow">
+                  {' '}
+                  →
+                </span>
+              </a>
+            </p>
         </article>
       </div>
     </div>

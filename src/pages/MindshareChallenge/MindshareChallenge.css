@@ -67,17 +67,49 @@
 .mindshare-article {
   display: grid;
   gap: 22px;
+  font-size: 19px;
+  line-height: 1.9;
 }
 
-.mindshare-article p {
+.mindshare-article p,
+.mindshare-article li,
+.mindshare-article h2,
+.mindshare-article h3,
+.mindshare-article h4,
+.mindshare-article a {
   margin: 0;
   font-size: 19px;
   line-height: 1.9;
   font-weight: 400;
 }
 
+.mindshare-article h2,
+.mindshare-article h3,
+.mindshare-article h4 {
+  font-weight: 700;
+}
+
+.mindshare-duration-box {
+  padding: 10px 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.mindshare-article p.mindshare-duration-box {
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+.mindshare-duration-box p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.9;
+}
+
 .mindshare-submit-row {
   margin-top: 8px;
+  text-align: center;
 }
 
 .mindshare-submit-link {

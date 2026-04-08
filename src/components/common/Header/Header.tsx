@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Logo from '../Logo/Logo'
 import SocialIcons from '../../Home/SocialIcons/SocialIcons'
 import MenuModal from './MenuModal'
@@ -57,6 +58,13 @@ const Header = ({ showSocialIcons = true }: HeaderProps) => {
                 <Logo />
 
                 <div className="header-right">
+                    <Link
+                        to="/mindshare-challenge"
+                        className="header-mindshare-button"
+                        aria-label="Open Mindshare Challenge page"
+                    >
+                        Mindshare Challenge
+                    </Link>
                     {/* Navigation ẩn mặc định, chỉ truy cập qua plugin button */}
                     <button
                         type="button"
