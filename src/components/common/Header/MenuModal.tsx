@@ -13,7 +13,6 @@ type NavLinkItem =
 
 const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
   const navLinks: NavLinkItem[] = [
-    { to: '/mindshare-challenge', label: 'Mindshare Challenge', isFeatured: true },
     { to: '/', label: 'SR Agentic' },
     { to: '/sr-platform', label: 'SR Platform' },
     { to: '/about', label: 'Training Engine' },
@@ -27,6 +26,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       href: 'https://arxiv.org/abs/2603.25353',
       label: 'Publications',
     },
+    { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
   ]
 
   return (
