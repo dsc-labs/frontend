@@ -1,0 +1,98 @@
+.mindshare-page {
+  min-height: 100vh;
+  background: #ffffff;
+  color: #111111;
+}
+
+.mindshare-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 150px 24px 80px;
+  box-sizing: border-box;
+}
+
+.mindshare-title-section {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.mindshare-title {
+  margin: 0;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.mindshare-countdown {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 28px;
+  margin-top: 28px;
+}
+
+.mindshare-countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 72px;
+}
+
+.mindshare-countdown-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #111111;
+}
+
+.mindshare-countdown-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666666;
+}
+
+.mindshare-countdown-expired {
+  margin: 28px 0 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.mindshare-article {
+  display: grid;
+  gap: 22px;
+}
+
+.mindshare-article p {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.9;
+  font-weight: 400;
+}
+
+.mindshare-submit-link {
+  color: #111111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.mindshare-submit-link:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 1023px) {
+  .mindshare-container {
+    padding-top: 110px;
+  }
+
+  .mindshare-article p {
+    font-size: 17px;
+    line-height: 1.8;
+  }
+}

@@ -6,6 +6,7 @@ import About from './pages/About/About'
 import DataPlatform from './pages/DataPlatform/DataPlatform'
 import UseCases from './pages/UseCases/UseCases'
 import TechnologyStack from './pages/TechnologyStack/TechnologyStack'
+import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
 import Partners from './pages/Partners/Partners'
 import Models from './pages/Models/Models'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
@@ -40,6 +41,7 @@ function App() {
               <Route path="/data-platform" element={<DataPlatform />} />
               <Route path="/use-cases" element={<UseCases />} />
               <Route path="/technology-stack" element={<TechnologyStack />} />
+              <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
               <Route path="/partners" element={<Partners />} />
               <Route path="/models" element={<Models />} />
             </Routes>

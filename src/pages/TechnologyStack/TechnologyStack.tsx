@@ -44,7 +44,6 @@ const TechnologyStack = () => {
       isActive: false,
     },
   ]
-
   return (
     <div className="technology-stack-page">
       <DefaultPageSEO path="/technology-stack" />

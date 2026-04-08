@@ -8,11 +8,12 @@ interface MenuModalProps {
 }
 
 type NavLinkItem =
-  | { to: string; label: string }
-  | { href: string; label: string }
+  | { to: string; label: string; isFeatured?: boolean }
+  | { href: string; label: string; isFeatured?: boolean }
 
 const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
   const navLinks: NavLinkItem[] = [
+    { to: '/mindshare-challenge', label: 'Mindshare Challenge', isFeatured: true },
     { to: '/', label: 'SR Agentic' },
     { to: '/sr-platform', label: 'SR Platform' },
     { to: '/about', label: 'Training Engine' },
@@ -72,7 +73,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
                   {'to' in link ? (
                     <Link
                       to={link.to}
-                      className="menu-link"
+                      className={`menu-link ${link.isFeatured ? 'menu-link-featured' : ''}`}
                       onClick={onClose}
                     >
                       {link.label}
@@ -80,7 +81,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
                   ) : (
                     <a
                       href={link.href}
-                      className="menu-link"
+                      className={`menu-link ${link.isFeatured ? 'menu-link-featured' : ''}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={onClose}
