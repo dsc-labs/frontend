@@ -27,6 +27,10 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       label: 'Publications',
     },
     { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
+    {
+      href: 'https://app.virtuals.io/virtuals/70972',
+      label: 'SR Token',
+    },
   ]
 
   return (
