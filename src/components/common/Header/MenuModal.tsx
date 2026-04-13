@@ -15,6 +15,10 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
   const navLinks: NavLinkItem[] = [
     { to: '/', label: 'SR Agentic' },
     { to: '/sr-platform', label: 'SR Platform' },
+    {
+      href: 'https://app.virtuals.io/virtuals/70972',
+      label: 'SR Token',
+    },
     { to: '/about', label: 'Training Engine' },
     { to: '/technology-stack', label: 'Technology' },
     { to: '/use-cases', label: 'Use Cases' },
@@ -27,10 +31,6 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       label: 'Publications',
     },
     { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
-    {
-      href: 'https://app.virtuals.io/virtuals/70972',
-      label: 'SR Token',
-    },
   ]
 
   return (
