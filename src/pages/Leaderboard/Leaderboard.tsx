@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import type { CSSProperties } from 'react'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
+import leaderboardCsv from '../../../leaderboard.csv?raw'
 import './Leaderboard.css'
 
 type LeaderboardEntry = {
@@ -12,95 +13,112 @@ type LeaderboardEntry = {
   score: number
 }
 
-const LEADERBOARD_ENTRIES: LeaderboardEntry[] = [
-  {
-    rank: 1,
-    name: 'Goon',
-    handle: '@Goon_crypto',
-    wallet: '0x73b6bdf237eD04f40E5684f3e5718F9239B5d64a',
-    posts: 9,
-    score: 145.0,
-  },
-  {
-    rank: 2,
-    name: 'zagen',
-    handle: '@0xzagen',
-    wallet: '0x1aad084517ea492a67fcca54048c7e0404ce1ab2',
-    posts: 5,
-    score: 110.0,
-  },
-  {
-    rank: 3,
-    name: '100xDarren',
-    handle: '@100xDarren',
-    wallet: '0x6E74c2a17fB723998ddFd1e21815e9b3932e13FD',
-    posts: 1,
-    score: 101.0,
-  },
-  {
-    rank: 4,
-    name: 'Conan.eth',
-    handle: '@0oweekend59',
-    wallet: '0xa25CA0AB85421292725Ebda66e07CC792b14F021',
-    posts: 18,
-    score: 88.0,
-  },
-  {
-    rank: 5,
-    name: '3DMax_Virtuals',
-    handle: '@3DMax_Virtuals',
-    wallet: '-',
-    posts: 2,
-    score: 75.0,
-  },
-  {
-    rank: 6,
-    name: 'JBCollins',
-    handle: '@jbcollins01',
-    wallet: '0x4ca432c4698db24259810d3696c2048a69906891',
-    posts: 13,
-    score: 73.5,
-  },
-  {
-    rank: 7,
-    name: 'Biz Brain',
-    handle: '@bizbrainzuni',
-    wallet: '0xd5A065E5c38c7d87f6890e920f4e1aCc9722d97a',
-    posts: 15,
-    score: 71.7,
-  },
-  {
-    rank: 8,
-    name: 'MEDICO',
-    handle: '@Drkhaleefah2',
-    wallet: '0xb0c7084fc05ed9827683dc38766a93d083af6c4',
-    posts: 46,
-    score: 66.9,
-  },
-  {
-    rank: 9,
-    name: 'Ayyaras',
-    handle: '@OxAybars',
-    wallet: '0x2C8B5f6E7CFbaA12226E288Eb75624016cD1727',
-    posts: 11,
-    score: 65.0,
-  },
-  {
-    rank: 10,
-    name: 'Crispy',
-    handle: '@0xcrispdal',
-    wallet: '0x8a5348b3f0c9be7dfdb96f5a3ebc25b6047e306',
-    posts: 12,
-    score: 63.8,
-  },
-  {
-    rank: 11,
-    name: 'office2crypto',
-    handle: '@office2crypto',
-    wallet: '0x97Bc998dBD5D5a9df74Cb589F4eabd516D4a22A',
-    posts: 4,
-    score: 63.0,
-  },
+type LeaderboardStat = {
+  label: string
+  value: string
+  isHighlighted?: boolean
+}
+
+type CsvRow = {
+  username: string
+  name: string
+  wallet: string
+  total_score: string
+  total_posts: string
+}
+
+const SNAPSHOT_TOTAL_LIKES = 40431
+const SNAPSHOT_TOTAL_COMMENTS = 28719
+const SNAPSHOT_TOTAL_RETWEETS = 5732
+
+function parseCsvLine(line: string) {
+  const values: string[] = []
+  let current = ''
+  let inQuotes = false
+
+  for (let i = 0; i < line.length; i += 1) {
+    const char = line[i]
+    if (char === '"') {
+      const nextChar = line[i + 1]
+      if (inQuotes && nextChar === '"') {
+        current += '"'
+        i += 1
+      } else {
+        inQuotes = !inQuotes
+      }
+      continue
+    }
+    if (char === ',' && !inQuotes) {
+      values.push(current)
+      current = ''
+      continue
+    }
+    current += char
+  }
+  values.push(current)
+  return values
+}
+
+function parseCsv(rawCsv: string): CsvRow[] {
+  const lines = rawCsv
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  if (lines.length < 2) return []
+
+  const headers = parseCsvLine(lines[0])
+  return lines.slice(1).map((line) => {
+    const values = parseCsvLine(line)
+    const row = Object.fromEntries(headers.map((header, idx) => [header, values[idx] ?? '']))
+    return row as CsvRow
+  })
+}
+
+function toNumber(value: string) {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+function formatInteger(value: number) {
+  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)
+}
+
+function formatDecimal(value: number, digits = 1) {
+  return new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  }).format(value)
+}
+
+const CSV_ROWS = parseCsv(leaderboardCsv)
+
+const SCORED_ROWS = CSV_ROWS.filter((row) => toNumber(row.total_score) > 0)
+
+const LEADERBOARD_ENTRIES: LeaderboardEntry[] = SCORED_ROWS.map((row, index) => ({
+  rank: index + 1,
+  name: row.name || row.username || 'Unknown',
+  handle: row.username ? `@${row.username}` : '-',
+  wallet: row.wallet || '-',
+  posts: toNumber(row.total_posts),
+  score: toNumber(row.total_score),
+}))
+
+const trackedUsers = LEADERBOARD_ENTRIES.length
+const relevantPosts = LEADERBOARD_ENTRIES.reduce((sum, row) => sum + row.posts, 0)
+const totalScore = LEADERBOARD_ENTRIES.reduce((sum, row) => sum + row.score, 0)
+const averageScore = trackedUsers > 0 ? totalScore / trackedUsers : 0
+const totalEngagement = SNAPSHOT_TOTAL_LIKES + SNAPSHOT_TOTAL_COMMENTS + SNAPSHOT_TOTAL_RETWEETS
+
+const LEADERBOARD_STATS: LeaderboardStat[] = [
+  { label: 'Tracked Users', value: formatInteger(trackedUsers) },
+  { label: 'Relevant Posts', value: formatInteger(relevantPosts) },
+  { label: 'Average Score', value: formatDecimal(averageScore, 1) },
+  { label: 'Total Score', value: formatDecimal(totalScore, 1) },
+  { label: 'Total Likes', value: formatInteger(SNAPSHOT_TOTAL_LIKES) },
+  { label: 'Total Comments', value: formatInteger(SNAPSHOT_TOTAL_COMMENTS) },
+  { label: 'Total Retweets', value: formatInteger(SNAPSHOT_TOTAL_RETWEETS) },
+  { label: 'Total Engagement', value: formatInteger(totalEngagement), isHighlighted: true },
 ]
 
 function rankLabel(rank: number) {
@@ -110,7 +128,7 @@ function rankLabel(rank: number) {
   return `${rank}`
 }
 
-function averageScore(score: number, posts: number) {
+function averageByPosts(score: number, posts: number) {
   if (posts === 0) return '0.0'
   return (score / posts).toFixed(1)
 }
@@ -129,6 +147,18 @@ const Leaderboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: 'easeOut' }}
       >
+        <section className="leaderboard-stats" aria-label="Leaderboard summary metrics">
+          {LEADERBOARD_STATS.map((stat) => (
+            <article
+              key={stat.label}
+              className={`leaderboard-stat-card ${stat.isHighlighted ? 'is-highlighted' : ''}`}
+            >
+              <p className="leaderboard-stat-label">{stat.label}</p>
+              <p className="leaderboard-stat-value">{stat.value}</p>
+            </article>
+          ))}
+        </section>
+
         <div className="leaderboard-table-wrap">
           <table className="leaderboard-table">
             <thead>
@@ -165,7 +195,7 @@ const Leaderboard = () => {
                   <td className="wallet-cell">{entry.wallet}</td>
                   <td className="is-right">{entry.posts}</td>
                   <td className="is-right score-cell">{entry.score.toFixed(1)}</td>
-                  <td className="is-right">{averageScore(entry.score, entry.posts)}</td>
+                  <td className="is-right">{averageByPosts(entry.score, entry.posts)}</td>
                 </tr>
               ))}
             </tbody>

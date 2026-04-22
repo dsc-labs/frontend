@@ -109,7 +109,10 @@
 
 .mindshare-submit-row {
   margin-top: 8px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .mindshare-submit-link {
@@ -143,6 +146,11 @@
 .mindshare-submit-arrow {
   font-size: 18px;
   line-height: 1;
+}
+
+.mindshare-leaderboard-link {
+  background: #ffffff;
+  color: #111111;
 }
 
 @media (max-width: 1023px) {

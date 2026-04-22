@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 import './MindshareChallenge.css'
 
-/** Epoch 1 ends at 17:00 UTC on April 22, 2026 (2 weeks from April 8, 2026). */
-const COUNTDOWN_END = new Date('2026-04-22T17:00:00Z')
+const EPOCH_1_END = new Date('2026-04-22T17:00:00Z')
+const EPOCH_2_DURATION_MS = 28 * 24 * 60 * 60 * 1000
+const EPOCH_2_END = new Date(EPOCH_1_END.getTime() + EPOCH_2_DURATION_MS)
 
 function pad2(n: number) {
   return n.toString().padStart(2, '0')
@@ -24,23 +26,33 @@ function getRemaining(end: Date, nowMs: number) {
   return { days, hours, minutes, seconds: secs, expired: false }
 }
 
-const MindshareCountdown = () => {
+type MindshareCountdownProps = {
+  end: Date
+  epoch: 1 | 2
+  onComplete?: () => void
+}
+
+const MindshareCountdown = ({ end, epoch, onComplete }: MindshareCountdownProps) => {
   const [nowMs, setNowMs] = useState(() => Date.now())
+  const hasTriggeredRef = useRef(false)
 
   useEffect(() => {
     const id = window.setInterval(() => setNowMs(Date.now()), 1000)
     return () => window.clearInterval(id)
   }, [])
 
-  const { days, hours, minutes, seconds, expired } = getRemaining(
-    COUNTDOWN_END,
-    nowMs,
-  )
+  const { days, hours, minutes, seconds, expired } = getRemaining(end, nowMs)
+
+  useEffect(() => {
+    if (!expired || hasTriggeredRef.current || !onComplete) return
+    hasTriggeredRef.current = true
+    onComplete()
+  }, [expired, onComplete])
 
   if (expired) {
     return (
       <p className="mindshare-countdown-expired" role="status">
-        Challenge window is open.
+        Epoch {epoch} has ended.
       </p>
     )
   }
@@ -65,6 +77,18 @@ const MindshareCountdown = () => {
 }
 
 const MindshareChallenge = () => {
+  const [activeEpoch, setActiveEpoch] = useState<1 | 2>(() =>
+    Date.now() > EPOCH_1_END.getTime() ? 2 : 1,
+  )
+
+  const countdownEnd = activeEpoch === 1 ? EPOCH_1_END : EPOCH_2_END
+
+  const handleCountdownComplete = () => {
+    if (activeEpoch === 1) {
+      setActiveEpoch(2)
+    }
+  }
+
   return (
     <div className="mindshare-page">
       <DefaultPageSEO path="/mindshare-challenge" />
@@ -77,13 +101,17 @@ const MindshareChallenge = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="mindshare-title">STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH 1</h1>
-          <MindshareCountdown />
+          <h1 className="mindshare-title">STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH {activeEpoch}</h1>
+          <MindshareCountdown
+            end={countdownEnd}
+            epoch={activeEpoch}
+            onComplete={handleCountdownComplete}
+          />
         </motion.div>
 
         <article className="mindshare-article">
           <p>
-            Epoch 1 marks the beginning of the <strong>Strike Robot</strong> contributor program - an initiative
+            Epoch {activeEpoch} is part of the <strong>Strike Robot</strong> contributor program - an initiative
             designed to grow the ecosystem through community-driven content and shared mindshare.
           </p>
           <p>
@@ -97,26 +125,34 @@ const MindshareChallenge = () => {
             created not only by building, but also by sharing, educating, and amplifying.
           </p>
 
-          <p className="mindshare-submit-row">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mindshare-submit-link"
-              >
-                <strong>Submit Your Mindshare</strong>
-                <span aria-hidden="true" className="mindshare-submit-arrow">
-                  {' '}
-                  →
-                </span>
-              </a>
-            </p>
+          <div className="mindshare-submit-row">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mindshare-submit-link"
+            >
+              <strong>Submit Your Mindshare</strong>
+              <span aria-hidden="true" className="mindshare-submit-arrow">
+                {' '}
+                →
+              </span>
+            </a>
+            <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
+              <strong>View Leaderboard</strong>
+              <span aria-hidden="true" className="mindshare-submit-arrow">
+                {' '}
+                →
+              </span>
+            </Link>
+          </div>
 
-          <h2>EPOCH 1 BREAKDOWN</h2>
+          <h2>EPOCH {activeEpoch} BREAKDOWN</h2>
           <h3>Duration</h3>
           <p className="mindshare-duration-box">
-            Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All
-            submissions within this period will be counted.
+            {activeEpoch === 1
+              ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
+              : 'Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. All submissions within this period will be counted.'}
           </p>
 
           <h3>Reward Pool</h3>
@@ -142,20 +178,27 @@ const MindshareChallenge = () => {
           </ul>
 
           <h3>Submit your contribution via the form below</h3>
-          <p className="mindshare-submit-row">
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mindshare-submit-link"
-              >
-                <strong>Submit Your Mindshare</strong>
-                <span aria-hidden="true" className="mindshare-submit-arrow">
-                  {' '}
-                  →
-                </span>
-              </a>
-            </p>
+          <div className="mindshare-submit-row">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mindshare-submit-link"
+            >
+              <strong>Submit Your Mindshare</strong>
+              <span aria-hidden="true" className="mindshare-submit-arrow">
+                {' '}
+                →
+              </span>
+            </a>
+            <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
+              <strong>View Leaderboard</strong>
+              <span aria-hidden="true" className="mindshare-submit-arrow">
+                {' '}
+                →
+              </span>
+            </Link>
+          </div>
         </article>
       </div>
     </div>
