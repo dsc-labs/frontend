@@ -1,0 +1,136 @@
+.leaderboard-page {
+  min-height: 100vh;
+  padding: 32px 20px;
+  background:
+    radial-gradient(1200px 600px at 20% -20%, rgba(122, 89, 255, 0.18), transparent 60%),
+    radial-gradient(800px 500px at 90% 0%, rgba(87, 156, 255, 0.14), transparent 64%),
+    #08090f;
+  color: #e6e8ef;
+}
+
+.leaderboard-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(22, 24, 34, 0.96), rgba(13, 15, 22, 0.96));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.leaderboard-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  min-width: 980px;
+  border-collapse: collapse;
+}
+
+.leaderboard-table thead th {
+  padding: 16px 20px;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 12px;
+  font-weight: 600;
+  color: #8f95a6;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.leaderboard-table tbody td {
+  padding: 14px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 15px;
+  color: #d2d6e2;
+}
+
+.leaderboard-table th.is-right,
+.leaderboard-table td.is-right {
+  text-align: right;
+}
+
+.leaderboard-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.rank-value {
+  font-weight: 700;
+  color: #f2f4f9;
+}
+
+.rank-1 {
+  color: #fbbf24;
+}
+
+.rank-2 {
+  color: #cbd5e1;
+}
+
+.rank-3 {
+  color: #fb923c;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: hsl(calc(var(--avatar-seed) * 17), 64%, 45%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+}
+
+.user-copy {
+  min-width: 0;
+}
+
+.user-name {
+  margin: 0;
+  font-weight: 600;
+  color: #f6f7fb;
+}
+
+.user-handle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #8f95a6;
+}
+
+.wallet-cell {
+  color: #9ea3b3;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+}
+
+.score-cell {
+  color: #e2b9ff;
+  font-weight: 600;
+}
+
+@media (max-width: 1023px) {
+  .leaderboard-page {
+    padding: 16px 12px;
+  }
+
+  .leaderboard-shell {
+    border-radius: 12px;
+  }
+
+  .leaderboard-table thead th,
+  .leaderboard-table tbody td {
+    padding: 12px 14px;
+  }
+}

@@ -31,6 +31,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       label: 'Publications',
     },
     { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
+    { to: '/leaderboard', label: 'Leaderboard' },
   ]
 
   return (

@@ -9,6 +9,7 @@ import TechnologyStack from './pages/TechnologyStack/TechnologyStack'
 import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
 import Partners from './pages/Partners/Partners'
 import Models from './pages/Models/Models'
+import Leaderboard from './pages/Leaderboard/Leaderboard'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
 
@@ -44,6 +45,7 @@ function App() {
               <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
               <Route path="/partners" element={<Partners />} />
               <Route path="/models" element={<Models />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes>
           </Router>
         </>
