@@ -1,13 +1,12 @@
 import { motion } from 'framer-motion'
 import type { CSSProperties } from 'react'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
-import leaderboardCsv from '../../../leaderboard.csv?raw'
+import leaderboardCsv from '../../../leaderboard_export.csv?raw'
 import './Leaderboard.css'
 
 type LeaderboardEntry = {
   rank: number
-  name: string
-  handle: string
+  username: string
   wallet: string
   posts: number
   score: number
@@ -20,16 +19,24 @@ type LeaderboardStat = {
 }
 
 type CsvRow = {
+  rank?: string
   username: string
-  name: string
-  wallet: string
-  total_score: string
-  total_posts: string
+  name?: string
+  wallet?: string
+  score?: string
+  total_score?: string
+  posts?: string
+  total_posts?: string
 }
 
-const SNAPSHOT_TOTAL_LIKES = 40431
-const SNAPSHOT_TOTAL_COMMENTS = 28719
-const SNAPSHOT_TOTAL_RETWEETS = 5732
+const SNAPSHOT_TRACKED_USERS = '439'
+const SNAPSHOT_RELEVANT_POSTS = '1,723'
+const SNAPSHOT_AVERAGE_SCORE = '4.1'
+const SNAPSHOT_TOTAL_SCORE = '6,986.8'
+const SNAPSHOT_TOTAL_LIKES = '40,394'
+const SNAPSHOT_TOTAL_COMMENTS = '28,615'
+const SNAPSHOT_TOTAL_RETWEETS = '5,705'
+const SNAPSHOT_TOTAL_ENGAGEMENT = '74,714'
 
 function parseCsvLine(line: string) {
   const values: string[] = []
@@ -80,45 +87,35 @@ function toNumber(value: string) {
   return Number.isFinite(parsed) ? parsed : 0
 }
 
-function formatInteger(value: number) {
-  return new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(value)
-}
-
-function formatDecimal(value: number, digits = 1) {
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: digits,
-    maximumFractionDigits: digits,
-  }).format(value)
-}
-
 const CSV_ROWS = parseCsv(leaderboardCsv)
 
-const SCORED_ROWS = CSV_ROWS.filter((row) => toNumber(row.total_score) > 0)
+function getPosts(row: CsvRow) {
+  return toNumber(row.posts ?? row.total_posts ?? '0')
+}
+
+function getScore(row: CsvRow) {
+  return toNumber(row.score ?? row.total_score ?? '0')
+}
+
+const SCORED_ROWS = CSV_ROWS.filter((row) => getScore(row) > 0)
 
 const LEADERBOARD_ENTRIES: LeaderboardEntry[] = SCORED_ROWS.map((row, index) => ({
   rank: index + 1,
-  name: row.name || row.username || 'Unknown',
-  handle: row.username ? `@${row.username}` : '-',
+  username: row.username || 'unknown',
   wallet: row.wallet || '-',
-  posts: toNumber(row.total_posts),
-  score: toNumber(row.total_score),
+  posts: getPosts(row),
+  score: getScore(row),
 }))
 
-const trackedUsers = LEADERBOARD_ENTRIES.length
-const relevantPosts = LEADERBOARD_ENTRIES.reduce((sum, row) => sum + row.posts, 0)
-const totalScore = LEADERBOARD_ENTRIES.reduce((sum, row) => sum + row.score, 0)
-const averageScore = trackedUsers > 0 ? totalScore / trackedUsers : 0
-const totalEngagement = SNAPSHOT_TOTAL_LIKES + SNAPSHOT_TOTAL_COMMENTS + SNAPSHOT_TOTAL_RETWEETS
-
 const LEADERBOARD_STATS: LeaderboardStat[] = [
-  { label: 'Tracked Users', value: formatInteger(trackedUsers) },
-  { label: 'Relevant Posts', value: formatInteger(relevantPosts) },
-  { label: 'Average Score', value: formatDecimal(averageScore, 1) },
-  { label: 'Total Score', value: formatDecimal(totalScore, 1) },
-  { label: 'Total Likes', value: formatInteger(SNAPSHOT_TOTAL_LIKES) },
-  { label: 'Total Comments', value: formatInteger(SNAPSHOT_TOTAL_COMMENTS) },
-  { label: 'Total Retweets', value: formatInteger(SNAPSHOT_TOTAL_RETWEETS) },
-  { label: 'Total Engagement', value: formatInteger(totalEngagement), isHighlighted: true },
+  { label: 'Tracked Users', value: SNAPSHOT_TRACKED_USERS },
+  { label: 'Relevant Posts', value: SNAPSHOT_RELEVANT_POSTS },
+  { label: 'Average Score', value: SNAPSHOT_AVERAGE_SCORE },
+  { label: 'Total Score', value: SNAPSHOT_TOTAL_SCORE },
+  { label: 'Total Likes', value: SNAPSHOT_TOTAL_LIKES },
+  { label: 'Total Comments', value: SNAPSHOT_TOTAL_COMMENTS },
+  { label: 'Total Retweets', value: SNAPSHOT_TOTAL_RETWEETS },
+  { label: 'Total Engagement', value: SNAPSHOT_TOTAL_ENGAGEMENT, isHighlighted: true },
 ]
 
 function rankLabel(rank: number) {
@@ -181,14 +178,13 @@ const Leaderboard = () => {
                     <div className="user-cell">
                       <span
                         className="user-avatar"
-                        style={{ '--avatar-seed': avatarSeed(entry.name) } as CSSProperties}
+                        style={{ '--avatar-seed': avatarSeed(entry.username) } as CSSProperties}
                         aria-hidden="true"
                       >
-                        {entry.name[0].toUpperCase()}
+                        {entry.username[0]?.toUpperCase() ?? 'U'}
                       </span>
                       <div className="user-copy">
-                        <p className="user-name">{entry.name}</p>
-                        <p className="user-handle">{entry.handle}</p>
+                        <p className="user-name">{entry.username}</p>
                       </div>
                     </div>
                   </td>
