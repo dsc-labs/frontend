@@ -187,13 +187,11 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       open: true,
     },
+    esbuild: {
+      drop: ['console'],
+    },
     build: {
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-        },
-      },
+      minify: 'esbuild',
       rollupOptions: {
         input: {
           main: 'index.html',
