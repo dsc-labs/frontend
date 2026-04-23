@@ -15,9 +15,7 @@ import './MindshareSubmit.css'
 
 type SubmissionState = {
   name: string
-  xHandle: string
   mindshareUrls: string
-  rewardWalletAddress: string
 }
 
 const X_OAUTH_CLIENT_ID = (import.meta.env.VITE_X_OAUTH_CLIENT_ID as string | undefined)?.trim() || undefined
@@ -34,22 +32,8 @@ const MindshareSubmit = () => {
 
   const [form, setForm] = useState<SubmissionState>({
     name: '',
-    xHandle: xProfile ? `@${xProfile.username}` : '',
     mindshareUrls: '',
-    rewardWalletAddress: address ?? '',
   })
-
-  useEffect(() => {
-    if (!form.xHandle && xProfile?.username) {
-      setForm((prev) => ({ ...prev, xHandle: `@${xProfile.username}` }))
-    }
-  }, [xProfile, form.xHandle])
-
-  useEffect(() => {
-    if (!form.rewardWalletAddress && address) {
-      setForm((prev) => ({ ...prev, rewardWalletAddress: address }))
-    }
-  }, [address, form.rewardWalletAddress])
 
   const clearOAuthParams = useCallback(() => {
     navigate('/mindshare-submit', { replace: true })
@@ -127,13 +111,22 @@ const MindshareSubmit = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!xProfile?.username || !walletAddress) {
+      setSubmitMessage('Please connect both X and Wallet before submitting.')
+      return
+    }
     setSubmitBusy(true)
     setSubmitMessage(null)
     try {
+      const payload = {
+        ...form,
+        xHandle: `@${xProfile.username}`,
+        rewardWalletAddress: walletAddress,
+      }
       const res = await fetch('/api/mindshare/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       })
       const text = await res.text()
       let json: { ok?: boolean; error?: string } = {}
@@ -237,20 +230,6 @@ const MindshareSubmit = () => {
             </label>
 
             <label className="mindshare-submit-field">
-              <span>Type Your X Handle *</span>
-              <input
-                type="text"
-                placeholder="@username"
-                value={form.xHandle}
-                onChange={(e) => setForm((prev) => ({ ...prev, xHandle: e.target.value }))}
-                required
-              />
-              <small className="mindshare-submit-field-hint">
-                Kindly ensure that your account has been active for at least 3 months and is verified by X
-              </small>
-            </label>
-
-            <label className="mindshare-submit-field">
               <span>Submit your mindshare about Strike Robot *</span>
               <textarea
                 placeholder="You can submit one or multiple post URLs (e.g. https://x.com/your-post)"
@@ -261,22 +240,8 @@ const MindshareSubmit = () => {
               />
             </label>
 
-            <label className="mindshare-submit-field">
-              <span>Please Enter Your Wallet Address To Receive Rewards *</span>
-              <input
-                type="text"
-                placeholder="Enter your EVM wallet address (e.g. 0x1234...abcd)"
-                value={form.rewardWalletAddress}
-                onChange={(e) => setForm((prev) => ({ ...prev, rewardWalletAddress: e.target.value }))}
-                required
-              />
-              <small className="mindshare-submit-field-hint">
-                Enter your EVM wallet address (e.g. 0x1234...abcd)
-              </small>
-            </label>
-
             <div className="mindshare-submit-actions">
-              <button type="submit" disabled={submitBusy}>
+              <button type="submit" disabled={submitBusy || !isIdentityLinked}>
                 {submitBusy ? 'Submitting...' : 'Submit Entry'}
               </button>
               <Link to="/mindshare-challenge">Back to challenge</Link>

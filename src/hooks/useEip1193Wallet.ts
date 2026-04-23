@@ -1,21 +1,6 @@
-/**
- * Browser wallet (EIP-1193) — same flow as Mujoco_web `src/wallet.js`:
- * `eth_requestAccounts` / `eth_accounts` + `accountsChanged`.
- */
-
 import { useCallback, useEffect, useState } from 'react'
+import { useWallets, useLogin, useLogout, usePrivy } from '@privy-io/react-auth'
 import { clearStoredWalletAddress, storeWalletAddress } from '../lib/walletStorage'
-
-type EthereumLike = {
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
-  on?: (event: string, handler: (...args: unknown[]) => void) => void
-  removeListener?: (event: string, handler: (...args: unknown[]) => void) => void
-}
-
-function getEthereum(): EthereumLike | undefined {
-  if (typeof window === 'undefined') return undefined
-  return (window as unknown as { ethereum?: EthereumLike }).ethereum
-}
 
 export function shortenAddress(addr: string) {
   if (addr.length < 10) return addr
@@ -23,83 +8,61 @@ export function shortenAddress(addr: string) {
 }
 
 export function useEip1193Wallet() {
-  const [address, setAddress] = useState<string | null>(null)
-  /** User clicked Disconnect — hide session until they Connect again (extension may still be authorized). */
+  const { ready, authenticated } = usePrivy()
+  const { wallets } = useWallets()
+  const [localAddress, setLocalAddress] = useState<string | null>(null)
   const [sessionHidden, setSessionHidden] = useState(false)
 
-  const readAccounts = useCallback(async () => {
-    const eth = getEthereum()
-    if (!eth || sessionHidden) return
-    try {
-      const accounts = (await eth.request({ method: 'eth_accounts' })) as string[]
-      const next = accounts[0] ?? null
-      if (next) {
-        storeWalletAddress(next)
-        setAddress(next)
-      } else {
-        clearStoredWalletAddress()
-        setAddress(null)
-      }
-    } catch {
-      clearStoredWalletAddress()
-      setAddress(null)
-    }
-  }, [sessionHidden])
-
-  useEffect(() => {
-    void readAccounts()
-  }, [readAccounts])
-
-  useEffect(() => {
-    const eth = getEthereum()
-    if (!eth?.on) return
-    const handler = (accounts: unknown) => {
-      if (sessionHidden) return
-      const list = accounts as string[]
-      const next = list?.[0] ?? null
-      if (next) {
-        storeWalletAddress(next)
-        setAddress(next)
-      } else {
-        clearStoredWalletAddress()
-        setAddress(null)
-      }
-    }
-    eth.on('accountsChanged', handler)
-    return () => eth.removeListener?.('accountsChanged', handler)
-  }, [sessionHidden])
-
-  const connect = useCallback(async () => {
-    const eth = getEthereum()
-    if (!eth) {
-      window.alert('No Ethereum wallet found. Install MetaMask or another EIP-1193 wallet.')
-      return
-    }
-    try {
+  const { login } = useLogin({
+    onComplete: ({ user }) => {
       setSessionHidden(false)
-      const accounts = (await eth.request({ method: 'eth_requestAccounts' })) as string[]
-      const next = accounts[0] ?? null
-      if (next) storeWalletAddress(next)
-      setAddress(next)
-    } catch (err: unknown) {
-      const code = (err as { code?: number })?.code
-      if (code !== 4001) {
-        console.error('Wallet connection error:', err)
+      const walletAccount = user.linkedAccounts.find(
+        (a) => a.type === 'wallet' && 'address' in a,
+      ) as { address: string } | undefined
+      if (walletAccount?.address) {
+        setLocalAddress(walletAccount.address)
       }
+    },
+  })
+
+  const { logout } = useLogout({
+    onSuccess: () => {
+      setLocalAddress(null)
+      clearStoredWalletAddress()
+    },
+  })
+
+  // Keep localAddress in sync with Privy wallet state
+  const privyAddress = wallets[0]?.address ?? null
+  useEffect(() => {
+    if (!sessionHidden && privyAddress) setLocalAddress(privyAddress)
+  }, [privyAddress, sessionHidden])
+
+  const address = sessionHidden ? null : localAddress ?? privyAddress
+
+  useEffect(() => {
+    if (address) {
+      storeWalletAddress(address)
+    } else {
+      clearStoredWalletAddress()
     }
-  }, [])
+  }, [address])
 
   const disconnect = useCallback(() => {
     setSessionHidden(true)
+    setLocalAddress(null)
     clearStoredWalletAddress()
-    setAddress(null)
-  }, [])
+    if (!ready || !authenticated) return
+    logout().catch(() => {
+      /* ignore if session already gone */
+    })
+  }, [logout, ready, authenticated])
 
   return {
     address,
     shortAddress: address ? shortenAddress(address) : null,
-    hasProvider: typeof window !== 'undefined' && !!getEthereum(),
-    connect,
+    hasProvider: ready,
+    connect: login,
     disconnect,
     sessionHidden,
   }
