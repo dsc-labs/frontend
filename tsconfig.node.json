@@ -11,7 +11,7 @@
     "lib/twitterAvatar.ts",
     "lib/avatarRequest.ts",
     "lib/xTwitterOAuthExchange.ts",
-    "lib/mindshareSheets.ts"
+    "lib/mindshareCsvStore.ts"
   ]
 }
 

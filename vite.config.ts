@@ -3,7 +3,7 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { Buffer } from 'node:buffer'
 import { resolveAvatar } from './lib/avatarRequest'
-import { appendMindshareSubmission } from './lib/mindshareSheets'
+import { appendMindshareSubmissionCsv } from './lib/mindshareCsvStore'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
 
 function readHttpBody(req: IncomingMessage): Promise<string> {
@@ -122,41 +122,21 @@ export default defineConfig(({ mode }) => {
                   return
                 }
 
-                const clientEmail = env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-                const privateKey = env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
-                const spreadsheetId =
-                  env.GOOGLE_SHEETS_SPREADSHEET_ID || '1SDrT1CvJlgp6Se-onIGzaiy5D-kSF_a_hnLd630DsJo'
-                const sheetName = env.GOOGLE_SHEETS_SHEET_NAME || 'Sheet1'
-                if (!clientEmail || !privateKey) {
-                  res.statusCode = 503
-                  res.setHeader('Content-Type', 'application/json')
-                  res.end(
-                    JSON.stringify({
-                      error:
-                        'Set GOOGLE_SERVICE_ACCOUNT_EMAIL and GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY in .env',
-                    }),
-                  )
-                  return
-                }
-
-                await appendMindshareSubmission({
-                  spreadsheetId,
-                  sheetName,
-                  clientEmail,
-                  privateKey,
-                  row: {
+                const result = await appendMindshareSubmissionCsv(
+                  {
                     xHandle,
                     walletAddress: rewardWalletAddress,
                     name,
                     postSubmitted: mindshareUrls,
                   },
-                })
+                  env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+                )
 
                 res.statusCode = 200
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
-                res.end(JSON.stringify({ ok: true }))
+                res.end(JSON.stringify({ ok: true, file: result.filePath }))
               } catch (e: unknown) {
-                const message = e instanceof Error ? e.message : 'Failed to append row'
+                const message = e instanceof Error ? e.message : 'Failed to append CSV row'
                 res.statusCode = 500
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
                 res.end(JSON.stringify({ error: message }))

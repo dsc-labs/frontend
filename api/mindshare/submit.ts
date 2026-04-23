@@ -1,8 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { appendMindshareSubmission } from '../../lib/mindshareSheets'
-
-const DEFAULT_SPREADSHEET_ID = '1SDrT1CvJlgp6Se-onIGzaiy5D-kSF_a_hnLd630DsJo'
-const DEFAULT_SHEET_NAME = 'Sheet1'
+import { appendMindshareSubmissionCsv } from '../../lib/mindshareCsvStore'
 
 type SubmitBody = {
   name?: string
@@ -40,34 +37,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return
   }
 
-  const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-  const privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY
-  const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID || DEFAULT_SPREADSHEET_ID
-  const sheetName = process.env.GOOGLE_SHEETS_SHEET_NAME || DEFAULT_SHEET_NAME
-  if (!clientEmail || !privateKey) {
-    sendJson(res, 503, {
-      error:
-        'Server missing GOOGLE_SERVICE_ACCOUNT_EMAIL or GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY',
-    })
-    return
-  }
-
   try {
-    await appendMindshareSubmission({
-      spreadsheetId,
-      sheetName,
-      clientEmail,
-      privateKey,
-      row: {
+    const result = await appendMindshareSubmissionCsv(
+      {
         xHandle,
         walletAddress: rewardWalletAddress,
         name,
         postSubmitted: mindshareUrls,
       },
+      process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+    )
+    sendJson(res, 200, {
+      ok: true,
+      file: result.filePath,
     })
-    sendJson(res, 200, { ok: true })
   } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : 'Failed to append row'
+    const message = err instanceof Error ? err.message : 'Failed to append CSV row'
     sendJson(res, 500, { error: message })
   }
 }
