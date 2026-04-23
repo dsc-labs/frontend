@@ -145,7 +145,7 @@ const MindshareSubmit = () => {
       if (!res.ok || !json.ok) {
         throw new Error(json.error || text || `HTTP ${res.status}`)
       }
-      setSubmitMessage('Submitted successfully. Your entry has been saved to CSV.')
+      setSubmitMessage('Submitted successfully. Your entry has been saved.')
       setForm((prev) => ({ ...prev, mindshareUrls: '' }))
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Failed to submit entry'
