@@ -39,7 +39,7 @@ export default defineConfig(({ mode }) => {
           server.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
 
-            if (pathname.startsWith('/api/x/oauth/exchange')) {
+            if (pathname.startsWith('/api/x-oauth/exchange') || pathname.startsWith('/api/x/oauth/exchange')) {
               if (req.method !== 'POST') {
                 res.statusCode = 405
                 res.end('Method Not Allowed')

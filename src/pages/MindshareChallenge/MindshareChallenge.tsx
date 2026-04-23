@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
-import LeaderboardConnectBar from '../../components/Leaderboard/LeaderboardConnectBar'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 import './MindshareChallenge.css'
 
@@ -108,13 +107,6 @@ const MindshareChallenge = () => {
             epoch={activeEpoch}
             onComplete={handleCountdownComplete}
           />
-          <div className="mindshare-identity-section">
-            <p className="mindshare-identity-copy">
-              Connect your <strong>X</strong> account and <strong>wallet</strong> so we can verify who you are when
-              you submit mindshare.
-            </p>
-            <LeaderboardConnectBar oauthCallbackPath="/mindshare-challenge" onLightPage />
-          </div>
         </motion.div>
 
         <article className="mindshare-article">
