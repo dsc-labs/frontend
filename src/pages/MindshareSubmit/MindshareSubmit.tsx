@@ -220,37 +220,47 @@ const MindshareSubmit = () => {
   }
 
   useEffect(() => {
-    setTokenBalance(null)
-    setTokenError(null)
-  }, [walletAddress])
-
-  const onScanTokenBalance = async () => {
     if (!walletAddress) {
-      setTokenError('connect wallet to scan token balance')
+      setTokenBalance(null)
+      setTokenError(null)
+      setTokenBusy(false)
       return
     }
+
     const provider = getEthereumProvider()
     if (!provider) {
-      setTokenError('wallet provider unavailable for token scan')
+      setTokenBalance(null)
+      setTokenError('wallet provider unavailable')
+      setTokenBusy(false)
       return
     }
-    setTokenBusy(true)
-    setTokenError(null)
-    try {
-      const data = buildErc20BalanceOfCall(walletAddress)
-      const result = (await provider.request({
-        method: 'eth_call',
-        params: [{ to: TRACKED_TOKEN.address, data }, 'latest'],
-      })) as string
-      const parsed = BigInt(result)
-      setTokenBalance(parsed)
-    } catch {
-      setTokenBalance(null)
-      setTokenError('unable to scan token on current network')
-    } finally {
-      setTokenBusy(false)
+
+    let cancelled = false
+    ;(async () => {
+      setTokenBusy(true)
+      setTokenError(null)
+      try {
+        const data = buildErc20BalanceOfCall(walletAddress)
+        const result = (await provider.request({
+          method: 'eth_call',
+          params: [{ to: TRACKED_TOKEN.address, data }, 'latest'],
+        })) as string
+        if (cancelled) return
+        const parsed = BigInt(result)
+        setTokenBalance(parsed)
+      } catch {
+        if (cancelled) return
+        setTokenBalance(null)
+        setTokenError('scan failed')
+      } finally {
+        if (!cancelled) setTokenBusy(false)
+      }
+    })()
+
+    return () => {
+      cancelled = true
     }
-  }
+  }, [walletAddress])
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -346,17 +356,16 @@ const MindshareSubmit = () => {
               <div className="mindshare-submit-identity-actions-secondary">
                 <button
                   type="button"
-                  className="mindshare-submit-identity-btn"
-                  onClick={() => void onScanTokenBalance()}
-                  disabled={tokenBusy}
+                  className="mindshare-submit-identity-btn is-static"
+                  disabled
                 >
                   {tokenBusy
-                    ? 'Scanning...'
+                    ? '$SR BALANCE: SCANNING...'
                     : tokenBalance !== null
-                      ? `SR: ${formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)}`
+                      ? `$SR BALANCE: ${formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)}`
                       : tokenError
-                        ? 'Retry SR Scan'
-                        : 'Show SR Balance'}
+                        ? '$SR BALANCE: N/A'
+                        : '$SR BALANCE'}
                 </button>
                 <a
                   href="https://app.virtuals.io/virtuals/70972"

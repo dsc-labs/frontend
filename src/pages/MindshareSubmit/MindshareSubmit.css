@@ -173,6 +173,11 @@
   cursor: not-allowed;
 }
 
+.mindshare-submit-identity-btn.is-static:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
 a.mindshare-submit-identity-btn {
   text-decoration: none;
   display: inline-flex;
