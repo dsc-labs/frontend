@@ -10,6 +10,7 @@ import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
 import Partners from './pages/Partners/Partners'
 import Models from './pages/Models/Models'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
+import MindshareSubmit from './pages/MindshareSubmit/MindshareSubmit'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
 
@@ -46,6 +47,7 @@ function App() {
               <Route path="/partners" element={<Partners />} />
               <Route path="/models" element={<Models />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/mindshare-submit" element={<MindshareSubmit />} />
             </Routes>
           </Router>
         </>

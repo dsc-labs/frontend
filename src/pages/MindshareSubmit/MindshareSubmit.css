@@ -1,0 +1,287 @@
+.mindshare-submit-page {
+  min-height: 100vh;
+  background: #d7d7d7;
+  color: #0d0d0d;
+}
+
+.mindshare-submit-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 140px 24px 64px;
+  box-sizing: border-box;
+}
+
+.mindshare-submit-shell {
+  max-width: 740px;
+  margin: 0 auto;
+}
+
+.mindshare-submit-head {
+  border-bottom: 1px solid #676767;
+  padding-bottom: 12px;
+}
+
+.mindshare-submit-head h1 {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.mindshare-submit-head p {
+  margin: 8px 0 0;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.mindshare-submit-identity {
+  margin-top: 18px;
+  border: 1px solid #8d8d8d;
+  background: #e0e0e0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.mindshare-submit-identity > div {
+  flex: 1;
+}
+
+.mindshare-submit-identity strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mindshare-submit-identity p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #2f2f2f;
+  overflow-wrap: anywhere;
+}
+
+.mindshare-submit-identity-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #b56f00;
+}
+
+.mindshare-submit-identity-dot.is-linked {
+  background: #1f8f2d;
+}
+
+.mindshare-submit-identity-link {
+  color: #111111;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.mindshare-submit-identity-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mindshare-submit-identity-btn {
+  border: 1px solid #111111;
+  background: #111111;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.mindshare-submit-identity-btn.is-ghost {
+  background: transparent;
+  color: #111111;
+}
+
+.mindshare-submit-identity-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.mindshare-submit-protocol {
+  margin-top: 32px;
+  border: 1px solid #777777;
+  padding: 22px 30px;
+  background: #dcdcdc;
+}
+
+.mindshare-submit-protocol-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cacaca;
+}
+
+.mindshare-submit-protocol-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 26px;
+}
+
+.mindshare-submit-protocol-grid p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.mindshare-submit-form {
+  margin-top: 28px;
+  display: grid;
+  gap: 16px;
+}
+
+.mindshare-submit-row {
+  display: grid;
+  gap: 16px;
+}
+
+.mindshare-submit-row--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.mindshare-submit-field {
+  display: grid;
+  gap: 8px;
+}
+
+.mindshare-submit-field span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.mindshare-submit-field-hint {
+  margin-top: -2px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #3b3b3b;
+}
+
+.mindshare-submit-field input,
+.mindshare-submit-field select,
+.mindshare-submit-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #8d8d8d;
+  background: #d9d9d9;
+  color: #111111;
+  border-radius: 0;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1.1;
+  padding: 14px 16px;
+  outline: none;
+}
+
+.mindshare-submit-field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #111111 50%),
+    linear-gradient(135deg, #111111 50%, transparent 50%);
+  background-position: calc(100% - 22px) calc(50% - 2px), calc(100% - 15px) calc(50% - 2px);
+  background-size: 7px 7px, 7px 7px;
+  background-repeat: no-repeat;
+  padding-right: 42px;
+}
+
+.mindshare-submit-field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.mindshare-submit-field input:focus,
+.mindshare-submit-field select:focus,
+.mindshare-submit-field textarea:focus {
+  border-color: #3f3f3f;
+  background: #e3e3e3;
+}
+
+.mindshare-submit-field input::placeholder,
+.mindshare-submit-field textarea::placeholder {
+  color: #5d6f86;
+}
+
+.mindshare-submit-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.mindshare-submit-actions button,
+.mindshare-submit-actions a {
+  border: 1px solid #111111;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.mindshare-submit-actions a {
+  background: transparent;
+  color: #111111;
+}
+
+.mindshare-submit-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.mindshare-submit-status {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: #1a1a1a;
+}
+
+@media (max-width: 860px) {
+  .mindshare-submit-container {
+    padding-top: 110px;
+  }
+
+  .mindshare-submit-head h1 {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .mindshare-submit-protocol {
+    padding: 16px;
+  }
+
+  .mindshare-submit-protocol-grid,
+  .mindshare-submit-row--two {
+    grid-template-columns: 1fr;
+  }
+
+  .mindshare-submit-field input,
+  .mindshare-submit-field select,
+  .mindshare-submit-field textarea {
+    font-size: 18px;
+  }
+
+  .mindshare-submit-identity {
+    flex-wrap: wrap;
+  }
+
+  .mindshare-submit-identity-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

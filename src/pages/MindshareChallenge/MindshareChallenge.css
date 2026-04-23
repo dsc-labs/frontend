@@ -64,8 +64,29 @@
   color: #333333;
 }
 
+.mindshare-identity-section {
+  margin-top: 36px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mindshare-identity-copy {
+  margin: 0 0 14px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: #444444;
+}
+
+.mindshare-identity-section .leaderboard-connect-bar--light {
+  border-radius: 12px;
+}
+
 .mindshare-article {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 22px;
   font-size: 19px;
   line-height: 1.9;
@@ -109,10 +130,10 @@
 
 .mindshare-submit-row {
   margin-top: 8px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   justify-content: center;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
 .mindshare-submit-link {
@@ -122,14 +143,14 @@
   padding: 10px 18px;
   border-radius: 999px;
   border: 1px solid #111111;
-  background: #111111;
-  color: #ffffff;
+  background: #111;
+  color: #fff;
   text-decoration: none;
   font-size: 16px;
   font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.01em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  letter-spacing: .01em;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
 }
 
 .mindshare-submit-link:hover {
@@ -161,5 +182,9 @@
   .mindshare-article p {
     font-size: 17px;
     line-height: 1.8;
+  }
+
+  .mindshare-submit-row {
+    grid-template-columns: auto auto;
   }
 }

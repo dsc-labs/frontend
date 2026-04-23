@@ -1,0 +1,146 @@
+.leaderboard-connect-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.leaderboard-connect-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.leaderboard-x-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.leaderboard-x-chip {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(29, 155, 240, 0.15);
+  border: 1px solid rgba(29, 155, 240, 0.35);
+  color: #9bd8fb;
+}
+
+.leaderboard-connect-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8eaf2;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.leaderboard-connect-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.leaderboard-connect-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.leaderboard-connect-btn--wallet {
+  border-color: rgba(124, 58, 237, 0.45);
+  background: rgba(124, 58, 237, 0.2);
+}
+
+.leaderboard-connect-btn--wallet:hover:not(:disabled) {
+  background: rgba(124, 58, 237, 0.32);
+  border-color: rgba(167, 139, 250, 0.55);
+}
+
+.leaderboard-connect-btn.is-ghost {
+  background: transparent;
+  font-weight: 500;
+}
+
+.leaderboard-wallet-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.leaderboard-wallet-chip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #c4c9d6;
+}
+
+/* Light surfaces (e.g. Mindshare page) */
+.leaderboard-connect-bar--light {
+  border-bottom: 1px solid #e0e0e0;
+  background: #f4f4f4;
+  justify-content: center;
+}
+
+.leaderboard-connect-bar--light .leaderboard-connect-btn {
+  color: #111111;
+  border-color: #c8c8c8;
+  background: #ffffff;
+}
+
+.leaderboard-connect-bar--light .leaderboard-connect-btn:hover:not(:disabled) {
+  background: #f7f7f7;
+  border-color: #999999;
+}
+
+.leaderboard-connect-bar--light .leaderboard-connect-btn--wallet {
+  border-color: rgba(124, 58, 237, 0.55);
+  background: rgba(124, 58, 237, 0.12);
+}
+
+.leaderboard-connect-bar--light .leaderboard-connect-btn--wallet:hover:not(:disabled) {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.65);
+}
+
+.leaderboard-connect-bar--light .leaderboard-connect-btn.is-ghost {
+  color: #333333;
+}
+
+.leaderboard-connect-bar--light .leaderboard-wallet-chip {
+  color: #222222;
+  background: #ffffff;
+  border-color: #d0d0d0;
+}
+
+.leaderboard-connect-bar--light .leaderboard-x-chip {
+  color: #0d7bbd;
+  background: rgba(29, 155, 240, 0.12);
+  border-color: rgba(29, 155, 240, 0.45);
+}
+
+@media (max-width: 640px) {
+  .leaderboard-connect-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .leaderboard-connect-group {
+    justify-content: center;
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
+import LeaderboardConnectBar from '../../components/Leaderboard/LeaderboardConnectBar'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 import './MindshareChallenge.css'
 
@@ -107,6 +108,13 @@ const MindshareChallenge = () => {
             epoch={activeEpoch}
             onComplete={handleCountdownComplete}
           />
+          <div className="mindshare-identity-section">
+            <p className="mindshare-identity-copy">
+              Connect your <strong>X</strong> account and <strong>wallet</strong> so we can verify who you are when
+              you submit mindshare.
+            </p>
+            <LeaderboardConnectBar oauthCallbackPath="/mindshare-challenge" onLightPage />
+          </div>
         </motion.div>
 
         <article className="mindshare-article">
@@ -126,18 +134,13 @@ const MindshareChallenge = () => {
           </p>
 
           <div className="mindshare-submit-row">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mindshare-submit-link"
-            >
+            <Link to="/mindshare-submit" className="mindshare-submit-link">
               <strong>Submit Your Mindshare</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
                 {' '}
                 →
               </span>
-            </a>
+            </Link>
             <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
               <strong>View Leaderboard</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
@@ -179,18 +182,13 @@ const MindshareChallenge = () => {
 
           <h3>Submit your contribution via the form below</h3>
           <div className="mindshare-submit-row">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSeyuBGq3qTWhUD4ikhEL4iJyyb0sy9YpSAyCOjW7r2qJie8Mw/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mindshare-submit-link"
-            >
+            <Link to="/mindshare-submit" className="mindshare-submit-link">
               <strong>Submit Your Mindshare</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
                 {' '}
                 →
               </span>
-            </a>
+            </Link>
             <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
               <strong>View Leaderboard</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">

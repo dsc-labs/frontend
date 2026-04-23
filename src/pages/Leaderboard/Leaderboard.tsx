@@ -1,12 +1,16 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import type { CSSProperties } from 'react'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
+import LeaderboardConnectBar from '../../components/Leaderboard/LeaderboardConnectBar'
 import leaderboardCsv from '../../../leaderboard_export.csv?raw'
 import './Leaderboard.css'
 
 type LeaderboardEntry = {
   rank: number
   username: string
+  /** Profile image URL from CSV (`avatar` column); when empty, `/api/avatar` is used. */
+  avatarUrl?: string
   wallet: string
   posts: number
   score: number
@@ -22,6 +26,7 @@ type CsvRow = {
   rank?: string
   username: string
   name?: string
+  avatar?: string
   wallet?: string
   score?: string
   total_score?: string
@@ -99,13 +104,17 @@ function getScore(row: CsvRow) {
 
 const SCORED_ROWS = CSV_ROWS.filter((row) => getScore(row) > 0)
 
-const LEADERBOARD_ENTRIES: LeaderboardEntry[] = SCORED_ROWS.map((row, index) => ({
-  rank: index + 1,
-  username: row.username || 'unknown',
-  wallet: row.wallet || '-',
-  posts: getPosts(row),
-  score: getScore(row),
-}))
+const LEADERBOARD_ENTRIES: LeaderboardEntry[] = SCORED_ROWS.map((row, index) => {
+  const avatar = row.avatar?.trim()
+  return {
+    rank: index + 1,
+    username: row.username || 'unknown',
+    ...(avatar ? { avatarUrl: avatar } : {}),
+    wallet: row.wallet || '-',
+    posts: getPosts(row),
+    score: getScore(row),
+  }
+})
 
 const LEADERBOARD_STATS: LeaderboardStat[] = [
   { label: 'Tracked Users', value: SNAPSHOT_TRACKED_USERS },
@@ -134,6 +143,58 @@ function avatarSeed(name: string) {
   return Array.from(name).reduce((acc, char) => acc + char.charCodeAt(0), 0)
 }
 
+function xProfileUrl(username: string) {
+  const handle = username.startsWith('@') ? username.slice(1) : username
+  return `https://x.com/${encodeURIComponent(handle)}`
+}
+
+function avatarProxyUrl(username: string) {
+  const handle = username.startsWith('@') ? username.slice(1) : username
+  return `/api/avatar?username=${encodeURIComponent(handle)}`
+}
+
+type AvatarLoadMode = 'csv' | 'api' | 'fallback'
+
+function UserAvatar({ username, csvAvatarUrl }: { username: string; csvAvatarUrl?: string }) {
+  const trimmedCsv = csvAvatarUrl?.trim() ?? ''
+  const [mode, setMode] = useState<AvatarLoadMode>(() => (trimmedCsv ? 'csv' : 'api'))
+
+  if (mode === 'fallback') {
+    return (
+      <span
+        className="user-avatar user-avatar--fallback"
+        style={{ '--avatar-seed': avatarSeed(username) } as CSSProperties}
+        aria-hidden="true"
+      >
+        {username[0]?.toUpperCase() ?? 'U'}
+      </span>
+    )
+  }
+
+  const src = mode === 'csv' && trimmedCsv ? trimmedCsv : avatarProxyUrl(username)
+
+  return (
+    <img
+      key={src}
+      src={src}
+      alt=""
+      className="user-avatar user-avatar-img"
+      width={30}
+      height={30}
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      onError={() => {
+        if (mode === 'csv' && trimmedCsv) {
+          setMode('api')
+        } else {
+          setMode('fallback')
+        }
+      }}
+    />
+  )
+}
+
 const Leaderboard = () => {
   return (
     <div className="leaderboard-page">
@@ -144,6 +205,7 @@ const Leaderboard = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: 'easeOut' }}
       >
+        <LeaderboardConnectBar />
         <section className="leaderboard-stats" aria-label="Leaderboard summary metrics">
           {LEADERBOARD_STATS.map((stat) => (
             <article
@@ -176,16 +238,16 @@ const Leaderboard = () => {
                   </td>
                   <td>
                     <div className="user-cell">
-                      <span
-                        className="user-avatar"
-                        style={{ '--avatar-seed': avatarSeed(entry.username) } as CSSProperties}
-                        aria-hidden="true"
+                      <a
+                        href={xProfileUrl(entry.username)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="user-x-link"
+                        aria-label={`@${entry.username} on X`}
                       >
-                        {entry.username[0]?.toUpperCase() ?? 'U'}
-                      </span>
-                      <div className="user-copy">
-                        <p className="user-name">{entry.username}</p>
-                      </div>
+                        <UserAvatar username={entry.username} csvAvatarUrl={entry.avatarUrl} />
+                        <span className="user-name">{entry.username}</span>
+                      </a>
                     </div>
                   </td>
                   <td className="wallet-cell">{entry.wallet}</td>
