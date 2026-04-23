@@ -113,32 +113,51 @@ export async function exchangeCodeForProfile(args: {
     throw new Error('Missing PKCE verifier (try connecting again).')
   }
 
-  const res = await fetch('/api/x-oauth/exchange', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      code: args.code,
-      code_verifier: verifier,
-      redirect_uri: args.redirectUri,
-    }),
+  const payload = JSON.stringify({
+    code: args.code,
+    code_verifier: verifier,
+    redirect_uri: args.redirectUri,
   })
+  const endpointCandidates = ['/api/x-oauth/exchange', '/api/x/oauth/exchange']
+  let lastError = 'X sign-in failed'
+  let profile: XOAuthStoredProfile | null = null
 
-  const text = await res.text()
-  let json: { profile?: XOAuthStoredProfile; error?: string }
-  try {
-    json = JSON.parse(text) as { profile?: XOAuthStoredProfile; error?: string }
-  } catch {
-    throw new Error(text || `HTTP ${res.status}`)
+  for (const endpoint of endpointCandidates) {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+    })
+
+    const text = await res.text()
+    let json: { profile?: XOAuthStoredProfile; error?: string }
+    try {
+      json = JSON.parse(text) as { profile?: XOAuthStoredProfile; error?: string }
+    } catch {
+      json = {}
+    }
+
+    if (res.status === 404) {
+      lastError = `Endpoint not found: ${endpoint}`
+      continue
+    }
+
+    if (!res.ok) {
+      throw new Error(json.error || text || `HTTP ${res.status}`)
+    }
+
+    if (!json.profile?.username) {
+      throw new Error('Invalid profile response')
+    }
+
+    profile = json.profile
+    break
   }
 
-  if (!res.ok) {
-    throw new Error(json.error || `HTTP ${res.status}`)
-  }
-
-  if (!json.profile?.username) {
-    throw new Error('Invalid profile response')
+  if (!profile) {
+    throw new Error(lastError)
   }
 
   sessionStorage.removeItem(verifierStorageKey(args.state))
-  return json.profile
+  return profile
 }

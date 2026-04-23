@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
@@ -89,6 +89,10 @@ const MindshareChallenge = () => {
     }
   }
 
+  const onSubmitLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="mindshare-page">
       <DefaultPageSEO path="/mindshare-challenge" />
@@ -126,7 +130,12 @@ const MindshareChallenge = () => {
           </p>
 
           <div className="mindshare-submit-row">
-            <Link to="/mindshare-submit" className="mindshare-submit-link">
+            <Link
+              to="/mindshare-submit"
+              className="mindshare-submit-link is-disabled"
+              onClick={onSubmitLinkClick}
+              aria-disabled="true"
+            >
               <strong>Submit Your Mindshare</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
                 {' '}
@@ -174,7 +183,12 @@ const MindshareChallenge = () => {
 
           <h3>Submit your contribution via the form below</h3>
           <div className="mindshare-submit-row">
-            <Link to="/mindshare-submit" className="mindshare-submit-link">
+            <Link
+              to="/mindshare-submit"
+              className="mindshare-submit-link is-disabled"
+              onClick={onSubmitLinkClick}
+              aria-disabled="true"
+            >
               <strong>Submit Your Mindshare</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
                 {' '}
