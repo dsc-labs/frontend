@@ -321,9 +321,12 @@ const MindshareSubmit = () => {
           <div className="mindshare-submit-identity">
             <span className={`mindshare-submit-identity-dot ${isIdentityLinked ? 'is-linked' : ''}`} aria-hidden="true" />
             <div>
-              <strong>{isIdentityLinked ? 'Identity linked' : 'Identity not fully linked'}</strong>
+              <span className="mindshare-submit-identity-status">
+                {isIdentityLinked ? 'Identity linked' : 'Identity not fully linked'}
+              </span>
               <p>
-                X: {xProfile ? `@${xProfile.username}` : 'not connected'} · Wallet: {walletAddress ?? 'not connected'}
+                X: {xProfile ? <strong>@{xProfile.username}</strong> : 'not connected'} · Wallet:{' '}
+                {walletAddress ? <strong>{walletAddress}</strong> : 'not connected'}
               </p>
             </div>
             <div className="mindshare-submit-identity-actions">
@@ -360,11 +363,11 @@ const MindshareSubmit = () => {
                   disabled
                 >
                   {tokenBusy
-                    ? '$SR BALANCE: SCANNING...'
+                    ? '… $SR'
                     : tokenBalance !== null
-                      ? `$SR BALANCE: ${formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)}`
+                      ? `${formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)} $SR`
                       : tokenError
-                        ? '$SR BALANCE: N/A'
+                        ? 'N/A $SR'
                         : '$SR BALANCE'}
                 </button>
                 <a
