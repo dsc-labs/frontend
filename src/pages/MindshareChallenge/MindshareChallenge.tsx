@@ -182,7 +182,7 @@ const MindshareChallenge = () => {
               </span>
             </Link>
             <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
-              <strong>View Leaderboard</strong>
+              <strong>Epoch 1 Leaderboard</strong>
               <span aria-hidden="true" className="mindshare-submit-arrow">
                 {' '}
                 →
