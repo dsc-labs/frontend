@@ -9,6 +9,8 @@ interface ImportMetaEnv {
   readonly VITE_X_OAUTH_CLIENT_ID?: string
   /** Optional full redirect_uri override; when unset, each flow uses `origin` + its page path (e.g. `/mindshare-challenge`). */
   readonly VITE_X_OAUTH_REDIRECT_URI?: string
+  /** Base RPC URL used to read SR balance via eth_call. */
+  readonly VITE_BASE_RPC_URL?: string
 }
 
 interface ImportMeta {

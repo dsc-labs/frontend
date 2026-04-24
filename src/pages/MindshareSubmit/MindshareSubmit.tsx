@@ -18,6 +18,7 @@ type SubmissionState = {
 }
 
 const X_OAUTH_CLIENT_ID = (import.meta.env.VITE_X_OAUTH_CLIENT_ID as string | undefined)?.trim() || undefined
+const BASE_RPC_URL = (import.meta.env.VITE_BASE_RPC_URL as string | undefined)?.trim() || undefined
 const EPOCH_1_END = new Date('2026-04-22T17:00:00Z')
 const EPOCH_2_DURATION_MS = 28 * 24 * 60 * 60 * 1000
 const EPOCH_2_END = new Date(EPOCH_1_END.getTime() + EPOCH_2_DURATION_MS)
@@ -100,8 +101,8 @@ function formatTokenBalance(raw: bigint, decimals: number): string {
   const whole = raw / base
   const fraction = raw % base
   if (fraction === 0n) return whole.toString()
-  const fractionStr = fraction.toString().padStart(decimals, '0').replace(/0+$/, '')
-  return `${whole.toString()}.${fractionStr.slice(0, 4)}`
+  const fractionStr = fraction.toString().padStart(decimals, '0')
+  return `${whole.toString()}.${fractionStr.slice(0, 1)}`
 }
 
 function buildErc20BalanceOfCall(walletAddress: string): string {
@@ -109,13 +110,26 @@ function buildErc20BalanceOfCall(walletAddress: string): string {
   return `0x70a08231000000000000000000000000${normalized}`
 }
 
-type EthereumProviderLike = {
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
-}
-
-function getEthereumProvider(): EthereumProviderLike | undefined {
-  if (typeof window === 'undefined') return undefined
-  return (window as Window & { ethereum?: EthereumProviderLike }).ethereum
+async function fetchTokenBalanceFromBaseRpc(walletAddress: string): Promise<bigint> {
+  if (!BASE_RPC_URL) {
+    throw new Error('missing base rpc url')
+  }
+  const data = buildErc20BalanceOfCall(walletAddress)
+  const res = await fetch(BASE_RPC_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: 1,
+      jsonrpc: '2.0',
+      method: 'eth_call',
+      params: [{ to: TRACKED_TOKEN.address, data }, 'latest'],
+    }),
+  })
+  const json = (await res.json()) as { result?: string; error?: { message?: string } }
+  if (!res.ok || !json.result || json.error) {
+    throw new Error(json.error?.message || `rpc failed (${res.status})`)
+  }
+  return BigInt(json.result)
 }
 
 const MindshareSubmit = () => {
@@ -227,10 +241,9 @@ const MindshareSubmit = () => {
       return
     }
 
-    const provider = getEthereumProvider()
-    if (!provider) {
+    if (!BASE_RPC_URL) {
       setTokenBalance(null)
-      setTokenError('wallet provider unavailable')
+      setTokenError('base rpc missing')
       setTokenBusy(false)
       return
     }
@@ -240,13 +253,8 @@ const MindshareSubmit = () => {
       setTokenBusy(true)
       setTokenError(null)
       try {
-        const data = buildErc20BalanceOfCall(walletAddress)
-        const result = (await provider.request({
-          method: 'eth_call',
-          params: [{ to: TRACKED_TOKEN.address, data }, 'latest'],
-        })) as string
+        const parsed = await fetchTokenBalanceFromBaseRpc(walletAddress)
         if (cancelled) return
-        const parsed = BigInt(result)
         setTokenBalance(parsed)
       } catch {
         if (cancelled) return
@@ -260,7 +268,7 @@ const MindshareSubmit = () => {
     return () => {
       cancelled = true
     }
-  }, [walletAddress])
+  }, [walletAddress, BASE_RPC_URL])
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -332,8 +340,19 @@ const MindshareSubmit = () => {
                 {isIdentityLinked ? 'Identity linked' : 'Identity not fully linked'}
               </span>
               <p>
-                X: {xProfile ? <strong>@{xProfile.username}</strong> : 'not connected'} · Wallet:{' '}
-                {walletAddress ? <strong>{walletAddress}</strong> : 'not connected'}
+                <span className="mindshare-submit-identity-line">
+                  <span className="mindshare-submit-identity-label">X:</span>{' '}
+                  {xProfile ? <strong>@{xProfile.username}</strong> : 'not connected'}
+                </span>
+                <span className="mindshare-submit-identity-line">
+                  {walletAddress ? (
+                    <strong>{walletAddress}</strong>
+                  ) : (
+                    <>
+                      <span className="mindshare-submit-identity-label">Wallet:</span> not connected
+                    </>
+                  )}
+                </span>
               </p>
             </div>
             <div className="mindshare-submit-identity-actions">
