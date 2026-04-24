@@ -6,6 +6,8 @@ type SubmitBody = {
   xHandle?: string
   mindshareUrls?: string
   rewardWalletAddress?: string
+  /** Human-readable SR balance at submit time (optional). */
+  srBalance?: string
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -30,6 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const xHandle = (body.xHandle ?? '').trim()
   const mindshareUrls = (body.mindshareUrls ?? '').trim()
   const rewardWalletAddress = (body.rewardWalletAddress ?? '').trim()
+  const srBalance = (body.srBalance ?? '').trim()
   if (!name || !xHandle || !mindshareUrls || !rewardWalletAddress) {
     sendJson(res, 400, {
       error: 'Missing required fields: name, xHandle, mindshareUrls, rewardWalletAddress',
@@ -44,6 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         walletAddress: rewardWalletAddress,
         name,
         postSubmitted: mindshareUrls,
+        srBalance,
       },
       process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
     )

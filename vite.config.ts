@@ -104,12 +104,14 @@ export default defineConfig(({ mode }) => {
                   xHandle?: string
                   mindshareUrls?: string
                   rewardWalletAddress?: string
+                  srBalance?: string
                 }
 
                 const name = (json.name ?? '').trim()
                 const xHandle = (json.xHandle ?? '').trim()
                 const mindshareUrls = (json.mindshareUrls ?? '').trim()
                 const rewardWalletAddress = (json.rewardWalletAddress ?? '').trim()
+                const srBalance = (json.srBalance ?? '').trim()
                 if (!name || !xHandle || !mindshareUrls || !rewardWalletAddress) {
                   res.statusCode = 400
                   res.setHeader('Content-Type', 'application/json')
@@ -128,6 +130,7 @@ export default defineConfig(({ mode }) => {
                     walletAddress: rewardWalletAddress,
                     name,
                     postSubmitted: mindshareUrls,
+                    srBalance,
                   },
                   env.MINDSHARE_SUBMISSIONS_CSV_PATH,
                 )

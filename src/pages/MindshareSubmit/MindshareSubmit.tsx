@@ -271,11 +271,18 @@ const MindshareSubmit = () => {
     setSubmitBusy(true)
     setSubmitMessage(null)
     try {
+      const srBalance =
+        tokenBalance !== null
+          ? formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)
+          : tokenError
+            ? 'N/A'
+            : ''
       const payload = {
         ...form,
         name: xProfile.name?.trim() || `@${xProfile.username}`,
         xHandle: `@${xProfile.username}`,
         rewardWalletAddress: walletAddress,
+        srBalance,
       }
       const res = await fetch('/api/mindshare/submit', {
         method: 'POST',
