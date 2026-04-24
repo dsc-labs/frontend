@@ -118,6 +118,10 @@
   min-width: 50px;
 }
 
+.mindshare-submit-identity-label.is-unlocked {
+  min-width: auto;
+}
+
 .mindshare-submit-token-inline {
   margin-top: 6px;
   font-size: 11px;

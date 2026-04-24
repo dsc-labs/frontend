@@ -341,17 +341,20 @@ const MindshareSubmit = () => {
               </span>
               <p>
                 <span className="mindshare-submit-identity-line">
-                  <span className="mindshare-submit-identity-label">X:</span>{' '}
+                  <span
+                    className={`mindshare-submit-identity-label ${xProfile ? 'is-unlocked' : ''}`}
+                  >
+                    X:
+                  </span>{' '}
                   {xProfile ? <strong>@{xProfile.username}</strong> : 'not connected'}
                 </span>
                 <span className="mindshare-submit-identity-line">
-                  {walletAddress ? (
-                    <strong>{walletAddress}</strong>
-                  ) : (
-                    <>
-                      <span className="mindshare-submit-identity-label">Wallet:</span> not connected
-                    </>
-                  )}
+                  <span
+                    className={`mindshare-submit-identity-label ${xProfile ? 'is-unlocked' : ''}`}
+                  >
+                    Wallet:
+                  </span>{' '}
+                  {walletAddress ? <strong>{walletAddress}</strong> : 'not connected'}
                 </span>
               </p>
             </div>
