@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import type { CSSProperties } from 'react'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 import LeaderboardConnectBar from '../../components/Leaderboard/LeaderboardConnectBar'
+import { isLikelyEthAddress, shortenAddress } from '../../lib/walletStorage'
 import leaderboardCsv from '../../../leaderboard_export.csv?raw'
 import './Leaderboard.css'
 
@@ -250,7 +251,12 @@ const Leaderboard = () => {
                       </a>
                     </div>
                   </td>
-                  <td className="wallet-cell">{entry.wallet}</td>
+                  <td
+                    className="wallet-cell"
+                    title={isLikelyEthAddress(entry.wallet) ? entry.wallet : undefined}
+                  >
+                    {isLikelyEthAddress(entry.wallet) ? shortenAddress(entry.wallet) : entry.wallet}
+                  </td>
                   <td className="is-right">{entry.posts}</td>
                   <td className="is-right score-cell">{entry.score.toFixed(1)}</td>
                   <td className="is-right">{averageByPosts(entry.score, entry.posts)}</td>

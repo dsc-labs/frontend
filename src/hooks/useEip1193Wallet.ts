@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useWallets, useLogin, useLogout, usePrivy } from '@privy-io/react-auth'
-import { clearStoredWalletAddress, storeWalletAddress } from '../lib/walletStorage'
+import { clearStoredWalletAddress, shortenAddress, storeWalletAddress } from '../lib/walletStorage'
 
-export function shortenAddress(addr: string) {
-  if (addr.length < 10) return addr
-  return `${addr.slice(0, 6)}…${addr.slice(-4)}`
-}
+export { shortenAddress }
 
 export function useEip1193Wallet() {
   const { ready, authenticated } = usePrivy()

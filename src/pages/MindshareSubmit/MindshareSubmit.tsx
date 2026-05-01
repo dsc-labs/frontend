@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { usePrivy } from '@privy-io/react-auth'
 import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
 import { useEip1193Wallet } from '../../hooks/useEip1193Wallet'
@@ -138,6 +139,7 @@ const MindshareSubmit = () => {
   )
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const { getAccessToken } = usePrivy()
   const { address, hasProvider, connect, disconnect } = useEip1193Wallet()
   const [xProfile, setXProfile] = useState<XOAuthStoredProfile | null>(() => readStoredXProfile())
   const [xBusy, setXBusy] = useState(false)
@@ -279,6 +281,11 @@ const MindshareSubmit = () => {
     setSubmitBusy(true)
     setSubmitMessage(null)
     try {
+      const token = await getAccessToken()
+      if (!token) {
+        setSubmitMessage('Submit failed: Could not get auth token. Please reconnect your wallet.')
+        return
+      }
       const srBalance =
         tokenBalance !== null
           ? formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)
@@ -294,7 +301,10 @@ const MindshareSubmit = () => {
       }
       const res = await fetch('/api/mindshare/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: JSON.stringify(payload),
       })
       const text = await res.text()

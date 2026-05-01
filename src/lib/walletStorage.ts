@@ -8,6 +8,14 @@ export function isLikelyEthAddress(s: string): boolean {
   return ETH_ADDRESS_RE.test(s.trim())
 }
 
+/** e.g. `0x73b6....d64a` — full address only in `title` / tooltips when needed */
+export function shortenAddress(addr: string) {
+  const s = addr.trim()
+  if (!isLikelyEthAddress(s)) return s
+  const hex = s.slice(2)
+  return `0x${hex.slice(0, 4)}....${hex.slice(-4)}`
+}
+
 export function readStoredWalletAddress(): string | null {
   try {
     const raw = localStorage.getItem(WALLET_ADDRESS_KEY)?.trim()

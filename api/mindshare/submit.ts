@@ -1,5 +1,15 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import { PrivyClient } from '@privy-io/server-auth'
 import { appendMindshareSubmissionCsv } from '../../lib/mindshareCsvStore'
+
+function getPrivyClient(): PrivyClient | null {
+  const appId = process.env.PRIVY_APP_ID
+  const appSecret = process.env.PRIVY_APP_SECRET
+  if (!appId || !appSecret) return null
+  return new PrivyClient(appId, appSecret)
+}
+
+const privyClient = getPrivyClient()
 
 type SubmitBody = {
   name?: string
@@ -13,6 +23,25 @@ type SubmitBody = {
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
     res.status(405).setHeader('Allow', 'POST').end('Method Not Allowed')
+    return
+  }
+
+  if (!privyClient) {
+    sendJson(res, 503, { error: 'Server auth not configured (missing PRIVY_APP_ID or PRIVY_APP_SECRET)' })
+    return
+  }
+
+  const authHeader = typeof req.headers.authorization === 'string' ? req.headers.authorization : ''
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : ''
+  if (!token) {
+    sendJson(res, 401, { error: 'Missing authorization token' })
+    return
+  }
+
+  try {
+    await privyClient.verifyAuthToken(token)
+  } catch {
+    sendJson(res, 401, { error: 'Invalid or expired authorization token' })
     return
   }
 
