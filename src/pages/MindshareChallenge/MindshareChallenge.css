@@ -174,6 +174,46 @@
   color: #111111;
 }
 
+.mindshare-epoch2-leaderboard-btn {
+  appearance: none;
+  margin: 0;
+  cursor: default;
+  font: inherit;
+  text-align: center;
+}
+
+.mindshare-leaderboard-label-stack {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  text-align: center;
+  min-height: 1em;
+}
+
+.mindshare-leaderboard-label-stack > span {
+  grid-area: 1 / 1;
+  transition: opacity 0.28s ease;
+}
+
+.mindshare-leaderboard-label-default {
+  opacity: 1;
+}
+
+.mindshare-leaderboard-label-hover {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.mindshare-epoch2-leaderboard-btn:hover .mindshare-leaderboard-label-default,
+.mindshare-epoch2-leaderboard-btn:focus-visible .mindshare-leaderboard-label-default {
+  opacity: 0;
+}
+
+.mindshare-epoch2-leaderboard-btn:hover .mindshare-leaderboard-label-hover,
+.mindshare-epoch2-leaderboard-btn:focus-visible .mindshare-leaderboard-label-hover {
+  opacity: 1;
+}
+
 @media (max-width: 1023px) {
   .mindshare-container {
     padding-top: 110px;

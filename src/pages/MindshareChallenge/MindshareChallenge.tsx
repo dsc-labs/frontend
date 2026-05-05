@@ -76,6 +76,29 @@ const MindshareCountdown = ({ end, epoch, onComplete }: MindshareCountdownProps)
   )
 }
 
+function Epoch2LeaderboardComingSoonButton() {
+  return (
+    <button
+      type="button"
+      className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn"
+      aria-label="Epoch 2 Leaderboard, coming soon"
+    >
+      <span className="mindshare-leaderboard-label-stack">
+        <span className="mindshare-leaderboard-label-default">
+          <strong>Epoch 2 Leaderboard</strong>
+        </span>
+        <span className="mindshare-leaderboard-label-hover">
+          <strong>Coming Soon</strong>
+        </span>
+      </span>
+      <span aria-hidden="true" className="mindshare-submit-arrow">
+        {' '}
+        →
+      </span>
+    </button>
+  )
+}
+
 const MindshareChallenge = () => {
   const [activeEpoch, setActiveEpoch] = useState<1 | 2>(() =>
     Date.now() > EPOCH_1_END.getTime() ? 2 : 1,
@@ -133,13 +156,7 @@ const MindshareChallenge = () => {
                 →
               </span>
             </Link>
-            <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
-              <strong>Epoch 1 Leaderboard</strong>
-              <span aria-hidden="true" className="mindshare-submit-arrow">
-                {' '}
-                →
-              </span>
-            </Link>
+            <Epoch2LeaderboardComingSoonButton />
           </div>
 
           <h2>EPOCH {activeEpoch} BREAKDOWN</h2>
@@ -181,13 +198,7 @@ const MindshareChallenge = () => {
                 →
               </span>
             </Link>
-            <Link to="/leaderboard" className="mindshare-submit-link mindshare-leaderboard-link">
-              <strong>Epoch 1 Leaderboard</strong>
-              <span aria-hidden="true" className="mindshare-submit-arrow">
-                {' '}
-                →
-              </span>
-            </Link>
+            <Epoch2LeaderboardComingSoonButton />
           </div>
         </article>
       </div>
