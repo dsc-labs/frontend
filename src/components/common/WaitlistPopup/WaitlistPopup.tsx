@@ -486,7 +486,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                     <span className="t-val">{snapshotCountdown}</span>
                   </div>
                   <div className="p-rate">
-                    ${displayUsdPerHr.toFixed(0)}/hr{hasVvvLive ? ' · ×1.2' : ''}
+                    {displayUsdPerHr.toFixed(0)}/hr{hasVvvLive ? ' · ×1.2' : ''}
                   </div>
                 </div>
               </div>
