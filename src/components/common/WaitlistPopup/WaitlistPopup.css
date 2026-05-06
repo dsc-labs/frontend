@@ -11,6 +11,8 @@
 .bbtn{background:none;border:none;cursor:pointer;color:#bbb;font-size:11px;font-weight:600;display:flex;align-items:center;gap:3px;padding:0;width:44px;flex-shrink:0}
 .bbtn.hid{visibility:hidden;pointer-events:none}
 .dots{display:flex;align-items:center;flex:1;justify-content:center}
+/* Keep connector lines, but block any global `.dots::after` ellipsis from other styles. */
+.wp-overlay .dots::after{content:''!important;display:none!important}
 .sd{width:22px;height:22px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #e0e0e0;color:#ccc;background:#fff}
 .sd.act,.sd.dn{background:#111;border-color:#111;color:#fff}
 .sl{width:28px;height:1px;background:#e8e8e8}
