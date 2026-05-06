@@ -119,29 +119,34 @@ const SNAPSHOT_CSV_HEADERS = [
 async function writeCsvMirrorIfConfigured(state: WaitlistState): Promise<void> {
   const dir = process.env.WAITLIST_CSV_MIRROR_DIR?.trim()
   if (!dir) return
-  const base = resolve(dir)
-  await mkdir(base, { recursive: true })
+  try {
+    const base = resolve(dir)
+    await mkdir(base, { recursive: true })
 
-  const userLines = [
-    USER_CSV_HEADERS.join(','),
-    ...Object.values(state.users).map((u) =>
-      USER_CSV_HEADERS.map((h) => csvEscape(String((u as Record<string, unknown>)[h] ?? ''))).join(','),
-    ),
-  ]
-  await writeFile(join(base, 'waitlist_users.csv'), userLines.join('\n') + '\n', 'utf8')
+    const userLines = [
+      USER_CSV_HEADERS.join(','),
+      ...Object.values(state.users).map((u) =>
+        USER_CSV_HEADERS.map((h) => csvEscape(String((u as Record<string, unknown>)[h] ?? ''))).join(','),
+      ),
+    ]
+    await writeFile(join(base, 'waitlist_users.csv'), userLines.join('\n') + '\n', 'utf8')
 
-  const snapLines = [
-    SNAPSHOT_CSV_HEADERS.join(','),
-    ...state.snapshots.map((s) =>
-      SNAPSHOT_CSV_HEADERS.map((h) => csvEscape(String((s as Record<string, unknown>)[h] ?? ''))).join(','),
-    ),
-  ]
-  await writeFile(join(base, 'waitlist_snapshots.csv'), snapLines.join('\n') + '\n', 'utf8')
+    const snapLines = [
+      SNAPSHOT_CSV_HEADERS.join(','),
+      ...state.snapshots.map((s) =>
+        SNAPSHOT_CSV_HEADERS.map((h) => csvEscape(String((s as Record<string, unknown>)[h] ?? ''))).join(','),
+      ),
+    ]
+    await writeFile(join(base, 'waitlist_snapshots.csv'), snapLines.join('\n') + '\n', 'utf8')
 
-  if (state.lastUsdPrices) {
-    const m = state.lastUsdPrices
-    const metaLines = ['key,value', `srUsd,${m.srUsd}`, `vvvUsd,${m.vvvUsd}`, `updatedAt,${csvEscape(m.updatedAt)}`]
-    await writeFile(join(base, 'waitlist_last_prices.csv'), metaLines.join('\n') + '\n', 'utf8')
+    if (state.lastUsdPrices) {
+      const m = state.lastUsdPrices
+      const metaLines = ['key,value', `srUsd,${m.srUsd}`, `vvvUsd,${m.vvvUsd}`, `updatedAt,${csvEscape(m.updatedAt)}`]
+      await writeFile(join(base, 'waitlist_last_prices.csv'), metaLines.join('\n') + '\n', 'utf8')
+    }
+  } catch (err) {
+    // Never fail API requests due to optional CSV mirror writes.
+    console.warn('waitlist csv mirror skipped', err)
   }
 }
 
