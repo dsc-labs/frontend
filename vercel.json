@@ -18,6 +18,10 @@
   ],
   "rewrites": [
     {
+      "source": "/waitlist/:path*",
+      "destination": "/api/waitlist/:path*"
+    },
+    {
       "source": "/sr-platform",
       "destination": "/sr-platform/index.html"
     },

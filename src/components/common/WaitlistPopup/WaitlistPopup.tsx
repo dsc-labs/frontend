@@ -4,6 +4,7 @@ import { useEip1193Wallet } from '../../../hooks/useEip1193Wallet'
 
 const MIN = 10000
 const BASE_RPC_URL = (import.meta.env.VITE_BASE_RPC_URL as string | undefined)?.trim() || undefined
+const WAITLIST_API_BASE = (import.meta.env.VITE_WAITLIST_API_BASE as string | undefined)?.trim() || '/waitlist'
 const SR_TOKEN = { address: '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9', decimals: 18 } as const
 const VVV_TOKEN = { address: '0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf', decimals: 18 } as const
 const WAITLIST_CAPACITY = 5000
@@ -187,7 +188,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     ;(async () => {
       try {
         const res = await fetch(
-          `/api/waitlist/status?walletAddress=${encodeURIComponent(address)}&limit=5`,
+          `${WAITLIST_API_BASE}/status?walletAddress=${encodeURIComponent(address)}&limit=5`,
         )
         const data = (await res.json()) as {
           ok?: boolean
@@ -311,7 +312,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     setJoinBusy(true)
     setJoinError(null)
     try {
-      const res = await fetch('/api/waitlist/register', {
+      const res = await fetch(`${WAITLIST_API_BASE}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ walletAddress: address, email: email.trim() }),
@@ -343,7 +344,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     setJoinError(null)
     try {
       const res = await fetch(
-        `/api/waitlist/status?walletAddress=${encodeURIComponent(address)}&limit=5`,
+        `${WAITLIST_API_BASE}/status?walletAddress=${encodeURIComponent(address)}&limit=5`,
       )
       const data = (await res.json()) as {
         ok?: boolean
