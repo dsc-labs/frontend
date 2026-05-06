@@ -81,10 +81,10 @@
 }
 
 .home-main-btn-dark:hover {
-  /* keep waitlist CTA static on hover */
-  background-color: #1d1d1d;
-  border-color: #1d1d1d;
-  color: #ffffff;
+  /* opposite of light btn: dark -> light on hover */
+  background-color: #fdfefe;
+  border-color: #cfcfcf;
+  color: #0a0a0a;
 }
 
 .home-main-btn-icon {

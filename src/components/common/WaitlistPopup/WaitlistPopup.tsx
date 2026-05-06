@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './WaitlistPopup.css'
 import { useEip1193Wallet } from '../../../hooks/useEip1193Wallet'
 
@@ -114,6 +115,7 @@ function formatRemainingHms(msRemaining: number): string {
 }
 
 export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
+  const navigate = useNavigate()
   const [step, setStep] = useState<Step>(1)
   const [email, setEmail] = useState('')
   const [srBalanceRaw, setSrBalanceRaw] = useState<bigint | null>(null)
@@ -435,7 +437,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
               </p>
               <button className="cwb" onClick={() => void connect()} disabled={!hasProvider} title={!hasProvider ? 'No EIP-1193 wallet in this browser' : undefined}>
                 <div className="cwb-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><rect x="1" y="4" width="22" height="16" rx="2" /><path d="M1 10h22" /><circle cx="17" cy="15" r="1.5" fill="#fff" stroke="none" /></svg></div>
-                Connect Wallet via Privy
+                Connect Wallet
               </button>
               <p className="foot-note">Secured by privy.io · Read-only · No transactions</p>
             </div>
@@ -447,7 +449,6 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 <div className="wdot" />
                 <div style={{ flex: 1 }}>
                   <div className="waddr" title={address ?? undefined}>{shortAddress ?? '-'}</div>
-                  <div className="wvia">via Privy</div>
                 </div>
                 <button className="disc" onClick={() => { disconnect(); setStep(1) }}>Disconnect</button>
               </div>
@@ -461,7 +462,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Checking...'
                       : tokenError
                         ? 'Balance unavailable'
-                        : `≈ ${formatAmount(srBalance * srUsdPrice)}`}
+                        : `≈ $${formatAmount(srBalance * srUsdPrice)}`}
                   </div>
                 </div>
                 <div className="tc">
@@ -472,7 +473,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Checking...'
                       : tokenError
                         ? 'Balance unavailable'
-                        : `≈ ${formatAmount(vvvBalance * vvvUsdPrice)}`}
+                        : `≈ $${formatAmount(vvvBalance * vvvUsdPrice)}`}
                   </div>
                 </div>
               </div>
@@ -550,7 +551,6 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Continue →'
                       : 'Join SR Platform →'}
               </button>
-              <div className="j-note">Rank from total points after each snapshot run</div>
             </div>
           ) : null}
 
@@ -558,10 +558,6 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
             <div className="s3">
               <div className="s3-ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg></div>
               <div className="s3-title">You're on the list!</div>
-              <p className="s3-sub">
-                Notification goes to <strong>{registered.user.email}</strong>. The live ticker estimates points between snapshots;{' '}
-                <strong>official</strong> totals are written when the snapshot job runs.
-              </p>
               <div className="rank-card">
                 <div className="rank-n">{waitlistPositionDisplay}</div>
                 <div>
@@ -577,7 +573,16 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 </div>
               </div>
               <div className="snap" style={{ marginBottom: 14, textAlign: 'left' }}><div className="snap-ico">⚡</div><div className="snap-txt"><b>Keep holding.</b> Your standing updates on each snapshot.</div></div>
-              <button className="sbtn">Share on X to move up ↗</button>
+              <button
+                type="button"
+                className="sbtn"
+                onClick={() => {
+                  onClose?.()
+                  navigate('/mindshare-challenge')
+                }}
+              >
+                Join Mindshare Challenge to move up ↗
+              </button>
             </div>
           ) : null}
         </div>

@@ -181,6 +181,7 @@ const HomeMain = () => {
             <motion.button
               type="button"
               className="home-main-btn home-main-btn-dark"
+              whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
               onClick={openWaitlistPopup}
@@ -364,6 +365,7 @@ const HomeMain = () => {
             <motion.button
               type="button"
               className="home-main-btn home-main-btn-dark"
+              whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
               onClick={openWaitlistPopup}
