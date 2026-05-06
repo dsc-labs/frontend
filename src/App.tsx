@@ -63,6 +63,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/sr-platform" element={<HomeMain />} />
+                <Route path="/test" element={<HomeMain />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/data-platform" element={<DataPlatform />} />
                 <Route path="/use-cases" element={<UseCases />} />

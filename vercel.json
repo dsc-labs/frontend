@@ -22,6 +22,10 @@
       "destination": "/sr-platform/index.html"
     },
     {
+      "source": "/test",
+      "destination": "/sr-platform/index.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
