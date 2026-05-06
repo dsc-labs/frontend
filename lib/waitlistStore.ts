@@ -57,6 +57,10 @@ const DEFAULT_STATE: WaitlistState = { users: {}, snapshots: [] }
 
 /** Default: repo-relative `data/waitlist/state.json`. Legacy: `./waitlist_state.json` (read fallback). */
 function defaultStatePath(): string {
+  // Vercel serverless filesystem is read-only except /tmp.
+  if (process.env.VERCEL) {
+    return resolve('/tmp', 'mma-robot', 'waitlist', 'state.json')
+  }
   return resolve(process.cwd(), 'data', 'waitlist', 'state.json')
 }
 
