@@ -120,7 +120,6 @@ const HomeMain = () => {
     window.open(YOUTUBE_DEMO_URL, '_blank', 'noopener,noreferrer')
   }
 
-  const [isHeroCtaHovered, setIsHeroCtaHovered] = useState(false)
   const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false)
 
   const openWaitlistPopup = () => setIsWaitlistPopupOpen(true)
@@ -182,14 +181,11 @@ const HomeMain = () => {
             <motion.button
               type="button"
               className="home-main-btn home-main-btn-dark"
-              whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
-              onMouseEnter={() => setIsHeroCtaHovered(true)}
-              onMouseLeave={() => setIsHeroCtaHovered(false)}
               onClick={openWaitlistPopup}
             >
-              <span>{isHeroCtaHovered ? 'COMING SOON' : 'ENTER SR PLATFORM'}</span>
+              <span>JOIN WAITLIST</span>
             </motion.button>
           </motion.div>
         </motion.section>
@@ -368,14 +364,11 @@ const HomeMain = () => {
             <motion.button
               type="button"
               className="home-main-btn home-main-btn-dark"
-              whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
-              onMouseEnter={() => setIsHeroCtaHovered(true)}
-              onMouseLeave={() => setIsHeroCtaHovered(false)}
               onClick={openWaitlistPopup}
             >
-              <span>{isHeroCtaHovered ? 'COMING SOON' : 'ENTER SR PLATFORM'}</span>
+              <span>JOIN WAITLIST</span>
             </motion.button>
           </motion.div>
 

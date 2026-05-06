@@ -81,10 +81,10 @@
 }
 
 .home-main-btn-dark:hover {
-  /* đen -> trắng: nền trắng, chữ đen */
-  background-color: #ffffff;
-  color: #000000;
-  border-color: #ffffff;
+  /* keep waitlist CTA static on hover */
+  background-color: #1d1d1d;
+  border-color: #1d1d1d;
+  color: #ffffff;
 }
 
 .home-main-btn-icon {
