@@ -30,7 +30,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       href: 'https://arxiv.org/abs/2603.25353',
       label: 'Publications',
     },
-    { to: '/sr-platform', label: 'SR Platform Waitlist' },
+    { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
   ]
 
   return (
@@ -69,7 +69,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
             <nav className="menu-nav">
               {navLinks.map((link, index) => (
                 <motion.div
-                  key={'to' in link ? link.to : link.href}
+                  key={`${'to' in link ? link.to : link.href}-${index}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}

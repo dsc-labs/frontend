@@ -578,10 +578,10 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 className="sbtn"
                 onClick={() => {
                   onClose?.()
-                  navigate('/sr-platform')
+                  navigate('/mindshare-challenge')
                 }}
               >
-                Open SR Platform waitlist ↗
+                Join Mindshare Challenge to Move up ↗
               </button>
             </div>
           ) : null}
