@@ -30,7 +30,7 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       href: 'https://arxiv.org/abs/2603.25353',
       label: 'Publications',
     },
-    { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
+    { to: '/sr-platform', label: 'SR Platform Waitlist' },
   ]
 
   return (

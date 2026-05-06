@@ -59,11 +59,11 @@ const Header = ({ showSocialIcons = true }: HeaderProps) => {
 
                 <div className="header-right">
                     <Link
-                        to="/mindshare-challenge"
+                        to="/sr-platform"
                         className="header-mindshare-button"
-                        aria-label="Open Mindshare Challenge page"
+                        aria-label="Open SR Platform waitlist"
                     >
-                        Mindshare Challenge
+                        SR Platform Waitlist
                     </Link>
                     {/* Navigation ẩn mặc định, chỉ truy cập qua plugin button */}
                     <button

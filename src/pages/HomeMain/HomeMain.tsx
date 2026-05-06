@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
 import WaitlistPopup from '../../components/common/WaitlistPopup/WaitlistPopup'
 import { isSrPlatformWaitlistLive } from '../../lib/srPlatformWaitlistLaunch'
@@ -117,6 +118,9 @@ const userCases = [
 const YOUTUBE_DEMO_URL = 'https://www.youtube.com/watch?v=ML76zIddNcA'
 
 const HomeMain = () => {
+  const location = useLocation()
+  const isTestRoute = location.pathname === '/test' || location.pathname === '/test/'
+
   const handleWatchDemoClick = () => {
     window.open(YOUTUBE_DEMO_URL, '_blank', 'noopener,noreferrer')
   }
@@ -126,16 +130,19 @@ const HomeMain = () => {
   /** Which gated JOIN WAITLIST control is hovered (label → "Coming soon"). */
   const [gatedWaitlistHover, setGatedWaitlistHover] = useState<'hero' | 'about' | null>(null)
 
+  /** `/test` bypasses launch gate; `/sr-platform` uses fixed launch time. */
+  const waitlistUnlocked = isTestRoute || waitlistLive
+
   useEffect(() => {
-    if (waitlistLive) return
+    if (isTestRoute || waitlistLive) return
     const id = window.setInterval(() => {
       if (isSrPlatformWaitlistLive()) setWaitlistLive(true)
     }, 1000)
     return () => window.clearInterval(id)
-  }, [waitlistLive])
+  }, [isTestRoute, waitlistLive])
 
   const openWaitlistPopup = () => {
-    if (!waitlistLive) return
+    if (!waitlistUnlocked) return
     setIsWaitlistPopupOpen(true)
   }
   const closeWaitlistPopup = () => setIsWaitlistPopupOpen(false)
@@ -195,19 +202,19 @@ const HomeMain = () => {
 
             <motion.button
               type="button"
-              className={`home-main-btn home-main-btn-dark${waitlistLive ? '' : ' home-main-btn-waitlist-gated'}`}
+              className={`home-main-btn home-main-btn-dark${waitlistUnlocked ? '' : ' home-main-btn-waitlist-gated'}`}
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
               onClick={openWaitlistPopup}
               onMouseEnter={() => {
-                if (!waitlistLive) setGatedWaitlistHover('hero')
+                if (!waitlistUnlocked) setGatedWaitlistHover('hero')
               }}
               onMouseLeave={() => setGatedWaitlistHover(null)}
-              aria-disabled={!waitlistLive}
+              aria-disabled={!waitlistUnlocked}
             >
               <span>
-                {!waitlistLive && gatedWaitlistHover === 'hero' ? 'Coming soon' : 'JOIN WAITLIST'}
+                {!waitlistUnlocked && gatedWaitlistHover === 'hero' ? 'Coming soon' : 'JOIN WAITLIST'}
               </span>
             </motion.button>
           </motion.div>
@@ -386,19 +393,19 @@ const HomeMain = () => {
             </motion.button>
             <motion.button
               type="button"
-              className={`home-main-btn home-main-btn-dark${waitlistLive ? '' : ' home-main-btn-waitlist-gated'}`}
+              className={`home-main-btn home-main-btn-dark${waitlistUnlocked ? '' : ' home-main-btn-waitlist-gated'}`}
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
               onClick={openWaitlistPopup}
               onMouseEnter={() => {
-                if (!waitlistLive) setGatedWaitlistHover('about')
+                if (!waitlistUnlocked) setGatedWaitlistHover('about')
               }}
               onMouseLeave={() => setGatedWaitlistHover(null)}
-              aria-disabled={!waitlistLive}
+              aria-disabled={!waitlistUnlocked}
             >
               <span>
-                {!waitlistLive && gatedWaitlistHover === 'about' ? 'Coming soon' : 'JOIN WAITLIST'}
+                {!waitlistUnlocked && gatedWaitlistHover === 'about' ? 'Coming soon' : 'JOIN WAITLIST'}
               </span>
             </motion.button>
           </motion.div>
@@ -428,7 +435,7 @@ const HomeMain = () => {
         </div>
       </section>
 
-      {isWaitlistPopupOpen && waitlistLive ? <WaitlistPopup onClose={closeWaitlistPopup} /> : null}
+      {isWaitlistPopupOpen && waitlistUnlocked ? <WaitlistPopup onClose={closeWaitlistPopup} /> : null}
     </div>
   )
 }
