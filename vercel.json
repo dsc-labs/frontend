@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/waitlist/snapshot",
-      "schedule": "0 0 * * *"
+      "schedule": "*/15 * * * *"
     }
   ],
   "headers": [
