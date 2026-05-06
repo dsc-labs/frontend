@@ -59,8 +59,10 @@ export function applySnapshotToUser(params: {
 
   const srUnits = rawBalanceToTokenUnits(params.srRaw, SR_TOKEN_DECIMALS)
   const vvvUnits = rawBalanceToTokenUnits(params.vvvRaw, VVV_TOKEN_DECIMALS)
-  const srUsdPerMinute = srUnits * params.srUsdPrice
-  const vvvUsdPerMinute = vvvUnits * params.vvvUsdPrice
+  const srUsdPerHour = srUnits * params.srUsdPrice
+  const vvvUsdPerHour = vvvUnits * params.vvvUsdPrice
+  const srUsdPerMinute = srUsdPerHour / 60
+  const vvvUsdPerMinute = vvvUsdPerHour / 60
   const hasBoth = srUnits > 0 && vvvUnits > 0
   const multiplier = hasBoth ? 1.2 : 1
   const pointsAdded = round4((srUsdPerMinute + vvvUsdPerMinute) * minutesElapsed * multiplier)

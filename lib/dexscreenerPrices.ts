@@ -67,6 +67,6 @@ export function resolveUsdPrice(params: {
   ) {
     return { usd: params.cachedPrice, source: 'cached' }
   }
-  const fallback = Number.isFinite(params.envPrice) && params.envPrice > 0 ? params.envPrice : 0.02
+  const fallback = Number.isFinite(params.envPrice) && params.envPrice > 0 ? params.envPrice : 0
   return { usd: fallback, source: 'env' }
 }

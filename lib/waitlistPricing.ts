@@ -15,9 +15,6 @@ export async function fetchResolvedSrVvvUsd(state: WaitlistState): Promise<{
   dexSr: number | null
   dexVvv: number | null
 }> {
-  const envSrUsd = Number(process.env.SR_USD_PRICE ?? '0.02')
-  const envVvvUsd = Number(process.env.VVV_USD_PRICE ?? '0.02')
-
   let dexMap = new Map<string, number | null>()
   try {
     dexMap = await fetchDexscreenerUsdPricesForTokens([WAITLIST_SR_TOKEN, WAITLIST_VVV_TOKEN])
@@ -36,12 +33,12 @@ export async function fetchResolvedSrVvvUsd(state: WaitlistState): Promise<{
   const resolvedSr = resolveUsdPrice({
     dexPrice: dexSr,
     cachedPrice: cachedSr,
-    envPrice: envSrUsd,
+    envPrice: 0,
   })
   const resolvedVvv = resolveUsdPrice({
     dexPrice: dexVvv,
     cachedPrice: cachedVvv,
-    envPrice: envVvvUsd,
+    envPrice: 0,
   })
 
   return { resolvedSr, resolvedVvv, dexSr, dexVvv }

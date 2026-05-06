@@ -212,6 +212,8 @@ async function serveWaitlistApiIfMatched(
       handler = (await import('./api/waitlist/status')).default
     } else if (pathname.startsWith('/api/waitlist/snapshot') || pathname.startsWith('/waitlist/snapshot')) {
       handler = (await import('./api/waitlist/snapshot')).default
+    } else if (pathname.startsWith('/api/waitlist/prices') || pathname.startsWith('/waitlist/prices')) {
+      handler = (await import('./api/waitlist/prices')).default
     }
   } catch {
     res.statusCode = 500

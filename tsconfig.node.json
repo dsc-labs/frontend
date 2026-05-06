@@ -8,6 +8,10 @@
   },
   "include": [
     "vite.config.ts",
+    "api/waitlist/**/*.ts",
+    "lib/waitlist*.ts",
+    "lib/dexscreenerPrices.ts",
+    "lib/serverBaseRpc.ts",
     "lib/twitterAvatar.ts",
     "lib/avatarRequest.ts",
     "lib/xTwitterOAuthExchange.ts",

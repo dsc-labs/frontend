@@ -9,8 +9,6 @@ const SR_TOKEN = { address: '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9', decima
 const VVV_TOKEN = { address: '0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf', decimals: 18 } as const
 const WAITLIST_CAPACITY = 5000
 const SNAPSHOT_INTERVAL_MS = 15 * 60 * 1000
-/** Matches sr-popup.html mock: illustrative $/token for the live ticker (server snapshots use Dex prices). */
-const LIVE_PREVIEW_USD_PER_TOKEN = 0.02
 
 type Step = 1 | 2 | 3
 
@@ -38,6 +36,14 @@ function formatTokenBalance(raw: bigint, decimals: number): string {
 function toTokenUnits(raw: bigint, decimals: number): number {
   const parsed = Number(formatTokenBalance(raw, decimals))
   return Number.isFinite(parsed) ? parsed : 0
+}
+
+function formatAmount(value: number, fractionDigits = 2): string {
+  const safe = Number.isFinite(value) ? value : 0
+  return safe.toLocaleString(undefined, {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  })
 }
 
 function buildErc20BalanceOfCall(walletAddress: string): string {
@@ -70,29 +76,9 @@ function displayWaitlistSlot(points: number, address?: string | null): number {
   return Math.max(1, Math.min(WAITLIST_CAPACITY, base + tie))
 }
 
-/** sr-popup.html: (srUsd+vvvUsd) × hours × mult, using flat $/token for the preview. */
-function livePreviewPtsFromSession(
-  sessionStartMs: number,
-  srBal: number,
-  vvvBal: number,
-  usdPerToken: number,
-  nowMs: number,
-): number {
-  const srU = srBal * usdPerToken
-  const vvvU = vvvBal * usdPerToken
-  const hasV = vvvBal > 0
-  const mult = hasV ? 1.2 : 1
-  const hrs = Math.max(0, (nowMs - sessionStartMs) / 3_600_000)
-  return (srU + vvvU) * hrs * mult
-}
-
-/** Grow server cumulative using last snapshot rates (same shape as snapshot job). */
-function extrapolatedLivePointsFromServer(user: WaitlistUserPayload, nowMs: number): number {
-  if (!user.lastSnapshotAt) return user.cumulativePoints
-  const prev = Date.parse(user.lastSnapshotAt)
-  if (!Number.isFinite(prev)) return user.cumulativePoints
-  const minutes = Math.max(0, (nowMs - prev) / 60_000)
-  return user.cumulativePoints + user.latestUsdPerMinute * minutes * user.latestMultiplier
+function parsedFinite(value: string | number | null | undefined): number {
+  const n = typeof value === 'number' ? value : Number(value ?? 0)
+  return Number.isFinite(n) ? n : 0
 }
 
 /** Hold clock for registered users: same anchors as waitlist state JSON (`lastSnapshotAt`, else `createdAt`). */
@@ -145,6 +131,8 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
   )
   /** Session clock for hold timer + HTML-style preview (resets when wallet disconnects). */
   const [sessionStartMs, setSessionStartMs] = useState<number | null>(null)
+  const [srUsdPrice, setSrUsdPrice] = useState(0)
+  const [vvvUsdPrice, setVvvUsdPrice] = useState(0)
   const [, setLiveTick] = useState(0)
   const { address, shortAddress, hasProvider, connect, disconnect } = useEip1193Wallet()
 
@@ -173,6 +161,8 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
       setWalletRegStatus('idle')
       setExistingFromServer(null)
       setSessionStartMs(null)
+      setSrUsdPrice(0)
+      setVvvUsdPrice(0)
       return
     }
     setSessionStartMs((s) => (s === null ? Date.now() : s))
@@ -219,8 +209,33 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
   }, [address])
 
   useEffect(() => {
+    if (!address) return
+    let cancelled = false
+    const loadPrices = async () => {
+      try {
+        const res = await fetch(`${WAITLIST_API_BASE}/prices`)
+        const data = (await res.json()) as { ok?: boolean; srUsd?: number; vvvUsd?: number }
+        if (!cancelled && res.ok) {
+          setSrUsdPrice(Number.isFinite(data.srUsd) ? Number(data.srUsd) : 0)
+          setVvvUsdPrice(Number.isFinite(data.vvvUsd) ? Number(data.vvvUsd) : 0)
+        }
+      } catch {
+        if (!cancelled) return
+      }
+    }
+    void loadPrices()
+    const id = window.setInterval(() => {
+      void loadPrices()
+    }, 60_000)
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+    }
+  }, [address])
+
+  useEffect(() => {
     if (step !== 2 && !(step === 3 && registered)) return
-    const id = window.setInterval(() => setLiveTick((n) => n + 1), 100)
+    const id = window.setInterval(() => setLiveTick((n) => n + 1), 2000)
     return () => window.clearInterval(id)
   }, [step, registered])
 
@@ -279,22 +294,26 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
 
   const nowMs = Date.now()
   const hasVvvLive = vvvBalance > 0
+  const existingSrBal = existingFromServer ? parsedFinite(existingFromServer.user.latestSrBalance) : 0
+  const existingVvvBal = existingFromServer ? parsedFinite(existingFromServer.user.latestVvvBalance) : 0
+  const existingUsdPerMinLive = existingSrBal * srUsdPrice + existingVvvBal * vvvUsdPrice
+  const existingLastSnapMs =
+    isExistingWallet && existingFromServer?.user.lastSnapshotAt
+      ? Date.parse(existingFromServer.user.lastSnapshotAt)
+      : Number.NaN
+  const existingMinutesSinceSnapshot =
+    Number.isFinite(existingLastSnapMs) ? Math.max(0, (nowMs - existingLastSnapMs) / 60_000) : 0
   const livePtsStep2 =
     isExistingWallet && existingFromServer
-      ? extrapolatedLivePointsFromServer(existingFromServer.user, nowMs)
-      : livePreviewPtsFromSession(
-          currentSnapshotStartMsFromNow(nowMs),
-          srBalance,
-          vvvBalance,
-          LIVE_PREVIEW_USD_PER_TOKEN,
-          nowMs,
-        )
-  const usdPerHrPreview = (srBalance + vvvBalance) * LIVE_PREVIEW_USD_PER_TOKEN
-  const usdPerHrServer =
+      ? existingFromServer.user.cumulativePoints + existingUsdPerMinLive * existingMinutesSinceSnapshot
+      : (srBalance * srUsdPrice + vvvBalance * vvvUsdPrice) *
+        Math.max(0, (nowMs - currentSnapshotStartMsFromNow(nowMs)) / 60_000)
+  const usdPerMinPreview = srBalance * srUsdPrice + vvvBalance * vvvUsdPrice
+  const usdPerMinServer =
     isExistingWallet && existingFromServer
-      ? existingFromServer.user.latestUsdPerMinute * 60
-      : usdPerHrPreview
-  const displayUsdPerHr = isExistingWallet && existingFromServer ? usdPerHrServer : usdPerHrPreview
+      ? existingUsdPerMinLive
+      : usdPerMinPreview
+  const displayUsdPerMin = isExistingWallet && existingFromServer ? usdPerMinServer : usdPerMinPreview
   const holdAnchorMs =
     isExistingWallet && existingFromServer
       ? holdClockAnchorMsFromServerUser(existingFromServer.user)
@@ -369,18 +388,22 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
 
   const serverPoints = registered?.user.cumulativePoints ?? 0
   const serverRank = registered?.rank
-  const livePtsStep3 = registered ? extrapolatedLivePointsFromServer(registered.user, Date.now()) : 0
+  const regSrBal = parsedFinite(registered?.user.latestSrBalance)
+  const regVvvBal = parsedFinite(registered?.user.latestVvvBalance)
+  const regPerMinute = regSrBal * srUsdPrice + regVvvBal * vvvUsdPrice
+  const regLastSnapMs = registered?.user.lastSnapshotAt ? Date.parse(registered.user.lastSnapshotAt) : Number.NaN
+  const regMinutesSinceSnapshot = Number.isFinite(regLastSnapMs) ? Math.max(0, (Date.now() - regLastSnapMs) / 60_000) : 0
+  const livePtsStep3 = registered ? serverPoints + regPerMinute * regMinutesSinceSnapshot : 0
   const waitlistPositionDisplay =
     serverRank != null ? `#${serverRank}` : `#${displayWaitlistSlot(livePtsStep3, address)}`
   const pointsDisplay = livePtsStep3.toFixed(4)
   const serverPointsDisplay = serverPoints.toFixed(4)
-  const regHasVvv = Number(registered?.user.latestVvvBalance ?? 0) > 0
 
   return (
     <div className="wp-overlay" onClick={() => onClose?.()}>
       <div className="pop" onClick={(e) => e.stopPropagation()}>
         <div className="ph">
-          <div className="logo">STRIKE<div className="logo-sep" />ROBOT<span className="logo-ai">AI</span></div>
+          <div className="logo">SR PLATFORM WAITLIST</div>
           <button className="xbtn" onClick={() => onClose?.()} aria-label="Close">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
           </button>
@@ -438,7 +461,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Checking...'
                       : tokenError
                         ? 'Balance unavailable'
-                        : `≈ ${(srBalance * LIVE_PREVIEW_USD_PER_TOKEN).toFixed(2)}`}
+                        : `≈ ${formatAmount(srBalance * srUsdPrice)}`}
                   </div>
                 </div>
                 <div className="tc">
@@ -449,7 +472,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Checking...'
                       : tokenError
                         ? 'Balance unavailable'
-                        : `≈ ${(vvvBalance * LIVE_PREVIEW_USD_PER_TOKEN).toFixed(2)}`}
+                        : `≈ ${formatAmount(vvvBalance * vvvUsdPrice)}`}
                   </div>
                 </div>
               </div>
@@ -464,7 +487,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
               ) : (
                 <p className="p-expl" style={{ marginBottom: 10 }}>
                   <span className="p-expl-muted">
-                    Live preview uses <strong>$0.02</strong> per token (like the design mock); snapshots use live Dex prices.
+                    Live preview uses current SR/VVV prices from snapshots (Dexscreener with cached fallback), refreshed every minute.
                     After you join, the server also records balances for snapshot scoring.
                   </span>
                 </p>
@@ -487,7 +510,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                     <span className="t-val">{snapshotCountdown}</span>
                   </div>
                   <div className="p-rate">
-                    {displayUsdPerHr.toFixed(0)}/hr{hasVvvLive ? ' · ×1.2' : ''}
+                    {displayUsdPerMin.toFixed(2)}/min
                   </div>
                 </div>
               </div>
@@ -550,9 +573,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 <div className="f-lbl">Points — realtime (live estimate)</div>
                 <div className="f-val">{pointsDisplay} pts</div>
                 <div className="f-desc">
-                  Confirmed at last snapshot: <strong>{serverPointsDisplay} pts</strong>. $SR ({registered.user.latestSrBalance}) + $VVV (
-                  {registered.user.latestVvvBalance})
-                  {regHasVvv ? ' · ×1.2 when both non-zero' : ''}. Leaderboard uses snapshot totals; this ticker matches sr-popup.html behavior between runs.
+                  Confirmed at last snapshot: <strong>{serverPointsDisplay} pts</strong>.
                 </div>
               </div>
               <div className="snap" style={{ marginBottom: 14, textAlign: 'left' }}><div className="snap-ico">⚡</div><div className="snap-txt"><b>Keep holding.</b> Your standing updates on each snapshot.</div></div>
