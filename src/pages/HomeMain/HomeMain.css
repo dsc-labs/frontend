@@ -87,6 +87,11 @@
   color: #0a0a0a;
 }
 
+/* Waitlist gated until 2026-05-07 08:00 GMT+7 — same hover as live dark btn (light bg); label swaps in React */
+.home-main-btn.home-main-btn-dark.home-main-btn-waitlist-gated {
+  cursor: not-allowed;
+}
+
 .home-main-btn-icon {
   width: 16px;
   height: 16px;

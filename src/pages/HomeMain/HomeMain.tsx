@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../../components/common/Header/Header'
 import WaitlistPopup from '../../components/common/WaitlistPopup/WaitlistPopup'
+import { isSrPlatformWaitlistLive } from '../../lib/srPlatformWaitlistLaunch'
 import {
   PageSEO,
   SR_PLATFORM_SEO_DESCRIPTION,
@@ -121,8 +122,22 @@ const HomeMain = () => {
   }
 
   const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false)
+  const [waitlistLive, setWaitlistLive] = useState(() => isSrPlatformWaitlistLive())
+  /** Which gated JOIN WAITLIST control is hovered (label → "Coming soon"). */
+  const [gatedWaitlistHover, setGatedWaitlistHover] = useState<'hero' | 'about' | null>(null)
 
-  const openWaitlistPopup = () => setIsWaitlistPopupOpen(true)
+  useEffect(() => {
+    if (waitlistLive) return
+    const id = window.setInterval(() => {
+      if (isSrPlatformWaitlistLive()) setWaitlistLive(true)
+    }, 1000)
+    return () => window.clearInterval(id)
+  }, [waitlistLive])
+
+  const openWaitlistPopup = () => {
+    if (!waitlistLive) return
+    setIsWaitlistPopupOpen(true)
+  }
   const closeWaitlistPopup = () => setIsWaitlistPopupOpen(false)
 
   return (
@@ -180,13 +195,20 @@ const HomeMain = () => {
 
             <motion.button
               type="button"
-              className="home-main-btn home-main-btn-dark"
+              className={`home-main-btn home-main-btn-dark${waitlistLive ? '' : ' home-main-btn-waitlist-gated'}`}
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
               onClick={openWaitlistPopup}
+              onMouseEnter={() => {
+                if (!waitlistLive) setGatedWaitlistHover('hero')
+              }}
+              onMouseLeave={() => setGatedWaitlistHover(null)}
+              aria-disabled={!waitlistLive}
             >
-              <span>JOIN WAITLIST</span>
+              <span>
+                {!waitlistLive && gatedWaitlistHover === 'hero' ? 'Coming soon' : 'JOIN WAITLIST'}
+              </span>
             </motion.button>
           </motion.div>
         </motion.section>
@@ -364,13 +386,20 @@ const HomeMain = () => {
             </motion.button>
             <motion.button
               type="button"
-              className="home-main-btn home-main-btn-dark"
+              className={`home-main-btn home-main-btn-dark${waitlistLive ? '' : ' home-main-btn-waitlist-gated'}`}
               whileHover={{ y: -3, scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
               onClick={openWaitlistPopup}
+              onMouseEnter={() => {
+                if (!waitlistLive) setGatedWaitlistHover('about')
+              }}
+              onMouseLeave={() => setGatedWaitlistHover(null)}
+              aria-disabled={!waitlistLive}
             >
-              <span>JOIN WAITLIST</span>
+              <span>
+                {!waitlistLive && gatedWaitlistHover === 'about' ? 'Coming soon' : 'JOIN WAITLIST'}
+              </span>
             </motion.button>
           </motion.div>
 
@@ -399,7 +428,7 @@ const HomeMain = () => {
         </div>
       </section>
 
-      {isWaitlistPopupOpen ? <WaitlistPopup onClose={closeWaitlistPopup} /> : null}
+      {isWaitlistPopupOpen && waitlistLive ? <WaitlistPopup onClose={closeWaitlistPopup} /> : null}
     </div>
   )
 }
