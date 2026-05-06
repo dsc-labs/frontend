@@ -1,4 +1,6 @@
-import type { IncomingMessage } from 'node:http'
+import type { IncomingMessage, ServerResponse } from 'node:http'
+import type { Connect, PreviewServer, ViteDevServer } from 'vite'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { Buffer } from 'node:buffer'
@@ -17,10 +19,224 @@ function readHttpBody(req: IncomingMessage): Promise<string> {
   })
 }
 
+function patchVercelResponse(res: ServerResponse): VercelResponse {
+  const r = res as ServerResponse & { status?: (code: number) => ServerResponse }
+  if (typeof r.status !== 'function') {
+    r.status = function status(code: number) {
+      r.statusCode = code
+      return r
+    }
+  }
+  return r as VercelResponse
+}
+
+async function incomingToVercelRequest(req: IncomingMessage, host: string): Promise<VercelRequest> {
+  const url = new URL(req.url ?? '/', `http://${host}`)
+  const method = (req.method ?? 'GET').toUpperCase()
+  let body: unknown = {}
+  if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+    const raw = await readHttpBody(req)
+    try {
+      body = raw ? JSON.parse(raw) : {}
+    } catch {
+      body = {}
+    }
+  }
+  const query: Record<string, string | string[]> = {}
+  url.searchParams.forEach((value, key) => {
+    const prev = query[key]
+    if (prev === undefined) query[key] = value
+    else if (Array.isArray(prev)) prev.push(value)
+    else query[key] = [prev, value]
+  })
+  return { ...req, method, body, query, url: req.url ?? '/' } as unknown as VercelRequest
+}
+
 // https://vitejs.dev/config/
 function parsePositiveInt(raw: string | undefined, fallback: number) {
   const n = Number(raw)
   return Number.isFinite(n) && n > 0 ? Math.floor(n) : fallback
+}
+
+/** `.env` is not on `process.env` for Vite middleware; copy waitlist-related keys for local API routes. */
+function applyWaitlistEnvToProcess(fromLoadedEnv: Record<string, string>) {
+  const keys = [
+    'BASE_RPC_URL',
+    'VITE_BASE_RPC_URL',
+    'WAITLIST_STATE_PATH',
+    'WAITLIST_CRON_SECRET',
+    'CRON_SECRET',
+    'SR_USD_PRICE',
+    'VVV_USD_PRICE',
+    'WAITLIST_CSV_MIRROR_DIR',
+    'WAITLIST_SNAPSHOT_SKIP_AUTH',
+  ] as const
+  for (const k of keys) {
+    const v = fromLoadedEnv[k]?.trim()
+    if (v && !process.env[k]?.trim()) process.env[k] = v
+  }
+}
+
+const DEFAULT_WAITLIST_DEV_CRON_MS = 15 * 60 * 1000
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+function isConnRefused(err: unknown): boolean {
+  let cur: unknown = err
+  for (let i = 0; i < 6 && cur; i++) {
+    if (
+      typeof cur === 'object' &&
+      cur !== null &&
+      'code' in cur &&
+      (cur as { code: string }).code === 'ECONNREFUSED'
+    ) {
+      return true
+    }
+    if (typeof cur === 'object' && cur !== null && 'cause' in cur) {
+      cur = (cur as { cause: unknown }).cause
+      continue
+    }
+    break
+  }
+  return false
+}
+
+/** `npm run dev` / `vite preview` only. On by default (15 min). Opt out: WAITLIST_DEV_CRON=0 */
+function getWaitlistDevCronIntervalMs(loadedEnv: Record<string, string>): number {
+  if (
+    loadedEnv.WAITLIST_DEV_CRON === '0' ||
+    loadedEnv.WAITLIST_DEV_CRON_DISABLED === '1'
+  ) {
+    return 0
+  }
+  const explicit = Number(loadedEnv.WAITLIST_DEV_CRON_MS?.trim())
+  if (Number.isFinite(explicit) && explicit > 0) return Math.floor(explicit)
+  return DEFAULT_WAITLIST_DEV_CRON_MS
+}
+
+function attachWaitlistDevCron(server: ViteDevServer | PreviewServer, loadedEnv: Record<string, string>) {
+  const intervalMs = getWaitlistDevCronIntervalMs(loadedEnv)
+  if (intervalMs <= 0) return
+
+  const bind = () => {
+    const httpServer = server.httpServer
+    if (!httpServer) return
+
+    const snapshotHeaders = (): Headers => {
+      applyWaitlistEnvToProcess(loadedEnv)
+      const headers = new Headers()
+      const skip = process.env.WAITLIST_SNAPSHOT_SKIP_AUTH === '1' && !process.env.VERCEL
+      if (!skip) {
+        const s = process.env.WAITLIST_CRON_SECRET?.trim()
+        const c = process.env.CRON_SECRET?.trim()
+        if (s) headers.set('x-cron-secret', s)
+        else if (c) headers.set('Authorization', `Bearer ${c}`)
+      }
+      return headers
+    }
+
+    const runSnapshot = async () => {
+      if (!httpServer.listening) return
+      const addr = httpServer.address()
+      if (typeof addr === 'string') return
+      const port =
+        typeof addr === 'object' && addr && 'port' in addr
+          ? addr.port
+          : server.config.server.port ?? 3000
+
+      const paths = [
+        `http://127.0.0.1:${port}/api/waitlist/snapshot`,
+        `http://[::1]:${port}/api/waitlist/snapshot`,
+        `http://localhost:${port}/api/waitlist/snapshot`,
+      ]
+
+      const headers = snapshotHeaders()
+      const maxRounds = 8
+      let lastErr: unknown
+      for (let round = 0; round < maxRounds; round++) {
+        for (const url of paths) {
+          try {
+            const res = await fetch(url, { headers })
+            const text = await res.text()
+            if (!res.ok) {
+              console.warn('[waitlist dev cron]', res.status, text.slice(0, 300))
+            }
+            return
+          } catch (e) {
+            lastErr = e
+          }
+        }
+        if (lastErr !== undefined && !isConnRefused(lastErr)) {
+          console.warn('[waitlist dev cron] request failed:', lastErr)
+          return
+        }
+        if (round < maxRounds - 1) await sleep(400)
+      }
+      console.warn('[waitlist dev cron] request failed:', lastErr)
+    }
+
+    const id = setInterval(() => void runSnapshot(), intervalMs)
+    const warmup = setTimeout(() => void runSnapshot(), 800)
+    const onClose = () => {
+      clearInterval(id)
+      clearTimeout(warmup)
+    }
+    httpServer.once('close', onClose)
+
+    console.info(
+      `[waitlist] dev cron: every ${intervalMs / 1000}s → GET /api/waitlist/snapshot (disable: WAITLIST_DEV_CRON=0)`,
+    )
+  }
+
+  if (server.httpServer?.listening) bind()
+  else server.httpServer?.once('listening', bind)
+}
+
+/** Dev + preview: handle /api/waitlist/* (Vite does not run this on production static hosting). */
+async function serveWaitlistApiIfMatched(
+  req: IncomingMessage,
+  res: ServerResponse,
+  pathname: string,
+  env: Record<string, string>,
+  passToNext: Connect.NextFunction,
+): Promise<boolean> {
+  if (!pathname.startsWith('/api/waitlist/')) return false
+  applyWaitlistEnvToProcess(env)
+  let handler: ((req: VercelRequest, res: VercelResponse) => Promise<void>) | undefined
+  try {
+    if (pathname.startsWith('/api/waitlist/register')) {
+      handler = (await import('./api/waitlist/register')).default
+    } else if (pathname.startsWith('/api/waitlist/status')) {
+      handler = (await import('./api/waitlist/status')).default
+    } else if (pathname.startsWith('/api/waitlist/snapshot')) {
+      handler = (await import('./api/waitlist/snapshot')).default
+    }
+  } catch {
+    res.statusCode = 500
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ error: 'Failed to load waitlist handler' }))
+    return true
+  }
+  if (!handler) {
+    passToNext()
+    return true
+  }
+  try {
+    const host = req.headers.host ?? 'localhost'
+    const vercelReq = await incomingToVercelRequest(req, host)
+    const vercelRes = patchVercelResponse(res)
+    await handler(vercelReq, vercelRes)
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Waitlist API error'
+    if (!res.headersSent && !res.writableEnded) {
+      res.statusCode = 500
+      res.setHeader('Content-Type', 'application/json; charset=utf-8')
+      res.end(JSON.stringify({ error: message }))
+    }
+  }
+  return true
 }
 
 export default defineConfig(({ mode }) => {
@@ -36,8 +252,11 @@ export default defineConfig(({ mode }) => {
       {
         name: 'api-dev-proxy',
         configureServer(server) {
+          attachWaitlistDevCron(server, env)
           server.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
+
+            if (await serveWaitlistApiIfMatched(req, res, pathname, env, next)) return
 
             if (pathname.startsWith('/api/x-oauth/exchange') || pathname.startsWith('/api/x/oauth/exchange')) {
               if (req.method !== 'POST') {
@@ -184,11 +403,22 @@ export default defineConfig(({ mode }) => {
             }
           })
         },
+        configurePreviewServer(previewServer) {
+          attachWaitlistDevCron(previewServer, env)
+          previewServer.middlewares.use(async (req, res, next) => {
+            const pathname = req.url?.split('?')[0] ?? ''
+            if (await serveWaitlistApiIfMatched(req, res, pathname, env, next)) return
+            next()
+          })
+        },
       },
     ],
     server: {
       port: 3000,
       open: true,
+    },
+    preview: {
+      port: 3000,
     },
     esbuild: {
       drop: ['console'],

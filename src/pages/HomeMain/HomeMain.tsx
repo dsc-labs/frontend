@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import Header from '../../components/common/Header/Header'
+import WaitlistPopup from '../../components/common/WaitlistPopup/WaitlistPopup'
 import {
   PageSEO,
   SR_PLATFORM_SEO_DESCRIPTION,
@@ -120,6 +121,10 @@ const HomeMain = () => {
   }
 
   const [isHeroCtaHovered, setIsHeroCtaHovered] = useState(false)
+  const [isWaitlistPopupOpen, setIsWaitlistPopupOpen] = useState(false)
+
+  const openWaitlistPopup = () => setIsWaitlistPopupOpen(true)
+  const closeWaitlistPopup = () => setIsWaitlistPopupOpen(false)
 
   return (
     <div className="home-main-page font-orbitron">
@@ -182,6 +187,7 @@ const HomeMain = () => {
               transition={{ duration: 0.15 }}
               onMouseEnter={() => setIsHeroCtaHovered(true)}
               onMouseLeave={() => setIsHeroCtaHovered(false)}
+              onClick={openWaitlistPopup}
             >
               <span>{isHeroCtaHovered ? 'COMING SOON' : 'ENTER SR PLATFORM'}</span>
             </motion.button>
@@ -367,6 +373,7 @@ const HomeMain = () => {
               transition={{ duration: 0.15 }}
               onMouseEnter={() => setIsHeroCtaHovered(true)}
               onMouseLeave={() => setIsHeroCtaHovered(false)}
+              onClick={openWaitlistPopup}
             >
               <span>{isHeroCtaHovered ? 'COMING SOON' : 'ENTER SR PLATFORM'}</span>
             </motion.button>
@@ -396,6 +403,8 @@ const HomeMain = () => {
           </div>
         </div>
       </section>
+
+      {isWaitlistPopupOpen ? <WaitlistPopup onClose={closeWaitlistPopup} /> : null}
     </div>
   )
 }
