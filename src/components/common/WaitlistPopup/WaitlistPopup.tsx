@@ -7,6 +7,7 @@ const BASE_RPC_URL = (import.meta.env.VITE_BASE_RPC_URL as string | undefined)?.
 const SR_TOKEN = { address: '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9', decimals: 18 } as const
 const VVV_TOKEN = { address: '0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf', decimals: 18 } as const
 const WAITLIST_CAPACITY = 5000
+const SNAPSHOT_INTERVAL_MS = 15 * 60 * 1000
 /** Matches sr-popup.html mock: illustrative $/token for the live ticker (server snapshots use Dex prices). */
 const LIVE_PREVIEW_USD_PER_TOKEN = 0.02
 
@@ -101,6 +102,28 @@ function holdClockAnchorMsFromServerUser(user: WaitlistUserPayload): number | nu
   }
   const c = Date.parse(user.createdAt)
   return Number.isFinite(c) ? c : null
+}
+
+function nextSnapshotMsFromServerUser(user: WaitlistUserPayload): number | null {
+  const anchorMs = holdClockAnchorMsFromServerUser(user)
+  if (anchorMs === null) return null
+  return anchorMs + SNAPSHOT_INTERVAL_MS
+}
+
+function nextSnapshotMsFromNow(nowMs: number): number {
+  return Math.ceil(nowMs / SNAPSHOT_INTERVAL_MS) * SNAPSHOT_INTERVAL_MS
+}
+
+function currentSnapshotStartMsFromNow(nowMs: number): number {
+  return Math.floor(nowMs / SNAPSHOT_INTERVAL_MS) * SNAPSHOT_INTERVAL_MS
+}
+
+function formatRemainingHms(msRemaining: number): string {
+  const totalSec = Math.max(0, Math.floor(msRemaining / 1000))
+  const h = Math.floor(totalSec / 3600)
+  const m = Math.floor((totalSec % 3600) / 60)
+  const s = totalSec % 60
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 }
 
 export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
@@ -258,9 +281,13 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
   const livePtsStep2 =
     isExistingWallet && existingFromServer
       ? extrapolatedLivePointsFromServer(existingFromServer.user, nowMs)
-      : sessionStartMs !== null
-        ? livePreviewPtsFromSession(sessionStartMs, srBalance, vvvBalance, LIVE_PREVIEW_USD_PER_TOKEN, nowMs)
-        : 0
+      : livePreviewPtsFromSession(
+          currentSnapshotStartMsFromNow(nowMs),
+          srBalance,
+          vvvBalance,
+          LIVE_PREVIEW_USD_PER_TOKEN,
+          nowMs,
+        )
   const usdPerHrPreview = (srBalance + vvvBalance) * LIVE_PREVIEW_USD_PER_TOKEN
   const usdPerHrServer =
     isExistingWallet && existingFromServer
@@ -273,6 +300,11 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
       : sessionStartMs
   const elapsedSec = holdAnchorMs !== null ? Math.max(0, Math.floor((nowMs - holdAnchorMs) / 1000)) : 0
   const holdClock = `${String(Math.floor(elapsedSec / 3600)).padStart(2, '0')}:${String(Math.floor((elapsedSec % 3600) / 60)).padStart(2, '0')}:${String(elapsedSec % 60).padStart(2, '0')}`
+  const nextSnapshotMs =
+    isExistingWallet && existingFromServer
+      ? nextSnapshotMsFromServerUser(existingFromServer.user)
+      : nextSnapshotMsFromNow(nowMs)
+  const snapshotCountdown = nextSnapshotMs !== null ? formatRemainingHms(nextSnapshotMs - nowMs) : holdClock
 
   async function submitRegister() {
     if (!address || !joinNewEnabled) return
@@ -405,7 +437,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Checking...'
                       : tokenError
                         ? 'Balance unavailable'
-                        : `≈ $${(srBalance * LIVE_PREVIEW_USD_PER_TOKEN).toFixed(2)}`}
+                        : `≈ ${(srBalance * LIVE_PREVIEW_USD_PER_TOKEN).toFixed(2)}`}
                   </div>
                 </div>
                 <div className="tc">
@@ -416,7 +448,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                       ? 'Checking...'
                       : tokenError
                         ? 'Balance unavailable'
-                        : `≈ $${(vvvBalance * LIVE_PREVIEW_USD_PER_TOKEN).toFixed(2)}`}
+                        : `≈ ${(vvvBalance * LIVE_PREVIEW_USD_PER_TOKEN).toFixed(2)}`}
                   </div>
                 </div>
               </div>
@@ -450,8 +482,8 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 <div className="p-bottom">
                   <div className="timer-row">
                     <div className="tdot" />
-                    <span className="t-lbl">Hold</span>
-                    <span className="t-val">{holdClock}</span>
+                    <span className="t-lbl">Next Snapshot</span>
+                    <span className="t-val">{snapshotCountdown}</span>
                   </div>
                   <div className="p-rate">
                     ${displayUsdPerHr.toFixed(0)}/hr{hasVvvLive ? ' · ×1.2' : ''}
