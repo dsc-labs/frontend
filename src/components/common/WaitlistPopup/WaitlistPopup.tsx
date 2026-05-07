@@ -531,7 +531,7 @@ export default function WaitlistPopup({
                     ) : (
                       <>
                         /test signup: listed with <strong>no point accrual</strong>. Complete signup on{' '}
-                        <strong>/sr-platform</strong> (10,000 $SR) for ranked points.
+                        <strong>/sr-platform</strong> (10,000 $SR or 5 $VVV) for ranked points.
                       </>
                     )}
                   </span>
