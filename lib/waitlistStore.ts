@@ -18,6 +18,11 @@ export type WaitlistUser = {
   latestVvvBalance: string
   latestMultiplier: number
   latestUsdPerMinute: number
+  /**
+   * When false (e.g. joined via `/test` + register-test), snapshots refresh balances but do not add
+   * to cumulativePoints and the user is excluded from `topUsersByPoints` ranking. Omitted/undefined = true.
+   */
+  accruesPoints?: boolean
 }
 
 export type WaitlistSnapshot = {

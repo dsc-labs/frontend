@@ -65,8 +65,13 @@ export function applySnapshotToUser(params: {
   const vvvUsdPerMinute = vvvUsdPerHour / 60
   const hasBoth = srUnits > 0 && vvvUnits > 0
   const multiplier = hasBoth ? 1.2 : 1
-  const pointsAdded = round4((srUsdPerMinute + vvvUsdPerMinute) * minutesElapsed * multiplier)
-  const cumulativePoints = round4(params.user.cumulativePoints + pointsAdded)
+  const accrue = params.user.accruesPoints !== false
+  const pointsAdded = accrue
+    ? round4((srUsdPerMinute + vvvUsdPerMinute) * minutesElapsed * multiplier)
+    : 0
+  const cumulativePoints = accrue
+    ? round4(params.user.cumulativePoints + pointsAdded)
+    : round4(params.user.cumulativePoints)
 
   const updatedUser: WaitlistUser = {
     ...params.user,
@@ -100,8 +105,10 @@ export function applySnapshotToUser(params: {
   return { user: updatedUser, snapshot }
 }
 
+/** Leaderboard / rank: only users whose points count toward the public waitlist (`/sr-platform` signups). */
 export function topUsersByPoints(state: WaitlistState, limit = 100): WaitlistUser[] {
   return Object.values(state.users)
+    .filter((u) => u.accruesPoints !== false)
     .sort((a, b) => b.cumulativePoints - a.cumulativePoints)
     .slice(0, limit)
 }

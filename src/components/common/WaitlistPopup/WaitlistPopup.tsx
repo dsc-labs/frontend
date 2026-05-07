@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import './WaitlistPopup.css'
 import { useEip1193Wallet } from '../../../hooks/useEip1193Wallet'
 
-const MIN = 10000
+const MIN_SR = 10000
+const MIN_VVV = 5
 const BASE_RPC_URL = (import.meta.env.VITE_BASE_RPC_URL as string | undefined)?.trim() || undefined
 const WAITLIST_API_BASE = (import.meta.env.VITE_WAITLIST_API_BASE as string | undefined)?.trim() || '/waitlist'
 const SR_TOKEN = { address: '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9', decimals: 18 } as const
@@ -23,6 +24,12 @@ type WaitlistUserPayload = {
   latestVvvBalance: string
   latestMultiplier: number
   latestUsdPerMinute: number
+  /** false = joined via `/test`; snapshots do not add points (see server). */
+  accruesPoints?: boolean
+}
+
+function userAccruesWaitlistPoints(u: WaitlistUserPayload | null | undefined): boolean {
+  return u?.accruesPoints !== false
 }
 
 function formatTokenBalance(raw: bigint, decimals: number): string {
@@ -34,9 +41,14 @@ function formatTokenBalance(raw: bigint, decimals: number): string {
   return `${whole.toString()}.${fractionStr.slice(0, 1)}`
 }
 
-function toTokenUnits(raw: bigint, decimals: number): number {
-  const parsed = Number(formatTokenBalance(raw, decimals))
-  return Number.isFinite(parsed) ? parsed : 0
+/** Same numeric conversion as `lib/waitlistCalculator.rawBalanceToTokenUnits` (register / snapshots). */
+function rawBalanceToTokenUnits(raw: bigint, decimals: number): number {
+  const base = 10n ** BigInt(decimals)
+  const whole = raw / base
+  const fraction = raw % base
+  const fractionStr = fraction.toString().padStart(decimals, '0').slice(0, 6)
+  const value = Number(`${whole.toString()}.${fractionStr}`)
+  return Number.isFinite(value) ? value : 0
 }
 
 function formatAmount(value: number, fractionDigits = 2): string {
@@ -114,7 +126,14 @@ function formatRemainingHms(msRemaining: number): string {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 }
 
-export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
+export default function WaitlistPopup({
+  onClose,
+  useTestRegisterApi = false,
+}: {
+  onClose?: () => void
+  /** When true (`/test` only): call `/register-test` (no point accrual). `/sr-platform` always uses 10k $SR or 5+ $VVV + `/register`. */
+  useTestRegisterApi?: boolean
+}) {
   const navigate = useNavigate()
   const [step, setStep] = useState<Step>(1)
   const [email, setEmail] = useState('')
@@ -275,11 +294,16 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     }
   }, [address])
 
-  const srBalance = srBalanceRaw !== null ? toTokenUnits(srBalanceRaw, SR_TOKEN.decimals) : 0
-  const vvvBalance = vvvBalanceRaw !== null ? toTokenUnits(vvvBalanceRaw, VVV_TOKEN.decimals) : 0
+  const srBalance =
+    srBalanceRaw !== null ? rawBalanceToTokenUnits(srBalanceRaw, SR_TOKEN.decimals) : 0
+  const vvvBalance =
+    vvvBalanceRaw !== null ? rawBalanceToTokenUnits(vvvBalanceRaw, VVV_TOKEN.decimals) : 0
   const srDisplay = srBalanceRaw !== null ? formatTokenBalance(srBalanceRaw, SR_TOKEN.decimals) : '0'
   const vvvDisplay = vvvBalanceRaw !== null ? formatTokenBalance(vvvBalanceRaw, VVV_TOKEN.decimals) : '0'
-  const eligible = srBalance >= MIN
+  const eligibleSr = srBalance >= MIN_SR
+  const eligibleVvvMin = vvvBalance >= MIN_VVV
+  const eligible = eligibleSr || eligibleVvvMin
+  const vvvRowOk = eligibleVvvMin
   const emailOk = email.includes('@') && email.trim().length >= 5
   const isExistingWallet = walletRegStatus === 'existing' && existingFromServer !== null
   const statusStillLoading = walletRegStatus === 'loading' || walletRegStatus === 'idle'
@@ -295,7 +319,6 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     emailOk
 
   const nowMs = Date.now()
-  const hasVvvLive = vvvBalance > 0
   const existingSrBal = existingFromServer ? parsedFinite(existingFromServer.user.latestSrBalance) : 0
   const existingVvvBal = existingFromServer ? parsedFinite(existingFromServer.user.latestVvvBalance) : 0
   const existingUsdPerMinLive = existingSrBal * srUsdPrice + existingVvvBal * vvvUsdPrice
@@ -307,15 +330,25 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     Number.isFinite(existingLastSnapMs) ? Math.max(0, (nowMs - existingLastSnapMs) / 60_000) : 0
   const livePtsStep2 =
     isExistingWallet && existingFromServer
-      ? existingFromServer.user.cumulativePoints + existingUsdPerMinLive * existingMinutesSinceSnapshot
-      : (srBalance * srUsdPrice + vvvBalance * vvvUsdPrice) *
-        Math.max(0, (nowMs - currentSnapshotStartMsFromNow(nowMs)) / 60_000)
+      ? userAccruesWaitlistPoints(existingFromServer.user)
+        ? existingFromServer.user.cumulativePoints + existingUsdPerMinLive * existingMinutesSinceSnapshot
+        : 0
+      : useTestRegisterApi
+        ? 0
+        : !eligible
+          ? 0
+          : (srBalance * srUsdPrice + vvvBalance * vvvUsdPrice) *
+            Math.max(0, (nowMs - currentSnapshotStartMsFromNow(nowMs)) / 60_000)
   const usdPerMinPreview = srBalance * srUsdPrice + vvvBalance * vvvUsdPrice
   const usdPerMinServer =
     isExistingWallet && existingFromServer
       ? existingUsdPerMinLive
       : usdPerMinPreview
   const displayUsdPerMin = isExistingWallet && existingFromServer ? usdPerMinServer : usdPerMinPreview
+  /** Step 2 card: no “accrual” preview until wallet meets join rules (new wallets only). */
+  const displayUsdPerMinCard =
+    isExistingWallet && existingFromServer ? displayUsdPerMin : eligible ? usdPerMinPreview : 0
+  const showX12BonusPill = eligible && srBalance > 0 && vvvBalance > 0
   const holdAnchorMs =
     isExistingWallet && existingFromServer
       ? holdClockAnchorMsFromServerUser(existingFromServer.user)
@@ -333,7 +366,10 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
     setJoinBusy(true)
     setJoinError(null)
     try {
-      const res = await fetch(`${WAITLIST_API_BASE}/register`, {
+      const registerUrl = useTestRegisterApi
+        ? `${WAITLIST_API_BASE}/register-test`
+        : `${WAITLIST_API_BASE}/register`
+      const res = await fetch(registerUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ walletAddress: address, email: email.trim() }),
@@ -395,9 +431,14 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
   const regPerMinute = regSrBal * srUsdPrice + regVvvBal * vvvUsdPrice
   const regLastSnapMs = registered?.user.lastSnapshotAt ? Date.parse(registered.user.lastSnapshotAt) : Number.NaN
   const regMinutesSinceSnapshot = Number.isFinite(regLastSnapMs) ? Math.max(0, (Date.now() - regLastSnapMs) / 60_000) : 0
-  const livePtsStep3 = registered ? serverPoints + regPerMinute * regMinutesSinceSnapshot : 0
-  const waitlistPositionDisplay =
-    serverRank != null ? `#${serverRank}` : `#${displayWaitlistSlot(livePtsStep3, address)}`
+  const regAccrues = registered ? userAccruesWaitlistPoints(registered.user) : true
+  const livePtsStep3 =
+    registered && regAccrues ? serverPoints + regPerMinute * regMinutesSinceSnapshot : registered ? 0 : 0
+  const waitlistPositionDisplay = !regAccrues
+    ? '—'
+    : serverRank != null
+      ? `#${serverRank}`
+      : `#${displayWaitlistSlot(livePtsStep3, address)}`
   const pointsDisplay = livePtsStep3.toFixed(4)
   const serverPointsDisplay = serverPoints.toFixed(4)
 
@@ -432,8 +473,19 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
             <div>
               <div className="title">Join SR Platform Waitlist</div>
               <p className="desc">
-                Connect your wallet to verify your <strong>$SR</strong> and <strong>$VVV</strong> holdings. Minimum{' '}
-                <strong>10,000 $SR</strong> to qualify. Hold both tokens to earn a <strong>×1.2 points multiplier</strong>.
+                {allowVvvMinimumEligible ? (
+                  <>
+                    Connect your wallet to verify your <strong>$SR</strong> and <strong>$VVV</strong> holdings. You qualify
+                    with at least <strong>10,000 $SR</strong> or <strong>5 $VVV</strong>. Hold both tokens to earn a{' '}
+                    <strong>×1.2 points multiplier</strong>.
+                  </>
+                ) : (
+                  <>
+                    Connect your wallet to verify your <strong>$SR</strong> and <strong>$VVV</strong> holdings. Minimum{' '}
+                    <strong>10,000 $SR</strong> to qualify. Hold both tokens to earn a{' '}
+                    <strong>×1.2 points multiplier</strong>.
+                  </>
+                )}
               </p>
               <button className="cwb" onClick={() => void connect()} disabled={!hasProvider} title={!hasProvider ? 'No EIP-1193 wallet in this browser' : undefined}>
                 <div className="cwb-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><rect x="1" y="4" width="22" height="16" rx="2" /><path d="M1 10h22" /><circle cx="17" cy="15" r="1.5" fill="#fff" stroke="none" /></svg></div>
@@ -456,7 +508,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
               <div className="tgrid">
                 <div className="tc">
                   <div className="tc-head"><span className="tag sr">$SR</span><span className="tc-lbl">Balance</span></div>
-                  <div className={`tc-val ${eligible ? 'ok' : 'bad'}`}>{tokenBusy ? '...' : srDisplay}</div>
+                  <div className={`tc-val ${eligibleSr ? 'ok' : 'bad'}`}>{tokenBusy ? '...' : srDisplay}</div>
                   <div className="tc-usd">
                     {tokenBusy
                       ? 'Checking...'
@@ -467,7 +519,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 </div>
                 <div className="tc">
                   <div className="tc-head"><span className="tag vvv">$VVV</span><span className="tc-lbl">Balance</span></div>
-                  <div className={`tc-val ${vvvBalance > 0 ? 'ok' : 'bad'}`}>{tokenBusy ? '...' : vvvDisplay}</div>
+                  <div className={`tc-val ${vvvRowOk ? 'ok' : 'bad'}`}>{tokenBusy ? '...' : vvvDisplay}</div>
                   <div className="tc-usd">
                     {tokenBusy
                       ? 'Checking...'
@@ -481,8 +533,17 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
               {isExistingWallet && existingFromServer ? (
                 <p className="p-expl" style={{ marginBottom: 10 }}>
                   <span className="p-expl-strong">
-                    Confirmed: {existingFromServer.user.cumulativePoints.toFixed(4)} pts
-                    {existingFromServer.rank != null ? ` · Rank #${existingFromServer.rank}` : ''}
+                    {userAccruesWaitlistPoints(existingFromServer.user) ? (
+                      <>
+                        Confirmed: {existingFromServer.user.cumulativePoints.toFixed(4)} pts
+                        {existingFromServer.rank != null ? ` · Rank #${existingFromServer.rank}` : ''}
+                      </>
+                    ) : (
+                      <>
+                        /test signup: listed with <strong>no point accrual</strong>. Complete signup on{' '}
+                        <strong>/sr-platform</strong> (10,000 $SR) for ranked points.
+                      </>
+                    )}
                   </span>
                 </p>
               ) : (
@@ -497,7 +558,7 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
               <div className="pcard">
                 <div className="pcard-top">
                   <span className="p-lbl">Points — realtime</span>
-                  <span className={`bonus-pill${hasVvvLive ? ' show' : ''}`}>⚡ ×1.2 bonus</span>
+                  <span className={`bonus-pill${showX12BonusPill ? ' show' : ''}`}>⚡ ×1.2 bonus</span>
                 </div>
                 <div className="p-main">
                   <div className="p-num">{livePtsStep2.toFixed(4)}</div>
@@ -511,13 +572,45 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                     <span className="t-val">{snapshotCountdown}</span>
                   </div>
                   <div className="p-rate">
-                    {displayUsdPerMin.toFixed(2)}/min
+                    {displayUsdPerMinCard.toFixed(2)}/min
                   </div>
                 </div>
               </div>
+              {useTestRegisterApi && !isExistingWallet ? (
+                <p className="p-expl-muted" style={{ marginTop: 8, marginBottom: 0, fontSize: 12 }}>
+                  Realtime points stay at 0 on /test; only <strong>/sr-platform</strong> signups accrue waitlist points.
+                </p>
+              ) : null}
 
-              <div className={`req ${eligible ? 'ok' : 'bad'}`}>{eligible ? '✓ Eligible — 10,000 $SR minimum met' : '✕ Not eligible — need at least 10,000 $SR'}</div>
-              <div className="snap"><div className="snap-ico">⚡</div><div className="snap-txt"><b>Snapshots.</b> Hold at least <b>10,000 $SR</b> — dropping below on a snapshot may yield no points for that interval.</div></div>
+              <div className={`req ${eligible ? 'ok' : 'bad'}`}>
+                {allowVvvMinimumEligible
+                  ? eligible
+                    ? eligibleSr && eligibleVvvMin
+                      ? '✓ Eligible — 10,000 $SR minimum met and 5 $VVV minimum met'
+                      : eligibleSr
+                        ? '✓ Eligible — 10,000 $SR minimum met'
+                        : '✓ Eligible — 5 $VVV minimum met'
+                    : '✕ Not eligible — need at least 10,000 $SR or 5 $VVV'
+                  : eligible
+                    ? '✓ Eligible — 10,000 $SR minimum met'
+                    : '✕ Not eligible — need at least 10,000 $SR'}
+              </div>
+              <div className="snap">
+                <div className="snap-ico">⚡</div>
+                <div className="snap-txt">
+                  <b>Snapshots.</b>{' '}
+                  {allowVvvMinimumEligible ? (
+                    <>
+                      Hold at least <b>10,000 $SR</b> or <b>5 $VVV</b> — dropping below both minima on a snapshot may yield
+                      no points for that interval.
+                    </>
+                  ) : (
+                    <>
+                      Hold at least <b>10,000 $SR</b> — dropping below on a snapshot may yield no points for that interval.
+                    </>
+                  )}
+                </div>
+              </div>
               <label className="flbl">{isExistingWallet ? 'Registered email' : 'Email address'}</label>
               {statusStillLoading ? (
                 <div className="finp finp-muted" aria-busy>
@@ -562,17 +655,43 @@ export default function WaitlistPopup({ onClose }: { onClose?: () => void }) {
                 <div className="rank-n">{waitlistPositionDisplay}</div>
                 <div>
                   <div className="rank-lbl">Waitlist position</div>
-                  <div className="rank-s">Based on ~{livePtsStep3.toFixed(2)} pts (live est.)</div>
+                  <div className="rank-s">
+                    {regAccrues
+                      ? `Based on ~${livePtsStep3.toFixed(2)} pts (live est.)`
+                      : 'Ranked points apply to /sr-platform signups only.'}
+                  </div>
                 </div>
               </div>
               <div className="final-card">
                 <div className="f-lbl">Points — realtime (live estimate)</div>
                 <div className="f-val">{pointsDisplay} pts</div>
                 <div className="f-desc">
-                  Confirmed at last snapshot: <strong>{serverPointsDisplay} pts</strong>.
+                  {regAccrues ? (
+                    <>
+                      Confirmed at last snapshot: <strong>{serverPointsDisplay} pts</strong>.
+                    </>
+                  ) : (
+                    <>
+                      <strong>/test</strong> signup: balances refresh on snapshots, but <strong>cumulative waitlist points stay 0</strong>.
+                      Join from <strong>/sr-platform</strong> (10,000 $SR) to accrue points.
+                    </>
+                  )}
                 </div>
               </div>
-              <div className="snap" style={{ marginBottom: 14, textAlign: 'left' }}><div className="snap-ico">⚡</div><div className="snap-txt"><b>Keep holding.</b> Your standing updates on each snapshot.</div></div>
+              <div className="snap" style={{ marginBottom: 14, textAlign: 'left' }}>
+                <div className="snap-ico">⚡</div>
+                <div className="snap-txt">
+                  {regAccrues ? (
+                    <>
+                      <b>Keep holding.</b> Your standing updates on each snapshot.
+                    </>
+                  ) : (
+                    <>
+                      <b>Test route.</b> No waitlist point accrual here — use <b>/sr-platform</b> for the public leaderboard.
+                    </>
+                  )}
+                </div>
+              </div>
               <button
                 type="button"
                 className="sbtn"

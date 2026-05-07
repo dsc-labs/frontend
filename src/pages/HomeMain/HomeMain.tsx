@@ -435,7 +435,9 @@ const HomeMain = () => {
         </div>
       </section>
 
-      {isWaitlistPopupOpen && waitlistUnlocked ? <WaitlistPopup onClose={closeWaitlistPopup} /> : null}
+      {isWaitlistPopupOpen && waitlistUnlocked ? (
+        <WaitlistPopup onClose={closeWaitlistPopup} useTestRegisterApi={isTestRoute} />
+      ) : null}
     </div>
   )
 }
