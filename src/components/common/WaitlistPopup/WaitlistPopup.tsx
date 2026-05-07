@@ -473,19 +473,9 @@ export default function WaitlistPopup({
             <div>
               <div className="title">Join SR Platform Waitlist</div>
               <p className="desc">
-                {allowVvvMinimumEligible ? (
-                  <>
-                    Connect your wallet to verify your <strong>$SR</strong> and <strong>$VVV</strong> holdings. You qualify
-                    with at least <strong>10,000 $SR</strong> or <strong>5 $VVV</strong>. Hold both tokens to earn a{' '}
-                    <strong>×1.2 points multiplier</strong>.
-                  </>
-                ) : (
-                  <>
-                    Connect your wallet to verify your <strong>$SR</strong> and <strong>$VVV</strong> holdings. Minimum{' '}
-                    <strong>10,000 $SR</strong> to qualify. Hold both tokens to earn a{' '}
-                    <strong>×1.2 points multiplier</strong>.
-                  </>
-                )}
+                Connect your wallet to verify your <strong>$SR</strong> and <strong>$VVV</strong> holdings. You qualify with
+                at least <strong>10,000 $SR</strong> or <strong>5 $VVV</strong>. Hold both tokens to earn a{' '}
+                <strong>×1.2 points multiplier</strong>.
               </p>
               <button className="cwb" onClick={() => void connect()} disabled={!hasProvider} title={!hasProvider ? 'No EIP-1193 wallet in this browser' : undefined}>
                 <div className="cwb-ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><rect x="1" y="4" width="22" height="16" rx="2" /><path d="M1 10h22" /><circle cx="17" cy="15" r="1.5" fill="#fff" stroke="none" /></svg></div>
@@ -583,32 +573,19 @@ export default function WaitlistPopup({
               ) : null}
 
               <div className={`req ${eligible ? 'ok' : 'bad'}`}>
-                {allowVvvMinimumEligible
-                  ? eligible
-                    ? eligibleSr && eligibleVvvMin
-                      ? '✓ Eligible — 10,000 $SR minimum met and 5 $VVV minimum met'
-                      : eligibleSr
-                        ? '✓ Eligible — 10,000 $SR minimum met'
-                        : '✓ Eligible — 5 $VVV minimum met'
-                    : '✕ Not eligible — need at least 10,000 $SR or 5 $VVV'
-                  : eligible
-                    ? '✓ Eligible — 10,000 $SR minimum met'
-                    : '✕ Not eligible — need at least 10,000 $SR'}
+                {eligible
+                  ? eligibleSr && eligibleVvvMin
+                    ? '✓ Eligible — 10,000 $SR minimum met and 5 $VVV minimum met'
+                    : eligibleSr
+                      ? '✓ Eligible — 10,000 $SR minimum met'
+                      : '✓ Eligible — 5 $VVV minimum met'
+                  : '✕ Not eligible — need at least 10,000 $SR or 5 $VVV'}
               </div>
               <div className="snap">
                 <div className="snap-ico">⚡</div>
                 <div className="snap-txt">
-                  <b>Snapshots.</b>{' '}
-                  {allowVvvMinimumEligible ? (
-                    <>
-                      Hold at least <b>10,000 $SR</b> or <b>5 $VVV</b> — dropping below both minima on a snapshot may yield
-                      no points for that interval.
-                    </>
-                  ) : (
-                    <>
-                      Hold at least <b>10,000 $SR</b> — dropping below on a snapshot may yield no points for that interval.
-                    </>
-                  )}
+                  <b>Snapshots.</b> Hold at least <b>10,000 $SR</b> or <b>5 $VVV</b> — dropping below both minima on a
+                  snapshot may yield no points for that interval.
                 </div>
               </div>
               <label className="flbl">{isExistingWallet ? 'Registered email' : 'Email address'}</label>

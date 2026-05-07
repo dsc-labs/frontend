@@ -70,8 +70,6 @@ function applyWaitlistEnvToProcess(fromLoadedEnv: Record<string, string>) {
     'VVV_USD_PRICE',
     'WAITLIST_CSV_MIRROR_DIR',
     'WAITLIST_SNAPSHOT_SKIP_AUTH',
-    'WAITLIST_ALLOW_VVV_MINIMUM',
-    'VITE_WAITLIST_ALLOW_VVV_MINIMUM',
   ] as const
   for (const k of keys) {
     const v = fromLoadedEnv[k]?.trim()

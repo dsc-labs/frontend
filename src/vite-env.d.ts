@@ -11,11 +11,6 @@ interface ImportMetaEnv {
   readonly VITE_X_OAUTH_REDIRECT_URI?: string
   /** Base RPC URL used to read SR balance via eth_call. */
   readonly VITE_BASE_RPC_URL?: string
-  /**
-   * When `1` / `true` / `yes`, `/sr-platform` waitlist uses the same 10k $SR or 5 $VVV gate as `/test`
-   * (must set `WAITLIST_ALLOW_VVV_MINIMUM` on the server too). `/test` does not need this.
-   */
-  readonly VITE_WAITLIST_ALLOW_VVV_MINIMUM?: string
 }
 
 interface ImportMeta {
