@@ -6,6 +6,8 @@ import react from '@vitejs/plugin-react'
 import { Buffer } from 'node:buffer'
 import { resolveAvatar } from './lib/avatarRequest'
 import { appendMindshareSubmissionCsv } from './lib/mindshareCsvStore'
+import { applyMindshareEpoch2Env } from './lib/mindshareEpoch2Env'
+import { buildMindshareEpoch2LeaderboardPayload } from './lib/mindshareEpoch2LeaderboardBuild'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
 
 function readHttpBody(req: IncomingMessage): Promise<string> {
@@ -49,7 +51,15 @@ async function incomingToVercelRequest(req: IncomingMessage, host: string): Prom
     else if (Array.isArray(prev)) prev.push(value)
     else query[key] = [prev, value]
   })
-  return { ...req, method, body, query, url: req.url ?? '/' } as unknown as VercelRequest
+  /** `IncomingMessage` headers are non-enumerable — `{...req}` drops them; Vercel handlers expect `headers`. */
+  return {
+    ...req,
+    headers: req.headers ?? {},
+    method,
+    body,
+    query,
+    url: req.url ?? '/',
+  } as unknown as VercelRequest
 }
 
 // https://vitejs.dev/config/
@@ -317,6 +327,37 @@ export default defineConfig(({ mode }) => {
               return
             }
 
+            if (pathname.startsWith('/api/mindshare/epoch2-leaderboard')) {
+              if (req.method !== 'GET') {
+                res.statusCode = 405
+                res.setHeader('Allow', 'GET')
+                res.end('Method Not Allowed')
+                return
+              }
+              try {
+                applyMindshareEpoch2Env(env)
+                const host = req.headers.host ?? 'localhost'
+                const url = new URL(req.url ?? '/', `http://${host}`)
+                const forceRefresh =
+                  url.searchParams.get('refresh') === '1' || url.searchParams.get('refresh') === 'true'
+                const payload = await buildMindshareEpoch2LeaderboardPayload({
+                  bearerToken: process.env.TWITTER_BEARER_TOKEN,
+                  csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+                  forceRefresh,
+                })
+                res.statusCode = 200
+                res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                res.setHeader('Cache-Control', 'no-store')
+                res.end(JSON.stringify(payload))
+              } catch (e: unknown) {
+                const message = e instanceof Error ? e.message : 'Epoch 2 leaderboard build failed'
+                res.statusCode = 500
+                res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                res.end(JSON.stringify({ ok: false, error: message }))
+              }
+              return
+            }
+
             if (pathname.startsWith('/api/mindshare/submit')) {
               if (req.method !== 'POST') {
                 res.statusCode = 405
@@ -415,6 +456,36 @@ export default defineConfig(({ mode }) => {
           previewServer.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
             if (await serveWaitlistApiIfMatched(req, res, pathname, env, next)) return
+            if (pathname.startsWith('/api/mindshare/epoch2-leaderboard')) {
+              if (req.method !== 'GET') {
+                res.statusCode = 405
+                res.setHeader('Allow', 'GET')
+                res.end('Method Not Allowed')
+                return
+              }
+              try {
+                applyMindshareEpoch2Env(env)
+                const host = req.headers.host ?? 'localhost'
+                const url = new URL(req.url ?? '/', `http://${host}`)
+                const forceRefresh =
+                  url.searchParams.get('refresh') === '1' || url.searchParams.get('refresh') === 'true'
+                const payload = await buildMindshareEpoch2LeaderboardPayload({
+                  bearerToken: process.env.TWITTER_BEARER_TOKEN,
+                  csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+                  forceRefresh,
+                })
+                res.statusCode = 200
+                res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                res.setHeader('Cache-Control', 'no-store')
+                res.end(JSON.stringify(payload))
+              } catch (e: unknown) {
+                const message = e instanceof Error ? e.message : 'Epoch 2 leaderboard build failed'
+                res.statusCode = 500
+                res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                res.end(JSON.stringify({ ok: false, error: message }))
+              }
+              return
+            }
             next()
           })
         },

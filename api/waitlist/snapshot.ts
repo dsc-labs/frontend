@@ -3,6 +3,7 @@ import { applySnapshotToUser, fetchErc20Balance } from '../../lib/waitlistCalcul
 import { fetchResolvedSrVvvUsd, WAITLIST_SR_TOKEN, WAITLIST_VVV_TOKEN } from '../../lib/waitlistPricing'
 import { getServerBaseRpcUrl } from '../../lib/serverBaseRpc'
 import { readWaitlistState, writeWaitlistState } from '../../lib/waitlistStore'
+import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
 
 /**
  * Optional lock for /api/waitlist/snapshot.
@@ -11,32 +12,12 @@ import { readWaitlistState, writeWaitlistState } from '../../lib/waitlistStore'
  *   We accept Bearer if it matches `CRON_SECRET` or the same value as `WAITLIST_CRON_SECRET`.
  * - Local: set `WAITLIST_SNAPSHOT_SKIP_AUTH=1` only when `VERCEL` is not set (never on deployed Vercel).
  */
-function authOk(req: VercelRequest): boolean {
-  if (process.env.WAITLIST_SNAPSHOT_SKIP_AUTH === '1' && !process.env.VERCEL) {
-    return true
-  }
-  const waitlistSecret = process.env.WAITLIST_CRON_SECRET?.trim()
-  const vercelCronSecret = process.env.CRON_SECRET?.trim()
-  if (!waitlistSecret && !vercelCronSecret) return true
-
-  const x = typeof req.headers['x-cron-secret'] === 'string' ? req.headers['x-cron-secret'] : ''
-  if (waitlistSecret && x === waitlistSecret) return true
-
-  const auth = typeof req.headers.authorization === 'string' ? req.headers.authorization : ''
-  const m = /^Bearer\s+(.+)$/i.exec(auth)
-  const bearer = m?.[1]?.trim() ?? ''
-  if (waitlistSecret && bearer === waitlistSecret) return true
-  if (vercelCronSecret && bearer === vercelCronSecret) return true
-
-  return false
-}
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST' && req.method !== 'GET') {
     res.status(405).setHeader('Allow', 'GET, POST').end('Method Not Allowed')
     return
   }
-  if (!authOk(req)) {
+  if (!isVercelCronAuthorizedRequest(req)) {
     sendJson(res, 401, { error: 'Unauthorized snapshot request' })
     return
   }

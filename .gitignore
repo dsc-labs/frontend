@@ -19,6 +19,9 @@ waitlist_state.json
 data/waitlist/state.json
 data/waitlist/csv/
 
+# Mindshare Epoch 2 metrics cache (local / CI)
+data/mindshare/epoch2_metrics_cache.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

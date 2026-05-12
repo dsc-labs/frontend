@@ -15,7 +15,15 @@
     "lib/twitterAvatar.ts",
     "lib/avatarRequest.ts",
     "lib/xTwitterOAuthExchange.ts",
-    "lib/mindshareCsvStore.ts"
+    "lib/mindshareCsvStore.ts",
+    "lib/mindshareEpoch2Constants.ts",
+    "lib/mindshareEpoch2Env.ts",
+    "lib/mindshareEpoch2MetricsCache.ts",
+    "lib/xTweetMetrics.ts",
+    "lib/mindshareEpoch2Score.ts",
+    "lib/vercelCronAuth.ts",
+    "api/mindshare/epoch2-leaderboard.ts",
+    "api/mindshare/epoch2-refresh.ts"
   ]
 }
 

@@ -12,6 +12,7 @@ import Partners from './pages/Partners/Partners'
 import Models from './pages/Models/Models'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
 import MindshareSubmit from './pages/MindshareSubmit/MindshareSubmit'
+import MindshareEpoch2Leaderboard from './pages/MindshareEpoch2Leaderboard/MindshareEpoch2Leaderboard'
 import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
 
@@ -69,6 +70,7 @@ function App() {
                 <Route path="/use-cases" element={<UseCases />} />
                 <Route path="/technology-stack" element={<TechnologyStack />} />
                 <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
+                <Route path="/epoch2" element={<MindshareEpoch2Leaderboard />} />
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/models" element={<Models />} />
                 <Route path="/leaderboard" element={<Leaderboard />} />
