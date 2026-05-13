@@ -212,7 +212,17 @@ async function serveWaitlistApiIfMatched(
   env: Record<string, string>,
   passToNext: Connect.NextFunction,
 ): Promise<boolean> {
-  if (!pathname.startsWith('/api/waitlist/') && !pathname.startsWith('/waitlist/')) return false
+  const isWaitlistStatsPath =
+    pathname === '/waitlist-stats' ||
+    pathname.startsWith('/waitlist-stats/') ||
+    pathname === '/sr-platform/waitlist-stats' ||
+    pathname.startsWith('/sr-platform/waitlist-stats/')
+  if (
+    !pathname.startsWith('/api/waitlist/') &&
+    !pathname.startsWith('/waitlist/') &&
+    !isWaitlistStatsPath
+  )
+    return false
   applyWaitlistEnvToProcess(env)
   let handler: ((req: VercelRequest, res: VercelResponse) => Promise<void>) | undefined
   try {
@@ -223,6 +233,8 @@ async function serveWaitlistApiIfMatched(
       handler = (await import('./api/waitlist/register-test')).default
     } else if (pathname.startsWith('/api/waitlist/register') || pathname.startsWith('/waitlist/register')) {
       handler = (await import('./api/waitlist/register')).default
+    } else if (pathname === '/api/waitlist/stats' || isWaitlistStatsPath) {
+      handler = (await import('./api/waitlist/stats')).default
     } else if (pathname.startsWith('/api/waitlist/status') || pathname.startsWith('/waitlist/status')) {
       handler = (await import('./api/waitlist/status')).default
     } else if (pathname.startsWith('/api/waitlist/snapshot') || pathname.startsWith('/waitlist/snapshot')) {
