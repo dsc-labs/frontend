@@ -4,7 +4,7 @@ import { readWaitlistState } from '../../lib/waitlistStore'
 
 /**
  * Public aggregate waitlist metrics (no wallet addresses or emails).
- * GET `/api/waitlist/stats`, `/waitlist-stats`, or `/sr-platform/waitlist-stats` (Vite dev + Vercel rewrites).
+ * GET `/waitlist`, `/waitlist/stats`, `/api/waitlist/stats`, or legacy `/waitlist-stats` (Vite dev + Vercel rewrites).
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {

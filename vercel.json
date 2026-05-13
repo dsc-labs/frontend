@@ -22,6 +22,10 @@
   ],
   "rewrites": [
     {
+      "source": "/waitlist",
+      "destination": "/api/waitlist/stats"
+    },
+    {
       "source": "/waitlist/:path*",
       "destination": "/api/waitlist/:path*"
     },

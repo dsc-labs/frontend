@@ -212,12 +212,16 @@ async function serveWaitlistApiIfMatched(
   env: Record<string, string>,
   passToNext: Connect.NextFunction,
 ): Promise<boolean> {
-  const isWaitlistStatsPath =
-    pathname === '/waitlist-stats' || pathname.startsWith('/waitlist-stats/')
+  const isLegacyWaitlistStatsShortcut =
+    pathname === '/waitlist-stats' ||
+    pathname.startsWith('/waitlist-stats/') ||
+    pathname === '/sr-platform/waitlist-stats' ||
+    pathname.startsWith('/sr-platform/waitlist-stats/')
   if (
     !pathname.startsWith('/api/waitlist/') &&
     !pathname.startsWith('/waitlist/') &&
-    !isWaitlistStatsPath
+    pathname !== '/waitlist' &&
+    !isLegacyWaitlistStatsShortcut
   )
     return false
   applyWaitlistEnvToProcess(env)
@@ -230,7 +234,13 @@ async function serveWaitlistApiIfMatched(
       handler = (await import('./api/waitlist/register-test')).default
     } else if (pathname.startsWith('/api/waitlist/register') || pathname.startsWith('/waitlist/register')) {
       handler = (await import('./api/waitlist/register')).default
-    } else if (pathname === '/api/waitlist/stats' || isWaitlistStatsPath) {
+    } else if (
+      pathname === '/api/waitlist/stats' ||
+      pathname === '/waitlist' ||
+      pathname === '/waitlist/stats' ||
+      pathname.startsWith('/waitlist/stats/') ||
+      isLegacyWaitlistStatsShortcut
+    ) {
       handler = (await import('./api/waitlist/stats')).default
     } else if (pathname.startsWith('/api/waitlist/status') || pathname.startsWith('/waitlist/status')) {
       handler = (await import('./api/waitlist/status')).default
