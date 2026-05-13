@@ -213,10 +213,7 @@ async function serveWaitlistApiIfMatched(
   passToNext: Connect.NextFunction,
 ): Promise<boolean> {
   const isWaitlistStatsPath =
-    pathname === '/waitlist-stats' ||
-    pathname.startsWith('/waitlist-stats/') ||
-    pathname === '/sr-platform/waitlist-stats' ||
-    pathname.startsWith('/sr-platform/waitlist-stats/')
+    pathname === '/waitlist-stats' || pathname.startsWith('/waitlist-stats/')
   if (
     !pathname.startsWith('/api/waitlist/') &&
     !pathname.startsWith('/waitlist/') &&
@@ -506,9 +503,12 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       open: true,
+      /** Tunnels / reverse proxies that forward `Host: strikerobot.ai` (e.g. Cloudflare). */
+      allowedHosts: ['strikerobot.ai', '.strikerobot.ai'],
     },
     preview: {
       port: 3000,
+      allowedHosts: ['strikerobot.ai', '.strikerobot.ai'],
     },
     esbuild: {
       drop: ['console'],
