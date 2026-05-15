@@ -457,7 +457,7 @@ export default defineConfig(({ mode }) => {
               return
             }
 
-            if (pathname.startsWith('/api/mindshare/epoch2-leaderboard')) {
+            if (pathname.startsWith('/api/mindshare/test-epoch2-leaderboard')) {
               if (req.method !== 'GET') {
                 res.statusCode = 405
                 res.setHeader('Allow', 'GET')
@@ -610,7 +610,7 @@ export default defineConfig(({ mode }) => {
           previewServer.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
             if (await serveWaitlistApiIfMatched(req, res, pathname, env, next)) return
-            if (pathname.startsWith('/api/mindshare/epoch2-leaderboard')) {
+            if (pathname.startsWith('/api/mindshare/test-epoch2-leaderboard')) {
               if (req.method !== 'GET') {
                 res.statusCode = 405
                 res.setHeader('Allow', 'GET')

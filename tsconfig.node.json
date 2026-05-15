@@ -26,7 +26,7 @@
     "lib/xTweetMetrics.ts",
     "lib/mindshareEpoch2Score.ts",
     "lib/vercelCronAuth.ts",
-    "api/mindshare/epoch2-leaderboard.ts",
+    "api/mindshare/test-epoch2-leaderboard.ts",
     "api/mindshare/epoch2-refresh.ts",
     "api/mindshare/epoch2-sr-snapshot.ts"
   ]

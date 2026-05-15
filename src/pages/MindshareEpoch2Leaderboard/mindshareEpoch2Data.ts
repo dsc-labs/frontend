@@ -17,7 +17,7 @@ export type Epoch2LeaderboardUser = {
   score: number
 }
 
-/** JSON from `GET /api/mindshare/epoch2-leaderboard` (matches server builder output). */
+/** JSON from `GET /api/mindshare/test-epoch2-leaderboard` (matches server builder output). */
 export type Epoch2LeaderboardApiPayload = {
   ok: true
   generatedAt: string

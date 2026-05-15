@@ -35,7 +35,7 @@ const MindshareEpoch2Leaderboard = () => {
     let cancelled = false
     const run = async () => {
       try {
-        const res = await fetch('/api/mindshare/epoch2-leaderboard')
+        const res = await fetch('/api/mindshare/test-epoch2-leaderboard')
         const ct = res.headers.get('content-type') ?? ''
         if (!ct.includes('application/json')) {
           throw new Error(

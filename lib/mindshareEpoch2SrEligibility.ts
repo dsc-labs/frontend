@@ -42,7 +42,10 @@ export async function loadEpoch2MindshareEligibleBySrHold(params: {
     let chainFailures = 0
     const conc = Math.max(
       1,
-      Math.min(32, Number(params.rpcConcurrency ?? process.env.MINDSHARE_EPOCH2_SR_GATE_RPC_CONCURRENCY || '8') || 8),
+      Math.min(
+        32,
+        Number(params.rpcConcurrency ?? process.env.MINDSHARE_EPOCH2_SR_GATE_RPC_CONCURRENCY ?? '8') || 8,
+      ),
     )
     await runPool(keys, conc, async (w) => {
       const addr = w.startsWith('0x') ? w : `0x${w}`
