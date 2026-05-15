@@ -21,6 +21,8 @@ data/waitlist/csv/
 
 # Mindshare Epoch 2 metrics cache (local / CI)
 data/mindshare/epoch2_metrics_cache.json
+data/mindshare/epoch2_sr_snapshots.jsonl
+data/mindshare/epoch2_sr_eligible_wallets.json
 
 # Editor directories and files
 .vscode/*

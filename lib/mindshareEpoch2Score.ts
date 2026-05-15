@@ -1,42 +1,52 @@
 /**
  * StrikeRobot Mindshare Challenge — Epoch 2 scoring (see repo `score.md`).
  *
- * - **Quality (0–5)**: not derivable from metrics alone; supply from human review, rubric, or model.
- * - **Engagement (0–5)**: proportional to views / comments / retweets vs targets for “max” (50k / 100 / 100).
- * - **Follower multiplier**: tiered by follower count.
- * - **Per post**: `(quality + engagement) × followerMultiplier` (same multiplier for all posts of that author).
- * - **Participant total**: sum of per-post finals (typical); change to average if product prefers.
+ * - **Quality (0–7)**: rubric / human; not derivable from URL alone.
+ * - **Interaction (0–3)**: `MIN(3, comments×0.01 + retweets×0.04)`; views and likes are not used.
+ * - **Quality gate**: quality ≤ 3 → interaction = 0 (score.md §2).
+ * - **Follower multiplier**: tiered table (score.md §3).
+ * - **Per post**: `(quality + interaction) × followerMultiplier`.
+ *
+ * **§4 Instant snapshot (score.md)**: metrics are expected at submit time and locked thereafter.
+ * This repo’s CSV pipeline still reads live X metrics when building the leaderboard unless you
+ * persist counts at submit time — align storage with §4 for production lock-in.
  */
 
-const MAX_QUALITY = 5
-const MAX_ENGAGEMENT = 5
+export const MAX_QUALITY = 7
+export const MAX_INTERACTION = 3
 
-/** Approximate thresholds for full engagement points (score.md). */
-export const EPOCH2_ENGAGEMENT_TARGETS = {
-  views: 50_000,
-  comments: 100,
-  retweets: 100,
-} as const
+const COMMENT_WEIGHT = 0.01
+const RETWEET_WEIGHT = 0.04
 
-function clamp01(n: number): number {
-  if (!Number.isFinite(n) || n <= 0) return 0
-  return Math.min(1, n)
+/** Quality above this (on 0–7 scale) unlocks interaction scoring (score.md). */
+export const EPOCH2_QUALITY_GATE_EXCLUSIVE = 3
+
+/**
+ * Raw interaction points from comments + retweets/reposts only, capped at 3 (score.md §2).
+ * Likes and views are intentionally excluded.
+ */
+export function interactionScoreFromCommentsRetweets(comments: number, retweets: number): number {
+  const c = Math.max(0, Number.isFinite(comments) ? comments : 0)
+  const r = Math.max(0, Number.isFinite(retweets) ? retweets : 0)
+  const raw = c * COMMENT_WEIGHT + r * RETWEET_WEIGHT
+  return Math.round(Math.min(MAX_INTERACTION, raw) * 100) / 100
 }
 
-/** 0–5 from organic views / comments / retweets (equal weight on each capped axis). */
-export function engagementScoreFromMetrics(
-  views: number,
+/**
+ * Interaction score after quality gate: quality ≤ 3 → 0; else same as
+ * {@link interactionScoreFromCommentsRetweets}.
+ */
+export function engagementScoreAfterQualityGate(
+  qualityScore: number,
   comments: number,
   retweets: number,
 ): number {
-  const rv = clamp01(views / EPOCH2_ENGAGEMENT_TARGETS.views)
-  const rc = clamp01(comments / EPOCH2_ENGAGEMENT_TARGETS.comments)
-  const rr = clamp01(retweets / EPOCH2_ENGAGEMENT_TARGETS.retweets)
-  const raw = (MAX_ENGAGEMENT * (rv + rc + rr)) / 3
-  return Math.round(raw * 100) / 100
+  const q = clampQualityScore(qualityScore)
+  if (q <= EPOCH2_QUALITY_GATE_EXCLUSIVE) return 0
+  return interactionScoreFromCommentsRetweets(comments, retweets)
 }
 
-/** Follower tier multiplier (score.md table; inclusive lower bounds). */
+/** Follower tier multiplier (score.md §3; inclusive lower bounds on tiers). */
 export function followerMultiplier(followers: number): number {
   const f = Math.max(0, Math.floor(followers))
   if (f < 3001) return 1.0
@@ -53,44 +63,44 @@ export function clampQualityScore(quality: number): number {
   return Math.round(q * 100) / 100
 }
 
-export function clampEngagementScore(engagement: number): number {
-  if (!Number.isFinite(engagement)) return 0
-  const e = Math.max(0, Math.min(MAX_ENGAGEMENT, engagement))
+export function clampInteractionScore(interaction: number): number {
+  if (!Number.isFinite(interaction)) return 0
+  const e = Math.max(0, Math.min(MAX_INTERACTION, interaction))
   return Math.round(e * 100) / 100
 }
 
 /**
- * Exact formula from score.md: `(quality + engagement) × followerMultiplier`
- * with both subscores already on 0–5 (e.g. reviewer engagement 4.0).
+ * Per score.md: `(quality + interaction) × followerMultiplier`
+ * with quality on 0–7 and interaction on 0–3.
  */
 export function epoch2FinalScoreFromComponents(
   qualityScore: number,
-  engagementScore: number,
+  interactionScore: number,
   authorFollowerCount: number,
 ): number {
   const q = clampQualityScore(qualityScore)
-  const e = clampEngagementScore(engagementScore)
+  const e = clampInteractionScore(interactionScore)
   const m = followerMultiplier(authorFollowerCount)
   return Math.round((q + e) * m * 100) / 100
 }
 
 export type Epoch2PostScoreInput = {
-  /** 0–5 from rubric / reviewer / LLM (not auto from URL alone). */
+  /** 0–7 from rubric / reviewer (score.md §1). */
   qualityScore: number
+  /** Unused for interaction math (score.md excludes views); kept for §4 submit snapshots / API shape. */
   views: number
   comments: number
   retweets: number
 }
 
 /**
- * One post: engagement from metrics (0–5), quality supplied, same multiplier for the author.
- * For purely manual engagement (like the worked example), use {@link epoch2FinalScoreFromComponents} instead.
+ * One post: interaction from comments + retweets with quality gate; same follower multiplier for the author.
  */
 export function epoch2FinalScoreForPost(
   post: Epoch2PostScoreInput,
   authorFollowerCount: number,
 ): number {
-  const e = engagementScoreFromMetrics(post.views, post.comments, post.retweets)
+  const e = engagementScoreAfterQualityGate(post.qualityScore, post.comments, post.retweets)
   return epoch2FinalScoreFromComponents(post.qualityScore, e, authorFollowerCount)
 }
 
@@ -109,8 +119,16 @@ export function epoch2ParticipantTotalScore(
 /** Optional breakdown for UI or audits. */
 export function epoch2ScoreBreakdown(post: Epoch2PostScoreInput, authorFollowerCount: number) {
   const quality = clampQualityScore(post.qualityScore)
-  const engagement = engagementScoreFromMetrics(post.views, post.comments, post.retweets)
+  const rawInteraction = interactionScoreFromCommentsRetweets(post.comments, post.retweets)
+  const interaction = engagementScoreAfterQualityGate(post.qualityScore, post.comments, post.retweets)
   const multiplier = followerMultiplier(authorFollowerCount)
-  const final = epoch2FinalScoreFromComponents(quality, engagement, authorFollowerCount)
-  return { quality, engagement, multiplier, final }
+  const final = epoch2FinalScoreFromComponents(quality, interaction, authorFollowerCount)
+  return {
+    quality,
+    rawInteraction,
+    interaction,
+    interactionGated: quality <= EPOCH2_QUALITY_GATE_EXCLUSIVE,
+    multiplier,
+    final,
+  }
 }

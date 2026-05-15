@@ -204,6 +204,116 @@ function attachWaitlistDevCron(server: ViteDevServer | PreviewServer, loadedEnv:
   else server.httpServer?.once('listening', bind)
 }
 
+/** Next 17:00 UTC (= 00:00 GMT+7) from now, in milliseconds. */
+function msUntilNextUtc17(): number {
+  const now = new Date()
+  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 17, 0, 0, 0))
+  if (now.getTime() >= next.getTime()) {
+    next.setUTCDate(next.getUTCDate() + 1)
+  }
+  return next.getTime() - now.getTime()
+}
+
+function mindshareEpoch2SrSnapshotDevCronDisabled(loadedEnv: Record<string, string>): boolean {
+  return (
+    loadedEnv.MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON === '0' ||
+    loadedEnv.MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED === '1'
+  )
+}
+
+/**
+ * `npm run dev` / `vite preview`: schedule GET /api/mindshare/epoch2-sr-snapshot at each 17:00 UTC (midnight GMT+7).
+ * Eligible wallet list file is updated then; leaderboard scores stay live. Opt out: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=0
+ */
+function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewServer, loadedEnv: Record<string, string>) {
+  if (mindshareEpoch2SrSnapshotDevCronDisabled(loadedEnv)) return
+
+  const bind = () => {
+    const httpServer = server.httpServer
+    if (!httpServer) return
+
+    const snapshotHeaders = (): Headers => {
+      applyMindshareEpoch2Env(loadedEnv)
+      applyWaitlistEnvToProcess(loadedEnv)
+      const headers = new Headers()
+      const skip = process.env.MINDSHARE_EPOCH2_CRON_SKIP_AUTH === '1' && !process.env.VERCEL
+      if (!skip) {
+        const s = process.env.WAITLIST_CRON_SECRET?.trim()
+        const c = process.env.CRON_SECRET?.trim()
+        if (s) headers.set('x-cron-secret', s)
+        else if (c) headers.set('Authorization', `Bearer ${c}`)
+      }
+      return headers
+    }
+
+    const runSnapshot = async () => {
+      if (!httpServer.listening) return
+      const addr = httpServer.address()
+      if (typeof addr === 'string') return
+      const port =
+        typeof addr === 'object' && addr && 'port' in addr
+          ? addr.port
+          : server.config.server.port ?? 3000
+
+      const paths = [
+        `http://127.0.0.1:${port}/api/mindshare/epoch2-sr-snapshot`,
+        `http://[::1]:${port}/api/mindshare/epoch2-sr-snapshot`,
+        `http://localhost:${port}/api/mindshare/epoch2-sr-snapshot`,
+      ]
+
+      const headers = snapshotHeaders()
+      const maxRounds = 8
+      let lastErr: unknown
+      for (let round = 0; round < maxRounds; round++) {
+        for (const url of paths) {
+          try {
+            const res = await fetch(url, { method: 'GET', headers })
+            const text = await res.text()
+            if (!res.ok) {
+              console.warn('[epoch2 SR snapshot dev cron]', res.status, text.slice(0, 300))
+            }
+            return
+          } catch (e) {
+            lastErr = e
+          }
+        }
+        if (lastErr !== undefined && !isConnRefused(lastErr)) {
+          console.warn('[epoch2 SR snapshot dev cron] request failed:', lastErr)
+          return
+        }
+        if (round < maxRounds - 1) await sleep(400)
+      }
+      console.warn('[epoch2 SR snapshot dev cron] request failed:', lastErr)
+    }
+
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
+
+    const scheduleNext = () => {
+      const delay = msUntilNextUtc17()
+      timeoutId = setTimeout(() => {
+        void runSnapshot().finally(() => {
+          scheduleNext()
+        })
+      }, delay)
+    }
+
+    scheduleNext()
+
+    const onClose = () => {
+      if (timeoutId !== undefined) clearTimeout(timeoutId)
+    }
+    httpServer.once('close', onClose)
+
+    const nextAt = new Date(Date.now() + msUntilNextUtc17())
+    console.info(
+      `[mindshare epoch2] SR eligibility file: next snapshot ~${nextAt.toISOString()} (17:00 UTC = 00:00 GMT+7). Disable: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=0`,
+    )
+  }
+
+  if (server.httpServer?.listening) bind()
+  else server.httpServer?.once('listening', bind)
+}
+
 /** Dev + preview: handle /api/waitlist/* (Vite does not run this on production static hosting). */
 async function serveWaitlistApiIfMatched(
   req: IncomingMessage,
@@ -289,6 +399,7 @@ export default defineConfig(({ mode }) => {
         name: 'api-dev-proxy',
         configureServer(server) {
           attachWaitlistDevCron(server, env)
+          attachMindshareEpoch2SrSnapshotDevCron(server, env)
           server.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
 
@@ -370,6 +481,29 @@ export default defineConfig(({ mode }) => {
                 res.end(JSON.stringify(payload))
               } catch (e: unknown) {
                 const message = e instanceof Error ? e.message : 'Epoch 2 leaderboard build failed'
+                res.statusCode = 500
+                res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                res.end(JSON.stringify({ ok: false, error: message }))
+              }
+              return
+            }
+
+            if (pathname.startsWith('/api/mindshare/epoch2-sr-snapshot')) {
+              if (req.method !== 'GET' && req.method !== 'POST') {
+                res.statusCode = 405
+                res.setHeader('Allow', 'GET, POST')
+                res.end('Method Not Allowed')
+                return
+              }
+              try {
+                applyMindshareEpoch2Env(env)
+                const handler = (await import('./api/mindshare/epoch2-sr-snapshot')).default
+                const host = req.headers.host ?? 'localhost'
+                const vercelReq = await incomingToVercelRequest(req, host)
+                const vercelRes = patchVercelResponse(res)
+                await handler(vercelReq, vercelRes)
+              } catch (e: unknown) {
+                const message = e instanceof Error ? e.message : 'Epoch2 SR snapshot failed'
                 res.statusCode = 500
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
                 res.end(JSON.stringify({ ok: false, error: message }))
@@ -472,6 +606,7 @@ export default defineConfig(({ mode }) => {
         },
         configurePreviewServer(previewServer) {
           attachWaitlistDevCron(previewServer, env)
+          attachMindshareEpoch2SrSnapshotDevCron(previewServer, env)
           previewServer.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
             if (await serveWaitlistApiIfMatched(req, res, pathname, env, next)) return
@@ -499,6 +634,29 @@ export default defineConfig(({ mode }) => {
                 res.end(JSON.stringify(payload))
               } catch (e: unknown) {
                 const message = e instanceof Error ? e.message : 'Epoch 2 leaderboard build failed'
+                res.statusCode = 500
+                res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                res.end(JSON.stringify({ ok: false, error: message }))
+              }
+              return
+            }
+
+            if (pathname.startsWith('/api/mindshare/epoch2-sr-snapshot')) {
+              if (req.method !== 'GET' && req.method !== 'POST') {
+                res.statusCode = 405
+                res.setHeader('Allow', 'GET, POST')
+                res.end('Method Not Allowed')
+                return
+              }
+              try {
+                applyMindshareEpoch2Env(env)
+                const handler = (await import('./api/mindshare/epoch2-sr-snapshot')).default
+                const host = req.headers.host ?? 'localhost'
+                const vercelReq = await incomingToVercelRequest(req, host)
+                const vercelRes = patchVercelResponse(res)
+                await handler(vercelReq, vercelRes)
+              } catch (e: unknown) {
+                const message = e instanceof Error ? e.message : 'Epoch2 SR snapshot failed'
                 res.statusCode = 500
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
                 res.end(JSON.stringify({ ok: false, error: message }))

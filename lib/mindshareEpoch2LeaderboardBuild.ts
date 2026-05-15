@@ -17,6 +17,15 @@ import {
   normalizeXUsername,
   type TweetMetricsSnapshot,
 } from './xTweetMetrics'
+import { loadEpoch2MindshareEligibleBySrHold } from './mindshareEpoch2SrEligibility'
+import { readEpoch2SrEligibleWalletsFromSnapshot } from './mindshareEpoch2SrSnapshot'
+import { getServerBaseRpcUrl } from './serverBaseRpc'
+
+function epoch2MinSrTokens(): number {
+  const n = Number(process.env.MINDSHARE_EPOCH2_MIN_SR_TOKENS ?? '10000')
+  if (!Number.isFinite(n) || n < 0) return 10_000
+  return n
+}
 
 export type Epoch2ApiStats = {
   totalParticipants: number
@@ -44,9 +53,9 @@ export type MindshareEpoch2LeaderboardPayload = {
 }
 
 function defaultQualityScore(): number {
-  const raw = Number(process.env.MINDSHARE_EPOCH2_DEFAULT_QUALITY ?? '2.5')
-  if (!Number.isFinite(raw)) return 2.5
-  return Math.max(0, Math.min(5, raw))
+  const raw = Number(process.env.MINDSHARE_EPOCH2_DEFAULT_QUALITY ?? '4')
+  if (!Number.isFinite(raw)) return 4
+  return Math.max(0, Math.min(7, raw))
 }
 
 function defaultCacheTtlMs(): number {
@@ -100,12 +109,80 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     }
   }
 
+  const skipWaitlistSrGate = process.env.MINDSHARE_EPOCH2_SKIP_WAITLIST_SR_GATE === '1'
+  let rowsForScoring = rows
+  if (!skipWaitlistSrGate) {
+    const snap = await readEpoch2SrEligibleWalletsFromSnapshot()
+    if (snap) {
+      const eligible = new Set(snap.walletsLower)
+      rowsForScoring = rows.filter((r) => eligible.has(walletKey(r.walletAddress)))
+      warnings.push(
+        `SR gate: ${eligible.size} wallet(s) from last daily snapshot (${snap.updatedAt}; on-chain SR > ${snap.thresholdExclusive} when snapshot ran). Scores below are computed live from X metrics.`,
+      )
+    } else {
+      const liveFallback = process.env.MINDSHARE_EPOCH2_SR_GATE_LIVE_FALLBACK !== '0'
+      if (liveFallback) {
+        const rpcUrl = getServerBaseRpcUrl()
+        const mindshareWalletKeysLower = [
+          ...new Set(rows.map((r) => walletKey(r.walletAddress)).filter(Boolean)),
+        ]
+        const { eligible, chainChecks, chainFailures } = await loadEpoch2MindshareEligibleBySrHold({
+          minSrTokens: epoch2MinSrTokens(),
+          waitlistStatePath: process.env.WAITLIST_STATE_PATH,
+          rpcUrl,
+          mindshareWalletKeysLower,
+        })
+        rowsForScoring = rows.filter((r) => eligible.has(walletKey(r.walletAddress)))
+        warnings.push(
+          'SR gate: no eligibility snapshot file yet — using live on-chain balances until the next 00:00 GMT+7 snapshot (or call GET /api/mindshare/epoch2-sr-snapshot once).',
+        )
+        if (rpcUrl) {
+          warnings.push(
+            `SR gate (live fallback): ${eligible.size} of ${chainChecks} wallet(s) meet ≥${epoch2MinSrTokens()} tokens.`,
+          )
+          if (chainFailures > 0) {
+            warnings.push(
+              `SR gate (live fallback): ${chainFailures} RPC balance read(s) failed (wallets treated as ineligible).`,
+            )
+          }
+        } else {
+          warnings.push(
+            'SR gate (live fallback): no BASE_RPC_URL — waitlist state.json only; most CSV wallets may be excluded.',
+          )
+        }
+      } else {
+        rowsForScoring = []
+        warnings.push(
+          'SR gate: no eligibility snapshot file and MINDSHARE_EPOCH2_SR_GATE_LIVE_FALLBACK=0 — no CSV rows pass the gate. Run GET /api/mindshare/epoch2-sr-snapshot with RPC configured.',
+        )
+      }
+    }
+  }
+
+  if (rowsForScoring.length === 0) {
+    return {
+      ok: true,
+      generatedAt,
+      stats: {
+        totalParticipants: 0,
+        totalMindsharePosts: 0,
+        totalScore: 0,
+        daysRemaining: epoch2DaysRemaining(nowMs),
+        totalLikes: 0,
+        totalComments: 0,
+        totalRetweets: 0,
+      },
+      users: [],
+      warnings,
+    }
+  }
+
   const cache = await readEpoch2MetricsCache()
   const bearer = options.bearerToken?.trim()
 
   const tweetIdSet = new Set<string>()
   const handleSet = new Set<string>()
-  for (const row of rows) {
+  for (const row of rowsForScoring) {
     handleSet.add(normalizeXUsername(row.xHandle))
     for (const url of extractPostUrlsFromSubmissionField(row.postSubmitted)) {
       const id = extractTweetIdFromStatusUrl(url)
@@ -165,7 +242,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     return cache.tweets[tweetId]?.snapshot ?? null
   }
 
-  for (const row of rows) {
+  for (const row of rowsForScoring) {
     const wk = walletKey(row.walletAddress)
     if (!wk) {
       warnings.push(`Row skipped: missing wallet for ${row.xHandle}`)
@@ -244,6 +321,6 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       totalRetweets,
     },
     users,
-    warnings: [],
+    warnings,
   }
 }

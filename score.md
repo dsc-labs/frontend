@@ -1,57 +1,129 @@
-# StrikeRobot Mindshare Challenge — Scoring Mechanism
+# StrikeRobot Mindshare Challenge — Optimized Realtime Scoring System
+---
 
-Each participant’s score will be calculated based on 3 core factors:
+# 1. Quality Content — Max 7 Points
 
-## 1. Quality Content — Max 5 Points
+Quality is the most important factor in the StrikeRobot Mindshare Challenge.
 
-Posts must provide meaningful and detailed content related to StrikeRobot.
+A post must pass all quality validation checks before receiving any interaction score.
 
-To be eligible for scoring:
+---
 
-* The content must clearly discuss StrikeRobot
-* Posts should include relevant keywords or hashtags such as:
+## Minimum Requirements
+
+Eligible posts must:
+
+* Clearly discuss StrikeRobot
+* Include at least one related keyword:
 
   * “Strike Robot”
   * $SR
   * #StrikeRobot
-* Posts must contain sufficient depth and explanation
-* Extremely short or low-effort posts will receive low scores or may not be counted
-* Content detected as AI-generated or spam-like will not be eligible for scoring
-
-Scoring will focus on:
-
-* Depth of information
-* Originality
-* Clarity
-* Educational or analytical value
-
-Maximum score: 5 points
+* Contain meaningful explanations, opinions, analysis and image
+* Meet minimum content length requirements
+* Be original and human-written
 
 ---
 
-## 2. Engagement Score — Max 5 Points
+## Strict Anti-Bot & AI Protection
 
-Engagement scores are calculated based on the organic performance of each post, including:
+The system applies aggressive filtering against:
 
-* Views
+* AI-generated content
+* Copy-paste structures
+* Repeated templates
+* Generic promotional text
+* Low-effort farming posts
+* Spam keyword stuffing
+
+Posts may receive reduced scores or automatic rejection if detected as:
+
+* Overly repetitive
+* Structurally identical to other submissions
+* Excessively AI-formatted
+* Lacking meaningful context or insight
+
+Additional quality checks may include:
+
+* Sentence diversity
+* Vocabulary variation
+* Human-like writing flow
+* Topic relevance density
+* Originality scoring
+
+---
+
+## Quality Score Logic
+
+### 7 Points
+
+* Deep analysis or educational content
+* Original research or strong insights
+* High readability and structure
+* Clearly demonstrates understanding of StrikeRobot
+
+### 5–6 Points
+
+* Strong explanations with useful information
+* Good structure and originality
+
+### 3–4 Points
+
+* Moderate depth but still relevant
+* Some originality present
+
+### 1–2 Points
+
+* Basic or surface-level content
+* Low informational value
+
+### 0 Points
+
+* Spam
+* AI filler
+* Duplicate content
+* Extremely short posts
+* Off-topic content
+
+---
+
+# 2. Engagement Score — Max 3 Points
+
+To reduce manipulation, views and likes are NOT counted.
+
+Only:
+
 * Comments
 * Retweets/Reposts
 
-To receive the maximum engagement score of 5 points, a post should achieve approximately:
+---
 
-* 50,000+ views
-* 100+ comments
-* 100+ retweets/reposts
+## Quality Threshold Requirement
 
-Posts with lower engagement will receive scores proportionally based on overall performance and community interaction quality.
+A post must receive a Quality Score above 3 points before interaction points can be counted.
 
-Artificial engagement, botted activity, or engagement farming will not be counted.
+Rules:
 
-Maximum score: 5 points
+* Quality Score ≤ 3 → Interaction Score = 0
+* Quality Score > 3 → Eligible for Engagement Score
+
+This ensures:
+
+* Low-quality viral posts cannot farm leaderboard points
+* Spam engagement becomes ineffective
+* Content quality remains the primary ranking factor
 
 ---
 
-## 3. Follower Multiplier
+Interaction Formula
+
+Interaction Score =
+
+MIN(
+(Comment Count × 0.01) +
+(Retweet Count × 0.04)
+
+# 3. Follower Multiplier
 
 Final scores will receive a multiplier based on the participant’s follower count.
 
@@ -64,25 +136,13 @@ Final scores will receive a multiplier based on the participant’s follower cou
 | 20,001 – 50,000 | ×1.4       |
 | Above 50,001    | ×1.5       |
 
----
 
-## Final Score Formula
+# 4. Instant Snapshot System
 
-Final Score = (Quality Score + Engagement Score) × Follower Multiplier
+The system only counts engagement metrics at the exact moment the post is submitted.
 
-Example:
+After submission:
 
-* Quality Score: 4.5
-* Engagement Score: 4.0
-* Followers: 12,000 → ×1.3 multiplier
-
-Final Score = (4.5 + 4.0) × 1.3 = 11.05
-
----
-
-## Important Notes
-
-* Only original and meaningful content will be counted
-* Spam, copied content, or engagement farming may result in score removal
-* The system may periodically rescore posts to maintain fairness
-* StrikeRobot reserves the right to adjust scores in cases of manipulation or abuse
+* Scores are permanently locked
+* Future engagement increases will NOT affect rankings
+* Deleted or reposted submissions will not be rescored

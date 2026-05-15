@@ -8,3 +8,10 @@ export function epoch2DaysRemaining(nowMs = Date.now()): number {
   if (t <= 0) return 0
   return Math.ceil(t / (24 * 60 * 60 * 1000))
 }
+
+/**
+ * Epoch 2 **daily SR eligibility snapshot** (cron `/api/mindshare/epoch2-sr-snapshot`):
+ * a mindshare submission wallet counts as eligible iff on-chain $SR **strictly exceeds** this value
+ * (human token units). Not read from env — product rule is fixed at 10,000.
+ */
+export const EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE = 10_000
