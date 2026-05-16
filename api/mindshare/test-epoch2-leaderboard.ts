@@ -15,6 +15,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const refreshRaw = queryFirst(req.query?.refresh as string | string[] | undefined)
+  /** Operator-only: bypasses TTL and refetches X. Public `/epoch2` should omit this; use cron `/api/mindshare/epoch2-refresh` instead. */
   const forceRefresh = refreshRaw === '1' || refreshRaw === 'true'
 
   try {

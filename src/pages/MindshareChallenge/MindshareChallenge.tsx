@@ -187,6 +187,7 @@ const MindshareChallenge = () => {
             <li>Deliver valuable and relevant content related to <strong>Strike Robot</strong></li>
             <li>Be written in any language, not limited to English</li>
             <li>Ensure your X account has been active for over 3 months and is verified</li>
+            <li>To be eligible, participants must hold at least <strong>10,000 $SR</strong> in their wallet</li>
           </ul>
 
           <h3>Submit your contribution via the form below</h3>

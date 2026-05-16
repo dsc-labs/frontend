@@ -10,6 +10,11 @@ const EPOCH2_SEO_TITLE = 'Mindshare Challenge — Epoch 2 Leaderboard'
 const EPOCH2_SEO_DESCRIPTION =
   'Epoch 2 mindshare leaderboard: participants, engagement, and ranked scores for the StrikeRobot mindshare challenge.'
 
+function leaderboardApiUrl(): string {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '')
+  return `${base}/api/mindshare/test-epoch2-leaderboard`
+}
+
 function isEpoch2Payload(x: unknown): x is Epoch2LeaderboardApiPayload {
   if (!x || typeof x !== 'object') return false
   const o = x as Record<string, unknown>
@@ -19,6 +24,13 @@ function isEpoch2Payload(x: unknown): x is Epoch2LeaderboardApiPayload {
     o.stats !== null &&
     typeof o.stats === 'object' &&
     Array.isArray(o.users) &&
+    (o.users as unknown[]).every(
+      (u) =>
+        u &&
+        typeof u === 'object' &&
+        typeof (u as Epoch2LeaderboardUser).wallet === 'string' &&
+        typeof (u as Epoch2LeaderboardUser).srEligible === 'boolean',
+    ) &&
     Array.isArray(o.warnings)
   )
 }
@@ -35,11 +47,11 @@ const MindshareEpoch2Leaderboard = () => {
     let cancelled = false
     const run = async () => {
       try {
-        const res = await fetch('/api/mindshare/test-epoch2-leaderboard')
+        const res = await fetch(leaderboardApiUrl())
         const ct = res.headers.get('content-type') ?? ''
         if (!ct.includes('application/json')) {
           throw new Error(
-            `API returned non-JSON (${ct || 'no Content-Type'}). Often the dev server moved to another port — use the exact URL Vite prints (e.g. localhost:3001), not a stale bookmark.`,
+            `API returned non-JSON (${ct || 'no Content-Type'}). If you deploy only static files (nginx “dist”), you must proxy ${leaderboardApiUrl()} to a server that runs the API (e.g. Vercel), or use \`npm run dev\` / \`vite preview\` which wire /api in Vite.`,
           )
         }
         const json: unknown = await res.json().catch(() => null)
@@ -94,6 +106,11 @@ const MindshareEpoch2Leaderboard = () => {
         {loadState === 'ready' && stats !== null && users !== null ? (
           <>
             <Epoch2StatCards stats={stats} />
+            {users.length === 0 ? (
+              <p className="epoch2-lb-notice" role="status">
+                No participants on the leaderboard yet. Scores update on a schedule; check back soon.
+              </p>
+            ) : null}
             <Epoch2LeaderboardTable users={users} stats={stats} />
           </>
         ) : null}

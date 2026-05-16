@@ -116,6 +116,18 @@ function parseCsvLine(line) {
   return out;
 }
 
+function normalizeXHandle(raw) {
+  const t = String(raw || '').trim();
+  if (!t) return '';
+  return t.startsWith('@') ? t : `@${t}`;
+}
+
+function csvCell(value) {
+  const s = String(value ?? '');
+  if (/[",\n\r]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+  return s;
+}
+
 function extractPostUrls(raw) {
   const t = raw.trim();
   if (!t) return [];
@@ -292,7 +304,8 @@ async function main() {
     if (!byWallet.has(w)) {
       byWallet.set(w, {
         wallet: walletAddress.trim(),
-        username: (name || xHandle || '').trim(),
+        xHandle: normalizeXHandle(xHandle),
+        displayName: (name || '').trim(),
         posts: 0,
         score: 0,
         csvSr: '',
@@ -301,6 +314,8 @@ async function main() {
 
     const urls = extractPostUrls(postSubmitted || '');
     const agg = byWallet.get(w);
+    if (!agg.xHandle && xHandle) agg.xHandle = normalizeXHandle(xHandle);
+    if (!agg.displayName && name) agg.displayName = name.trim();
     const srTrim = (srCell ?? '').trim();
     if (srTrim) agg.csvSr = srTrim.replace(/,/g, '');
     for (const _url of urls) {
@@ -374,9 +389,13 @@ async function main() {
     .sort((a, b) => b.row.score - a.row.score)
     .slice(0, TOP_N);
 
-  console.log('walletAddress,srBalance,postCount,score');
+  console.log('walletAddress,xHandle,displayName,srBalance,postCount,score');
   for (const { row, sr } of top) {
-    console.log(`${row.wallet},${sr},${row.posts},${row.score.toFixed(2)}`);
+    const handle = row.xHandle || '';
+    const displayName = row.displayName || '';
+    console.log(
+      [row.wallet, handle, displayName, sr, row.posts, row.score.toFixed(2)].map(csvCell).join(','),
+    );
   }
 }
 

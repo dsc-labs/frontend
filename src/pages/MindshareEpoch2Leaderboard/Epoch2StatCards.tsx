@@ -22,6 +22,11 @@ export function Epoch2StatCards({ stats }: Epoch2StatCardsProps) {
     { label: 'Total Engagement', value: formatNumber(totalEngagement) },
   ]
 
+  const row3: { label: string; value: string }[] = [
+    { label: 'SR Eligible', value: formatComma(stats.eligibleParticipants ?? 0) },
+    { label: 'Not SR Eligible', value: formatComma(stats.notEligibleParticipants ?? 0) },
+  ]
+
   return (
     <>
       <div className="epoch2-stats-grid">
@@ -34,6 +39,14 @@ export function Epoch2StatCards({ stats }: Epoch2StatCardsProps) {
       </div>
       <div className="epoch2-stats-grid">
         {row2.map((c) => (
+          <div key={c.label} className="epoch2-stat-card">
+            <div className="epoch2-stat-label">{c.label}</div>
+            <div className="epoch2-stat-value">{c.value}</div>
+          </div>
+        ))}
+      </div>
+      <div className="epoch2-stats-grid epoch2-stats-grid--sr">
+        {row3.map((c) => (
           <div key={c.label} className="epoch2-stat-card">
             <div className="epoch2-stat-label">{c.label}</div>
             <div className="epoch2-stat-value">{c.value}</div>

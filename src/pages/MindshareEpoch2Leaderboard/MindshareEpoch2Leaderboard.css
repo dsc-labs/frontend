@@ -65,6 +65,27 @@
   background: rgba(248, 113, 113, 0.08);
 }
 
+.epoch2-lb-code {
+  font-size: 0.85em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.epoch2-lb-warnings {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(245, 245, 245, 0.72);
+  margin: 0 0 20px;
+  padding-left: 1.25rem;
+}
+
+.epoch2-lb-warnings li {
+  margin-bottom: 0.35rem;
+}
+
 .epoch2-lb-loading {
   font-size: 16px;
   line-height: 1.5;
@@ -81,6 +102,10 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 16px;
+}
+
+.epoch2-stats-grid--sr {
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .epoch2-stat-card {
@@ -128,7 +153,7 @@
 
 .epoch2-table-header {
   display: grid;
-  grid-template-columns: 100px 1.9fr 1fr 1fr 0.8fr;
+  grid-template-columns: 100px 1.6fr 1fr 0.85fr 0.7fr 0.8fr;
   padding: 16px 28px;
   background: #1a1a1a;
   border-bottom: 1px solid #2a2a2a;
@@ -148,7 +173,7 @@
 
 .epoch2-table-row {
   display: grid;
-  grid-template-columns: 100px 1.9fr 1fr 1fr 0.8fr;
+  grid-template-columns: 100px 1.6fr 1fr 0.85fr 0.7fr 0.8fr;
   padding: 18px 28px;
   align-items: center;
   border-bottom: 1px solid #2a2a2a;
@@ -233,6 +258,29 @@
   color: #888888;
   font-variant-numeric: tabular-nums;
   font-family: ui-monospace, monospace;
+}
+
+.epoch2-sr-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.epoch2-sr-badge--yes {
+  color: #86efac;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.epoch2-sr-badge--no {
+  color: rgba(245, 245, 245, 0.55);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .epoch2-post-count {
@@ -335,8 +383,10 @@
   }
 
   .epoch2-col-wallet,
+  .epoch2-col-sr,
   .epoch2-col-posts,
   .epoch2-wallet,
+  .epoch2-sr-badge,
   .epoch2-post-count {
     display: none;
   }

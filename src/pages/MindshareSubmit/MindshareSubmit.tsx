@@ -425,8 +425,8 @@ const MindshareSubmit = () => {
             <div className="mindshare-submit-protocol-title">SUBMISSION REQUIREMENTS</div>
             <div className="mindshare-submit-protocol-grid">
               <p>
-                <strong>01. ELIGIBILITY:</strong> Contributors must have a verified X account that has been active
-                for at least 3 months.
+                <strong>01. ELIGIBILITY:</strong> Eligible contributors must have a verified X account older than 3
+                months and hold at least 10,000 $SR during random snapshots.
               </p>
               <p>
                 <strong>03. REVIEW:</strong> Accounts and content with high AI-generated signals will not be

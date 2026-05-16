@@ -214,37 +214,21 @@ function msUntilNextUtc17(): number {
   return next.getTime() - now.getTime()
 }
 
-function mindshareEpoch2SrSnapshotDevCronDisabled(loadedEnv: Record<string, string>): boolean {
-  return (
-    loadedEnv.MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON === '0' ||
-    loadedEnv.MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED === '1'
-  )
+function mindshareEpoch2SrSnapshotDevCronEnabled(loadedEnv: Record<string, string>): boolean {
+  if (loadedEnv.MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED === '1') return false
+  return loadedEnv.MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON === '1'
 }
 
 /**
- * `npm run dev` / `vite preview`: schedule GET /api/mindshare/epoch2-sr-snapshot at each 17:00 UTC (midnight GMT+7).
- * Eligible wallet list file is updated then; leaderboard scores stay live. Opt out: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=0
+ * `npm run dev` / `vite preview`: optional schedule GET /api/mindshare/epoch2-sr-snapshot at each 17:00 UTC (midnight GMT+7).
+ * Off by default; enable: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1. Production: Vercel Cron `0 17 * * *`.
  */
 function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewServer, loadedEnv: Record<string, string>) {
-  if (mindshareEpoch2SrSnapshotDevCronDisabled(loadedEnv)) return
+  if (!mindshareEpoch2SrSnapshotDevCronEnabled(loadedEnv)) return
 
   const bind = () => {
     const httpServer = server.httpServer
     if (!httpServer) return
-
-    const snapshotHeaders = (): Headers => {
-      applyMindshareEpoch2Env(loadedEnv)
-      applyWaitlistEnvToProcess(loadedEnv)
-      const headers = new Headers()
-      const skip = process.env.MINDSHARE_EPOCH2_CRON_SKIP_AUTH === '1' && !process.env.VERCEL
-      if (!skip) {
-        const s = process.env.WAITLIST_CRON_SECRET?.trim()
-        const c = process.env.CRON_SECRET?.trim()
-        if (s) headers.set('x-cron-secret', s)
-        else if (c) headers.set('Authorization', `Bearer ${c}`)
-      }
-      return headers
-    }
 
     const runSnapshot = async () => {
       if (!httpServer.listening) return
@@ -306,12 +290,133 @@ function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewS
 
     const nextAt = new Date(Date.now() + msUntilNextUtc17())
     console.info(
-      `[mindshare epoch2] SR eligibility file: next snapshot ~${nextAt.toISOString()} (17:00 UTC = 00:00 GMT+7). Disable: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=0`,
+      `[mindshare epoch2] SR eligibility dev cron: next snapshot ~${nextAt.toISOString()} (17:00 UTC = 00:00 GMT+7). Opt out: unset MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON or set MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED=1`,
     )
   }
 
   if (server.httpServer?.listening) bind()
   else server.httpServer?.once('listening', bind)
+}
+
+function mindshareEpoch2CronHeaders(loadedEnv: Record<string, string>): Headers {
+  applyMindshareEpoch2Env(loadedEnv)
+  applyWaitlistEnvToProcess(loadedEnv)
+  const headers = new Headers()
+  const skip = process.env.MINDSHARE_EPOCH2_CRON_SKIP_AUTH === '1' && !process.env.VERCEL
+  if (!skip) {
+    const s = process.env.WAITLIST_CRON_SECRET?.trim()
+    const c = process.env.CRON_SECRET?.trim()
+    if (s) headers.set('x-cron-secret', s)
+    else if (c) headers.set('Authorization', `Bearer ${c}`)
+  }
+  return headers
+}
+
+/** `npm run dev` / `vite preview`: every 15 min (matches Vercel). Opt out: MINDSHARE_EPOCH2_REFRESH_DEV_CRON=0 */
+function getMindshareEpoch2RefreshDevCronIntervalMs(loadedEnv: Record<string, string>): number {
+  if (
+    loadedEnv.MINDSHARE_EPOCH2_REFRESH_DEV_CRON === '0' ||
+    loadedEnv.MINDSHARE_EPOCH2_REFRESH_DEV_CRON_DISABLED === '1'
+  ) {
+    return 0
+  }
+  const explicit = Number(loadedEnv.MINDSHARE_EPOCH2_REFRESH_DEV_CRON_MS?.trim())
+  if (Number.isFinite(explicit) && explicit > 0) return explicit
+  return DEFAULT_WAITLIST_DEV_CRON_MS
+}
+
+function attachMindshareEpoch2RefreshDevCron(server: ViteDevServer | PreviewServer, loadedEnv: Record<string, string>) {
+  const intervalMs = getMindshareEpoch2RefreshDevCronIntervalMs(loadedEnv)
+  if (intervalMs <= 0) return
+
+  const bind = () => {
+    const httpServer = server.httpServer
+    if (!httpServer) return
+
+    const runRefresh = async () => {
+      if (!httpServer.listening) return
+      const addr = httpServer.address()
+      if (typeof addr === 'string') return
+      const port =
+        typeof addr === 'object' && addr && 'port' in addr
+          ? addr.port
+          : server.config.server.port ?? 3000
+
+      const paths = [
+        `http://127.0.0.1:${port}/api/mindshare/epoch2-refresh`,
+        `http://[::1]:${port}/api/mindshare/epoch2-refresh`,
+        `http://localhost:${port}/api/mindshare/epoch2-refresh`,
+      ]
+
+      const headers = mindshareEpoch2CronHeaders(loadedEnv)
+      const maxRounds = 8
+      let lastErr: unknown
+      for (let round = 0; round < maxRounds; round++) {
+        for (const url of paths) {
+          try {
+            const res = await fetch(url, { method: 'GET', headers })
+            const text = await res.text()
+            if (!res.ok) {
+              console.warn('[epoch2 refresh dev cron]', res.status, text.slice(0, 300))
+            }
+            return
+          } catch (e) {
+            lastErr = e
+          }
+        }
+        if (lastErr !== undefined && !isConnRefused(lastErr)) {
+          console.warn('[epoch2 refresh dev cron] request failed:', lastErr)
+          return
+        }
+        if (round < maxRounds - 1) await sleep(400)
+      }
+      console.warn('[epoch2 refresh dev cron] request failed:', lastErr)
+    }
+
+    const id = setInterval(() => void runRefresh(), intervalMs)
+    const warmup = setTimeout(() => void runRefresh(), 1200)
+    const onClose = () => {
+      clearInterval(id)
+      clearTimeout(warmup)
+    }
+    httpServer.once('close', onClose)
+
+    console.info(
+      `[mindshare epoch2] dev cron: every ${intervalMs / 1000}s → GET /api/mindshare/epoch2-refresh (disable: MINDSHARE_EPOCH2_REFRESH_DEV_CRON=0)`,
+    )
+  }
+
+  if (server.httpServer?.listening) bind()
+  else server.httpServer?.once('listening', bind)
+}
+
+async function serveEpoch2RefreshIfMatched(
+  req: IncomingMessage,
+  res: ServerResponse,
+  pathname: string,
+  env: Record<string, string>,
+): Promise<boolean> {
+  if (!pathname.startsWith('/api/mindshare/epoch2-refresh')) return false
+  if (req.method !== 'GET' && req.method !== 'POST') {
+    res.statusCode = 405
+    res.setHeader('Allow', 'GET, POST')
+    res.end('Method Not Allowed')
+    return true
+  }
+  try {
+    applyMindshareEpoch2Env(env)
+    const handler = (await import('./api/mindshare/epoch2-refresh')).default
+    const host = req.headers.host ?? 'localhost'
+    const vercelReq = await incomingToVercelRequest(req, host)
+    const vercelRes = patchVercelResponse(res)
+    await handler(vercelReq, vercelRes)
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Epoch 2 refresh failed'
+    res.statusCode = 500
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ ok: false, error: message }))
+  }
+  return true
 }
 
 /** Dev + preview: handle /api/waitlist/* (Vite does not run this on production static hosting). */
@@ -399,6 +504,7 @@ export default defineConfig(({ mode }) => {
         name: 'api-dev-proxy',
         configureServer(server) {
           attachWaitlistDevCron(server, env)
+          attachMindshareEpoch2RefreshDevCron(server, env)
           attachMindshareEpoch2SrSnapshotDevCron(server, env)
           server.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
@@ -487,6 +593,8 @@ export default defineConfig(({ mode }) => {
               }
               return
             }
+
+            if (await serveEpoch2RefreshIfMatched(req, res, pathname, env)) return
 
             if (pathname.startsWith('/api/mindshare/epoch2-sr-snapshot')) {
               if (req.method !== 'GET' && req.method !== 'POST') {
@@ -606,6 +714,7 @@ export default defineConfig(({ mode }) => {
         },
         configurePreviewServer(previewServer) {
           attachWaitlistDevCron(previewServer, env)
+          attachMindshareEpoch2RefreshDevCron(previewServer, env)
           attachMindshareEpoch2SrSnapshotDevCron(previewServer, env)
           previewServer.middlewares.use(async (req, res, next) => {
             const pathname = req.url?.split('?')[0] ?? ''
@@ -640,6 +749,8 @@ export default defineConfig(({ mode }) => {
               }
               return
             }
+
+            if (await serveEpoch2RefreshIfMatched(req, res, pathname, env)) return
 
             if (pathname.startsWith('/api/mindshare/epoch2-sr-snapshot')) {
               if (req.method !== 'GET' && req.method !== 'POST') {

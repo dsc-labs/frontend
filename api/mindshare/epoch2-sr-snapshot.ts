@@ -7,7 +7,7 @@ import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
  * Writes **`epoch2_sr_eligible_wallets.json`** (live leaderboard SR gate — updated once per run) and appends one line to the jsonl audit log. Eligible = on-chain SR **> 10_000** (hardcoded in `lib/mindshareEpoch2Constants.ts`).
  *
  * Auth: same as waitlist / epoch2-refresh (`CRON_SECRET` Bearer, `WAITLIST_CRON_SECRET`, or `x-cron-secret`).
- * Local `npm run dev`: same schedule via Vite — see `attachMindshareEpoch2SrSnapshotDevCron` in `vite.config.ts` (disable: `MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=0`).
+ * Local `npm run dev`: optional same schedule via Vite — see `attachMindshareEpoch2SrSnapshotDevCron` in `vite.config.ts` (enable: `MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1`).
  * Local: `MINDSHARE_EPOCH2_CRON_SKIP_AUTH=1` (never on Vercel).
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {

@@ -63,13 +63,14 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
         <div>Rank</div>
         <div>User</div>
         <div className="epoch2-col-wallet">Wallet</div>
+        <div className="epoch2-col-sr">SR</div>
         <div className="epoch2-col-posts">Post Count</div>
         <div className="epoch2-col-score">Score</div>
       </div>
 
       <div>
         {pageUsers.map((u) => (
-          <div key={`${u.rank}-${u.username}`} className="epoch2-table-row">
+          <div key={`${u.rank}-${u.wallet}`} className="epoch2-table-row">
             <Epoch2RankCell rank={u.rank} />
             <div className="epoch2-user-cell">
               <div className="epoch2-avatar">{avatarSvg}</div>
@@ -77,6 +78,11 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
             </div>
             <div className="epoch2-wallet" title={u.wallet}>
               {formatShortWallet(u.wallet)}
+            </div>
+            <div
+              className={`epoch2-sr-badge${u.srEligible ? ' epoch2-sr-badge--yes' : ' epoch2-sr-badge--no'}`}
+            >
+              {u.srEligible ? 'Eligible' : 'Not eligible'}
             </div>
             <div className="epoch2-post-count">{formatComma(u.postCount)}</div>
             <div className="epoch2-score">{formatComma(u.score)}</div>
