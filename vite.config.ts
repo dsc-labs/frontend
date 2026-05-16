@@ -7,7 +7,8 @@ import { Buffer } from 'node:buffer'
 import { resolveAvatar } from './lib/avatarRequest'
 import { appendMindshareSubmissionCsv } from './lib/mindshareCsvStore'
 import { applyMindshareEpoch2Env } from './lib/mindshareEpoch2Env'
-import { buildMindshareEpoch2LeaderboardPayload } from './lib/mindshareEpoch2LeaderboardBuild'
+import { getMindshareEpoch2LeaderboardForDisplay } from './lib/mindshareEpoch2LeaderboardBuild'
+import { runMindshareEpoch2DailySnapshot } from './lib/mindshareEpoch2DailySnapshot'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
 
 function readHttpBody(req: IncomingMessage): Promise<string> {
@@ -312,10 +313,10 @@ function mindshareEpoch2CronHeaders(loadedEnv: Record<string, string>): Headers 
   return headers
 }
 
-/** `npm run dev` / `vite preview`: every 15 min (matches Vercel). Opt out: MINDSHARE_EPOCH2_REFRESH_DEV_CRON=0 */
+/** `npm run dev` / `vite preview`: off by default (daily job only). Enable: MINDSHARE_EPOCH2_REFRESH_DEV_CRON=1 */
 function getMindshareEpoch2RefreshDevCronIntervalMs(loadedEnv: Record<string, string>): number {
   if (
-    loadedEnv.MINDSHARE_EPOCH2_REFRESH_DEV_CRON === '0' ||
+    loadedEnv.MINDSHARE_EPOCH2_REFRESH_DEV_CRON !== '1' ||
     loadedEnv.MINDSHARE_EPOCH2_REFRESH_DEV_CRON_DISABLED === '1'
   ) {
     return 0
@@ -382,7 +383,7 @@ function attachMindshareEpoch2RefreshDevCron(server: ViteDevServer | PreviewServ
     httpServer.once('close', onClose)
 
     console.info(
-      `[mindshare epoch2] dev cron: every ${intervalMs / 1000}s → GET /api/mindshare/epoch2-refresh (disable: MINDSHARE_EPOCH2_REFRESH_DEV_CRON=0)`,
+      `[mindshare epoch2] dev cron: every ${intervalMs / 1000}s → GET /api/mindshare/epoch2-refresh (daily snapshot; disable: unset MINDSHARE_EPOCH2_REFRESH_DEV_CRON)`,
     )
   }
 
@@ -576,10 +577,22 @@ export default defineConfig(({ mode }) => {
                 const url = new URL(req.url ?? '/', `http://${host}`)
                 const forceRefresh =
                   url.searchParams.get('refresh') === '1' || url.searchParams.get('refresh') === 'true'
-                const payload = await buildMindshareEpoch2LeaderboardPayload({
+                if (forceRefresh) {
+                  const run = await runMindshareEpoch2DailySnapshot({
+                    bearerToken: process.env.TWITTER_BEARER_TOKEN,
+                    csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+                  })
+                  if (!run.ok) {
+                    res.statusCode = 500
+                    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                    res.end(JSON.stringify({ ok: false, error: run.error }))
+                    return
+                  }
+                }
+                const payload = await getMindshareEpoch2LeaderboardForDisplay({
                   bearerToken: process.env.TWITTER_BEARER_TOKEN,
                   csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
-                  forceRefresh,
+                  forceRefresh: false,
                 })
                 res.statusCode = 200
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
@@ -732,10 +745,22 @@ export default defineConfig(({ mode }) => {
                 const url = new URL(req.url ?? '/', `http://${host}`)
                 const forceRefresh =
                   url.searchParams.get('refresh') === '1' || url.searchParams.get('refresh') === 'true'
-                const payload = await buildMindshareEpoch2LeaderboardPayload({
+                if (forceRefresh) {
+                  const run = await runMindshareEpoch2DailySnapshot({
+                    bearerToken: process.env.TWITTER_BEARER_TOKEN,
+                    csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+                  })
+                  if (!run.ok) {
+                    res.statusCode = 500
+                    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                    res.end(JSON.stringify({ ok: false, error: run.error }))
+                    return
+                  }
+                }
+                const payload = await getMindshareEpoch2LeaderboardForDisplay({
                   bearerToken: process.env.TWITTER_BEARER_TOKEN,
                   csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
-                  forceRefresh,
+                  forceRefresh: false,
                 })
                 res.statusCode = 200
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')

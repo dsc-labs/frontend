@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2Data'
 import { EPOCH2_PAGE_SIZE } from './mindshareEpoch2Data'
-import { formatComma, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
+import { formatComma, formatDisplayHandle, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
 
 const avatarSvg = (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -10,28 +10,38 @@ const avatarSvg = (
 )
 
 function Epoch2RankCell({ rank }: { rank: number }) {
-  if (rank === 1)
+  if (rank <= 3) {
+    const tier =
+      rank === 1 ? 'epoch2-rank-badge--gold' : rank === 2 ? 'epoch2-rank-badge--silver' : 'epoch2-rank-badge--bronze'
     return (
       <div className="epoch2-rank">
-        <div className="epoch2-rank-badge epoch2-rank-badge--gold">🏆</div>
+        <div className={`epoch2-rank-badge ${tier}`} aria-label={`Rank ${rank}`}>
+          🏆
+        </div>
       </div>
     )
-  if (rank === 2)
-    return (
-      <div className="epoch2-rank">
-        <div className="epoch2-rank-badge epoch2-rank-badge--silver">🏆</div>
-      </div>
-    )
-  if (rank === 3)
-    return (
-      <div className="epoch2-rank">
-        <div className="epoch2-rank-badge epoch2-rank-badge--bronze">🏆</div>
-      </div>
-    )
+  }
   return (
     <div className="epoch2-rank">
       <div className="epoch2-rank-number">{rank}</div>
     </div>
+  )
+}
+
+function Epoch2StatusCell({ eligible }: { eligible: boolean }) {
+  if (eligible) {
+    return (
+      <span className="epoch2-status-pill epoch2-status-pill--eligible">
+        <span className="epoch2-status-dot" aria-hidden />
+        Eligible
+      </span>
+    )
+  }
+  return (
+    <span className="epoch2-status-pill epoch2-status-pill--ineligible">
+      <span className="epoch2-status-dot" aria-hidden />
+      Not eligible
+    </span>
   )
 }
 
@@ -63,29 +73,27 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
         <div>Rank</div>
         <div>User</div>
         <div className="epoch2-col-wallet">Wallet</div>
-        <div className="epoch2-col-sr">SR</div>
         <div className="epoch2-col-posts">Post Count</div>
         <div className="epoch2-col-score">Score</div>
+        <div className="epoch2-col-status">Status</div>
       </div>
 
-      <div>
+      <div className="epoch2-table-body">
         {pageUsers.map((u) => (
           <div key={`${u.rank}-${u.wallet}`} className="epoch2-table-row">
             <Epoch2RankCell rank={u.rank} />
             <div className="epoch2-user-cell">
               <div className="epoch2-avatar">{avatarSvg}</div>
-              <div className="epoch2-username">{u.username}</div>
+              <div className="epoch2-username">{formatDisplayHandle(u.username)}</div>
             </div>
             <div className="epoch2-wallet" title={u.wallet}>
-              {formatShortWallet(u.wallet)}
-            </div>
-            <div
-              className={`epoch2-sr-badge${u.srEligible ? ' epoch2-sr-badge--yes' : ' epoch2-sr-badge--no'}`}
-            >
-              {u.srEligible ? 'Eligible' : 'Not eligible'}
+              {formatShortWallet(u.wallet, 4, 4)}
             </div>
             <div className="epoch2-post-count">{formatComma(u.postCount)}</div>
             <div className="epoch2-score">{formatComma(u.score)}</div>
+            <div className="epoch2-status-cell">
+              <Epoch2StatusCell eligible={u.srEligible} />
+            </div>
           </div>
         ))}
       </div>

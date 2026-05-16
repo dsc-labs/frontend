@@ -4,15 +4,14 @@
 .mindshare-epoch2-page {
   box-sizing: border-box;
   min-height: 100vh;
-  padding: 120px 24px 80px;
+  padding: 120px 32px 80px;
   color: #f5f5f5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #0a0a0a;
   background-image:
-    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-    linear-gradient(180deg, #131313 0%, #0a0a0a 100%);
+    radial-gradient(ellipse at top, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(180deg, #0f0f0f 0%, #0a0a0a 100%);
   background-attachment: fixed;
   font-family: 'Inter', system-ui, sans-serif;
 }
@@ -24,28 +23,33 @@
 }
 
 .epoch2-lb-container {
-  max-width: 55vw;
+  max-width: 1120px;
   min-width: 0;
   margin: 0 auto;
 }
 
-@media (max-width: 1200px) {
-  .epoch2-lb-container {
-    max-width: 80vw;
-  }
+.epoch2-lb-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-@media (max-width: 768px) {
-  .epoch2-lb-container {
-    max-width: 100%;
-  }
+.epoch2-lb-snapshot {
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(245, 245, 245, 0.55);
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
 }
 
-.epoch2-lb-title {
-  font-size: 36px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 28px;
+.epoch2-lb-snapshot strong {
+  font-weight: 600;
   color: #f5f5f5;
 }
 
@@ -53,7 +57,7 @@
   font-size: 14px;
   line-height: 1.45;
   color: rgba(245, 245, 245, 0.72);
-  margin: -12px 0 24px;
+  margin: 0 0 24px;
   padding: 12px 14px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.06);
@@ -63,27 +67,6 @@
 .epoch2-lb-notice--error {
   border-color: rgba(248, 113, 113, 0.35);
   background: rgba(248, 113, 113, 0.08);
-}
-
-.epoch2-lb-code {
-  font-size: 0.85em;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  padding: 0.1em 0.35em;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.epoch2-lb-warnings {
-  font-size: 13px;
-  line-height: 1.45;
-  color: rgba(245, 245, 245, 0.72);
-  margin: 0 0 20px;
-  padding-left: 1.25rem;
-}
-
-.epoch2-lb-warnings li {
-  margin-bottom: 0.35rem;
 }
 
 .epoch2-lb-loading {
@@ -104,16 +87,12 @@
   margin-bottom: 16px;
 }
 
-.epoch2-stats-grid--sr {
-  grid-template-columns: repeat(2, 1fr);
-}
-
 .epoch2-stat-card {
   background: #141414;
   border: 1px solid #2a2a2a;
   border-radius: 12px;
   padding: 20px 22px;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .epoch2-stat-card--highlight {
@@ -141,42 +120,47 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #f5f5f5;
+  font-variant-numeric: tabular-nums;
 }
 
 .epoch2-leaderboard {
-  background: #141414;
-  border: 1px solid #2a2a2a;
-  border-radius: 12px;
-  margin-top: 24px;
+  margin-top: 8px;
+  background: #111111;
+  border: 1px solid #1f1f1f;
+  border-radius: 14px;
   overflow: hidden;
 }
 
 .epoch2-table-header {
   display: grid;
-  grid-template-columns: 100px 1.6fr 1fr 0.85fr 0.7fr 0.8fr;
-  padding: 16px 28px;
-  background: #1a1a1a;
-  border-bottom: 1px solid #2a2a2a;
+  grid-template-columns: 72px minmax(140px, 1.5fr) minmax(110px, 1fr) 0.75fr 0.85fr minmax(120px, 1fr);
+  padding: 14px 24px;
+  background: #161616;
+  border-bottom: 1px solid #252525;
+  gap: 8px;
 }
 
 .epoch2-table-header > div {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #888888;
+  color: #6b6b6b;
 }
 
-.epoch2-col-score {
+.epoch2-col-posts,
+.epoch2-col-score,
+.epoch2-col-status {
   text-align: right;
 }
 
-.epoch2-table-row {
+.epoch2-table-body .epoch2-table-row {
   display: grid;
-  grid-template-columns: 100px 1.6fr 1fr 0.85fr 0.7fr 0.8fr;
-  padding: 18px 28px;
+  grid-template-columns: 72px minmax(140px, 1.5fr) minmax(110px, 1fr) 0.75fr 0.85fr minmax(120px, 1fr);
+  padding: 16px 24px;
   align-items: center;
-  border-bottom: 1px solid #2a2a2a;
+  gap: 8px;
+  border-bottom: 1px solid #1c1c1c;
   transition: background 0.15s ease;
 }
 
@@ -185,7 +169,7 @@
 }
 
 .epoch2-table-row:hover {
-  background: #1c1c1c;
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .epoch2-rank {
@@ -194,122 +178,156 @@
 }
 
 .epoch2-rank-badge {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
+  line-height: 1;
 }
 
 .epoch2-rank-badge--gold {
-  background: rgba(245, 197, 24, 0.12);
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.35);
 }
 
 .epoch2-rank-badge--silver {
-  background: rgba(208, 208, 208, 0.12);
+  background: rgba(192, 192, 192, 0.12);
+  border: 1px solid rgba(192, 192, 192, 0.28);
 }
 
 .epoch2-rank-badge--bronze {
-  background: rgba(205, 127, 50, 0.15);
+  background: rgba(180, 120, 60, 0.14);
+  border: 1px solid rgba(180, 120, 60, 0.32);
 }
 
 .epoch2-rank-number {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #f5f5f5;
-  padding-left: 10px;
+  padding-left: 4px;
 }
 
 .epoch2-user-cell {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  min-width: 0;
 }
 
 .epoch2-avatar {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2a2a2a, #4a4a4a);
+  background: #2a2a2a;
   border: 1px solid #3a3a3a;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   flex-shrink: 0;
-  color: #888;
+  color: #666;
 }
 
 .epoch2-avatar svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .epoch2-username {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   color: #f5f5f5;
-}
-
-.epoch2-wallet {
-  font-size: 14px;
-  color: #888888;
-  font-variant-numeric: tabular-nums;
-  font-family: ui-monospace, monospace;
-}
-
-.epoch2-sr-badge {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  border-radius: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.epoch2-sr-badge--yes {
-  color: #86efac;
-  background: rgba(34, 197, 94, 0.12);
-  border: 1px solid rgba(34, 197, 94, 0.25);
-}
-
-.epoch2-sr-badge--no {
-  color: rgba(245, 245, 245, 0.55);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.epoch2-wallet {
+  font-size: 13px;
+  color: #8a8a8a;
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 .epoch2-post-count {
-  font-size: 15px;
-  color: #f5f5f5;
+  font-size: 14px;
+  font-weight: 500;
+  color: #d4d4d4;
+  text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
 .epoch2-score {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  color: #f5f5f5;
+  color: #ffffff;
   text-align: right;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
+}
+
+.epoch2-status-cell {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.epoch2-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.epoch2-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.epoch2-status-pill--eligible {
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.12);
+}
+
+.epoch2-status-pill--eligible .epoch2-status-dot {
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+}
+
+.epoch2-status-pill--ineligible {
+  color: rgba(245, 245, 245, 0.5);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.epoch2-status-pill--ineligible .epoch2-status-dot {
+  background: #6b6b6b;
 }
 
 .epoch2-table-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 28px;
-  background: #141414;
+  padding: 14px 24px;
+  background: #111111;
+  border-top: 1px solid #1c1c1c;
 }
 
 .epoch2-footer-info {
   font-size: 13px;
   font-weight: 500;
-  color: #f5f5f5;
+  color: rgba(245, 245, 245, 0.65);
 }
 
 .epoch2-pagination {
@@ -346,26 +364,33 @@
   height: 14px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
+  .mindshare-epoch2-page {
+    padding: 100px 16px 64px;
+  }
+
   .epoch2-stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .epoch2-lb-title {
-    font-size: 28px;
+  .epoch2-table-header,
+  .epoch2-table-body .epoch2-table-row {
+    grid-template-columns: 56px minmax(100px, 1.4fr) 0.65fr 0.75fr minmax(100px, 0.95fr);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .epoch2-col-wallet,
+  .epoch2-wallet {
+    display: none;
+  }
+
+  .epoch2-score {
+    font-size: 18px;
   }
 }
 
-@media (max-width: 640px) {
-  .mindshare-epoch2-page {
-    padding: 100px 12px 64px;
-  }
-
-  .epoch2-lb-title {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-
+@media (max-width: 560px) {
   .epoch2-stats-grid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -376,30 +401,12 @@
   }
 
   .epoch2-table-header,
-  .epoch2-table-row {
-    grid-template-columns: 60px 1.4fr 1fr;
-    padding: 14px 16px;
-    font-size: 13px;
+  .epoch2-table-body .epoch2-table-row {
+    grid-template-columns: 48px 1fr 0.7fr minmax(88px, auto);
   }
 
-  .epoch2-col-wallet,
-  .epoch2-col-sr,
   .epoch2-col-posts,
-  .epoch2-wallet,
-  .epoch2-sr-badge,
   .epoch2-post-count {
     display: none;
-  }
-
-  .epoch2-score {
-    font-size: 17px;
-  }
-
-  .epoch2-username {
-    font-size: 14px;
-  }
-
-  .epoch2-table-footer {
-    padding: 14px 16px;
   }
 }

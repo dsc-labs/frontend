@@ -1,11 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { buildMindshareEpoch2LeaderboardPayload } from '../../lib/mindshareEpoch2LeaderboardBuild'
+import { runMindshareEpoch2DailySnapshot } from '../../lib/mindshareEpoch2DailySnapshot'
 import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
 
 /**
- * Cron / operator-only: refetches X metrics (force refresh) and rewrites the Epoch 2 metrics cache.
- * Vercel Cron: `vercel.json` calls `/api/mindshare/epoch2-refresh` every 15 minutes; set `CRON_SECRET` in the dashboard.
- * Daily SR eligibility snapshots (GMT+7 midnight): `/api/mindshare/epoch2-sr-snapshot` — see `vercel.json` and `lib/mindshareEpoch2SrSnapshot.ts`.
+ * Operator-only alias for the daily midnight job (`runMindshareEpoch2DailySnapshot`).
+ * Production schedule: `vercel.json` → `/api/mindshare/epoch2-sr-snapshot` at `0 17 * * *` (00:00 GMT+7).
  * Same auth as waitlist snapshot: `CRON_SECRET` Bearer, `WAITLIST_CRON_SECRET`, or `x-cron-secret`.
  * Local bypass (never on Vercel): `MINDSHARE_EPOCH2_CRON_SKIP_AUTH=1`.
  */
@@ -29,23 +28,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const payload = await buildMindshareEpoch2LeaderboardPayload({
+    const result = await runMindshareEpoch2DailySnapshot({
       bearerToken: process.env.TWITTER_BEARER_TOKEN,
       csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
-      forceRefresh: true,
     })
-    res.statusCode = 200
+    res.statusCode = result.ok ? 200 : 500
     res.setHeader('Content-Type', 'application/json; charset=utf-8')
     res.setHeader('Cache-Control', 'no-store')
-    res.end(
-      JSON.stringify({
-        ok: true,
-        generatedAt: payload.generatedAt,
-        participants: payload.stats.totalParticipants,
-        posts: payload.stats.totalMindsharePosts,
-        totalScore: payload.stats.totalScore,
-      }),
-    )
+    res.end(JSON.stringify(result))
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Epoch 2 refresh failed'
     res.statusCode = 500

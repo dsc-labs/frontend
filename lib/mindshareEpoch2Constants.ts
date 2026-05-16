@@ -15,3 +15,8 @@ export function epoch2DaysRemaining(nowMs = Date.now()): number {
  * (human token units). Not read from env — product rule is fixed at 10,000.
  */
 export const EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE = 10_000
+
+/** Epoch 1 prize winners (ranks 1–101) are excluded from the Epoch 2 leaderboard. */
+export const EPOCH1_PRIZE_WINNER_MAX_RANK = 101
+/** Epoch 1 ranks 102+ merge into Epoch 2 as cumulative score/post baselines. */
+export const EPOCH1_CARRYOVER_MIN_RANK = 102

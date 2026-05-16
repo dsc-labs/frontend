@@ -8,10 +8,13 @@ export type MindshareSubmissionRow = {
   name: string
   postSubmitted: string
   srBalance: string
+  /** ISO-8601 at form submit; empty on legacy rows. */
+  submittedAt: string
 }
 
 const CSV_HEADER_LEGACY = 'x handle,wallet,name,post submited'
-const CSV_HEADER = 'x handle,wallet,name,post submited,sr balance'
+const CSV_HEADER_SR = 'x handle,wallet,name,post submited,sr balance'
+const CSV_HEADER = 'x handle,wallet,name,post submited,sr balance,submitted at'
 
 function resolveMindshareCsvPath(customPath?: string): string {
   const fallbackPath = resolve(process.cwd(), 'mindshare_submissions.csv')
@@ -83,21 +86,23 @@ export async function readMindshareSubmissionsCsv(customPath?: string): Promise<
   const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0)
   if (lines.length === 0) return []
   const header = lines[0]!.replace(/^\uFEFF/, '').trimEnd()
-  if (header !== CSV_HEADER && header !== CSV_HEADER_LEGACY) {
+  if (header !== CSV_HEADER && header !== CSV_HEADER_SR && header !== CSV_HEADER_LEGACY) {
     return []
   }
+  const hasSubmittedAt = header === CSV_HEADER
   const dataLines = lines.slice(1)
   const rows: MindshareSubmissionRow[] = []
   for (const line of dataLines) {
     const cells = parseCsvDataLine(line)
     if (cells.length < 4) continue
-    const [xHandle, walletAddress, name, postSubmitted, srBalance = ''] = cells
+    const [xHandle, walletAddress, name, postSubmitted, srBalance = '', submittedAt = ''] = cells
     rows.push({
       xHandle: (xHandle ?? '').trim(),
       walletAddress: (walletAddress ?? '').trim(),
       name: (name ?? '').trim(),
       postSubmitted: (postSubmitted ?? '').trim(),
       srBalance: (srBalance ?? '').trim(),
+      submittedAt: hasSubmittedAt ? (submittedAt ?? '').trim() : '',
     })
   }
   return rows
@@ -111,7 +116,7 @@ function csvEscape(value: string): string {
   return normalized
 }
 
-/** Legacy CSVs: add `sr balance` column and an empty field on existing rows. */
+/** Legacy CSVs: add missing columns with empty trailing fields on existing rows. */
 async function migrateLegacyHeaderIfNeeded(filePath: string): Promise<void> {
   let content: string
   try {
@@ -121,10 +126,16 @@ async function migrateLegacyHeaderIfNeeded(filePath: string): Promise<void> {
   }
   const lines = content.split(/\r?\n/)
   const first = (lines[0] ?? '').replace(/^\uFEFF/, '').trimEnd()
-  if (first !== CSV_HEADER_LEGACY) return
   const dataLines = lines.slice(1).filter((l) => l.trim().length > 0)
-  const migrated = [CSV_HEADER, ...dataLines.map((row) => `${row},`)].join('\n') + '\n'
-  await writeFile(filePath, migrated, 'utf8')
+  if (first === CSV_HEADER_LEGACY) {
+    const migrated = [CSV_HEADER, ...dataLines.map((row) => `${row},,`)].join('\n') + '\n'
+    await writeFile(filePath, migrated, 'utf8')
+    return
+  }
+  if (first === CSV_HEADER_SR) {
+    const migrated = [CSV_HEADER, ...dataLines.map((row) => `${row},`)].join('\n') + '\n'
+    await writeFile(filePath, migrated, 'utf8')
+  }
 }
 
 async function ensureHeader(filePath: string): Promise<void> {
@@ -144,6 +155,7 @@ export async function appendMindshareSubmissionCsv(
   const filePath = resolveMindshareCsvPath(customPath ?? process.env.MINDSHARE_SUBMISSIONS_CSV_PATH)
   await migrateLegacyHeaderIfNeeded(filePath)
   await ensureHeader(filePath)
+  const submittedAt = (row.submittedAt ?? '').trim() || new Date().toISOString()
   const line =
     [
       csvEscape(row.xHandle),
@@ -151,6 +163,7 @@ export async function appendMindshareSubmissionCsv(
       csvEscape(row.name),
       csvEscape(row.postSubmitted),
       csvEscape(row.srBalance),
+      csvEscape(submittedAt),
     ].join(',') + '\n'
   await appendFile(filePath, line, 'utf8')
   return { filePath }

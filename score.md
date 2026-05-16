@@ -5,7 +5,7 @@
 
 Quality is the most important factor in the StrikeRobot Mindshare Challenge.
 
-A post must pass all quality validation checks before receiving any interaction score.
+A post must pass all quality validation checks before it receives a quality score.
 
 ---
 
@@ -84,44 +84,6 @@ Additional quality checks may include:
 * Duplicate content
 * Extremely short posts
 * Off-topic content
-
----
-
-# 2. Engagement Score — Max 3 Points
-
-To reduce manipulation, views and likes are NOT counted.
-
-Only:
-
-* Comments
-* Retweets/Reposts
-
----
-
-## Quality Threshold Requirement
-
-A post must receive a Quality Score above 3 points before interaction points can be counted.
-
-Rules:
-
-* Quality Score ≤ 3 → Interaction Score = 0
-* Quality Score > 3 → Eligible for Engagement Score
-
-This ensures:
-
-* Low-quality viral posts cannot farm leaderboard points
-* Spam engagement becomes ineffective
-* Content quality remains the primary ranking factor
-
----
-
-Interaction Formula
-
-Interaction Score =
-
-MIN(
-(Comment Count × 0.01) +
-(Retweet Count × 0.04)
 
 # 3. Follower Multiplier
 

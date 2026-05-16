@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { buildMindshareEpoch2LeaderboardPayload } from '../../lib/mindshareEpoch2LeaderboardBuild'
+import { getMindshareEpoch2LeaderboardForDisplay } from '../../lib/mindshareEpoch2LeaderboardBuild'
+import { runMindshareEpoch2DailySnapshot } from '../../lib/mindshareEpoch2DailySnapshot'
 
 function queryFirst(q: string | string[] | undefined): string | undefined {
   if (q === undefined) return undefined
@@ -19,10 +20,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const forceRefresh = refreshRaw === '1' || refreshRaw === 'true'
 
   try {
-    const payload = await buildMindshareEpoch2LeaderboardPayload({
+    if (forceRefresh) {
+      const run = await runMindshareEpoch2DailySnapshot({
+        bearerToken: process.env.TWITTER_BEARER_TOKEN,
+        csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+      })
+      if (!run.ok) {
+        res.statusCode = 500
+        res.setHeader('Content-Type', 'application/json; charset=utf-8')
+        res.end(JSON.stringify({ ok: false, error: run.error }))
+        return
+      }
+    }
+    const payload = await getMindshareEpoch2LeaderboardForDisplay({
       bearerToken: process.env.TWITTER_BEARER_TOKEN,
       csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
-      forceRefresh,
+      forceRefresh: false,
     })
     res.statusCode = 200
     res.setHeader('Content-Type', 'application/json; charset=utf-8')

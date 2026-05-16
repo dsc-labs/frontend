@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Dump top N wallets from mindshare_submissions.csv with post counts + simple score
- * (quality default, no X fetch — comments/retweets = 0).
+ * (score.md: quality × follower multiplier; default quality, no X fetch).
  *
  * SR balance resolution (see EPOCH2_DUMP_SR_PRIORITY):
  *   - On-chain $SR on Base via JSON-RPC when BASE_RPC_URL or VITE_BASE_RPC_URL is set
@@ -140,10 +140,6 @@ function extractPostUrls(raw) {
 }
 
 const MAX_QUALITY = 7;
-const MAX_INTERACTION = 3;
-const COMMENT_WEIGHT = 0.01;
-const RETWEET_WEIGHT = 0.04;
-const QUALITY_GATE_EXCLUSIVE = 3;
 
 function followerMultiplier(followers) {
   const f = Math.max(0, Math.floor(followers));
@@ -158,22 +154,11 @@ function clampQ(q) {
   if (!Number.isFinite(q)) return 0;
   return Math.round(Math.max(0, Math.min(MAX_QUALITY, q)) * 100) / 100;
 }
-function interactionFromCommentsRetweets(comments, retweets) {
-  const c = Math.max(0, Number.isFinite(comments) ? comments : 0);
-  const r = Math.max(0, Number.isFinite(retweets) ? retweets : 0);
-  const raw = c * COMMENT_WEIGHT + r * RETWEET_WEIGHT;
-  return Math.round(Math.min(MAX_INTERACTION, raw) * 100) / 100;
-}
-function interactionAfterGate(quality, comments, retweets) {
+/** score.md: quality (0–7) × follower multiplier per post. */
+function finalScore(quality, followers) {
   const q = clampQ(quality);
-  if (q <= QUALITY_GATE_EXCLUSIVE) return 0;
-  return interactionFromCommentsRetweets(comments, retweets);
-}
-function finalScore(quality, comments, retweets, followers) {
-  const q = clampQ(quality);
-  const i = interactionAfterGate(quality, comments, retweets);
   const m = followerMultiplier(followers);
-  return Math.round((q + i) * m * 100) / 100;
+  return Math.round(q * m * 100) / 100;
 }
 
 function getWaitlistUser(usersRecord, walletLower) {
@@ -319,7 +304,7 @@ async function main() {
     const srTrim = (srCell ?? '').trim();
     if (srTrim) agg.csvSr = srTrim.replace(/,/g, '');
     for (const _url of urls) {
-      const s = finalScore(defaultQuality, 0, 0, DEFAULT_FOLLOWERS);
+      const s = finalScore(defaultQuality, DEFAULT_FOLLOWERS);
       agg.posts += 1;
       agg.score += s;
     }

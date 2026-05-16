@@ -10,6 +10,11 @@ export function formatComma(n: number): string {
   return n.toLocaleString('en-US')
 }
 
+/** Leaderboard aggregate score (e.g. `1,164.24`). */
+export function formatEpoch2TotalScore(n: number): string {
+  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
 /** `0x` + first `head` hex chars + `...` + last `tail` hex chars (e.g. `0x71c16...3bdb1`). */
 export function formatShortWallet(wallet: string, head = 5, tail = 5): string {
   const w = wallet.trim()
@@ -20,8 +25,30 @@ export function formatShortWallet(wallet: string, head = 5, tail = 5): string {
   return `0x${hex.slice(0, head)}...${hex.slice(-tail)}`
 }
 
+/** e.g. `12:00 PM, May 15, 2026` for the snapshot line above the table. */
+export function formatEpoch2SnapshotLabel(iso: string): string {
+  const d = new Date(iso)
+  if (!Number.isFinite(d.getTime())) return iso
+  const time = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+  const date = d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  return `${time}, ${date}`
+}
+
+export function formatDisplayHandle(username: string): string {
+  const t = username.trim()
+  if (!t) return '@unknown'
+  return t.startsWith('@') ? t : `@${t}`
+}
+
+/**
+ * Ranks 1–7: API order (guaranteed top 7).
+ * Rank 8+: eligible by score, then not eligible by score (matches server sort).
+ */
 export function getRankedUsers(users: Epoch2LeaderboardUser[]): Array<Epoch2LeaderboardUser & { rank: number }> {
-  return [...users]
-    .sort((a, b) => b.score - a.score)
-    .map((u, i) => ({ ...u, rank: i + 1 }))
+  const GUARANTEED_COUNT = 7
+  const head = users.slice(0, GUARANTEED_COUNT)
+  const tail = users.slice(GUARANTEED_COUNT)
+  const eligible = tail.filter((u) => u.srEligible).sort((a, b) => b.score - a.score)
+  const ineligible = tail.filter((u) => !u.srEligible).sort((a, b) => b.score - a.score)
+  return [...head, ...eligible, ...ineligible].map((u, i) => ({ ...u, rank: i + 1 }))
 }

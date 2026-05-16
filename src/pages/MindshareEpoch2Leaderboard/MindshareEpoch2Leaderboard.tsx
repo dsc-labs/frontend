@@ -4,6 +4,7 @@ import { PageSEO } from '../../components/common/PageSEO/PageSEO'
 import type { Epoch2LeaderboardApiPayload, Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2Data'
 import { Epoch2LeaderboardTable } from './Epoch2LeaderboardTable'
 import { Epoch2StatCards } from './Epoch2StatCards'
+import { formatEpoch2SnapshotLabel } from './mindshareEpoch2Format'
 import './MindshareEpoch2Leaderboard.css'
 
 const EPOCH2_SEO_TITLE = 'Mindshare Challenge — Epoch 2 Leaderboard'
@@ -41,6 +42,7 @@ const MindshareEpoch2Leaderboard = () => {
   const [loadState, setLoadState] = useState<LoadState>('loading')
   const [stats, setStats] = useState<Epoch2StatsInput | null>(null)
   const [users, setUsers] = useState<Epoch2LeaderboardUser[] | null>(null)
+  const [generatedAt, setGeneratedAt] = useState<string | null>(null)
   const [errorNotice, setErrorNotice] = useState<string | null>(null)
 
   useEffect(() => {
@@ -66,12 +68,14 @@ const MindshareEpoch2Leaderboard = () => {
         if (cancelled) return
         setStats(json.stats)
         setUsers(json.users)
+        setGeneratedAt(json.generatedAt)
         setErrorNotice(null)
         setLoadState('ready')
       } catch (e) {
         if (!cancelled) {
           setStats(null)
           setUsers(null)
+          setGeneratedAt(null)
           const detail = e instanceof Error ? e.message : 'Request failed'
           setErrorNotice(detail)
           setLoadState('error')
@@ -87,12 +91,15 @@ const MindshareEpoch2Leaderboard = () => {
     }
   }, [])
 
+  const snapshotLabel =
+    generatedAt != null ? formatEpoch2SnapshotLabel(generatedAt) : null
+
   return (
     <div className="mindshare-epoch2-page">
       <PageSEO title={EPOCH2_SEO_TITLE} metaDescription={EPOCH2_SEO_DESCRIPTION} path="/epoch2" />
       <Header showSocialIcons />
       <div className="epoch2-lb-container">
-        <h1 className="epoch2-lb-title">MINDSHARE CHALLENGE - EPOCH 2 LEADERBOARD</h1>
+        <h1 className="epoch2-lb-sr-only">Epoch 2 Mindshare Leaderboard</h1>
         {loadState === 'loading' ? (
           <p className="epoch2-lb-loading" role="status">
             Loading leaderboard…
@@ -105,13 +112,19 @@ const MindshareEpoch2Leaderboard = () => {
         ) : null}
         {loadState === 'ready' && stats !== null && users !== null ? (
           <>
+            {snapshotLabel ? (
+              <p className="epoch2-lb-snapshot">
+                The Latest Snapshot: <strong>{snapshotLabel}</strong>
+              </p>
+            ) : null}
             <Epoch2StatCards stats={stats} />
             {users.length === 0 ? (
               <p className="epoch2-lb-notice" role="status">
                 No participants on the leaderboard yet. Scores update on a schedule; check back soon.
               </p>
-            ) : null}
-            <Epoch2LeaderboardTable users={users} stats={stats} />
+            ) : (
+              <Epoch2LeaderboardTable users={users} stats={stats} />
+            )}
           </>
         ) : null}
       </div>
