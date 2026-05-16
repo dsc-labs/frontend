@@ -70,7 +70,7 @@ function App() {
                 <Route path="/use-cases" element={<UseCases />} />
                 <Route path="/technology-stack" element={<TechnologyStack />} />
                 <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
-                <Route path="/epoch2" element={<MindshareEpoch2Leaderboard />} />
+                <Route path="/sraaaepoch2" element={<MindshareEpoch2Leaderboard />} />
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/models" element={<Models />} />
                 <Route path="/leaderboard" element={<Leaderboard />} />

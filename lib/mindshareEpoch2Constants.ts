@@ -16,7 +16,7 @@ export function epoch2DaysRemaining(nowMs = Date.now()): number {
  */
 export const EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE = 10_000
 
-/** Epoch 1 prize winners (ranks 1–101) are excluded from the Epoch 2 leaderboard. */
+/** Epoch 1 prize winners (ranks 1–101) do not receive Epoch 1 score carryover; they may still appear on Epoch 2. */
 export const EPOCH1_PRIZE_WINNER_MAX_RANK = 101
 /** Epoch 1 ranks 102+ merge into Epoch 2 as cumulative score/post baselines. */
 export const EPOCH1_CARRYOVER_MIN_RANK = 102

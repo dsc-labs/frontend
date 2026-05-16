@@ -1,12 +1,12 @@
 {
   "ok": true,
-  "generatedAt": "2026-05-16T14:43:23.868Z",
+  "generatedAt": "2026-05-16T13:43:24.907Z",
   "stats": {
-    "totalParticipants": 355,
-    "eligibleParticipants": 26,
+    "totalParticipants": 347,
+    "eligibleParticipants": 18,
     "notEligibleParticipants": 329,
-    "totalMindsharePosts": 1847,
-    "totalScore": 8046.24,
+    "totalMindsharePosts": 993,
+    "totalScore": 4629.19,
     "daysRemaining": 5,
     "totalLikes": 5340,
     "totalComments": 4659,
@@ -16,50 +16,50 @@
     {
       "username": "「 𝕲𝖔𝖔𝖓」",
       "wallet": "0x73B6bdf237eD04f40E5684f3e5718F9239B5d64a",
-      "postCount": 8,
-      "score": 376.04,
+      "postCount": 20,
+      "score": 266.04,
       "srEligible": true
     },
     {
       "username": "zagen",
       "wallet": "0x1aad084517ea492a67fcca54048c7e0404ce1ab2",
       "postCount": 14,
-      "score": 368.08,
+      "score": 258.08,
       "srEligible": true
     },
     {
       "username": "100xDarren",
       "wallet": "0xccd05831016B444fFC83F6dA2e018F62849ab34A",
       "postCount": 14,
-      "score": 218.95,
+      "score": 244.48,
       "srEligible": true
     },
     {
       "username": "Conan.eth",
       "wallet": "0x6d69e2d103CE4C147Fa189ee3fdfB88159C907cf",
-      "postCount": 2,
-      "score": 212.71,
+      "postCount": 17,
+      "score": 212.24,
       "srEligible": true
     },
     {
       "username": "3DMax_Virtuals",
       "wallet": "0xA18c066fC86B9e8a91287496ab954fcc414a30AA",
       "postCount": 9,
-      "score": 209.03,
+      "score": 208.56,
       "srEligible": true
     },
     {
       "username": "Biz Brain",
       "wallet": "0xd5A065E5c38c7d87f6B90e920f4e1aCc9722d97a",
-      "postCount": 14,
-      "score": 203.17,
+      "postCount": 15,
+      "score": 140.17,
       "srEligible": true
     },
     {
       "username": "office2crypto",
       "wallet": "0x97Bc998dBDD5D5a9df74cB589F4eabd516D4a22A",
       "postCount": 8,
-      "score": 199.22,
+      "score": 136.22,
       "srEligible": true
     },
     {
@@ -67,20 +67,6 @@
       "wallet": "0x611c3f4B257fA7f330061D5407bb0f6aDa52cada",
       "postCount": 17,
       "score": 68,
-      "srEligible": true
-    },
-    {
-      "username": "Sothh.HC",
-      "wallet": "0x2AA3D9acc0818855Cf7F1567a6C235B9702246D5",
-      "postCount": 16,
-      "score": 64,
-      "srEligible": true
-    },
-    {
-      "username": "GodAir",
-      "wallet": "0x6e7dbB10343c03DA3f07DC6B6a4747C7748Fd47A",
-      "postCount": 14,
-      "score": 56,
       "srEligible": true
     },
     {
@@ -98,52 +84,24 @@
       "srEligible": true
     },
     {
-      "username": "Ben Crypto",
-      "wallet": "0x2d8E97569C42d3A387E948a6A8bCd6474B47E39b",
-      "postCount": 13,
-      "score": 52,
-      "srEligible": true
-    },
-    {
-      "username": "sashinmeena",
-      "wallet": "0x3ae1Cfea83DA97D533Bb5f5E6E31C4ecDea3E057",
-      "postCount": 11,
-      "score": 44,
-      "srEligible": true
-    },
-    {
-      "username": "MEDICO",
-      "wallet": "0xB0c7084Fc05ed9827683dc38766a930d083af6C4",
-      "postCount": 11,
-      "score": 44,
-      "srEligible": true
-    },
-    {
       "username": "dinhxomgon",
       "wallet": "0x9C3419A8D3B46E5c7150e8f6e3Ec1A8afc1E9Db9",
-      "postCount": 8,
-      "score": 32,
+      "postCount": 9,
+      "score": 41.45,
       "srEligible": true
     },
     {
       "username": "Frank.eth",
       "wallet": "0x9D3CA3A3Da4d033ACee296D4C1829cc5143e0fAE",
-      "postCount": 7,
-      "score": 28,
+      "postCount": 12,
+      "score": 41.25,
       "srEligible": true
     },
     {
-      "username": "Trong Hatachi (❖,❖)",
-      "wallet": "0xC70D7342332eCF3c26F991FdBC85A8b8AB1A48bA",
+      "username": "hitas.base.eth",
+      "wallet": "0x4830764Cb1252Fc7553231E2FBF5b09961a29c59",
       "postCount": 5,
-      "score": 20,
-      "srEligible": true
-    },
-    {
-      "username": "sheepmek",
-      "wallet": "0x40A2C0F8D5b2B42059be294e25cE7bcaF1ddc652",
-      "postCount": 5,
-      "score": 20,
+      "score": 26.93,
       "srEligible": true
     },
     {
@@ -154,29 +112,15 @@
       "srEligible": true
     },
     {
-      "username": "Joker 🐳",
-      "wallet": "0xC6dB3110E8d0290200371dE6548A3174f5701d47",
-      "postCount": 2,
-      "score": 8,
-      "srEligible": true
-    },
-    {
-      "username": "hitas.base.eth",
-      "wallet": "0x4830764Cb1252Fc7553231E2FBF5b09961a29c59",
-      "postCount": 2,
-      "score": 8,
-      "srEligible": true
-    },
-    {
       "username": "alfakeko",
       "wallet": "0x471fAF231212caAD6554B4E3ec1fC5255f36F468",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 3,
+      "score": 12.25,
       "srEligible": true
     },
     {
-      "username": "CODY01ETH (*,*)",
-      "wallet": "0x7fCbefaE32efde50630e91B8B2346887838a7fbD",
+      "username": "sheepmek",
+      "wallet": "0x40A2C0F8D5b2B42059be294e25cE7bcaF1ddc652",
       "postCount": 2,
       "score": 8,
       "srEligible": true
@@ -189,8 +133,8 @@
       "srEligible": true
     },
     {
-      "username": "VULCAN 🌋",
-      "wallet": "0x96993C0aB74299f3C304a08DE30Dc2a3f1E072b4",
+      "username": "CODY01ETH (*,*)",
+      "wallet": "0x7fCbefaE32efde50630e91B8B2346887838a7fbD",
       "postCount": 1,
       "score": 4,
       "srEligible": true
@@ -198,2304 +142,2304 @@
     {
       "username": "chase",
       "wallet": "0x88Df9f66ef65c3C1231f981c85f7B946Bf6d99EC",
-      "postCount": 6,
-      "score": 42,
+      "postCount": 3,
+      "score": 21,
       "srEligible": false
     },
     {
       "username": "T N",
       "wallet": "0x214522796492859788Ffb807aF8a356672a8bB56",
-      "postCount": 8,
-      "score": 40,
+      "postCount": 4,
+      "score": 20,
       "srEligible": false
     },
     {
       "username": "Rare",
       "wallet": "0x271c72589f10D8eA866eDB97b9db09ab12ab9721",
-      "postCount": 12,
-      "score": 39.88,
+      "postCount": 6,
+      "score": 19.94,
       "srEligible": false
     },
     {
       "username": "CODED",
       "wallet": "0xcb1862d265c726b57592f795a4c20cbfbc892899",
-      "postCount": 8,
-      "score": 39.5,
+      "postCount": 4,
+      "score": 19.75,
       "srEligible": false
     },
     {
       "username": "deFiprinces",
       "wallet": "0x56c4924FDA0a46490f2135Ca259e7Bf1aFfE9B52",
-      "postCount": 8,
-      "score": 39,
+      "postCount": 4,
+      "score": 19.5,
       "srEligible": false
     },
     {
       "username": "Rosetina Degen 🎩🎒",
       "wallet": "0x53bB62BFBa912847D0B8d3eff55542bAE991bb0D",
-      "postCount": 4,
-      "score": 38.5,
+      "postCount": 2,
+      "score": 19.25,
       "srEligible": false
     },
     {
       "username": "tyr 🐺",
       "wallet": "0xd9926e2232b49bab2e1543613d286622411accaa",
-      "postCount": 4,
-      "score": 38.08,
+      "postCount": 2,
+      "score": 19.04,
       "srEligible": false
     },
     {
       "username": "Dzola",
       "wallet": "0xC6776bBa507Ed718C9D7AeE70b0eA1B1C26ec8Af",
-      "postCount": 4,
-      "score": 37.5,
+      "postCount": 2,
+      "score": 18.75,
       "srEligible": false
     },
     {
       "username": "SpilsA",
       "wallet": "0xC967255394fa6BD630F8405bD69b51d70Ad73F01",
-      "postCount": 8,
-      "score": 37.44,
+      "postCount": 4,
+      "score": 18.72,
       "srEligible": false
     },
     {
       "username": "Wozbekk",
       "wallet": "0x19221Aa28cc6269293bC6A3bae4001C93CE38cBf",
-      "postCount": 10,
-      "score": 37.44,
+      "postCount": 5,
+      "score": 18.72,
       "srEligible": false
     },
     {
       "username": "HBO",
       "wallet": "0x1A062aA6EFD4Be430B71Fa1436d72ec24bB381AB",
-      "postCount": 12,
-      "score": 36.86,
+      "postCount": 6,
+      "score": 18.43,
       "srEligible": false
     },
     {
       "username": "Em Bi grvt🍏",
       "wallet": "0x9202744fc4f6ae71272f6204c707e1bfd3694fae",
-      "postCount": 8,
-      "score": 36.5,
+      "postCount": 4,
+      "score": 18.25,
       "srEligible": false
     },
     {
       "username": "David",
       "wallet": "0x863e3ca52239be57ff34209f26f416f4a083de3d",
-      "postCount": 6,
-      "score": 36.5,
+      "postCount": 3,
+      "score": 18.25,
       "srEligible": false
     },
     {
       "username": "ValeriiVSL | 𝔽rAI",
       "wallet": "0x71004760Eb3F6Fb351358aBD8cfe7B481F5e086A",
-      "postCount": 6,
-      "score": 36.4,
+      "postCount": 3,
+      "score": 18.2,
       "srEligible": false
     },
     {
       "username": "Oscar",
       "wallet": "0x5F41297c6c24B5C549E2f673c1e4038bf0cf76f9",
-      "postCount": 4,
-      "score": 36,
+      "postCount": 2,
+      "score": 18,
       "srEligible": false
     },
     {
       "username": "6iks",
       "wallet": "0x9EA429C0EB345A5b73a2ea696fb8B819E57D2fdd",
-      "postCount": 22,
-      "score": 35.72,
+      "postCount": 11,
+      "score": 17.86,
       "srEligible": false
     },
     {
       "username": "rebeccacoupland",
       "wallet": "0x9c6b6EE9f10e2a63d94974b7A37Df0F1D7457B16",
-      "postCount": 8,
-      "score": 35.7,
+      "postCount": 4,
+      "score": 17.85,
       "srEligible": false
     },
     {
       "username": "ayıfero",
       "wallet": "0xABE08B81Dd3D7d67d8Aa753CE37195D02aB4383D",
-      "postCount": 8,
-      "score": 35.7,
+      "postCount": 4,
+      "score": 17.85,
       "srEligible": false
     },
     {
       "username": "SYNEX",
       "wallet": "0x11e6f1205160b970feb003161f18edffc58fBb73",
-      "postCount": 6,
-      "score": 35.52,
+      "postCount": 3,
+      "score": 17.76,
       "srEligible": false
     },
     {
       "username": "Crypty Universe📊",
       "wallet": "0x8996a21b8cf30a741078f995d9a58f6c543a0ca4",
-      "postCount": 4,
-      "score": 35.5,
+      "postCount": 2,
+      "score": 17.75,
       "srEligible": false
     },
     {
       "username": "MNWeb3",
       "wallet": "0xa3b1dc050f3a81f6fb5ffe52a7dc995545304198",
-      "postCount": 12,
-      "score": 35.06,
+      "postCount": 6,
+      "score": 17.53,
       "srEligible": false
     },
     {
       "username": "Ozan",
       "wallet": "0xDaa357631250d237E46C2648c7CbF32Ed470A55d",
-      "postCount": 8,
-      "score": 35,
+      "postCount": 4,
+      "score": 17.5,
       "srEligible": false
     },
     {
       "username": "SofiX.eth (reader arc) 📖",
       "wallet": "0x3d3c9859CDe8eF1A51456f7166BB17d7CFb1D6e6",
-      "postCount": 4,
-      "score": 34.92,
+      "postCount": 2,
+      "score": 17.46,
       "srEligible": false
     },
     {
       "username": "SADIQ ",
       "wallet": "0x002CcB36a4e4Da1c24c6C84F8939D0141529c3ef",
-      "postCount": 6,
-      "score": 34.78,
+      "postCount": 3,
+      "score": 17.39,
       "srEligible": false
     },
     {
       "username": "Mr_Josephhh 🤖ボッ",
       "wallet": "0xB23f40e5F70b5617aB0918123C39Aa20fb9Bc620",
-      "postCount": 8,
-      "score": 33.96,
+      "postCount": 4,
+      "score": 16.98,
       "srEligible": false
     },
     {
       "username": "ABBA",
       "wallet": "0x03fa24549d896DD8B582568BD17c27B1f63B1f10",
-      "postCount": 6,
-      "score": 33.94,
+      "postCount": 3,
+      "score": 16.97,
       "srEligible": false
     },
     {
       "username": "LEV",
       "wallet": "0x6c3a90c5Da8b1D74dEdE154B0e441927F2C97524",
-      "postCount": 10,
-      "score": 33.64,
+      "postCount": 5,
+      "score": 16.82,
       "srEligible": false
     },
     {
       "username": "呆呆呆呆🔸🐬TermMax",
       "wallet": "0x0D35D958ea4646D9378644848222dCcE4127BBa2",
-      "postCount": 10,
-      "score": 33.5,
+      "postCount": 5,
+      "score": 16.75,
       "srEligible": false
     },
     {
       "username": "Eccentric 🦈 KGeN 🐬TermMax",
       "wallet": "0xB794CbB6FDca6E47d537De61010675669A86Ff57",
-      "postCount": 8,
-      "score": 33.4,
+      "postCount": 4,
+      "score": 16.7,
       "srEligible": false
     },
     {
       "username": "heymen33",
       "wallet": "0xC2838c5F882f43958ac6993b5195618595C3F283",
-      "postCount": 4,
-      "score": 32.88,
+      "postCount": 2,
+      "score": 16.44,
       "srEligible": false
     },
     {
       "username": "hakan",
       "wallet": "0xF5C7F48887536E4E8F4a947472546bA81E74c569",
-      "postCount": 6,
-      "score": 32.5,
+      "postCount": 3,
+      "score": 16.25,
       "srEligible": false
     },
     {
       "username": "mesut",
       "wallet": "0x543e3C00E9C6C0Ed2Ef420302a574F1DCFa83e93",
-      "postCount": 6,
-      "score": 32.5,
+      "postCount": 3,
+      "score": 16.25,
       "srEligible": false
     },
     {
       "username": "luluca_pp",
       "wallet": "0x750Ff9679d229CcC28Ba6E011bAc955926333146",
-      "postCount": 6,
-      "score": 32.12,
+      "postCount": 3,
+      "score": 16.06,
       "srEligible": false
     },
     {
       "username": "apelkorv",
       "wallet": "0x86515adbbc3A02D7f5cceD10885150502C776cBC",
-      "postCount": 6,
-      "score": 32.06,
+      "postCount": 3,
+      "score": 16.03,
       "srEligible": false
     },
     {
       "username": "Nexora",
       "wallet": "0x9ff4359d5f8611084e608139d99deefe740b9d3c",
-      "postCount": 4,
-      "score": 32.02,
+      "postCount": 2,
+      "score": 16.01,
       "srEligible": false
     },
     {
       "username": "0xvinhpham",
       "wallet": "0x3aedb97569ad578038498af46f071045b1f36476",
-      "postCount": 8,
-      "score": 32,
+      "postCount": 4,
+      "score": 16,
       "srEligible": false
     },
     {
       "username": "Aemar (✱ ✱)",
       "wallet": "0x1d89d1cde8f01e5620debbcae90c312246a9f68c",
-      "postCount": 6,
-      "score": 32,
+      "postCount": 3,
+      "score": 16,
       "srEligible": false
     },
     {
       "username": "Sajib",
       "wallet": "0x3De953c945C8C5E351b5667904fCBd1AdC558A20",
-      "postCount": 6,
-      "score": 32,
+      "postCount": 3,
+      "score": 16,
       "srEligible": false
     },
     {
       "username": "XLⓂ️",
       "wallet": "0x697c9B0E6b16c1239d82F9f01D792796887a396b",
-      "postCount": 8,
-      "score": 32,
+      "postCount": 4,
+      "score": 16,
       "srEligible": false
     },
     {
       "username": "callmeperry3",
       "wallet": "0xeCe7205C26F7D58b1eD899fac8e68D2EE49247b4",
-      "postCount": 4,
-      "score": 32,
+      "postCount": 2,
+      "score": 16,
       "srEligible": false
     },
     {
       "username": "𝐃Ξ𝐆Ξ𝐍𝐊𝐈𝐃",
       "wallet": "0xbdfa3d13E5644fBa20aB3EB1d354693D404D281b",
-      "postCount": 6,
-      "score": 31.5,
+      "postCount": 3,
+      "score": 15.75,
       "srEligible": false
     },
     {
       "username": "Dhark💙",
       "wallet": "0x85293459625474693ee335f430be38e7e84516e6",
-      "postCount": 6,
-      "score": 31.5,
+      "postCount": 3,
+      "score": 15.75,
       "srEligible": false
     },
     {
       "username": "edgar",
       "wallet": "0xc2ce378434bF3500e5CF894F7eC57Be6C8AA1466",
-      "postCount": 6,
-      "score": 31.14,
+      "postCount": 3,
+      "score": 15.57,
       "srEligible": false
     },
     {
       "username": "WingroveRobert",
       "wallet": "0xc47BE2036326bA92Fa68DC2F2BA16952b8f85604",
-      "postCount": 6,
-      "score": 31.06,
+      "postCount": 3,
+      "score": 15.53,
       "srEligible": false
     },
     {
       "username": "KASIM Muhammad",
       "wallet": "0xFfFb536b929118A05785786f182333ff855d4339",
-      "postCount": 6,
-      "score": 31.02,
+      "postCount": 3,
+      "score": 15.51,
       "srEligible": false
     },
     {
       "username": "CRYPTO ALVERON",
       "wallet": "0x713c8aEa444C2Ad739D0f7fD84a8951830735bF6",
-      "postCount": 10,
-      "score": 31,
+      "postCount": 5,
+      "score": 15.5,
       "srEligible": false
     },
     {
       "username": "MIKEY",
       "wallet": "0xbbbbdf3ab00a2b1e72893b712ae484b8b0a903e8",
-      "postCount": 6,
-      "score": 30.98,
+      "postCount": 3,
+      "score": 15.49,
       "srEligible": false
     },
     {
       "username": "Amie",
       "wallet": "0x885f7b41cff62c8309bd609b8bca4332dafd3675",
-      "postCount": 6,
-      "score": 30.94,
+      "postCount": 3,
+      "score": 15.47,
       "srEligible": false
     },
     {
       "username": "Gujil Ruipa",
       "wallet": "0x147da61d038Faee3b73Fa90AdcE9A2abC2d87558",
-      "postCount": 6,
-      "score": 30.86,
+      "postCount": 3,
+      "score": 15.43,
       "srEligible": false
     },
     {
       "username": "Shawon MN",
       "wallet": "0x6c35a1bc15F0508c434Dc118Aa5a6f1f3Fe57418",
-      "postCount": 4,
-      "score": 30.02,
+      "postCount": 2,
+      "score": 15.01,
       "srEligible": false
     },
     {
       "username": "EyoAugusti",
       "wallet": "0x71e8E723a83305C8625AfA7BD135e502F7714d09",
-      "postCount": 4,
-      "score": 30,
+      "postCount": 2,
+      "score": 15,
       "srEligible": false
     },
     {
       "username": "Viora",
       "wallet": "0x6865D33a359b2ab9D46CAE2762e9Ed3Fa9a4145e",
-      "postCount": 6,
-      "score": 30,
+      "postCount": 3,
+      "score": 15,
       "srEligible": false
     },
     {
       "username": "Black Miami🧚🏿‍♂️",
       "wallet": "0x86678f2b6ca3f126666c59612f2428528340cfb6",
-      "postCount": 6,
-      "score": 29.84,
+      "postCount": 3,
+      "score": 14.92,
       "srEligible": false
     },
     {
       "username": "BigFarm 🌸",
       "wallet": "0xf93a9bd47f02cb3e89d5e9d0fbd18e4a21ff9511",
-      "postCount": 12,
-      "score": 29.5,
+      "postCount": 6,
+      "score": 14.75,
       "srEligible": false
     },
     {
       "username": "Monkey D. Rupiah 🤖ボッ 🐬TermMax",
       "wallet": "0xB72Baf8959052Fa2386F27584c7a1F708709f885",
-      "postCount": 6,
-      "score": 29.48,
+      "postCount": 3,
+      "score": 14.74,
       "srEligible": false
     },
     {
       "username": "Nguyen Phan Hoai Nam",
       "wallet": "0x3074dB7DdfEF10a64925a6a6123379679F86EAa1",
-      "postCount": 8,
-      "score": 29.34,
+      "postCount": 4,
+      "score": 14.67,
       "srEligible": false
     },
     {
       "username": "JhaliaArmas",
       "wallet": "0x0e5Dd9602Ab1584776cA0163bc9F0830B0274338",
-      "postCount": 8,
-      "score": 29.32,
+      "postCount": 4,
+      "score": 14.66,
       "srEligible": false
     },
     {
       "username": "Indra DJ",
       "wallet": "0xb6A5feD504dF5c3a61B5bf83Fb01e5Eb1A7F3DbC",
-      "postCount": 6,
-      "score": 29,
+      "postCount": 3,
+      "score": 14.5,
       "srEligible": false
     },
     {
       "username": "Choi_Soo_Sun_",
       "wallet": "0x949aB7B5d74D4de6936e0C6fa02146C47A1dBbf5",
-      "postCount": 8,
-      "score": 28.96,
+      "postCount": 4,
+      "score": 14.48,
       "srEligible": false
     },
     {
       "username": "Chorux",
       "wallet": "0xBfB6b759E824CfdFe81e475DE2a4dad15f31c765",
-      "postCount": 4,
-      "score": 28.58,
+      "postCount": 2,
+      "score": 14.29,
       "srEligible": false
     },
     {
       "username": "Verma",
       "wallet": "0x96FB478eAda938765Ba686DF6988a6EAAB49e416",
-      "postCount": 8,
-      "score": 28.5,
+      "postCount": 4,
+      "score": 14.25,
       "srEligible": false
     },
     {
       "username": "Scott",
       "wallet": "0xed3624c2f9e5cfed7b045141b5d1df68f9a960e6",
-      "postCount": 6,
-      "score": 28.5,
+      "postCount": 3,
+      "score": 14.25,
       "srEligible": false
     },
     {
       "username": "Tarik_DeFi",
       "wallet": "0xB6381D7958EB73E0f8771FDf3350B33d4bB9f235",
-      "postCount": 4,
-      "score": 28.5,
+      "postCount": 2,
+      "score": 14.25,
       "srEligible": false
     },
     {
       "username": "Dapper",
       "wallet": "0x590997bf8f5249fb6703c151ddd7c19b0434abd3",
-      "postCount": 10,
-      "score": 28.34,
+      "postCount": 5,
+      "score": 14.17,
       "srEligible": false
     },
     {
       "username": "Knox.eth🍌",
       "wallet": "0xAF83a69b531e52D184fEAE7D3F3cA3697dCfF592",
-      "postCount": 6,
-      "score": 27.5,
+      "postCount": 3,
+      "score": 13.75,
       "srEligible": false
     },
     {
       "username": "Clinton",
       "wallet": "0xf8e5bdF253aD5Be1d254433cF0Ee2E179A35E8e4",
-      "postCount": 12,
-      "score": 26.5,
+      "postCount": 6,
+      "score": 13.25,
       "srEligible": false
     },
     {
       "username": "Timcrypt",
       "wallet": "0xc1e337bf5977d0947f6a298c0a8be225093f1716",
-      "postCount": 8,
-      "score": 26.5,
+      "postCount": 4,
+      "score": 13.25,
       "srEligible": false
     },
     {
       "username": "Trenchwalker",
       "wallet": "0xabe2e29a2916b1d494eb2ceb998b46d8c06ec2e6",
-      "postCount": 16,
-      "score": 26.46,
+      "postCount": 8,
+      "score": 13.23,
       "srEligible": false
     },
     {
       "username": "Ahonaf Shariar Nihal",
       "wallet": "0x3e84F76A360af2fb9e2b33fe015d7bdd3953b260",
-      "postCount": 8,
-      "score": 26.4,
+      "postCount": 4,
+      "score": 13.2,
       "srEligible": false
     },
     {
       "username": "patricia ana .❤",
       "wallet": "0xCe84c05918315Fbc43348a886EC6839264241843",
-      "postCount": 6,
-      "score": 26.38,
+      "postCount": 3,
+      "score": 13.19,
       "srEligible": false
     },
     {
       "username": "Yemi",
       "wallet": "0xb60914d451886297FE4e3517bc0970BAC1E4E0B9",
-      "postCount": 14,
-      "score": 26.38,
+      "postCount": 7,
+      "score": 13.19,
       "srEligible": false
     },
     {
       "username": "Eternal",
       "wallet": "0x408b95510e8e5a1d065ebd8ac8858eacc8478ad8",
-      "postCount": 6,
-      "score": 26.32,
+      "postCount": 3,
+      "score": 13.16,
       "srEligible": false
     },
     {
       "username": "NightCitizen",
       "wallet": "0xa5d4479e06e1C397d81869436f622AAE06b801C9",
-      "postCount": 8,
-      "score": 26,
+      "postCount": 4,
+      "score": 13,
       "srEligible": false
     },
     {
       "username": "Mustapha bappayo",
       "wallet": "0xdadaff041dd50ff24317382e51325a708de446f2",
-      "postCount": 6,
-      "score": 25.96,
+      "postCount": 3,
+      "score": 12.98,
       "srEligible": false
     },
     {
       "username": "Andy the Jet 🐬TermMax",
       "wallet": "0xfe2cB10B37Cb2060C21b1f4fB9Ac5e8AF1CdCA2D",
-      "postCount": 10,
-      "score": 25.66,
+      "postCount": 5,
+      "score": 12.83,
       "srEligible": false
     },
     {
       "username": "Kyo",
       "wallet": "0x00edf8e6eee1706bca287d6e9ed23bf767fc4a07",
-      "postCount": 8,
-      "score": 25.52,
+      "postCount": 4,
+      "score": 12.76,
       "srEligible": false
     },
     {
       "username": "Dannyboy_0x",
       "wallet": "0x081d4609e4948e678021112fac0c442d4f6d355b",
-      "postCount": 6,
-      "score": 25.5,
+      "postCount": 3,
+      "score": 12.75,
       "srEligible": false
     },
     {
       "username": "Frankly Speaking",
       "wallet": "0xB5f319AaB9a35cFaf7b079c20cC43590Fb1252F0",
-      "postCount": 6,
-      "score": 25.5,
+      "postCount": 3,
+      "score": 12.75,
       "srEligible": false
     },
     {
       "username": "Oguntoba folagbade williams",
       "wallet": "0xdd8062e955799ddb7e1849ef1f830345e3a13d72",
-      "postCount": 10,
-      "score": 25.12,
+      "postCount": 5,
+      "score": 12.56,
       "srEligible": false
     },
     {
       "username": "rheRealjohnDoe⛓️🎗️ボッ",
       "wallet": "0x8074C4Fe871B511Cd7416083b15fA72AE68fE8ce",
-      "postCount": 6,
-      "score": 25,
+      "postCount": 3,
+      "score": 12.5,
       "srEligible": false
     },
     {
       "username": "lorento",
       "wallet": "0x564345897F26d1653A88BD1456d4090ebeB4405c",
-      "postCount": 4,
-      "score": 24.88,
+      "postCount": 2,
+      "score": 12.44,
       "srEligible": false
     },
     {
       "username": "SAJIB",
       "wallet": "0xEa4Acb9c4C8F068EAF38e9EFb658F04650318dAF",
-      "postCount": 4,
-      "score": 24.86,
+      "postCount": 2,
+      "score": 12.43,
       "srEligible": false
     },
     {
       "username": "Mariko0x",
       "wallet": "0xEd49Eb1503fD3cC40744bF1474926Faaf6a08BDf",
-      "postCount": 8,
-      "score": 24.54,
+      "postCount": 4,
+      "score": 12.27,
       "srEligible": false
     },
     {
       "username": "Thuy Signals",
       "wallet": "0x0d73E1f2bbdB8a39C19e94fF71C6765429DDE485",
-      "postCount": 8,
-      "score": 24.18,
+      "postCount": 4,
+      "score": 12.09,
       "srEligible": false
     },
     {
       "username": "花白区块链.🐬TermMax🕊",
       "wallet": "0x49Cf9f12d3E78E3A5A6B34073274d11d6b012e62",
-      "postCount": 14,
-      "score": 24,
+      "postCount": 7,
+      "score": 12,
       "srEligible": false
     },
     {
       "username": "FoFan",
       "wallet": "0x9df5cf833ced34428d7be5efc421f1075f7a96f7",
-      "postCount": 6,
-      "score": 23.5,
+      "postCount": 3,
+      "score": 11.75,
       "srEligible": false
     },
     {
       "username": "Oluwafemi👑❤️🚀",
       "wallet": "0xeB007A72346edf26e9910957AF4c2c14853EDE2d",
-      "postCount": 16,
-      "score": 23.34,
+      "postCount": 8,
+      "score": 11.67,
       "srEligible": false
     },
     {
       "username": "Griner",
       "wallet": "0x68db396c4f88fe96d9ec7d3c9bc80baf82bb7f87",
-      "postCount": 8,
-      "score": 23.32,
+      "postCount": 4,
+      "score": 11.66,
       "srEligible": false
     },
     {
       "username": "Pham Phu Dung",
       "wallet": "0x9f4eb3a88ba7a263facebd58d56b6c6f879db34f",
-      "postCount": 10,
-      "score": 22.2,
+      "postCount": 5,
+      "score": 11.1,
       "srEligible": false
     },
     {
       "username": "Willow",
       "wallet": "0x7410dd515287bf51a95cf7e3fd220210413c9b5c",
-      "postCount": 8,
-      "score": 22,
+      "postCount": 4,
+      "score": 11,
       "srEligible": false
     },
     {
       "username": "Li🥳🥳 🦇 (✱ ✱)",
       "wallet": "0xcfdd620d944361a91860b846679594bceab2738c",
-      "postCount": 6,
-      "score": 22,
+      "postCount": 3,
+      "score": 11,
       "srEligible": false
     },
     {
       "username": "Hizqil",
       "wallet": "0xa64768627f4eBdCac40CD830485987ac2E6a760d",
-      "postCount": 4,
-      "score": 21.96,
+      "postCount": 2,
+      "score": 10.98,
       "srEligible": false
     },
     {
       "username": "Mr.Jack 🐬TermMax",
       "wallet": "0x7ddb22b48ccb1104f24e98d5f74b97f46c9ec888",
-      "postCount": 10,
-      "score": 21.94,
+      "postCount": 5,
+      "score": 10.97,
       "srEligible": false
     },
     {
       "username": "Krnkmr",
       "wallet": "0x61eE15C1831ed97005f1dCa65f9821745eC766Ad",
-      "postCount": 4,
-      "score": 21.6,
+      "postCount": 2,
+      "score": 10.8,
       "srEligible": false
     },
     {
       "username": "Promzy",
       "wallet": "0x96421ac7d040518ac5e667201254d032864f3e23",
-      "postCount": 16,
-      "score": 21.36,
+      "postCount": 8,
+      "score": 10.68,
       "srEligible": false
     },
     {
       "username": "Furkan",
       "wallet": "0xff3a3cfc42d27e85dba9ea85f0bfec34bd632f9a",
-      "postCount": 4,
-      "score": 21.04,
+      "postCount": 2,
+      "score": 10.52,
       "srEligible": false
     },
     {
       "username": "Babe !!",
       "wallet": "0x09b44e1722d6b9CBe020fC045e463b1bAf3d6e6D",
-      "postCount": 4,
-      "score": 21,
+      "postCount": 2,
+      "score": 10.5,
       "srEligible": false
     },
     {
       "username": "TabDel0x 🐉🐉",
       "wallet": "0x5777DA469aF845AdE4E0c89D7AEcA5db9879E0B2",
-      "postCount": 4,
-      "score": 20.5,
+      "postCount": 2,
+      "score": 10.25,
       "srEligible": false
     },
     {
       "username": "jani_jenus.eth 𖤐",
       "wallet": "0xF4cEB967489c0ED4065cB48efF4506409B145ded",
-      "postCount": 6,
-      "score": 20.5,
+      "postCount": 3,
+      "score": 10.25,
       "srEligible": false
     },
     {
       "username": "Lan Anh",
       "wallet": "0x5c689c48001bf8bd5F732A88911A66A99639e056",
-      "postCount": 4,
-      "score": 20.5,
+      "postCount": 2,
+      "score": 10.25,
       "srEligible": false
     },
     {
       "username": "Travis",
       "wallet": "0x150905B32B99a5974b846466096Cf51EDf8FDc96",
-      "postCount": 6,
-      "score": 20.3,
+      "postCount": 3,
+      "score": 10.15,
       "srEligible": false
     },
     {
       "username": "kosturmabeni1",
       "wallet": "0x8F772Af47D8B510D859f47398b43864DDd3F435D",
-      "postCount": 6,
-      "score": 20,
+      "postCount": 3,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "Jimmysnooploo",
       "wallet": "0x91d49E37c64eb0cb24D24Ed2D38119c9AB78f3D5",
-      "postCount": 12,
-      "score": 20,
+      "postCount": 6,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "Musttt",
       "wallet": "0x3e9c8585c9bd6426d7f9ae0d52c3757235cbde20",
-      "postCount": 4,
-      "score": 20,
+      "postCount": 2,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "KaMii",
       "wallet": "0x0E880cA87895132880c1FfC97B331F341dA01051",
-      "postCount": 4,
-      "score": 20,
+      "postCount": 2,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "Dee",
       "wallet": "0xDC3F93744EC88DE6782b70b6bcD668F6A334EFBA",
-      "postCount": 4,
-      "score": 20,
+      "postCount": 2,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "jul",
       "wallet": "0x898E7BA5997Edf98aC95E19a2D8dc417Fbe80621",
-      "postCount": 12,
-      "score": 20,
+      "postCount": 6,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "Lord OBI",
       "wallet": "0x75a640EF71a77D856f6F8A5Cc3B1d43AF44827AE",
-      "postCount": 2,
-      "score": 20,
+      "postCount": 1,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "Mad Magic Sol 🥇🐬TermMax",
       "wallet": "0xc88FA8BF8a0A451b5DE6D1ccd35F89fB92962bd7",
-      "postCount": 4,
-      "score": 20,
+      "postCount": 2,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "SHAKIB",
       "wallet": "0x442bE7DFd31a9C71D1b3d3cB3cE1A4Cf3dBeDa85",
-      "postCount": 4,
-      "score": 20,
+      "postCount": 2,
+      "score": 10,
       "srEligible": false
     },
     {
       "username": "padres_fernando",
       "wallet": "0xF02F4DD849F027D49041b0c3F8e653Cf8E3EDF1e",
-      "postCount": 4,
-      "score": 19.72,
+      "postCount": 2,
+      "score": 9.86,
       "srEligible": false
     },
     {
       "username": "Rylnei",
       "wallet": "0x7428295c6b7ebecfa25d91e05d47a2a59dfa6c90",
-      "postCount": 8,
-      "score": 19.6,
+      "postCount": 4,
+      "score": 9.8,
       "srEligible": false
     },
     {
       "username": "Kalista",
       "wallet": "0x4548534b1a5b599F57AeA9e7e2174603bf0d967b",
-      "postCount": 6,
-      "score": 19.5,
+      "postCount": 3,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "motion.",
       "wallet": "0x70a64632342c465BFa08bb8c7e2d962cFdF1Dbe3",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "ZEXOR",
       "wallet": "0xEC7355518962E00Fb192F8c0be16C277Dd593e82",
-      "postCount": 6,
-      "score": 19.5,
+      "postCount": 3,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Shreeram Jangid",
       "wallet": "0xd9c60e1159e5acc20552382600a50f8cda1525e7",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "REJAUL Ⓜ️",
       "wallet": "0x7C056212702A3Df8bDc5F18aE7b6B9ed6657E6E0",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Sultan",
       "wallet": "0x113465e5062a655e7503122575AF392D55b73b59",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Wilson",
       "wallet": "0x87b636ad699636617dd7b69dd0973e46d4ef6103",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "𝔻ℝ 𝕊𝕋𝔸𝕌ℕℂℍ Ⓜ️ ⚡",
       "wallet": "0x48BBbB8989bCA0C9655Fbd716AC511a1F03E9d5F",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Catinat",
       "wallet": "0xbAbFF80ceDFb5D663332D8DA03c56be85293627C",
-      "postCount": 6,
-      "score": 19.5,
+      "postCount": 3,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "CryptoJuñior",
       "wallet": "0x9e7486e6e393ebBd68F73Bf1D74A901d1553AC3C",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Lucky Luke",
       "wallet": "0x176987a76d999bf117377aaaa6c2e54c44fcf6f7",
-      "postCount": 6,
-      "score": 19.5,
+      "postCount": 3,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "𝐌𝐞𝐡𝐞𝐝𝐢",
       "wallet": "0x14D21355Db8569736A583e0197385f5C26888Fbe",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Max",
       "wallet": "0x6A14588d869E0B11Dd8bcA209aB982315036fAb0",
-      "postCount": 4,
-      "score": 19.5,
+      "postCount": 2,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "Sheetly",
       "wallet": "0xcc6c55a1ee9c0771d184738203e4311ce79bc747",
-      "postCount": 2,
-      "score": 19.5,
+      "postCount": 1,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "tEO",
       "wallet": "0x951258c3e166ca7f5cefac5bcd099778d5767885",
-      "postCount": 6,
-      "score": 19.5,
+      "postCount": 3,
+      "score": 9.75,
       "srEligible": false
     },
     {
       "username": "X E N O | 🐬TermMax",
       "wallet": "0x82813d1528f0b25360639460070080a756c69029",
-      "postCount": 16,
-      "score": 19.48,
+      "postCount": 8,
+      "score": 9.74,
       "srEligible": false
     },
     {
       "username": "Aista",
       "wallet": "0xC8D3ddeF1Fc8240739D60965a102E3F7bf8BAE30",
-      "postCount": 8,
-      "score": 19.46,
+      "postCount": 4,
+      "score": 9.73,
       "srEligible": false
     },
     {
       "username": "Grace Iwuchukwu",
       "wallet": "0x561d7dc6dc66d4d2e3fe33d138f7de10ca01cef7",
-      "postCount": 4,
-      "score": 19.44,
+      "postCount": 2,
+      "score": 9.72,
       "srEligible": false
     },
     {
       "username": "iamlequanghuong",
       "wallet": "0x23934e253c4f9c44f73a85b350c00a72e1d9c20b",
-      "postCount": 2,
-      "score": 19.3,
+      "postCount": 1,
+      "score": 9.65,
       "srEligible": false
     },
     {
       "username": "ha",
       "wallet": "0x9219d387224d1d9bc9009cb6395a2f2e0094726b",
-      "postCount": 6,
-      "score": 19.28,
+      "postCount": 3,
+      "score": 9.64,
       "srEligible": false
     },
     {
       "username": "Daniel",
       "wallet": "0xfcd795d81b0c8f45afa1b5eefd9e02fe29e6f6d7",
-      "postCount": 2,
-      "score": 19.16,
+      "postCount": 1,
+      "score": 9.58,
       "srEligible": false
     },
     {
       "username": "𝕊𝕡𝕣𝕚𝕥𝕖",
       "wallet": "0xe2f6aebd4dff1c6593fb0a645d5a6b3ba8111a38",
-      "postCount": 8,
-      "score": 19,
+      "postCount": 4,
+      "score": 9.5,
       "srEligible": false
     },
     {
       "username": "Mankhan",
       "wallet": "0x09e4ed69b90612a178f117ccabbacc1979901c3d",
-      "postCount": 4,
-      "score": 19,
+      "postCount": 2,
+      "score": 9.5,
       "srEligible": false
     },
     {
       "username": "Busaba บุษบา",
       "wallet": "0x7aE8adFcC778c66c312bFbaC84Eff1402836ce7d",
-      "postCount": 2,
-      "score": 19,
+      "postCount": 1,
+      "score": 9.5,
       "srEligible": false
     },
     {
       "username": "Fabulous💸",
       "wallet": "0xBEBF32f7b33B41f8B141F168f1f61Bf4Bc4AE774",
-      "postCount": 4,
-      "score": 18.82,
+      "postCount": 2,
+      "score": 9.41,
       "srEligible": false
     },
     {
       "username": "Traderibo",
       "wallet": "0x7eac578521fe48f8ef5068563f67e768b8a85f9d",
-      "postCount": 6,
-      "score": 18.8,
+      "postCount": 3,
+      "score": 9.4,
       "srEligible": false
     },
     {
       "username": "eric.eth",
       "wallet": "0x88E6fAF07919c849a6dD8c46416D2616db61AdA6",
-      "postCount": 6,
-      "score": 18.76,
+      "postCount": 3,
+      "score": 9.38,
       "srEligible": false
     },
     {
       "username": "Enzo",
       "wallet": "0xCDA9BFD21b74ffEB74Ad1300256f3f5d6F77Fe3b",
-      "postCount": 4,
-      "score": 18.5,
+      "postCount": 2,
+      "score": 9.25,
       "srEligible": false
     },
     {
       "username": "Papy",
       "wallet": "0x2A4AC7409D43D111A3E471087226618538fF2B71",
-      "postCount": 2,
-      "score": 18.5,
+      "postCount": 1,
+      "score": 9.25,
       "srEligible": false
     },
     {
       "username": "ERKAN",
       "wallet": "0x3F31Fd7A98f90638b1263AAe656aF79A2002dc1B",
-      "postCount": 2,
-      "score": 18.5,
+      "postCount": 1,
+      "score": 9.25,
       "srEligible": false
     },
     {
       "username": "Benjamin",
       "wallet": "0xA316547E27bCF7F175eF4d5044D22Da6AE6d9edc",
-      "postCount": 2,
-      "score": 18.5,
+      "postCount": 1,
+      "score": 9.25,
       "srEligible": false
     },
     {
       "username": "Taheer",
       "wallet": "0x45b97f753f7cdbf2bc70fe013b854adb714a13b3",
-      "postCount": 2,
-      "score": 18.5,
+      "postCount": 1,
+      "score": 9.25,
       "srEligible": false
     },
     {
       "username": "Keng N",
       "wallet": "0xD924d8402Ce135957DC35fe338C61690e24861aD",
-      "postCount": 10,
-      "score": 18.38,
+      "postCount": 5,
+      "score": 9.19,
       "srEligible": false
     },
     {
       "username": "Mr. Jax 🐬TermMax",
       "wallet": "0x03193b2a5580ed18cb36efdac81b323bc746f33e",
-      "postCount": 6,
-      "score": 18.36,
+      "postCount": 3,
+      "score": 9.18,
       "srEligible": false
     },
     {
       "username": "Victor Edwin",
       "wallet": "0xd57e1aacd744e231868cec97fa038f7f65c915ef",
-      "postCount": 16,
-      "score": 18.24,
+      "postCount": 8,
+      "score": 9.12,
       "srEligible": false
     },
     {
       "username": "FAHAD",
       "wallet": "0x15B47032e5D0ed4373E37Df8fB5962e88fA4dD89",
-      "postCount": 4,
-      "score": 18,
+      "postCount": 2,
+      "score": 9,
       "srEligible": false
     },
     {
       "username": "Mustafa",
       "wallet": "0xfe4a4Bda927BDEe6f6650d419Fd3cD9018d4660D",
-      "postCount": 4,
-      "score": 18,
+      "postCount": 2,
+      "score": 9,
       "srEligible": false
     },
     {
       "username": "EZRAVERSE",
       "wallet": "0x03CA1a1A0040597679402d71813C0Dbe877f4116",
-      "postCount": 4,
-      "score": 18,
+      "postCount": 2,
+      "score": 9,
       "srEligible": false
     },
     {
       "username": "SkullZ",
       "wallet": "0x23edd37103613e3d86a4274ce0dcba1fb72f1e8a",
-      "postCount": 4,
-      "score": 18,
+      "postCount": 2,
+      "score": 9,
       "srEligible": false
     },
     {
       "username": "dee",
       "wallet": "0xdDA875aB21eEFFEaE8DAfC5Ae3bFd21d9acE6d21",
-      "postCount": 4,
-      "score": 18,
+      "postCount": 2,
+      "score": 9,
       "srEligible": false
     },
     {
       "username": "saint lee",
       "wallet": "0xfe3bc1eb469c70bfb462a9e208826e990bb078c0",
-      "postCount": 4,
-      "score": 17.9,
+      "postCount": 2,
+      "score": 8.95,
       "srEligible": false
     },
     {
       "username": "Cobra_10K",
       "wallet": "0x698173b62cb87686b2c038493bb9d538ac608287",
-      "postCount": 4,
-      "score": 17.5,
+      "postCount": 2,
+      "score": 8.75,
       "srEligible": false
     },
     {
       "username": "pprimnida ʕ••̫͡•ʔ•Noya",
       "wallet": "0xc4f1e9000e039e97dc5092fba83c8d34dd41f727",
-      "postCount": 4,
-      "score": 17.5,
+      "postCount": 2,
+      "score": 8.75,
       "srEligible": false
     },
     {
       "username": "Nwabueze Ikechi Isaac",
       "wallet": "0xfee7968d2337e3f3e80be40c728f3f7aa9255c09",
-      "postCount": 4,
-      "score": 17.5,
+      "postCount": 2,
+      "score": 8.75,
       "srEligible": false
     },
     {
       "username": "AnhsDuc",
       "wallet": "0x94F4e89c91BD375Eb9aa78E4bDbDd67cbF12e18A",
-      "postCount": 4,
-      "score": 17,
+      "postCount": 2,
+      "score": 8.5,
       "srEligible": false
     },
     {
       "username": "Phuong 👊",
       "wallet": "0x2c8165f7636b6a020727b756f5a48438371317df",
-      "postCount": 2,
-      "score": 16.68,
+      "postCount": 1,
+      "score": 8.34,
       "srEligible": false
     },
     {
       "username": "tamtd",
       "wallet": "0x82032F4f85f4A9ADfC0B1a881D7c8C93653E4812",
-      "postCount": 4,
-      "score": 16.66,
+      "postCount": 2,
+      "score": 8.33,
       "srEligible": false
     },
     {
       "username": "0x处长Jason",
       "wallet": "0x84bf184ab1a0cbe65531f14c2ab0a891253f19bc",
-      "postCount": 6,
-      "score": 16.5,
+      "postCount": 3,
+      "score": 8.25,
       "srEligible": false
     },
     {
       "username": "Paul",
       "wallet": "0x7c818C391Db52bEB3F77DD6BF4468eaC5518fFC1",
-      "postCount": 4,
-      "score": 16.5,
+      "postCount": 2,
+      "score": 8.25,
       "srEligible": false
     },
     {
       "username": "bobthebeanbaby",
       "wallet": "0x00aF28f49C01E28c4F25C2c3a7f33E508D777A07",
-      "postCount": 8,
-      "score": 16.5,
+      "postCount": 4,
+      "score": 8.25,
       "srEligible": false
     },
     {
       "username": "XQuack",
       "wallet": "0x5c3f31561228fff228fff16b48007375336cde56",
-      "postCount": 4,
-      "score": 16.5,
+      "postCount": 2,
+      "score": 8.25,
       "srEligible": false
     },
     {
       "username": "MsxChriz",
       "wallet": "0xe9f1e71E409cF1808925519d427Aa5AC65396Fd0",
-      "postCount": 4,
-      "score": 16.42,
+      "postCount": 2,
+      "score": 8.21,
       "srEligible": false
     },
     {
       "username": "Trấn Thành",
       "wallet": "0xc83c8916a1b9414de7f42deef4eb01917ec74451",
-      "postCount": 6,
-      "score": 16.32,
+      "postCount": 3,
+      "score": 8.16,
       "srEligible": false
     },
     {
       "username": "GhazalBasma",
       "wallet": "0x5129aA3ad7Dd8539bc3929702686FfcFa9f024C9",
-      "postCount": 4,
-      "score": 16.06,
+      "postCount": 2,
+      "score": 8.03,
       "srEligible": false
     },
     {
       "username": "TRAN DANG HOP",
       "wallet": "0x21b45103dd05c43969daF3CbB4277391777e2eC7",
-      "postCount": 6,
-      "score": 16,
+      "postCount": 3,
+      "score": 8,
       "srEligible": false
     },
     {
       "username": "Abdullahi Falalu",
       "wallet": "0xF96ad411eAe22DDc8aA7Da3D496413DF50FBa8fc",
-      "postCount": 4,
-      "score": 15.84,
+      "postCount": 2,
+      "score": 7.92,
       "srEligible": false
     },
     {
       "username": "Base.eth",
       "wallet": "0x3aC5974fD4866700ba013D4e1159Bf7E3D6d6256",
-      "postCount": 2,
-      "score": 15.76,
+      "postCount": 1,
+      "score": 7.88,
       "srEligible": false
     },
     {
       "username": "Emire",
       "wallet": "0x4EA3e78C11FcE7DD4d7e3AA8F37Cca193E9325B9",
-      "postCount": 2,
-      "score": 15.74,
+      "postCount": 1,
+      "score": 7.87,
       "srEligible": false
     },
     {
       "username": "JuanJoParejo",
       "wallet": "0x04301601de687236E912a8c22A31625D6EeA3c5F",
-      "postCount": 4,
-      "score": 15.48,
+      "postCount": 2,
+      "score": 7.74,
       "srEligible": false
     },
     {
       "username": "Brooklyn",
       "wallet": "0xC8678170e0E793AF3DaeEdbFB07c045a8b4bb393",
-      "postCount": 4,
-      "score": 15,
+      "postCount": 2,
+      "score": 7.5,
       "srEligible": false
     },
     {
       "username": "Deborah",
       "wallet": "0xE45c4407c27fC6e27a716367e2FCB3c9A83B68e5",
-      "postCount": 4,
-      "score": 15,
+      "postCount": 2,
+      "score": 7.5,
       "srEligible": false
     },
     {
       "username": "𝑆𝑎𝑛𝑙𝑜𝑢𝑖𝑠𝑠𝑠",
       "wallet": "0x86c33d544a8fcf77cbbbfe5b17ca3542ab7abb9c",
-      "postCount": 4,
-      "score": 15,
+      "postCount": 2,
+      "score": 7.5,
       "srEligible": false
     },
     {
       "username": "atichat khunchumnan",
       "wallet": "0xa48b036b9FE9192552F6911c7d15d3b943e2811f",
-      "postCount": 4,
-      "score": 14.86,
+      "postCount": 2,
+      "score": 7.43,
       "srEligible": false
     },
     {
       "username": "Nguyễn Thị Linh ❤️",
       "wallet": "0xCECAfe0749D91E990B51e879952322d35a7072d5",
-      "postCount": 16,
-      "score": 14.74,
+      "postCount": 8,
+      "score": 7.37,
       "srEligible": false
     },
     {
       "username": "ChainBuilder.pro",
       "wallet": "0x73e5D578929799f707707B3e73adCb43907D5eA9",
-      "postCount": 4,
-      "score": 14.62,
+      "postCount": 2,
+      "score": 7.31,
       "srEligible": false
     },
     {
       "username": "Youngmin Lee",
       "wallet": "0x02454407Cc4a7Dc79788372929bFc767d5e1D7e5",
-      "postCount": 6,
-      "score": 14,
+      "postCount": 3,
+      "score": 7,
       "srEligible": false
     },
     {
       "username": "Abuhanif",
       "wallet": "0x3430Ce58a8D5E3e31C1F73e0f3377BA65d92Aefb",
-      "postCount": 2,
-      "score": 13.92,
+      "postCount": 1,
+      "score": 6.96,
       "srEligible": false
     },
     {
       "username": "Ishaq",
       "wallet": "0x6a5a3825554dDc464084909ffD722191708B1c0e",
-      "postCount": 2,
-      "score": 13.7,
+      "postCount": 1,
+      "score": 6.85,
       "srEligible": false
     },
     {
       "username": "Hannah",
       "wallet": "0x15123bE4663dDe5eba8a4457A3050a3545367c05",
-      "postCount": 6,
-      "score": 13.7,
+      "postCount": 3,
+      "score": 6.85,
       "srEligible": false
     },
     {
       "username": "serdar",
       "wallet": "0x197bA93c3Fc804446626083bb8bba679F90222a8",
-      "postCount": 4,
-      "score": 13.62,
+      "postCount": 2,
+      "score": 6.81,
       "srEligible": false
     },
     {
       "username": "John kelly",
       "wallet": "0x4d2127Fbe2eF183135cE38C08f397C19901daD1C",
-      "postCount": 4,
-      "score": 13.5,
+      "postCount": 2,
+      "score": 6.75,
       "srEligible": false
     },
     {
       "username": "Mert Görmüş",
       "wallet": "0x8b0f24feec036aff6a6651b811492ddd90b82a09",
-      "postCount": 4,
-      "score": 13.36,
+      "postCount": 2,
+      "score": 6.68,
       "srEligible": false
     },
     {
       "username": "RurouniYu",
       "wallet": "0x784369FaB89a92F242b92452Cb19aAc0097ca4C3",
-      "postCount": 8,
-      "score": 13.12,
+      "postCount": 4,
+      "score": 6.56,
       "srEligible": false
     },
     {
       "username": "Urteamsfavoritecoach",
       "wallet": "0xae982f37Ef5F7922b7A497cba3b23C441C7cac38",
-      "postCount": 2,
-      "score": 13.04,
+      "postCount": 1,
+      "score": 6.52,
       "srEligible": false
     },
     {
       "username": "EFO_xx",
       "wallet": "0xd758e4edbf63c23957214282b13ca9bfb5b72676",
-      "postCount": 4,
-      "score": 13,
+      "postCount": 2,
+      "score": 6.5,
       "srEligible": false
     },
     {
       "username": "无法忍让🤖ボッ",
       "wallet": "0x93eecddd94fa42f1b0c082e79ea1998a91216acb",
-      "postCount": 4,
-      "score": 13,
+      "postCount": 2,
+      "score": 6.5,
       "srEligible": false
     },
     {
       "username": "Dave Brown",
       "wallet": "0xc750758366FA248Ec54590d8f98dF3358368238d",
-      "postCount": 4,
-      "score": 12.5,
+      "postCount": 2,
+      "score": 6.25,
       "srEligible": false
     },
     {
       "username": "Rejoice",
       "wallet": "0x650E317113C7e883d58AbA5fbD472e5F195C27c3",
-      "postCount": 2,
-      "score": 12.46,
+      "postCount": 1,
+      "score": 6.23,
       "srEligible": false
     },
     {
       "username": "Richard",
       "wallet": "0xecec188d4299d8f00d8942f9b2e9b7210e9bb614",
-      "postCount": 8,
-      "score": 12.4,
+      "postCount": 4,
+      "score": 6.2,
       "srEligible": false
     },
     {
       "username": "Daniel",
       "wallet": "0xfc7e35F51c1Cf318fccbe677D9289924ec852164",
-      "postCount": 4,
-      "score": 12.18,
+      "postCount": 2,
+      "score": 6.09,
       "srEligible": false
     },
     {
       "username": "Young OG",
       "wallet": "0xAFE9f4654cD8237ffbbe9379F20021499Ba51431",
-      "postCount": 2,
-      "score": 12.02,
+      "postCount": 1,
+      "score": 6.01,
       "srEligible": false
     },
     {
       "username": "车九",
       "wallet": "0xe0facb302a52844833729181d9a0a5c8894895db",
-      "postCount": 4,
-      "score": 12,
+      "postCount": 2,
+      "score": 6,
       "srEligible": false
     },
     {
       "username": "0reweb3",
       "wallet": "0x182c60f0d2beb81C99B7f52b3f1310F670294B45",
-      "postCount": 10,
-      "score": 11.56,
+      "postCount": 5,
+      "score": 5.78,
       "srEligible": false
     },
     {
       "username": "Luis",
       "wallet": "0x1a04d1f97F7CF151Cc76bb3d51d2dffaf29dcc4B",
-      "postCount": 2,
-      "score": 11.44,
+      "postCount": 1,
+      "score": 5.72,
       "srEligible": false
     },
     {
       "username": "| The Heroman",
       "wallet": "0xd6a83529fDaBb0c8711A58b1244263862dbe9969",
-      "postCount": 4,
-      "score": 11.42,
+      "postCount": 2,
+      "score": 5.71,
       "srEligible": false
     },
     {
       "username": "Juss",
       "wallet": "0x979Efc72454e7343b17180a92c53df87C5E3D562",
-      "postCount": 2,
-      "score": 11.32,
+      "postCount": 1,
+      "score": 5.66,
       "srEligible": false
     },
     {
       "username": "8IGHTY 4OUR",
       "wallet": "0x7525c1edf43cdb991fdae5ec70bb4546e5aa0ce7",
-      "postCount": 2,
-      "score": 11.16,
+      "postCount": 1,
+      "score": 5.58,
       "srEligible": false
     },
     {
       "username": "Mira",
       "wallet": "0x68B0026004A79e5998533a5ab6A836c42d2d7632",
-      "postCount": 2,
-      "score": 11,
+      "postCount": 1,
+      "score": 5.5,
       "srEligible": false
     },
     {
       "username": "ryu 龙",
       "wallet": "0xc02fBf1D030Ad97b84c1E1A533d37a6A2a1Db2B3",
-      "postCount": 2,
-      "score": 11,
+      "postCount": 1,
+      "score": 5.5,
       "srEligible": false
     },
     {
       "username": "CRYPTO FOYSAL",
       "wallet": "0xd6F2F95A5fCDc00c53e2e638D56d5A50b7814b8b",
-      "postCount": 2,
-      "score": 11,
+      "postCount": 1,
+      "score": 5.5,
       "srEligible": false
     },
     {
       "username": "Cuowngf",
       "wallet": "0xf90225c6f9A8588235C67825FbAE4A4291d44b31",
-      "postCount": 2,
-      "score": 11,
+      "postCount": 1,
+      "score": 5.5,
       "srEligible": false
     },
     {
       "username": "Sam 🂾",
       "wallet": "0x13b55e5284d66e5b44667244af871764361d89bb",
-      "postCount": 2,
-      "score": 11,
+      "postCount": 1,
+      "score": 5.5,
       "srEligible": false
     },
     {
       "username": "0xcuongdo",
       "wallet": "0xd48E13DE39d4CB4F70a83ACfB3866fBC8b9B947c",
-      "postCount": 2,
-      "score": 10.94,
+      "postCount": 1,
+      "score": 5.47,
       "srEligible": false
     },
     {
       "username": "Saino",
       "wallet": "0x0983e5fa77c7eD9F6337e39bb18a3C50947c5019",
-      "postCount": 2,
-      "score": 10.82,
+      "postCount": 1,
+      "score": 5.41,
       "srEligible": false
     },
     {
       "username": "Abubakar Zulkifilu Adam",
       "wallet": "0x61fc128e27cc1cfc42598fb411a3ffa82eac808a",
-      "postCount": 4,
-      "score": 10.74,
+      "postCount": 2,
+      "score": 5.37,
       "srEligible": false
     },
     {
       "username": "Neki",
       "wallet": "0xa3a19133ad1b8a7140cb2f8d69bb40b546c68884",
-      "postCount": 12,
-      "score": 10.64,
+      "postCount": 6,
+      "score": 5.32,
       "srEligible": false
     },
     {
       "username": "Crypto Hustle",
       "wallet": "0xf2d11B5d9aE8c69D058Bb51E3a60077Ab8534b1E",
-      "postCount": 2,
-      "score": 10.5,
+      "postCount": 1,
+      "score": 5.25,
       "srEligible": false
     },
     {
       "username": "Tsukuyomi.eth",
       "wallet": "0x149d485f982015b9fa7071dfbbcad66b494cb9e5",
-      "postCount": 2,
-      "score": 10.5,
+      "postCount": 1,
+      "score": 5.25,
       "srEligible": false
     },
     {
       "username": "batinho",
       "wallet": "0x81f28a69bd2ad3405b7a87272a10e2fb0b2bbfb0",
-      "postCount": 2,
-      "score": 10.5,
+      "postCount": 1,
+      "score": 5.25,
       "srEligible": false
     },
     {
       "username": "crypto_lifestyle",
       "wallet": "0x27232e2719988467e9d8b415b084fb40f5b816b5",
-      "postCount": 2,
-      "score": 10.5,
+      "postCount": 1,
+      "score": 5.25,
       "srEligible": false
     },
     {
       "username": "le long binh",
       "wallet": "0x39134f5b54aae49a76c4c015c0a5c41241181e55",
-      "postCount": 2,
-      "score": 10.5,
+      "postCount": 1,
+      "score": 5.25,
       "srEligible": false
     },
     {
       "username": "nomaden",
       "wallet": "0x2899b1d9a696ae5317f7988384abe88393f5a2a5",
-      "postCount": 2,
-      "score": 10.5,
+      "postCount": 1,
+      "score": 5.25,
       "srEligible": false
     },
     {
       "username": "Ada Jim🍄💎❤️ Memecoin",
       "wallet": "0x028cC8339CfaDbB0E706981118a5D91A725aDCCB",
-      "postCount": 2,
-      "score": 10.34,
+      "postCount": 1,
+      "score": 5.17,
       "srEligible": false
     },
     {
       "username": "CAO NGỌC SƠN",
       "wallet": "0x0e3d54f71600ad3e71ea8334177b441bb3ed8537",
-      "postCount": 2,
-      "score": 10.32,
+      "postCount": 1,
+      "score": 5.16,
       "srEligible": false
     },
     {
       "username": "Hellm | π",
       "wallet": "0xfd3b50bb02d9ef01c36703e49d050dfc3f5b3690",
-      "postCount": 2,
-      "score": 10.3,
+      "postCount": 1,
+      "score": 5.15,
       "srEligible": false
     },
     {
       "username": "Moeez",
       "wallet": "0x5eba6e6842ad7e314df0c71e0103de504a1e77c8",
-      "postCount": 2,
-      "score": 10.26,
+      "postCount": 1,
+      "score": 5.13,
       "srEligible": false
     },
     {
       "username": "ItsDackie",
       "wallet": "0xdb79578522d2397341954831911b71712136282c",
-      "postCount": 8,
-      "score": 10.26,
+      "postCount": 4,
+      "score": 5.13,
       "srEligible": false
     },
     {
       "username": "sweetl",
       "wallet": "0x7ec063ccee44945f2c6e7893aad91450a4d1275a",
-      "postCount": 2,
-      "score": 10,
+      "postCount": 1,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "Abdsalam Akinyemi",
       "wallet": "0x3e4bc5f26711fc6af2dd5ff0d234973a185075a3",
-      "postCount": 4,
-      "score": 10,
+      "postCount": 2,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "Breathe Agent",
       "wallet": "0x645f4dc1C08D30BC4c1763bb7A9F97E5f5AA3420",
-      "postCount": 2,
-      "score": 10,
+      "postCount": 1,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "Kha Huynh",
       "wallet": "0xFf9622a41d37760e390e577A581A13d1D7cD2EC7",
-      "postCount": 2,
-      "score": 10,
+      "postCount": 1,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "NeoH0DL",
       "wallet": "0x304261e5Df3801bD25CF2912Ec1af32Cad25D604",
-      "postCount": 6,
-      "score": 10,
+      "postCount": 3,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "Ali",
       "wallet": "0x7eee4653d932dca391b94a807f7a0ec3dbaac8b0",
-      "postCount": 2,
-      "score": 10,
+      "postCount": 1,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "zdapricorn.eth",
       "wallet": "0x88054bD4a3D77E11D09702532D594ecFA7777fBA",
-      "postCount": 2,
-      "score": 10,
+      "postCount": 1,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "privacy ish🪿",
       "wallet": "0x2df868f3176ed8f95d3b0d617a508e2478454ddd",
-      "postCount": 4,
-      "score": 10,
+      "postCount": 2,
+      "score": 5,
       "srEligible": false
     },
     {
       "username": "cryptoverse.sui",
       "wallet": "0x5768fEE0a0b0A8EB28C4AE5c0eB39C50f084064C",
-      "postCount": 14,
-      "score": 9.78,
+      "postCount": 7,
+      "score": 4.89,
       "srEligible": false
     },
     {
       "username": "Học viện X ✨",
       "wallet": "0x2e673d065258dbc4b640686e82968025c09feeb9",
-      "postCount": 2,
-      "score": 9.5,
+      "postCount": 1,
+      "score": 4.75,
       "srEligible": false
     },
     {
       "username": "Miizan",
       "wallet": "0xcd7fd3e0e6BbaF586439444284d8F228fA426B0D",
-      "postCount": 2,
-      "score": 9.5,
+      "postCount": 1,
+      "score": 4.75,
       "srEligible": false
     },
     {
       "username": "Rdx | π",
       "wallet": "0x757e602000f34fc2099d5af2bba1bd2e5bf49f25",
-      "postCount": 6,
-      "score": 9.5,
+      "postCount": 3,
+      "score": 4.75,
       "srEligible": false
     },
     {
       "username": "Maza",
       "wallet": "0x8779a475bd06f46c88ec10768e540c4f719c9d87",
-      "postCount": 4,
-      "score": 9.5,
+      "postCount": 2,
+      "score": 4.75,
       "srEligible": false
     },
     {
       "username": "pogo",
       "wallet": "0x667Af77577F86C86252EC7e6C7Bc400E8494A8e1",
-      "postCount": 2,
-      "score": 9.5,
+      "postCount": 1,
+      "score": 4.75,
       "srEligible": false
     },
     {
       "username": "Wilson",
       "wallet": "0xfe1D07F523ED7A45417Ec38bD78515828956c8AE",
-      "postCount": 2,
-      "score": 9.5,
+      "postCount": 1,
+      "score": 4.75,
       "srEligible": false
     },
     {
       "username": "D3rek",
       "wallet": "0xb4722f075317f877e7f595131a4c9bbf3ec3800a",
-      "postCount": 14,
-      "score": 9.18,
+      "postCount": 7,
+      "score": 4.59,
       "srEligible": false
     },
     {
       "username": "Chakdl",
       "wallet": "0x6FC4a111e62c0a10f0246be5424E83c72938FE06",
-      "postCount": 6,
-      "score": 9.18,
+      "postCount": 3,
+      "score": 4.59,
       "srEligible": false
     },
     {
       "username": "milinerose",
       "wallet": "0x668eb55cff1C157Dcb36F3C34c35665f03eA465c",
-      "postCount": 6,
-      "score": 9.1,
+      "postCount": 3,
+      "score": 4.55,
       "srEligible": false
     },
     {
       "username": "minako",
       "wallet": "0xC1d37688867118246A3C80Ad7705F1c69AE1f6d9",
-      "postCount": 18,
-      "score": 9.04,
+      "postCount": 9,
+      "score": 4.52,
       "srEligible": false
     },
     {
       "username": "Ameen",
       "wallet": "0x44b6De46CDfA8A2c16c1bd2D13DF8f07D0835c64",
-      "postCount": 12,
-      "score": 9,
+      "postCount": 6,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "APU",
       "wallet": "0xd3A8a80267Cd70a45def5054D0c10EbE87F3A1a0",
-      "postCount": 2,
-      "score": 9,
+      "postCount": 1,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "Dreams Growth🍌",
       "wallet": "0x08725ab091B016470f5dE76677ac4Bd81beE5022",
-      "postCount": 2,
-      "score": 9,
+      "postCount": 1,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "OxMax 🌊",
       "wallet": "0x989CA9262d96B467DC8B03042F37A81A3b0368d1",
-      "postCount": 2,
-      "score": 9,
+      "postCount": 1,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "AMINU",
       "wallet": "0xcb172bf110940d6c8ebd32b4a41d1101495690f5",
-      "postCount": 4,
-      "score": 9,
+      "postCount": 2,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "nzt",
       "wallet": "0xce48E68904B2EDD163384b3D4c8c2B22DDa05671",
-      "postCount": 6,
-      "score": 9,
+      "postCount": 3,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "Ridaatul Islam",
       "wallet": "0x27Ac609C4B4A2574a94F9d68ecA429CFA8738E6a",
-      "postCount": 2,
-      "score": 9,
+      "postCount": 1,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "QUEEN ( MONALISA )",
       "wallet": "0x64d9D1b040FbbEb8119B779D4F4B91531A0Fe903",
-      "postCount": 2,
-      "score": 9,
+      "postCount": 1,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "NGO DUY DINH",
       "wallet": "0x1199c5df13deecdc03433df7dde890fbee56fc1e",
-      "postCount": 2,
-      "score": 9,
+      "postCount": 1,
+      "score": 4.5,
       "srEligible": false
     },
     {
       "username": "chaeri",
       "wallet": "0x76F160F89a15920bE51dC66Aa957f490146F744d",
-      "postCount": 4,
-      "score": 8.98,
+      "postCount": 2,
+      "score": 4.49,
       "srEligible": false
     },
     {
       "username": "samest",
       "wallet": "0x0A98FfB8E9702E093AfBefD50A228E6B4b8A1a80",
-      "postCount": 10,
-      "score": 8.98,
+      "postCount": 5,
+      "score": 4.49,
       "srEligible": false
     },
     {
       "username": "MÅÑÔ",
       "wallet": "0x43d459dd6a4e50206cd3FAd65D592E73781ac3fd",
-      "postCount": 4,
-      "score": 8.8,
+      "postCount": 2,
+      "score": 4.4,
       "srEligible": false
     },
     {
       "username": "SAYED DOHA",
       "wallet": "0x7A4D7538e48F775678337597826D225ed3134Bd0",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "Richie 🎮🤙",
       "wallet": "0x25a58F5033C901e535bfE23Ed89C68b8E87738c5",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "蓝｜目标A9📈",
       "wallet": "0xa2b9091f1a71c4e2d78214f772e9801be5c52ec3",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "Franklinn",
       "wallet": "0x9EE7d46c895697cfDAA3863FEF9fbD942Bb9ee95",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "Kaganboss",
       "wallet": "0xD6846Eca71f7f57defEe8301142dcfb006E71140",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "Vala6",
       "wallet": "0x4898B1481cA18FD98ABA2b5Eb86B12eF6633c03D",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "Mohit Farazy | π² ☂️",
       "wallet": "0x9a185e76e57f472382c30f89a961fb22f9d9ee41",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "path9photos",
       "wallet": "0xa06165FC508E7df5043dCA84ce7070F351eF8676",
-      "postCount": 2,
-      "score": 8.5,
+      "postCount": 1,
+      "score": 4.25,
       "srEligible": false
     },
     {
       "username": "Fasah",
       "wallet": "0xBD4Cc603cED7057fE1025A6101879cAA61ddb43B",
-      "postCount": 2,
-      "score": 8.36,
+      "postCount": 1,
+      "score": 4.18,
       "srEligible": false
     },
     {
       "username": "Nguyen Hong Thinh",
       "wallet": "0xBf8aC28a677db23Aba7144F1357b71D7881f6E53",
-      "postCount": 4,
-      "score": 8.3,
+      "postCount": 2,
+      "score": 4.15,
       "srEligible": false
     },
     {
       "username": "🔅IBNU ABDULHAKEEM 📿☪️ 📊",
       "wallet": "0xbe65fa54eb13e60a42c29ed96ceceeecd31d56dd",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "EMİN",
       "wallet": "0x8b585A97ac32045A6C675462339928abF6f1d8f8",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "PᐃVEL.eth🍌",
       "wallet": "0xC57336E882575Ae8d97ab6d73c4c02f82B449252",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "Nobita | MeKongLabs",
       "wallet": "0x77ED5b57A08436C218eCCe26fa9DEf66E149e0F4",
-      "postCount": 4,
-      "score": 8,
+      "postCount": 2,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "Nguyen Huu Phuc",
       "wallet": "0xE44D72598D16132214D38ad499880AA1cdA05372",
-      "postCount": 4,
-      "score": 8,
+      "postCount": 2,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "Aloved",
       "wallet": "0x2da82580d6a07a3375aac232ace6b9698ee8d4af",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "Grace",
       "wallet": "0x3d3903152c3d5fbb4e1a8d2474e7fc4779ef00fc",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "16",
       "wallet": "0x93BBD282f808fd5dF7a9b5Ba23a7B64591D75e0F",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "Miyulux",
       "wallet": "0x128B4D9A062d137710F362d2b5c0B81E2726cC40",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "kerem",
       "wallet": "0xb7B36D147A85949F3bb96a8ef348fB420209bd40",
-      "postCount": 6,
-      "score": 8,
+      "postCount": 3,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "mirza",
       "wallet": "0x849c5E5e8851c8409c6fFc54e26CaD303b236921",
-      "postCount": 6,
-      "score": 8,
+      "postCount": 3,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "Sakyra Airoko",
       "wallet": "0xc0a26b567430e1b4708a26677c07b04e94e37a8c",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "不耐烦",
       "wallet": "0xdd1d28ad03140878b243db448d6bb97a7c4f5198",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "三炮投研（Alpha版）",
       "wallet": "0x9dcb761509c3e37b87619662bf666a4f0999c95f",
-      "postCount": 2,
-      "score": 8,
+      "postCount": 1,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "loni taft",
       "wallet": "0xb96cbccd63d9e6f38c1c051a7e3d9bd63589d405",
-      "postCount": 4,
-      "score": 8,
+      "postCount": 2,
+      "score": 4,
       "srEligible": false
     },
     {
       "username": "abri",
       "wallet": "0x6c64263Db81687f843B6Ab4A37977F8b940dFbb5",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Area21Spa",
       "wallet": "0x334B6C8C6CDa8A60B1F0619b8C1fc82dBEad81c0",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Crypto大山",
       "wallet": "0x09d5f220e7f81f54dcf1c9b62c0491be7e8d91bd",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Crypto Freedom",
       "wallet": "0x4830aca0ca5056a706203eed94f6a55565e06b3c",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Dark-德古拉",
       "wallet": "0x7558de7293d1d3f4963f0d2e79b4e6a60c9a58f8",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Gaming All in",
       "wallet": "0xb5f77a066d421c3fab48dfc9ddd2f030bf334147",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "MM",
       "wallet": "0x9ed35b26d3ee2da7dfa195e095b366461e9dc775",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "İskender Kabul",
       "wallet": "0x3a5d74045A04f46C0FdAa9776FbFD317FFa7Ea68",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "坐等机会的老韭菜.E",
       "wallet": "0x91f2f26edcb50e934091a880667fe33f6d715532",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "jaydeexbt",
       "wallet": "0x36b661f0820e72bf8be96568d52a72f3ebb673f6",
-      "postCount": 6,
-      "score": 7,
+      "postCount": 3,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Sevgi.Eth ADD+",
       "wallet": "0x555Eb90bA0Fd7379eDcc5692F1a3A1c4D3155d8A",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Jason",
       "wallet": "0x7046863ae4e11bf32d60b52c8bc23dd0cf31ecbf",
-      "postCount": 2,
-      "score": 7,
+      "postCount": 1,
+      "score": 3.5,
       "srEligible": false
     },
     {
       "username": "Vibers😇",
       "wallet": "0xd229E2eAe32F218311Dd93693217FF6dd5B87bF4",
-      "postCount": 2,
-      "score": 6.5,
+      "postCount": 1,
+      "score": 3.25,
       "srEligible": false
     },
     {
       "username": "SSWeb3_",
       "wallet": "0x4acceb9637f1915633610dd0edaac7acf32f012e",
-      "postCount": 4,
-      "score": 6.5,
+      "postCount": 2,
+      "score": 3.25,
       "srEligible": false
     },
     {
       "username": "ilker",
       "wallet": "0x1dB5E2D74313f7643955054d2518BEC663Bc9738",
-      "postCount": 2,
-      "score": 6.5,
+      "postCount": 1,
+      "score": 3.25,
       "srEligible": false
     },
     {
       "username": "Aleleeh",
       "wallet": "0x81c75e7249de85a36ff1103f048dcef162414188",
-      "postCount": 2,
-      "score": 6.5,
+      "postCount": 1,
+      "score": 3.25,
       "srEligible": false
     },
     {
       "username": "oAth",
       "wallet": "0xfbf6cb4fa1dd2e457b96aec9907857948246810b",
-      "postCount": 2,
-      "score": 6.5,
+      "postCount": 1,
+      "score": 3.25,
       "srEligible": false
     },
     {
       "username": "immortal",
       "wallet": "0x01007670bd0304cb26603e5c71ce469dc2bbce77",
-      "postCount": 2,
-      "score": 6.5,
+      "postCount": 1,
+      "score": 3.25,
       "srEligible": false
     },
     {
       "username": "Ling🐬TermMax",
       "wallet": "0x98b1452Ad6EBDf3019F7DaDD5BF93d4D147Eb7B6",
-      "postCount": 10,
-      "score": 6.42,
+      "postCount": 5,
+      "score": 3.21,
       "srEligible": false
     },
     {
       "username": "Nguyễn Hồng Nhung",
       "wallet": "0xfcd3f83648aff5abff318afff00f4e2b4ffda7c5",
-      "postCount": 10,
-      "score": 5.72,
+      "postCount": 5,
+      "score": 2.86,
       "srEligible": false
     },
     {
       "username": "jin li",
       "wallet": "0xabe2cccdafed6cec19e47a3794eeb487e646bc0f",
-      "postCount": 2,
-      "score": 5.5,
+      "postCount": 1,
+      "score": 2.75,
       "srEligible": false
     },
     {
       "username": "9955995king",
       "wallet": "0xe5055bcd239f51e2d09d318bF32A11Ff3a6c2beb",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "ApeAURA",
       "wallet": "0x9F5623E6bA9aAd8d9ca16377CBF5cCEB36C9fF27",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Crypto梭哈",
       "wallet": "0x02f6dd084188c2c238e5e50bd75667da0b4bc31d",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Phoenix Ranger 🦾",
       "wallet": "0x76dab6bce9bbdba28d562703abdcac2774c9f2dc",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Funboys_78",
       "wallet": "0x1aba551d336ecc4e4e9957745a239c555977833b",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Coke",
       "wallet": "0x650Ff11EC206A42Af72b9D29623A9BF5f927D7be",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "A Ghost",
       "wallet": "0x000e07f64faf882efb6de762e92caafd021056ac",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Lucky02568",
       "wallet": "0x83d9095d0ae5af34df56c073f78b17da20781a2c",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "𝗦𝗔𝗚𝗢𝗥 𝗖𝗔𝗣𝗜𝗧𝗔𝗟",
       "wallet": "0xD39285d3878d621320d4a603cC230161dd33ed98",
-      "postCount": 4,
-      "score": 4.5,
+      "postCount": 2,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Marufhassan76",
       "wallet": "0x8460Af0eba04aC9d6F74290e6cb54344f97977Ee",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Nguyen Nam",
       "wallet": "0xb31fa6f0029377820c5c01216da717244b61a957",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "NudistmaleZ",
       "wallet": "0x0b0ed1f17c0d00dbd80e4cda37f50d22fd8e3212",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "OnlyPulo",
       "wallet": "0xe71429c68b2a0c55c56f8316f9ba2cb78419ac77",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "OxxAkash",
       "wallet": "0xB650e795fbBbe90E7fC5aefBFfC518F1B973445f",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Pluto_Crrypt1",
       "wallet": "0xd8747642cec99a9fd2f834e0008c48828c5b8a4c",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "PumpVaultBase",
       "wallet": "0x9749eed9fe2027697c755d906c1ae70af44e9a92",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "XiaoZhi_BTC",
       "wallet": "0x39b217114b4b8b4d4f5c66044d3fb89483d58202",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "张行程",
       "wallet": "0xBe185faFf8a5447127C041037092b488d9c3fc38",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "_cjsy_eth_",
       "wallet": "0xb60691cd7fe2aaebac98b2bab3a3c0665d14918a",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Alpha.等风",
       "wallet": "0xfcb36187bcafab981ee787b5b08a845e961008cf",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "brightness96",
       "wallet": "0x8409cb7eded7807e8440c0c267a6acdfa164bb4e",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "ddcat80",
       "wallet": "0xe9ca28d97aa7c2739bb2f7d7c89a500e44caeff0",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "Dr Pengu",
       "wallet": "0x35be0738c74cfa88720b26b6d6c74ff373b767b1",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "hien_xxxx",
       "wallet": "0xba647f9fe1909c758015da067941b738478ef0a6",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "i_m_m_",
       "wallet": "0x562982024F31889fc025f718eD565887aB5a99dC",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "ᑭᖇᗩY乙",
       "wallet": "0x1d7Af3d1de21354BBFFE7d22761AeDDCBE71D216",
-      "postCount": 4,
-      "score": 4.5,
+      "postCount": 2,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "publicitsx",
       "wallet": "0x3d804a2091e631ba2662c7f64a7e82ce21f6daa6",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "qingshanbing",
       "wallet": "0x86bc57ee241565c0da6dc6e0efed9b26ce10c470",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "t0xic🦠",
       "wallet": "0x8E0eCa460Cf2940B69cc6984E75c6Bdafc55323D",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "sugardad076",
       "wallet": "0x28bab1b2d9e51b1a90b22fd4c346db6b8dc44cb2",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "无双-明灯（🐬 TermMax）",
       "wallet": "0x0579704631f4042da4ed7eb5d5b808bcb15143d1",
-      "postCount": 2,
-      "score": 4.5,
+      "postCount": 1,
+      "score": 2.25,
       "srEligible": false
     },
     {
       "username": "| Arion |",
       "wallet": "0x8445a688e7bfa2a159af2f1f5f619920e4afa689",
-      "postCount": 6,
-      "score": 1.16,
+      "postCount": 3,
+      "score": 0.58,
       "srEligible": false
     },
     {
       "username": "adeee🧡",
       "wallet": "0x2fbc28158512fe2d3b1679396f2cd56a6b62abab",
-      "postCount": 8,
-      "score": 0.5,
+      "postCount": 4,
+      "score": 0.25,
       "srEligible": false
     }
   ],
@@ -2530,15 +2474,15 @@
     "0xd5a065e5c38c7d87f6b90e920f4e1acc9722d97a",
     "0xf5fe70ac5c12905cd802c890c2a401194554d692"
   ],
-  "eligibleSnapshotUpdatedAt": "2026-05-16T14:43:23.846Z",
+  "eligibleSnapshotUpdatedAt": "2026-05-16T13:43:24.864Z",
   "epoch1CarryoverApplied": true,
   "guaranteedEpoch1BaselinesMerged": [
     "0x73b6bdf237ed04f40e5684f3e5718f9239b5d64a",
+    "0x6d69e2d103ce4c147fa189ee3fdfb88159c907cf",
+    "0xd5a065e5c38c7d87f6b90e920f4e1acc9722d97a",
     "0x1aad084517ea492a67fcca54048c7e0404ce1ab2",
     "0xccd05831016b444ffc83f6da2e018f62849ab34a",
-    "0x6d69e2d103ce4c147fa189ee3fdfb88159c907cf",
     "0xa18c066fc86b9e8a91287496ab954fcc414a30aa",
-    "0xd5a065e5c38c7d87f6b90e920f4e1acc9722d97a",
     "0x97bc998dbdd5d5a9df74cb589f4eabd516d4a22a"
   ],
   "snapshotDayKey": "2026-05-16",

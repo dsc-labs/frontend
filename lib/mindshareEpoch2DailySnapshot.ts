@@ -13,7 +13,7 @@ import {
   buildMindshareEpoch2LeaderboardPayload,
   type MindshareEpoch2LeaderboardPayload,
 } from './mindshareEpoch2LeaderboardBuild'
-import { flattenMindshareSubmissionPosts } from './mindshareEpoch2Posts'
+import { flattenMindshareSubmissionPosts, postsMatchingCountedKeys } from './mindshareEpoch2Posts'
 import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
 import { readEpoch2SrEligibleWalletsFromSnapshot, runMindshareEpoch2SrEligibilitySnapshot } from './mindshareEpoch2SrSnapshot'
 
@@ -90,6 +90,8 @@ export async function runMindshareEpoch2DailySnapshot(
     return postSubmittedInWindow(submittedMs, postWindow.startMs, postWindow.endMs)
   })
 
+  const countedPostsForRecount = postsMatchingCountedKeys(allPosts, dailyState.countedPostKeys)
+
   const payload = await buildMindshareEpoch2LeaderboardPayload({
     bearerToken: options.bearerToken,
     csvPath: options.csvPath,
@@ -97,6 +99,7 @@ export async function runMindshareEpoch2DailySnapshot(
     dailyScoring: {
       postsToScore,
       previousCountedKeys: dailyState.countedPostKeys,
+      countedPostsForRecount,
     },
   })
 

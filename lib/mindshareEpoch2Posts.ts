@@ -1,3 +1,4 @@
+import { epoch2PostKey } from './mindshareEpoch2DailyState'
 import {
   extractPostUrlsFromSubmissionField,
   type MindshareSubmissionRow,
@@ -46,4 +47,13 @@ export function flattenMindshareSubmissionPosts(rows: MindshareSubmissionRow[]):
     }
   }
   return out
+}
+
+/** Resolve CSV posts that match `walletLower:tweetId` keys in daily state. */
+export function postsMatchingCountedKeys(
+  allPosts: Epoch2FlattenedPost[],
+  countedKeys: string[],
+): Epoch2FlattenedPost[] {
+  const keySet = new Set(countedKeys)
+  return allPosts.filter((p) => keySet.has(epoch2PostKey(p.walletLower, p.tweetId)))
 }

@@ -2,8 +2,11 @@
  * X API v2: tweet metrics + tweet id from status URL (Bearer token, app-only).
  */
 
+import { upsampleTwitterProfileImage } from './twitterAvatar'
+
 const TWEETS_URL = 'https://api.twitter.com/2/tweets'
 const USERS_BY_USERNAME = 'https://api.twitter.com/2/users/by/username'
+const USERS_BY_USERNAMES = 'https://api.twitter.com/2/users/by'
 
 export type TweetMetricsSnapshot = {
   tweetId: string
@@ -19,6 +22,10 @@ export type TweetMetricsSnapshot = {
 export type XUserPublicSnapshot = {
   username: string
   followersCount: number
+  /** Upsampled profile image URL from X when available. */
+  profileImageUrl?: string
+  /** X display name when available. */
+  name?: string
 }
 
 /** Extract numeric tweet id from x.com or twitter.com status URL. */
@@ -52,7 +59,20 @@ type V2Tweet = {
 type V2User = {
   id: string
   username?: string
+  name?: string
+  profile_image_url?: string
   public_metrics?: { followers_count?: number }
+}
+
+function mapXUser(d: V2User, fallbackUsername: string): XUserPublicSnapshot {
+  const username = normalizeXUsername(d.username ?? fallbackUsername)
+  const rawProfile = d.profile_image_url?.trim()
+  return {
+    username,
+    followersCount: d.public_metrics?.followers_count ?? 0,
+    ...(rawProfile ? { profileImageUrl: upsampleTwitterProfileImage(rawProfile) } : {}),
+    ...(d.name?.trim() ? { name: d.name.trim() } : {}),
+  }
 }
 
 function mapTweetMetrics(t: V2Tweet): TweetMetricsSnapshot {
@@ -131,29 +151,52 @@ export async function fetchTweetMetricsByIds(
   return { byId, errors }
 }
 
+/** Up to 100 usernames per call (X API v2 limit). */
+export async function fetchUsersByUsernames(
+  bearerToken: string,
+  usernames: string[],
+): Promise<{ byHandle: Map<string, XUserPublicSnapshot>; errors: string[] }> {
+  const byHandle = new Map<string, XUserPublicSnapshot>()
+  const errors: string[] = []
+  const unique = [...new Set(usernames.map((h) => normalizeXUsername(h)).filter(Boolean))]
+  const chunkSize = 100
+  for (let i = 0; i < unique.length; i += chunkSize) {
+    const chunk = unique.slice(i, i + chunkSize)
+    const params = new URLSearchParams()
+    params.set('usernames', chunk.join(','))
+    params.set('user.fields', 'public_metrics,profile_image_url,name,username')
+    const { ok, status, json } = await twitterJson(bearerToken, `${USERS_BY_USERNAMES}?${params.toString()}`)
+    if (!ok) {
+      errors.push(`users/by ${status}: ${JSON.stringify(json)}`.slice(0, 500))
+      continue
+    }
+    const body = json as {
+      data?: V2User[]
+      errors?: Array<{ detail?: string; resource_id?: string }>
+    }
+    if (body.errors?.length) {
+      for (const e of body.errors) {
+        if (e.detail) errors.push(e.detail)
+      }
+    }
+    for (const d of body.data ?? []) {
+      if (!d?.id) continue
+      const handle = normalizeXUsername(d.username ?? '')
+      if (!handle) continue
+      byHandle.set(handle, mapXUser(d, handle))
+    }
+  }
+  return { byHandle, errors }
+}
+
 export async function fetchUserByUsername(
   bearerToken: string,
   username: string,
 ): Promise<{ user: XUserPublicSnapshot | null; error: string | null }> {
   const u = normalizeXUsername(username)
   if (!u) return { user: null, error: 'empty username' }
-  const params = new URLSearchParams()
-  params.set('user.fields', 'public_metrics')
-  const { ok, status, json } = await twitterJson(
-    bearerToken,
-    `${USERS_BY_USERNAME}/${encodeURIComponent(u)}?${params.toString()}`,
-  )
-  if (!ok) {
-    return { user: null, error: `users/by/username ${status}: ${JSON.stringify(json)}`.slice(0, 400) }
-  }
-  const body = json as { data?: V2User; errors?: Array<{ detail?: string }> }
-  const d = body.data
-  if (!d?.id) return { user: null, error: body.errors?.[0]?.detail ?? 'no user data' }
-  return {
-    user: {
-      username: d.username ?? u,
-      followersCount: d.public_metrics?.followers_count ?? 0,
-    },
-    error: null,
-  }
+  const { byHandle, errors } = await fetchUsersByUsernames(bearerToken, [u])
+  const user = byHandle.get(u) ?? null
+  if (user) return { user, error: null }
+  return { user: null, error: errors[0] ?? 'no user data' }
 }

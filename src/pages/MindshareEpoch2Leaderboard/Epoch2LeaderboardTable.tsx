@@ -1,13 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2Data'
 import { EPOCH2_PAGE_SIZE } from './mindshareEpoch2Data'
-import { formatComma, formatDisplayHandle, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
-
-const avatarSvg = (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-  </svg>
-)
+import UserAvatar, { xProfileUrl } from '../../components/UserAvatar/UserAvatar'
+import { formatComma, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
+import '../../components/UserAvatar/UserAvatar.css'
 
 function Epoch2RankCell({ rank }: { rank: number }) {
   if (rank <= 3) {
@@ -79,23 +75,39 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
       </div>
 
       <div className="epoch2-table-body">
-        {pageUsers.map((u) => (
-          <div key={`${u.rank}-${u.wallet}`} className="epoch2-table-row">
-            <Epoch2RankCell rank={u.rank} />
-            <div className="epoch2-user-cell">
-              <div className="epoch2-avatar">{avatarSvg}</div>
-              <div className="epoch2-username">{formatDisplayHandle(u.username)}</div>
+        {pageUsers.map((u) => {
+          const handle = u.xHandle || u.username
+          return (
+            <div key={`${u.rank}-${u.wallet}`} className="epoch2-table-row">
+              <Epoch2RankCell rank={u.rank} />
+              <div className="epoch2-user-cell">
+                <a
+                  href={xProfileUrl(handle)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="user-x-link"
+                  aria-label={`@${handle} on X`}
+                >
+                  <UserAvatar username={handle} csvAvatarUrl={u.avatarUrl} size={34} />
+                  <span className="epoch2-user-labels">
+                    <span className="user-name">@{handle}</span>
+                    {u.displayName && u.displayName !== handle ? (
+                      <span className="epoch2-user-display-name">{u.displayName}</span>
+                    ) : null}
+                  </span>
+                </a>
+              </div>
+              <div className="epoch2-wallet" title={u.wallet}>
+                {formatShortWallet(u.wallet, 4, 4)}
+              </div>
+              <div className="epoch2-post-count">{formatComma(u.postCount)}</div>
+              <div className="epoch2-score">{formatComma(u.score)}</div>
+              <div className="epoch2-status-cell">
+                <Epoch2StatusCell eligible={u.srEligible} />
+              </div>
             </div>
-            <div className="epoch2-wallet" title={u.wallet}>
-              {formatShortWallet(u.wallet, 4, 4)}
-            </div>
-            <div className="epoch2-post-count">{formatComma(u.postCount)}</div>
-            <div className="epoch2-score">{formatComma(u.score)}</div>
-            <div className="epoch2-status-cell">
-              <Epoch2StatusCell eligible={u.srEligible} />
-            </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       <div className="epoch2-table-footer">

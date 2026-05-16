@@ -13,7 +13,14 @@ export type Epoch2StatsInput = {
 }
 
 export type Epoch2LeaderboardUser = {
+  /** Display label (often submission `name`). */
   username: string
+  /** X handle for avatar + profile link (Epoch 1 export or mindshare CSV). */
+  xHandle?: string
+  /** Profile image from X cache or Epoch 1 export. */
+  avatarUrl?: string
+  /** X display name when available. */
+  displayName?: string
   wallet: string
   postCount: number
   score: number

@@ -17,6 +17,12 @@ export type Epoch2MetricsCacheFile = {
     {
       at: string
       followersCount: number
+      /** Canonical @handle from X (lowercase). */
+      username?: string
+      /** Upsampled profile image URL from X. */
+      profileImageUrl?: string
+      /** X display name. */
+      name?: string
     }
   >
 }

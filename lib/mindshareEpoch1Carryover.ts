@@ -11,6 +11,8 @@ export type Epoch1LeaderboardRow = {
   rank: number
   username: string
   name: string
+  /** Profile image URL from Epoch 1 export (`avatar` column). */
+  avatarUrl?: string
   wallet: string
   walletLower: string
   postCount: number
@@ -69,6 +71,7 @@ function parseEpoch1LeaderboardCsv(raw: string): Epoch1LeaderboardRow[] {
   const userI = idx('username')
   const nameI = idx('name')
   const walletI = idx('wallet')
+  const avatarI = idx('avatar')
   const postsI = idx('posts') >= 0 ? idx('posts') : idx('total_posts')
   const scoreI = idx('score') >= 0 ? idx('score') : idx('total_score')
 
@@ -86,10 +89,12 @@ function parseEpoch1LeaderboardCsv(raw: string): Epoch1LeaderboardRow[] {
 
     const username = (cells[userI] ?? '').trim()
     const name = (cells[nameI] ?? '').trim()
+    const avatarRaw = avatarI >= 0 ? (cells[avatarI] ?? '').trim() : ''
     rows.push({
       rank,
       username: username || name || wallet,
       name,
+      ...(avatarRaw ? { avatarUrl: avatarRaw } : {}),
       wallet,
       walletLower,
       postCount: Number.isFinite(posts) && posts > 0 ? Math.round(posts) : 0,
@@ -108,7 +113,7 @@ export async function loadEpoch1LeaderboardRows(): Promise<Epoch1LeaderboardRow[
   }
 }
 
-/** Wallets that already received Epoch 1 prizes (ranks 1–101). Excluded from Epoch 2 except guaranteed top-7 wallets. */
+/** Wallets that already received Epoch 1 prizes (ranks 1–101). No Epoch 1 score carryover; may still compete in Epoch 2. */
 export async function loadEpoch1PrizeWinnerWallets(
   exemptWalletsLower?: Set<string>,
 ): Promise<Set<string>> {
@@ -138,7 +143,8 @@ function displayFromEpoch1(row: Epoch1LeaderboardRow): string {
 }
 
 /**
- * Merge Epoch 1 carryover (rank 102+) into Epoch 2 users; drop prize winners (rank 1–101).
+ * Merge Epoch 1 carryover (rank 102+) into Epoch 2 users.
+ * Epoch 1 ranks 1–101 keep Epoch 2 scores from new posts only (no carryover merge).
  */
 export function mergeEpoch1CarryoverIntoUsers(
   epoch2Users: Epoch2ApiUser[],
@@ -151,7 +157,6 @@ export function mergeEpoch1CarryoverIntoUsers(
   for (const u of epoch2Users) {
     const wk = u.wallet.trim().toLowerCase()
     if (!wk.startsWith('0x')) continue
-    if (prizeWinnerWallets.has(wk)) continue
     byWallet.set(wk, { ...u, wallet: u.wallet.trim() })
   }
 

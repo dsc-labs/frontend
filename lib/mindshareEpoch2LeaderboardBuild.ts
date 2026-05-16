@@ -5,12 +5,15 @@ import {
 } from './mindshareCsvStore'
 import { readEpoch2LeaderboardSnapshot } from './mindshareEpoch2DailyState'
 import type { Epoch2FlattenedPost } from './mindshareEpoch2Posts'
-import { flattenMindshareSubmissionPosts } from './mindshareEpoch2Posts'
+import { flattenMindshareSubmissionPosts, postsMatchingCountedKeys } from './mindshareEpoch2Posts'
 import {
   loadEpoch1CarryoverRows,
+  loadEpoch1LeaderboardRows,
   loadEpoch1PrizeWinnerWallets,
   mergeEpoch1CarryoverIntoUsers,
 } from './mindshareEpoch1Carryover'
+import { enrichEpoch2UsersWithProfiles } from './mindshareEpoch2ProfileEnrichment'
+import { refreshXUserProfilesInCache } from './mindshareEpoch2XProfiles'
 import {
   applyGuaranteedTop7,
   loadGuaranteedTop7Epoch1Rows,
@@ -35,7 +38,7 @@ import { getServerBaseRpcUrl } from './serverBaseRpc'
 import {
   extractTweetIdFromStatusUrl,
   fetchTweetMetricsByIds,
-  fetchUserByUsername,
+  fetchUsersByUsernames,
   normalizeXUsername,
   type TweetMetricsSnapshot,
 } from './xTweetMetrics'
@@ -59,7 +62,14 @@ export type Epoch2ApiStats = {
 }
 
 export type Epoch2ApiUser = {
+  /** Display label (often CSV `name`). */
   username: string
+  /** X handle without `@` — avatar + profile link (set by profile enrichment). */
+  xHandle?: string
+  /** Epoch 1 export or X-cached profile image URL. */
+  avatarUrl?: string
+  /** X display name when available. */
+  displayName?: string
   wallet: string
   postCount: number
   score: number
@@ -194,15 +204,22 @@ async function refreshXMetricsForRows(options: {
   for (const h of Array.from(handleSet)) {
     if (!h) continue
     const c = cache.users[h]
-    if (forceRefresh || !c || !cacheEntryFresh(c.at, ttlMs, nowMs)) {
+    if (forceRefresh || !c || !cacheEntryFresh(c.at, ttlMs, nowMs) || !c.profileImageUrl) {
       handlesToFetch.push(h)
     }
   }
-  for (const h of handlesToFetch) {
-    const { user } = await fetchUserByUsername(bearerToken, h)
-    cache.users[h] = {
-      at: generatedAt,
-      followersCount: user?.followersCount ?? 0,
+  if (handlesToFetch.length > 0) {
+    const { byHandle } = await fetchUsersByUsernames(bearerToken, handlesToFetch)
+    for (const h of handlesToFetch) {
+      const snap = byHandle.get(h)
+      const prev = cache.users[h]
+      cache.users[h] = {
+        at: generatedAt,
+        followersCount: snap?.followersCount ?? prev?.followersCount ?? 0,
+        username: snap?.username ?? h,
+        ...(snap?.profileImageUrl ? { profileImageUrl: snap.profileImageUrl } : {}),
+        ...(snap?.name ? { name: snap.name } : {}),
+      }
     }
   }
 
@@ -227,6 +244,8 @@ async function refreshXMetricsForRows(options: {
 type DailyScoringOptions = {
   postsToScore: Epoch2FlattenedPost[]
   previousCountedKeys: string[]
+  /** All CSV posts already in `previousCountedKeys` — re-scored from cache each run (not seed). */
+  countedPostsForRecount: Epoch2FlattenedPost[]
 }
 
 function tweetIdsFromCountedPostKeys(keys: string[]): string[] {
@@ -257,9 +276,10 @@ async function loadSeedUserMap(): Promise<Map<string, { wallet: string; username
   return byWallet
 }
 
-/** Cumulative daily scoring: seed prior totals, add only {@link postsToScore}. */
+/** Cumulative daily scoring: seed non-counted wallets, re-aggregate all counted posts from cache, add {@link postsToScore}. */
 function scoreDailyPostsFromCache(
   postsToScore: Epoch2FlattenedPost[],
+  countedPostsForRecount: Epoch2FlattenedPost[],
   allCountedTweetIds: string[],
   cache: Epoch2MetricsCacheFile,
   defaultQ: number,
@@ -269,9 +289,13 @@ function scoreDailyPostsFromCache(
   const engagementByTweetId = new Map<string, TweetMetricsSnapshot>()
   const byWallet = new Map(seedByWallet)
 
-  for (const p of postsToScore) {
+  for (const p of countedPostsForRecount) {
+    byWallet.delete(p.walletLower)
+  }
+
+  const applyPost = (p: Epoch2FlattenedPost) => {
     const snap = cache.tweets[p.tweetId]?.snapshot ?? null
-    if (!snap) continue
+    if (!snap) return
     const h = normalizeXUsername(p.xHandle)
     const followers = h ? (cache.users[h]?.followersCount ?? 0) : 0
     if (!byWallet.has(p.walletLower)) {
@@ -293,6 +317,9 @@ function scoreDailyPostsFromCache(
     agg.score += epoch2FinalScoreForPost(post, followers)
     engagementByTweetId.set(p.tweetId, snap)
   }
+
+  for (const p of countedPostsForRecount) applyPost(p)
+  for (const p of postsToScore) applyPost(p)
 
   for (const tweetId of allCountedTweetIds) {
     const snap = cache.tweets[tweetId]?.snapshot
@@ -339,7 +366,7 @@ function scoreAllPostsFromCache(
   eligibleWalletKeys: Set<string>,
 ): { users: Epoch2ApiUser[]; engagementByTweetId: Map<string, TweetMetricsSnapshot> } {
   const posts = flattenMindshareSubmissionPosts(rows)
-  return scoreDailyPostsFromCache(posts, posts.map((p) => p.tweetId), cache, defaultQ, eligibleWalletKeys, new Map())
+  return scoreDailyPostsFromCache(posts, posts, posts.map((p) => p.tweetId), cache, defaultQ, eligibleWalletKeys, new Map())
 }
 
 export async function getMindshareEpoch2LeaderboardForDisplay(options: {
@@ -392,6 +419,25 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     const totalScore = users.reduce((s, u) => s + u.score, 0)
     const totalPosts = users.reduce((s, u) => s + u.postCount, 0)
     const eligibleParticipants = users.filter((u) => u.srEligible).length
+    const epoch1ProfileRowsEmpty = await loadEpoch1LeaderboardRows()
+    const profileHandlesEmpty = new Set<string>()
+    for (const u of users) {
+      const h = normalizeXUsername(u.xHandle ?? u.username)
+      if (h) profileHandlesEmpty.add(h)
+    }
+    const bearerEmpty = options.bearerToken?.trim()
+    const cacheEmpty = bearerEmpty
+      ? await refreshXUserProfilesInCache({
+          bearerToken: bearerEmpty,
+          handles: [...profileHandlesEmpty],
+          generatedAt,
+          ttlMs,
+          nowMs,
+          forceRefresh: options.forceRefresh,
+        })
+      : await readEpoch2MetricsCache()
+    users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRowsEmpty, [], cacheEmpty)
+
     return {
       ok: true,
       generatedAt,
@@ -439,6 +485,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     const allCountedTweetIds = [...new Set([...prevTweetIds, ...newTweetIds])]
     const scored = scoreDailyPostsFromCache(
       options.dailyScoring.postsToScore,
+      options.dailyScoring.countedPostsForRecount,
       allCountedTweetIds,
       cache,
       defaultQ,
@@ -464,8 +511,6 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
 
   if (applyEpoch1Carryover && epoch1Carryover.length > 0) {
     users = mergeEpoch1CarryoverIntoUsers(users, epoch1Carryover, prizeWinnerWallets, eligibleWalletKeys)
-  } else {
-    users = users.filter((u) => !prizeWinnerWallets.has(walletKey(u.wallet)))
   }
 
   const guaranteed = applyGuaranteedTop7(users, guaranteedEpoch1, epoch1BaselinesMerged)
@@ -477,6 +522,28 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
   const totalScore = users.reduce((s, u) => s + u.score, 0)
   const totalPosts = users.reduce((s, u) => s + u.postCount, 0)
   const epoch1Merged = applyEpoch1Carryover && epoch1Carryover.length > 0
+
+  const epoch1ProfileRows = await loadEpoch1LeaderboardRows()
+  const profileHandles = new Set<string>()
+  for (const row of rows) {
+    const h = normalizeXUsername(row.xHandle)
+    if (h) profileHandles.add(h)
+  }
+  for (const u of users) {
+    const h = normalizeXUsername(u.xHandle ?? u.username)
+    if (h) profileHandles.add(h)
+  }
+  const cacheForProfiles = bearer
+    ? await refreshXUserProfilesInCache({
+        bearerToken: bearer,
+        handles: [...profileHandles],
+        generatedAt,
+        ttlMs,
+        nowMs,
+        forceRefresh: options.forceRefresh,
+      })
+    : cache
+  users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRows, rows, cacheForProfiles)
 
   return {
     ok: true,

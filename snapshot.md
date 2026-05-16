@@ -102,7 +102,7 @@ These X handles are **always** on the leaderboard at **ranks 1–7** in this ord
 6. bizbrainzuni  
 7. office2crypto  
 
-Scores are **only increased** when needed to stay above rank 8+ (using varied gaps, not uniform +0.01 steps); otherwise left unchanged. Epoch 1 prize exclusion (ranks 1–101) does **not** apply to these seven wallets.
+Scores are adjusted to stay above rank 8+ with varied gaps (not uniform +0.01 steps). If the podium is far above the first organic eligible score, ranks 1–7 are **capped** so rank 7 is at most ~10 points above rank 8 (gaps cascade up through the top 7). Epoch 1 prize exclusion (ranks 1–101) does **not** apply to these seven wallets.
 
 ### Rank order after the top 7
 
@@ -120,7 +120,7 @@ A high-scoring not-eligible account never ranks above an eligible account with a
 
 | Epoch 1 rank | Epoch 2 |
 | ------------ | ------- |
-| **1–101** | **Excluded** — already received Epoch 1 prizes |
+| **1–101** | **No Epoch 1 carryover** — may compete normally; score comes from Epoch 2 posts only |
 | **102+** | **Merged once** into cumulative `score` and `postCount` (added on top of new Epoch 2 daily scores) |
 
 Tracked in `epoch2_daily_state.json` as `epoch1CarryoverApplied`. Re-deploy with an existing snapshot: run one daily job (`epoch2-sr-snapshot` or `?refresh=1`) to apply the merge.

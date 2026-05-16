@@ -23,6 +23,9 @@ export const EPOCH2_GUARANTEED_TOP7_HANDLES: readonly string[] = [
  */
 const GAP_ABOVE_NEXT_RANK: readonly number[] = [4.91, 3.47, 5.21, 2.86, 6.14, 4.33, 7.52]
 
+/** Max score gap between rank 8 (first organic eligible) and rank 7; cascades up through ranks 1–7. */
+const MAX_GAP_RANK8_TO_RANK7 = 10
+
 function gapAboveNextRank(slotFromBottom: number): number {
   const i = Math.max(0, Math.min(slotFromBottom, GAP_ABOVE_NEXT_RANK.length - 1))
   return GAP_ABOVE_NEXT_RANK[i]!
@@ -168,6 +171,18 @@ export function applyGuaranteedTop7(
     }
     const gapSlot = Math.min(slotFromBottom + 1, GAP_ABOVE_NEXT_RANK.length - 1)
     minRequired = g.score + gapAboveNextRank(gapSlot) + bumpCents(gapSlot)
+  }
+
+  // Rank 7 → 1: cap scores when the podium sits far above rank 8+ (e.g. 199 vs 68); keep small gaps within top 7.
+  let maxAllowedFromRank8 = topEligibleOther + MAX_GAP_RANK8_TO_RANK7
+  for (let i = guaranteedOrdered.length - 1; i >= 0; i -= 1) {
+    const g = guaranteedOrdered[i]!
+    if (g.score > maxAllowedFromRank8) {
+      g.score = roundScore(maxAllowedFromRank8)
+    }
+    const slotFromBottom = guaranteedOrdered.length - 1 - i
+    const gapSlot = Math.min(slotFromBottom + 1, GAP_ABOVE_NEXT_RANK.length - 1)
+    maxAllowedFromRank8 = g.score + gapAboveNextRank(gapSlot) + bumpCents(gapSlot)
   }
 
   const merged = [...guaranteedOrdered, ...sortEpoch2UsersByEligibilityThenScore(others)]
