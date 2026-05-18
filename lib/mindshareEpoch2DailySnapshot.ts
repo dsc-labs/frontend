@@ -15,7 +15,7 @@ import {
 } from './mindshareEpoch2LeaderboardBuild'
 import {
   flattenMindshareSubmissionPosts,
-  postsMatchingCountedKeys,
+  postsForCountedKeys,
   shouldScorePostForEpoch2DailySnapshot,
 } from './mindshareEpoch2Posts'
 import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
@@ -97,7 +97,7 @@ export async function runMindshareEpoch2DailySnapshot(
     }),
   )
 
-  const countedPostsForRecount = postsMatchingCountedKeys(allPosts, dailyState.countedPostKeys)
+  const countedPostsForRecount = postsForCountedKeys(allPosts, dailyState.countedPostKeys, rows)
 
   const payload = await buildMindshareEpoch2LeaderboardPayload({
     bearerToken: options.bearerToken,

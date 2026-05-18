@@ -19,11 +19,14 @@ waitlist_state.json
 data/waitlist/state.json
 data/waitlist/csv/
 
-# Mindshare runtime data (server/cron writes); backups stay in git
+# Mindshare: ignore runtime/cache; keep backups + daily snapshots in git
 data/mindshare/*
 !data/mindshare/.gitkeep
 !data/mindshare/backups/
 !data/mindshare/backups/**
+!data/mindshare/epoch2_daily_snapshots.jsonl
+!data/mindshare/epoch2_daily_state.json
+!data/mindshare/epoch2_leaderboard_snapshot.json
 
 # Editor directories and files
 .vscode/*

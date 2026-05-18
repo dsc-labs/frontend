@@ -305,13 +305,23 @@ function scoreDailyPostsFromCache(
     list.push(p)
     countedByWallet.set(p.walletLower, list)
   }
-  for (const [wk, posts] of countedByWallet) {
-    const canRecount = posts.some((p) => cache.tweets[p.tweetId]?.snapshot)
-    if (canRecount) byWallet.delete(wk)
+  for (const [wk] of countedByWallet) {
+    byWallet.delete(wk)
   }
 
-  const applyPost = (p: Epoch2FlattenedPost) => {
-    const snap = cache.tweets[p.tweetId]?.snapshot ?? null
+  const emptyTweetMetrics = (tweetId: string): TweetMetricsSnapshot => ({
+    tweetId,
+    likeCount: 0,
+    replyCount: 0,
+    retweetCount: 0,
+    quoteCount: 0,
+    impressionCount: 0,
+    authorId: '',
+  })
+
+  const applyPost = (p: Epoch2FlattenedPost, useDefaultMetricsIfMissing = false) => {
+    let snap = cache.tweets[p.tweetId]?.snapshot ?? null
+    if (!snap && useDefaultMetricsIfMissing) snap = emptyTweetMetrics(p.tweetId)
     if (!snap) return
     const h = normalizeXUsername(p.xHandle)
     const followers = h ? (cache.users[h]?.followersCount ?? 0) : 0
@@ -335,8 +345,8 @@ function scoreDailyPostsFromCache(
     engagementByTweetId.set(p.tweetId, snap)
   }
 
-  for (const p of countedPostsForRecount) applyPost(p)
-  for (const p of postsToScore) applyPost(p)
+  for (const p of countedPostsForRecount) applyPost(p, true)
+  for (const p of postsToScore) applyPost(p, false)
 
   for (const tweetId of allCountedTweetIds) {
     const snap = cache.tweets[tweetId]?.snapshot

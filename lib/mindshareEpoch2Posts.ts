@@ -50,11 +50,6 @@ export function flattenMindshareSubmissionPosts(rows: MindshareSubmissionRow[]):
   return out
 }
 
-export function walletHasCountedEpoch2Posts(walletLower: string, countedPostKeys: string[]): boolean {
-  const prefix = `${walletLower}:`
-  return countedPostKeys.some((k) => k.startsWith(prefix))
-}
-
 /**
  * Whether a CSV post should be scored on this daily run (SR-eligible, not already counted).
  */
@@ -75,7 +70,8 @@ export function shouldScorePostForEpoch2DailySnapshot(
     if (options.isBootstrap) {
       return postSubmittedInWindow(0, options.postWindow.startMs, options.postWindow.endMs)
     }
-    return !walletHasCountedEpoch2Posts(p.walletLower, options.countedPostKeys)
+    // Legacy row (no `submitted at`): after bootstrap, score each tweet once when SR-eligible.
+    return true
   }
 
   return postSubmittedInWindow(p.submittedAtMs, options.postWindow.startMs, options.postWindow.endMs)
@@ -88,4 +84,55 @@ export function postsMatchingCountedKeys(
 ): Epoch2FlattenedPost[] {
   const keySet = new Set(countedKeys)
   return allPosts.filter((p) => keySet.has(epoch2PostKey(p.walletLower, p.tweetId)))
+}
+
+/**
+ * Counted posts for daily recount: CSV matches plus synthetic posts from `wallet:tweetId` keys
+ * when multiline CSV rows were not parsed (legacy server snapshots).
+ */
+export function postsForCountedKeys(
+  allPosts: Epoch2FlattenedPost[],
+  countedKeys: string[],
+  rows: MindshareSubmissionRow[],
+): Epoch2FlattenedPost[] {
+  const matched = postsMatchingCountedKeys(allPosts, countedKeys)
+  const haveKeys = new Set(matched.map((p) => epoch2PostKey(p.walletLower, p.tweetId)))
+
+  const metaByWallet = new Map<string, { wallet: string; xHandle: string; name: string }>()
+  for (const p of allPosts) {
+    metaByWallet.set(p.walletLower, { wallet: p.wallet, xHandle: p.xHandle, name: p.name })
+  }
+  for (const row of rows) {
+    const wk = walletKey(row.walletAddress)
+    if (!wk.startsWith('0x') || wk.length !== 42) continue
+    if (!metaByWallet.has(wk)) {
+      metaByWallet.set(wk, {
+        wallet: row.walletAddress.trim(),
+        xHandle: row.xHandle.trim(),
+        name: row.name.trim(),
+      })
+    }
+  }
+
+  const out = [...matched]
+  for (const key of countedKeys) {
+    if (haveKeys.has(key)) continue
+    const colon = key.indexOf(':')
+    if (colon <= 0) continue
+    const walletLower = key.slice(0, colon).toLowerCase()
+    const tweetId = key.slice(colon + 1).trim()
+    if (!tweetId) continue
+    const meta = metaByWallet.get(walletLower)
+    if (!meta) continue
+    out.push({
+      wallet: meta.wallet,
+      walletLower,
+      xHandle: meta.xHandle,
+      name: meta.name,
+      tweetId,
+      submittedAtMs: null,
+    })
+    haveKeys.add(key)
+  }
+  return out
 }
