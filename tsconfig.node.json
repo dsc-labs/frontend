@@ -19,6 +19,11 @@
     "lib/mindshareEpoch2Constants.ts",
     "lib/mindshareEpoch2Env.ts",
     "lib/mindshareEpoch2LeaderboardBuild.ts",
+    "lib/mindshareEpoch2LeaderboardRecount.ts",
+    "lib/mindshareEpoch2Posts.ts",
+    "lib/mindshareEpoch2DailyState.ts",
+    "lib/mindshareEpoch2DailySnapshot.ts",
+    "lib/mindshareEpoch2Gmt7.ts",
     "lib/mindshareEpoch2WaitlistEligibility.ts",
     "lib/mindshareEpoch2SrEligibility.ts",
     "lib/mindshareEpoch2SrSnapshot.ts",
@@ -28,7 +33,8 @@
     "lib/vercelCronAuth.ts",
     "api/mindshare/test-epoch2-leaderboard.ts",
     "api/mindshare/epoch2-refresh.ts",
-    "api/mindshare/epoch2-sr-snapshot.ts"
+    "api/mindshare/epoch2-sr-snapshot.ts",
+    "api/mindshare/epoch2-recount.ts"
   ]
 }
 

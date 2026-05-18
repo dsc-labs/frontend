@@ -27,9 +27,10 @@ function parseSubmittedAtMs(raw: string | undefined): number | null {
   return Number.isFinite(ms) ? ms : null
 }
 
-/** One row per tweet URL in the submissions CSV. */
+/** One row per unique `walletLower:tweetId` in the submissions CSV (duplicate CSV rows ignored). */
 export function flattenMindshareSubmissionPosts(rows: MindshareSubmissionRow[]): Epoch2FlattenedPost[] {
   const out: Epoch2FlattenedPost[] = []
+  const seen = new Set<string>()
   for (const row of rows) {
     const wk = walletKey(row.walletAddress)
     if (!wk.startsWith('0x') || wk.length !== 42) continue
@@ -37,6 +38,9 @@ export function flattenMindshareSubmissionPosts(rows: MindshareSubmissionRow[]):
     for (const url of extractPostUrlsFromSubmissionField(row.postSubmitted)) {
       const tweetId = extractTweetIdFromStatusUrl(url)
       if (!tweetId) continue
+      const key = epoch2PostKey(wk, tweetId)
+      if (seen.has(key)) continue
+      seen.add(key)
       out.push({
         wallet: row.walletAddress.trim(),
         walletLower: wk,
@@ -77,13 +81,27 @@ export function shouldScorePostForEpoch2DailySnapshot(
   return postSubmittedInWindow(p.submittedAtMs, options.postWindow.startMs, options.postWindow.endMs)
 }
 
+function dedupePostsByWalletTweet(posts: Epoch2FlattenedPost[]): Epoch2FlattenedPost[] {
+  const seen = new Set<string>()
+  const out: Epoch2FlattenedPost[] = []
+  for (const p of posts) {
+    const key = epoch2PostKey(p.walletLower, p.tweetId)
+    if (seen.has(key)) continue
+    seen.add(key)
+    out.push(p)
+  }
+  return out
+}
+
 /** Resolve CSV posts that match `walletLower:tweetId` keys in daily state. */
 export function postsMatchingCountedKeys(
   allPosts: Epoch2FlattenedPost[],
   countedKeys: string[],
 ): Epoch2FlattenedPost[] {
   const keySet = new Set(countedKeys)
-  return allPosts.filter((p) => keySet.has(epoch2PostKey(p.walletLower, p.tweetId)))
+  return dedupePostsByWalletTweet(
+    allPosts.filter((p) => keySet.has(epoch2PostKey(p.walletLower, p.tweetId))),
+  )
 }
 
 /**
@@ -114,7 +132,7 @@ export function postsForCountedKeys(
     }
   }
 
-  const out = [...matched]
+  const out = dedupePostsByWalletTweet([...matched])
   for (const key of countedKeys) {
     if (haveKeys.has(key)) continue
     const colon = key.indexOf(':')

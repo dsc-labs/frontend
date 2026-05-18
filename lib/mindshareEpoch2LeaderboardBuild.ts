@@ -22,7 +22,7 @@ import {
 } from './mindshareEpoch2GuaranteedTop7'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
 import { epoch2DaysRemaining } from './mindshareEpoch2Constants'
-import { readEpoch2DailyState } from './mindshareEpoch2DailyState'
+import { epoch2PostKey, readEpoch2DailyState } from './mindshareEpoch2DailyState'
 import {
   cacheEntryFresh,
   readEpoch2MetricsCache,
@@ -319,10 +319,15 @@ function scoreDailyPostsFromCache(
     authorId: '',
   })
 
+  const scoredTweetKeys = new Set<string>()
+
   const applyPost = (p: Epoch2FlattenedPost, useDefaultMetricsIfMissing = false) => {
+    const postKey = epoch2PostKey(p.walletLower, p.tweetId)
+    if (scoredTweetKeys.has(postKey)) return
     let snap = cache.tweets[p.tweetId]?.snapshot ?? null
     if (!snap && useDefaultMetricsIfMissing) snap = emptyTweetMetrics(p.tweetId)
     if (!snap) return
+    scoredTweetKeys.add(postKey)
     const h = normalizeXUsername(p.xHandle)
     const followers = h ? (cache.users[h]?.followersCount ?? 0) : 0
     if (!byWallet.has(p.walletLower)) {
