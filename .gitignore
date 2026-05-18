@@ -19,10 +19,11 @@ waitlist_state.json
 data/waitlist/state.json
 data/waitlist/csv/
 
-# Mindshare Epoch 2 metrics cache (local / CI)
-data/mindshare/epoch2_metrics_cache.json
-data/mindshare/epoch2_sr_snapshots.jsonl
-data/mindshare/epoch2_sr_eligible_wallets.json
+# Mindshare runtime data (server/cron writes); backups stay in git
+data/mindshare/*
+!data/mindshare/.gitkeep
+!data/mindshare/backups/
+!data/mindshare/backups/**
 
 # Editor directories and files
 .vscode/*
