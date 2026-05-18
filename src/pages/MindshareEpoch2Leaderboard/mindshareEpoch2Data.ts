@@ -52,4 +52,4 @@ export type Epoch2LeaderboardApiPayload = {
   eligibleSnapshotUpdatedAt?: string | null
 }
 
-export const EPOCH2_PAGE_SIZE = 5
+export const EPOCH2_PAGE_SIZE = 20

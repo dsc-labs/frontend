@@ -3,7 +3,7 @@ import type { Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2D
 import { EPOCH2_PAGE_SIZE } from './mindshareEpoch2Data'
 import UserAvatar, { xProfileUrl } from '../../components/UserAvatar/UserAvatar'
 import { EPOCH2_CHECKPOINTS } from './mindshareEpoch2Data'
-import { formatComma, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
+import { filterEpoch2Users, formatComma, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
 import '../../components/UserAvatar/UserAvatar.css'
 
 function Epoch2RankCell({ rank }: { rank: number }) {
@@ -72,9 +72,16 @@ type Epoch2LeaderboardTableProps = {
 
 export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SIZE }: Epoch2LeaderboardTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
-  const ranked = useMemo(() => getRankedUsers(users), [users])
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filtered = useMemo(() => filterEpoch2Users(users, searchQuery), [users, searchQuery])
+  const ranked = useMemo(() => getRankedUsers(filtered), [filtered])
 
   const totalPages = Math.max(1, Math.ceil(ranked.length / pageSize))
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchQuery])
 
   useEffect(() => {
     setCurrentPage((p) => Math.min(p, totalPages))
@@ -83,11 +90,35 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
   const start = (safePage - 1) * pageSize
   const pageUsers = ranked.slice(start, start + pageSize)
 
-  const totalCount = stats.totalParticipants || ranked.length
-  const footerLabel = `Showing ${pageUsers.length} of ${formatComma(totalCount)} competitors`
+  const totalCount = stats.totalParticipants || users.length
+  const isSearching = searchQuery.trim().length > 0
+  const footerLabel = isSearching
+    ? `${formatComma(ranked.length)} match${ranked.length === 1 ? '' : 'es'} · showing ${pageUsers.length} on this page`
+    : `Showing ${pageUsers.length} of ${formatComma(totalCount)} competitors`
 
   return (
-    <div className="epoch2-leaderboard">
+    <div className="epoch2-leaderboard-wrap">
+      <div className="epoch2-search-row">
+        <label className="epoch2-search-label" htmlFor="epoch2-leaderboard-search">
+          Find
+        </label>
+        <input
+          id="epoch2-leaderboard-search"
+          type="search"
+          className="epoch2-search-input"
+          placeholder="Handle, name, or wallet…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          autoComplete="off"
+          spellCheck={false}
+        />
+        {isSearching ? (
+          <button type="button" className="epoch2-search-clear" onClick={() => setSearchQuery('')}>
+            Clear
+          </button>
+        ) : null}
+      </div>
+      <div className="epoch2-leaderboard">
       <div className="epoch2-table-header">
         <div>Rank</div>
         <div>User</div>
@@ -98,6 +129,11 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
       </div>
 
       <div className="epoch2-table-body">
+        {ranked.length === 0 ? (
+          <p className="epoch2-table-empty" role="status">
+            {isSearching ? 'No competitors match your search.' : 'No participants to show.'}
+          </p>
+        ) : null}
         {pageUsers.map((u) => {
           const handle = u.xHandle || u.username
           return (
@@ -160,6 +196,7 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
           </button>
         </div>
       </div>
+    </div>
     </div>
   )
 }

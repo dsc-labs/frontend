@@ -30,6 +30,22 @@
       ]
     },
     {
+      "username": "3DMax_Virtuals",
+      "wallet": "0xA18c066fC86B9e8a91287496ab954fcc414a30AA",
+      "postCount": 9,
+      "score": 105.1,
+      "srEligible": true,
+      "xHandle": "3dmax_virtuals",
+      "avatarUrl": "https://pbs.twimg.com/profile_images/2032533640039604224/p6WziH2S_400x400.jpg",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
       "username": "zagen",
       "wallet": "0x1aad084517ea492a67fcca54048c7e0404ce1ab2",
       "postCount": 14,
@@ -69,22 +85,6 @@
       "srEligible": true,
       "xHandle": "0xweekend59",
       "avatarUrl": "https://images.asksurf.ai/VdtUNC7gJOUJBqHFR-Pdb1UEbKqvOFCrSlnQPU6yZW4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODg3ODc3MTczOTc1NDQ5NjEvZ1FPcTd4dTAucG5n",
-      "checkpoints": [
-        true,
-        true,
-        true,
-        true,
-        true
-      ]
-    },
-    {
-      "username": "3DMax_Virtuals",
-      "wallet": "0xA18c066fC86B9e8a91287496ab954fcc414a30AA",
-      "postCount": 9,
-      "score": 87.81,
-      "srEligible": true,
-      "xHandle": "3dmax_virtuals",
-      "avatarUrl": "https://pbs.twimg.com/profile_images/2032533640039604224/p6WziH2S_400x400.jpg",
       "checkpoints": [
         true,
         true,

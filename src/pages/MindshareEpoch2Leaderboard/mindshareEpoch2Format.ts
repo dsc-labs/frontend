@@ -1,5 +1,17 @@
 import type { Epoch2LeaderboardUser } from './mindshareEpoch2Data'
 
+/** Match handle, display name, or wallet (partial, case-insensitive). */
+export function filterEpoch2Users(users: Epoch2LeaderboardUser[], query: string): Epoch2LeaderboardUser[] {
+  const q = query.trim().toLowerCase().replace(/^@/, '')
+  if (!q) return users
+  return users.filter((u) => {
+    const handle = (u.xHandle ?? u.username).trim().toLowerCase().replace(/^@/, '')
+    const name = (u.displayName ?? u.username).trim().toLowerCase()
+    const wallet = u.wallet.trim().toLowerCase()
+    return handle.includes(q) || name.includes(q) || wallet.includes(q)
+  })
+}
+
 export function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, '')}M`
   if (n >= 10_000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k`

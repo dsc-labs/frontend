@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 
 import { EPOCH2_GUARANTEED_TOP7_HANDLES } from './mindshareEpoch2GuaranteedTop7'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
-import { gmt7DayKeyFromMs } from './mindshareEpoch2Gmt7'
+import { gmt7DayKeyFromMs, gmt7PreviousDayKey } from './mindshareEpoch2Gmt7'
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
 import { normalizeXUsername } from './xTweetMetrics'
 
@@ -39,8 +39,11 @@ function resolveEligibilityDayKey(line: SrSnapshotLogLine): string | null {
   if (!at) return null
   const atMs = Date.parse(at)
   if (!Number.isFinite(atMs)) return null
-  // Legacy rows without eligibilityDayKey: use GMT+7 calendar day of the run.
-  return gmt7DayKeyFromMs(atMs)
+  const runDayGmt7 = gmt7DayKeyFromMs(atMs)
+  // First checkpoint day backfill was stored without `eligibilityDayKey` (meant that calendar day).
+  if (runDayGmt7 === EPOCH2_CHECKPOINT_DAY_KEYS[0]) return runDayGmt7
+  // Later manual/cron runs: midnight on D records eligibility for GMT+7 day D−1.
+  return gmt7PreviousDayKey(runDayGmt7)
 }
 
 /** Last SR snapshot per eligibility day (from `epoch2_sr_snapshots.jsonl`). */
