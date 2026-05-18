@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 
 import { EPOCH2_GUARANTEED_TOP7_HANDLES } from './mindshareEpoch2GuaranteedTop7'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
-import { gmt7DayKeyFromMs, gmt7PreviousDayKey } from './mindshareEpoch2Gmt7'
+import { gmt7DayKeyFromMs } from './mindshareEpoch2Gmt7'
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
 import { normalizeXUsername } from './xTweetMetrics'
 
@@ -33,15 +33,14 @@ function defaultSrSnapshotLogPath(): string {
   return resolve(process.cwd(), 'data', 'mindshare', 'epoch2_sr_snapshots.jsonl')
 }
 
-function resolveEligibilityDayKey(line: SrSnapshotLogLine, lineIndex: number): string | null {
+function resolveEligibilityDayKey(line: SrSnapshotLogLine): string | null {
   if (line.eligibilityDayKey?.trim()) return line.eligibilityDayKey.trim()
   const at = line.at?.trim()
   if (!at) return null
   const atMs = Date.parse(at)
   if (!Number.isFinite(atMs)) return null
-  const snapshotDay = gmt7DayKeyFromMs(atMs)
-  if (lineIndex === 0) return snapshotDay
-  return gmt7PreviousDayKey(snapshotDay)
+  // Legacy rows without eligibilityDayKey: use GMT+7 calendar day of the run.
+  return gmt7DayKeyFromMs(atMs)
 }
 
 /** Last SR snapshot per eligibility day (from `epoch2_sr_snapshots.jsonl`). */
@@ -66,9 +65,8 @@ export async function loadEpoch2SrEligibilityByDay(): Promise<Map<string, Set<st
   parsed.sort((a, b) => Date.parse(a.at ?? '') - Date.parse(b.at ?? ''))
 
   const byDay = new Map<string, Set<string>>()
-  for (let i = 0; i < parsed.length; i++) {
-    const line = parsed[i]!
-    const dayKey = resolveEligibilityDayKey(line, i)
+  for (const line of parsed) {
+    const dayKey = resolveEligibilityDayKey(line)
     if (!dayKey) continue
     const wallets = (line.eligibleWalletsLower ?? [])
       .map((w) => w.trim().toLowerCase())

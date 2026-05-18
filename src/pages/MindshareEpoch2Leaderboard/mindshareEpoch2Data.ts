@@ -31,7 +31,14 @@ export type Epoch2LeaderboardUser = {
   checkpoints?: boolean[]
 }
 
-export const EPOCH2_CHECKPOINT_LABELS = ['15', '16', '17', '18', '19'] as const
+/** GMT+7 eligibility days (15–19 May 2026) — keep in sync with `lib/mindshareEpoch2Checkpoints.ts`. */
+export const EPOCH2_CHECKPOINTS = [
+  { dayKey: '2026-05-15', dateLabel: '15 May 2026' },
+  { dayKey: '2026-05-16', dateLabel: '16 May 2026' },
+  { dayKey: '2026-05-17', dateLabel: '17 May 2026' },
+  { dayKey: '2026-05-18', dateLabel: '18 May 2026' },
+  { dayKey: '2026-05-19', dateLabel: '19 May 2026' },
+] as const
 
 /** JSON from `GET /api/mindshare/test-epoch2-leaderboard` (matches server builder output). */
 export type Epoch2LeaderboardApiPayload = {

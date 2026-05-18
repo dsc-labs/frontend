@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2Data'
 import { EPOCH2_PAGE_SIZE } from './mindshareEpoch2Data'
 import UserAvatar, { xProfileUrl } from '../../components/UserAvatar/UserAvatar'
-import { EPOCH2_CHECKPOINT_LABELS } from './mindshareEpoch2Data'
+import { EPOCH2_CHECKPOINTS } from './mindshareEpoch2Data'
 import { formatComma, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
 import '../../components/UserAvatar/UserAvatar.css'
 
@@ -33,27 +33,33 @@ function Epoch2Checkpoints({ checkpoints }: { checkpoints: boolean[] }) {
   const days = checkpoints.length === 5 ? checkpoints : defaultCheckpoints()
   return (
     <div className="epoch2-checkpoints" role="list" aria-label="Daily SR eligibility checkpoints, 15 to 19 May">
-      {days.map((passed, i) => (
-        <span
-          key={EPOCH2_CHECKPOINT_LABELS[i]}
-          className={`epoch2-checkpoint${passed ? ' epoch2-checkpoint--passed' : ''}`}
-          role="listitem"
-          title={`May ${EPOCH2_CHECKPOINT_LABELS[i]}: ${passed ? 'Eligible' : 'Not eligible'}`}
-          aria-label={`May ${EPOCH2_CHECKPOINT_LABELS[i]}: ${passed ? 'eligible' : 'not eligible'}`}
-        >
-          {passed ? (
-            <svg viewBox="0 0 12 12" fill="none" aria-hidden>
-              <path
-                d="M2.5 6.2 4.8 8.5 9.5 3.5"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          ) : null}
-        </span>
-      ))}
+      {EPOCH2_CHECKPOINTS.map((cp, i) => {
+        const passed = days[i] ?? false
+        return (
+          <span
+            key={cp.dayKey}
+            className={`epoch2-checkpoint${passed ? ' epoch2-checkpoint--passed' : ''}`}
+            role="listitem"
+            tabIndex={0}
+            aria-label={`${cp.dateLabel}: ${passed ? 'eligible' : 'not eligible'}`}
+          >
+            <span className="epoch2-checkpoint-tooltip" role="tooltip">
+              {cp.dateLabel}
+            </span>
+            {passed ? (
+              <svg viewBox="0 0 12 12" fill="none" aria-hidden>
+                <path
+                  d="M2.5 6.2 4.8 8.5 9.5 3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : null}
+          </span>
+        )
+      })}
     </div>
   )
 }
