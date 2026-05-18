@@ -12,6 +12,7 @@ import {
   loadEpoch1PrizeWinnerWallets,
   mergeEpoch1CarryoverIntoUsers,
 } from './mindshareEpoch1Carryover'
+import { enrichEpoch2UsersWithCheckpointsAndSrBalance } from './mindshareEpoch2Checkpoints'
 import { enrichEpoch2UsersWithProfiles } from './mindshareEpoch2ProfileEnrichment'
 import { refreshXUserProfilesInCache } from './mindshareEpoch2XProfiles'
 import {
@@ -75,6 +76,10 @@ export type Epoch2ApiUser = {
   score: number
   /** From daily SR eligibility snapshot (or live fallback when enabled). */
   srEligible: boolean
+  /** On-chain $SR from latest daily snapshot (human units). */
+  srBalance?: number
+  /** SR eligibility per GMT+7 day (15–19 May); true = passed that night's snapshot. */
+  checkpoints?: boolean[]
 }
 
 export type MindshareEpoch2LeaderboardPayload = {
@@ -369,15 +374,28 @@ function scoreAllPostsFromCache(
   return scoreDailyPostsFromCache(posts, posts, posts.map((p) => p.tweetId), cache, defaultQ, eligibleWalletKeys, new Map())
 }
 
+async function finalizeEpoch2UsersForDisplay(
+  users: Epoch2ApiUser[],
+  eligibleSnap: Epoch2SrEligibleWalletsFile | null,
+): Promise<Epoch2ApiUser[]> {
+  return enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
+}
+
 export async function getMindshareEpoch2LeaderboardForDisplay(options: {
   bearerToken: string | undefined
   csvPath?: string
   /** Operator rebuild (runs daily scoring logic only when combined with daily cron). */
   forceRefresh: boolean
 }): Promise<MindshareEpoch2LeaderboardPayload> {
+  const eligibleSnap = await readEpoch2SrEligibleWalletsFromSnapshot()
   if (!options.forceRefresh) {
     const snap = await readEpoch2LeaderboardSnapshot()
-    if (snap) return snap
+    if (snap) {
+      return {
+        ...snap,
+        users: await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap),
+      }
+    }
   }
   return buildMindshareEpoch2LeaderboardPayload({
     bearerToken: options.bearerToken,
@@ -437,6 +455,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
         })
       : await readEpoch2MetricsCache()
     users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRowsEmpty, [], cacheEmpty)
+    users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap)
 
     return {
       ok: true,
@@ -544,6 +563,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       })
     : cache
   users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRows, rows, cacheForProfiles)
+  users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap)
 
   return {
     ok: true,

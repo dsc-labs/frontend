@@ -5,6 +5,8 @@ import {
   EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE,
   EPOCH_2_END_MS,
 } from './mindshareEpoch2Constants'
+import { readEpoch2DailyState } from './mindshareEpoch2DailyState'
+import { gmt7PostCountWindowForSnapshot } from './mindshareEpoch2Gmt7'
 import { fetchErc20Balance, rawBalanceToTokenUnits, SR_TOKEN_DECIMALS } from './waitlistCalculator'
 import { WAITLIST_SR_TOKEN } from './waitlistPricing'
 import { getServerBaseRpcUrl } from './serverBaseRpc'
@@ -46,6 +48,10 @@ export type Epoch2SrEligibleWalletsFile = {
   updatedAt: string
   thresholdExclusive: number
   walletsLower: string[]
+  /** Latest on-chain $SR (human units) per wallet from the last snapshot. */
+  balancesByWallet?: Record<string, number>
+  /** GMT+7 eligibility day this snapshot applies to. */
+  eligibilityDayKey?: string
 }
 
 /**
@@ -122,6 +128,10 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     return { ok: false, error: 'Missing BASE_RPC_URL or VITE_BASE_RPC_URL (required for on-chain SR snapshot)' }
   }
 
+  const dailyState = await readEpoch2DailyState()
+  const isBootstrap = !dailyState.bootstrapCompleted
+  const { eligibilityDayKey } = gmt7PostCountWindowForSnapshot(nowMs, isBootstrap)
+
   const rows = await readMindshareSubmissionsCsv(process.env.MINDSHARE_SUBMISSIONS_CSV_PATH)
   const keys = [
     ...new Set(
@@ -159,8 +169,15 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
   const atIso = new Date().toISOString()
   const logPath = defaultSnapshotLogPath()
   await mkdir(dirname(logPath), { recursive: true })
+  const balancesByWallet: Record<string, number> = {}
+  for (const w of keys) {
+    const units = unitsByWallet.get(w)
+    if (typeof units === 'number' && Number.isFinite(units)) balancesByWallet[w] = units
+  }
+
   const line = JSON.stringify({
     at: atIso,
+    eligibilityDayKey,
     cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
     thresholdExclusive: threshold,
     totalMindshareWallets: keys.length,
@@ -176,6 +193,8 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     updatedAt: atIso,
     thresholdExclusive: threshold,
     walletsLower: eligibleWalletsLower,
+    balancesByWallet,
+    eligibilityDayKey,
   }
   await writeFile(eligibleWalletsPath, `${JSON.stringify(body, null, 2)}\n`, 'utf8')
 

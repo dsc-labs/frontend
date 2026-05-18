@@ -25,7 +25,13 @@ export type Epoch2LeaderboardUser = {
   postCount: number
   score: number
   srEligible: boolean
+  /** On-chain $SR from latest daily snapshot. */
+  srBalance?: number
+  /** Daily SR eligibility for 15–19 May (GMT+7). */
+  checkpoints?: boolean[]
 }
+
+export const EPOCH2_CHECKPOINT_LABELS = ['15', '16', '17', '18', '19'] as const
 
 /** JSON from `GET /api/mindshare/test-epoch2-leaderboard` (matches server builder output). */
 export type Epoch2LeaderboardApiPayload = {

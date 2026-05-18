@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2Data'
 import { EPOCH2_PAGE_SIZE } from './mindshareEpoch2Data'
 import UserAvatar, { xProfileUrl } from '../../components/UserAvatar/UserAvatar'
+import { EPOCH2_CHECKPOINT_LABELS } from './mindshareEpoch2Data'
 import { formatComma, formatShortWallet, getRankedUsers } from './mindshareEpoch2Format'
 import '../../components/UserAvatar/UserAvatar.css'
 
@@ -24,20 +25,36 @@ function Epoch2RankCell({ rank }: { rank: number }) {
   )
 }
 
-function Epoch2StatusCell({ eligible }: { eligible: boolean }) {
-  if (eligible) {
-    return (
-      <span className="epoch2-status-pill epoch2-status-pill--eligible">
-        <span className="epoch2-status-dot" aria-hidden />
-        Eligible
-      </span>
-    )
-  }
+function defaultCheckpoints(): boolean[] {
+  return [false, false, false, false, false]
+}
+
+function Epoch2Checkpoints({ checkpoints }: { checkpoints: boolean[] }) {
+  const days = checkpoints.length === 5 ? checkpoints : defaultCheckpoints()
   return (
-    <span className="epoch2-status-pill epoch2-status-pill--ineligible">
-      <span className="epoch2-status-dot" aria-hidden />
-      Not eligible
-    </span>
+    <div className="epoch2-checkpoints" role="list" aria-label="Daily SR eligibility checkpoints, 15 to 19 May">
+      {days.map((passed, i) => (
+        <span
+          key={EPOCH2_CHECKPOINT_LABELS[i]}
+          className={`epoch2-checkpoint${passed ? ' epoch2-checkpoint--passed' : ''}`}
+          role="listitem"
+          title={`May ${EPOCH2_CHECKPOINT_LABELS[i]}: ${passed ? 'Eligible' : 'Not eligible'}`}
+          aria-label={`May ${EPOCH2_CHECKPOINT_LABELS[i]}: ${passed ? 'eligible' : 'not eligible'}`}
+        >
+          {passed ? (
+            <svg viewBox="0 0 12 12" fill="none" aria-hidden>
+              <path
+                d="M2.5 6.2 4.8 8.5 9.5 3.5"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ) : null}
+        </span>
+      ))}
+    </div>
   )
 }
 
@@ -71,7 +88,7 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
         <div className="epoch2-col-wallet">Wallet</div>
         <div className="epoch2-col-posts">Post Count</div>
         <div className="epoch2-col-score">Score</div>
-        <div className="epoch2-col-status">Status</div>
+        <div className="epoch2-col-status">Eligible</div>
       </div>
 
       <div className="epoch2-table-body">
@@ -103,7 +120,7 @@ export function Epoch2LeaderboardTable({ users, stats, pageSize = EPOCH2_PAGE_SI
               <div className="epoch2-post-count">{formatComma(u.postCount)}</div>
               <div className="epoch2-score">{formatComma(u.score)}</div>
               <div className="epoch2-status-cell">
-                <Epoch2StatusCell eligible={u.srEligible} />
+                <Epoch2Checkpoints checkpoints={u.checkpoints ?? []} />
               </div>
             </div>
           )

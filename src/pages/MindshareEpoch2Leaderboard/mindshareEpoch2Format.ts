@@ -6,6 +6,11 @@ export function formatNumber(n: number): string {
   return n.toLocaleString('en-US')
 }
 
+export function formatSrBalance(n: number | undefined): string {
+  if (n === undefined || !Number.isFinite(n)) return '—'
+  return formatComma(Math.round(n * 10) / 10)
+}
+
 export function formatComma(n: number): string {
   return n.toLocaleString('en-US')
 }
