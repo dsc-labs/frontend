@@ -191,11 +191,16 @@ async function refreshXMetricsForRows(options: {
   generatedAt: string
   ttlMs: number
   nowMs: number
+  /** Tweet ids from `epoch2_daily_state` counted keys (covers multiline CSV edge cases). */
+  extraTweetIds?: string[]
 }): Promise<Epoch2MetricsCacheFile> {
   const cache = await readEpoch2MetricsCache()
-  const { bearerToken, rows, forceRefresh, generatedAt, ttlMs, nowMs } = options
+  const { bearerToken, rows, forceRefresh, generatedAt, ttlMs, nowMs, extraTweetIds = [] } = options
 
   const tweetIdSet = new Set<string>()
+  for (const id of extraTweetIds) {
+    if (id) tweetIdSet.add(id)
+  }
   const handleSet = new Set<string>()
   for (const row of rows) {
     handleSet.add(normalizeXUsername(row.xHandle))
@@ -294,8 +299,15 @@ function scoreDailyPostsFromCache(
   const engagementByTweetId = new Map<string, TweetMetricsSnapshot>()
   const byWallet = new Map(seedByWallet)
 
+  const countedByWallet = new Map<string, Epoch2FlattenedPost[]>()
   for (const p of countedPostsForRecount) {
-    byWallet.delete(p.walletLower)
+    const list = countedByWallet.get(p.walletLower) ?? []
+    list.push(p)
+    countedByWallet.set(p.walletLower, list)
+  }
+  for (const [wk, posts] of countedByWallet) {
+    const canRecount = posts.some((p) => cache.tweets[p.tweetId]?.snapshot)
+    if (canRecount) byWallet.delete(wk)
   }
 
   const applyPost = (p: Epoch2FlattenedPost) => {
@@ -483,6 +495,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
   }
 
   const bearer = options.bearerToken?.trim()
+  const extraTweetIds = tweetIdsFromCountedPostKeys(dailyState.countedPostKeys)
   const cache = bearer
     ? await refreshXMetricsForRows({
         rows,
@@ -491,6 +504,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
         generatedAt,
         ttlMs,
         nowMs,
+        extraTweetIds,
       })
     : await readEpoch2MetricsCache()
 

@@ -1,13 +1,13 @@
 {
   "ok": true,
-  "generatedAt": "2026-05-16T14:43:23.868Z",
+  "generatedAt": "2026-05-18T04:06:09.251Z",
   "stats": {
     "totalParticipants": 355,
     "eligibleParticipants": 26,
     "notEligibleParticipants": 329,
     "totalMindsharePosts": 1847,
-    "totalScore": 8046.24,
-    "daysRemaining": 5,
+    "totalScore": 6908.64,
+    "daysRemaining": 3,
     "totalLikes": 5340,
     "totalComments": 4659,
     "totalRetweets": 516
@@ -17,2486 +17,5641 @@
       "username": "「 𝕲𝖔𝖔𝖓」",
       "wallet": "0x73B6bdf237eD04f40E5684f3e5718F9239B5d64a",
       "postCount": 8,
-      "score": 376.04,
-      "srEligible": true
+      "score": 110.29,
+      "srEligible": true,
+      "xHandle": "goon_crypto",
+      "avatarUrl": "https://images.asksurf.ai/GJJy00tP8wO665fEfvCKeVZAceeNMl8mOThIqnnNdhw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDU1ODY0MTQxMjIyNzA3MjAvQ3V6RjBrcXlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "zagen",
       "wallet": "0x1aad084517ea492a67fcca54048c7e0404ce1ab2",
       "postCount": 14,
-      "score": 368.08,
-      "srEligible": true
+      "score": 102.33,
+      "srEligible": true,
+      "xHandle": "0xzagen",
+      "avatarUrl": "https://images.asksurf.ai/uhSZq0zbkXrsu1XKh2uPJm4BWoCsGdOs1oICccHcRI4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODM0MjMyMDQzODQ1NTA5MTIvb2xUVUg5SnFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "100xDarren",
       "wallet": "0xccd05831016B444fFC83F6dA2e018F62849ab34A",
       "postCount": 14,
-      "score": 218.95,
-      "srEligible": true
+      "score": 97.73,
+      "srEligible": true,
+      "xHandle": "100xdarren",
+      "avatarUrl": "https://pbs.twimg.com/profile_images/2024690477409456128/YQAuG4TJ_400x400.jpg",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "Conan.eth",
       "wallet": "0x6d69e2d103CE4C147Fa189ee3fdfB88159C907cf",
       "postCount": 2,
-      "score": 212.71,
-      "srEligible": true
+      "score": 91.49,
+      "srEligible": true,
+      "xHandle": "0xweekend59",
+      "avatarUrl": "https://images.asksurf.ai/VdtUNC7gJOUJBqHFR-Pdb1UEbKqvOFCrSlnQPU6yZW4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODg3ODc3MTczOTc1NDQ5NjEvZ1FPcTd4dTAucG5n",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "3DMax_Virtuals",
       "wallet": "0xA18c066fC86B9e8a91287496ab954fcc414a30AA",
       "postCount": 9,
-      "score": 209.03,
-      "srEligible": true
+      "score": 87.81,
+      "srEligible": true,
+      "xHandle": "3dmax_virtuals",
+      "avatarUrl": "https://pbs.twimg.com/profile_images/2032533640039604224/p6WziH2S_400x400.jpg",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "Biz Brain",
       "wallet": "0xd5A065E5c38c7d87f6B90e920f4e1aCc9722d97a",
       "postCount": 14,
-      "score": 203.17,
-      "srEligible": true
+      "score": 81.95,
+      "srEligible": true,
+      "xHandle": "bizbrainzuni",
+      "avatarUrl": "https://images.asksurf.ai/d1Mnn0XGCZ-ePJI42wPaqAuQr-N29GJbSTmG28WkWkk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzk0MDk3MzUzNjQyMDY1OTIvZ2t0Vy1rN0YuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "office2crypto",
       "wallet": "0x97Bc998dBDD5D5a9df74cB589F4eabd516D4a22A",
       "postCount": 8,
-      "score": 199.22,
-      "srEligible": true
+      "score": 78,
+      "srEligible": true,
+      "xHandle": "office2crypto",
+      "avatarUrl": "https://images.asksurf.ai/hPShDUUHN1p_Z5Y9gITNOl9p3cBdiIYgn2xdOYhzIrQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MDM5MzIxNzU2Mjk5MjIzMDQvZFVUZjBVUElfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
     },
     {
       "username": "JAYKIII 🎒",
       "wallet": "0x611c3f4B257fA7f330061D5407bb0f6aDa52cada",
       "postCount": 17,
       "score": 68,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "longl2282268",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "Sothh.HC",
       "wallet": "0x2AA3D9acc0818855Cf7F1567a6C235B9702246D5",
       "postCount": 16,
       "score": 64,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "sothh84",
+      "avatarUrl": "https://images.asksurf.ai/bBbVnuMxllJRR0H0NMPMBIOSLckn7xGeVku5SpX9xdk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDY1MzYwNjQ1MzQ0NjI0NjQvS3RzazJkTVYuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "GodAir",
       "wallet": "0x6e7dbB10343c03DA3f07DC6B6a4747C7748Fd47A",
       "postCount": 14,
       "score": 56,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "dang_duytan",
+      "avatarUrl": "https://images.asksurf.ai/Zs45Ej2Y89e0aFrdxlcYkyBLV4c_uJ4WNR-31QaWyDk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjYzNjg4ODE2OTk4NDgxOTIvQ0tMQVBXMXMuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyễn Thắm",
       "wallet": "0xf5fe70ac5c12905cD802c890c2A401194554d692",
       "postCount": 14,
       "score": 56,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "nguyenthambt",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "GaoGao",
       "wallet": "0x8E0da9865A8B2EE06921B877222DABE4c4d3D8d9",
       "postCount": 13,
       "score": 52,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "gaogaocrypto",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "Ben Crypto",
       "wallet": "0x2d8E97569C42d3A387E948a6A8bCd6474B47E39b",
       "postCount": 13,
       "score": 52,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "bencryptovnn",
+      "avatarUrl": "https://images.asksurf.ai/gQUrXxub1AayClYsCH3q8fYF7OYAt7SbPmscAZcxz-I/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjQzNTkxODE2MDUxNDY2MjUvRExMNGwtYjUuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "sashinmeena",
       "wallet": "0x3ae1Cfea83DA97D533Bb5f5E6E31C4ecDea3E057",
       "postCount": 11,
       "score": 44,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "sashinmeena",
+      "avatarUrl": "https://images.asksurf.ai/TqzVxcrgnKEzGU-j_j_xScC0e1GSZPbJQYyEByKqeH0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDU2NzQxNDAyMzgyNjIyNzIvcTFJSnFkSWkucG5n",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "MEDICO",
       "wallet": "0xB0c7084Fc05ed9827683dc38766a930d083af6C4",
       "postCount": 11,
       "score": 44,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "drkhaleefah2",
+      "avatarUrl": "https://images.asksurf.ai/XHDQqB71op_TuiVU_U5kESy3WbxEtTL1oRn8UOWorxA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTQyNTM5Mzk5NzA1NTE4MDkvc01vN0ZGUlkuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "dinhxomgon",
       "wallet": "0x9C3419A8D3B46E5c7150e8f6e3Ec1A8afc1E9Db9",
       "postCount": 8,
       "score": 32,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "dinhturin",
+      "avatarUrl": "https://images.asksurf.ai/jVpOlww1IUDcx4wJGkGfXQTXaG8BIwD4PG4kDjPj1mc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDU4MTA0NjQ5MTE5MjUyNDgvd1JSa1ZlRDdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "Frank.eth",
       "wallet": "0x9D3CA3A3Da4d033ACee296D4C1829cc5143e0fAE",
       "postCount": 7,
       "score": 28,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "punisher3505",
+      "avatarUrl": "https://images.asksurf.ai/Oga-7Skh6NP0rjOpdaPVRRTt5xMLxqzxzwkvNEC_RuE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTEyNjE0NjE1MTYwNTQ1MjgvczVxX0R2Um4uanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "Trong Hatachi (❖,❖)",
       "wallet": "0xC70D7342332eCF3c26F991FdBC85A8b8AB1A48bA",
       "postCount": 5,
       "score": 20,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "trong_hatachi",
+      "avatarUrl": "https://images.asksurf.ai/A8IACTQHnQtvghbJQvuMwp1kJJBliQ5A-Kgdti57Azk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDI5NDIwOTIyMTg4MjY3NTMvZ0RRbjdtZm0uanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "sheepmek",
       "wallet": "0x40A2C0F8D5b2B42059be294e25cE7bcaF1ddc652",
       "postCount": 5,
       "score": 20,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "sheepmek1",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "健康JK",
       "wallet": "0x88b791A2fA058B183Ccbfc11d36027C7a7e0D362",
       "postCount": 4,
       "score": 16,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "jiankang_0909",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "Joker 🐳",
       "wallet": "0xC6dB3110E8d0290200371dE6548A3174f5701d47",
       "postCount": 2,
       "score": 8,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "jokeriblack",
+      "avatarUrl": "https://images.asksurf.ai/gXnafcgjUZGVZY7afL-mS2EjKt4YbOfcRUQmMAbB8Ew/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDMxMjA5OTkxNjUwMzA0MDAvUnlPUEwwQmEuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "hitas.base.eth",
       "wallet": "0x4830764Cb1252Fc7553231E2FBF5b09961a29c59",
       "postCount": 2,
       "score": 8,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "hitasyurek",
+      "avatarUrl": "https://images.asksurf.ai/F_E75RCtqch_vC1DXvZgl3YNq_eTbisqgK5XawQjeqU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjgyMTYyOTkzNDA3NDY3NTIvMjlPVTVsb2lfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "alfakeko",
       "wallet": "0x471fAF231212caAD6554B4E3ec1fC5255f36F468",
       "postCount": 2,
       "score": 8,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "tcmalpha",
+      "avatarUrl": "https://images.asksurf.ai/a8OESIYEEN-3DUy1qKKdfBhX9OneIj6S0l5eq2Ms_9I/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTEwMzg1NDA4ODUyODI4MTYvX21JTmZSNlRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "CODY01ETH (*,*)",
       "wallet": "0x7fCbefaE32efde50630e91B8B2346887838a7fbD",
       "postCount": 2,
       "score": 8,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "dd1fx",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "一千万是只猫",
       "wallet": "0x04feE3fC468ac0595eE56F1913005F220c5685fD",
       "postCount": 1,
       "score": 4,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "rxu107",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "VULCAN 🌋",
       "wallet": "0x96993C0aB74299f3C304a08DE30Dc2a3f1E072b4",
       "postCount": 1,
       "score": 4,
-      "srEligible": true
+      "srEligible": true,
+      "xHandle": "bigmanstuff0",
+      "avatarUrl": "https://images.asksurf.ai/CZNkuRI9Exeg8qDDqoT6bwwPGLVyivTH83aK9Ya8tqA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3ODQ2MzE3MzEwMTk5NzY3MDUvMFJ5LUwwX2cuanBn",
+      "checkpoints": [
+        true,
+        true,
+        true,
+        false,
+        false
+      ]
     },
     {
       "username": "chase",
       "wallet": "0x88Df9f66ef65c3C1231f981c85f7B946Bf6d99EC",
       "postCount": 6,
       "score": 42,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "chaselightt",
+      "avatarUrl": "https://images.asksurf.ai/U-E2CUUGmU3pPXY7KltCoVs1OO7O1ggQ0sMp1Im7mrM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDIwOTA2MTA5NzE2OTcxNTIvZS1jWHczek0uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "T N",
       "wallet": "0x214522796492859788Ffb807aF8a356672a8bB56",
       "postCount": 8,
       "score": 40,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tnr1ck",
+      "avatarUrl": "https://images.asksurf.ai/POJuF20R68FPxdr4a3O71mXNV8jHZNHgsboOpWGB67Y/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzkyMTQ1NDg5NzMyNDQ0MTYvcVp4VFpRemIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Rare",
       "wallet": "0x271c72589f10D8eA866eDB97b9db09ab12ab9721",
       "postCount": 12,
       "score": 39.88,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rare_bd",
+      "avatarUrl": "https://images.asksurf.ai/Fa02eMep0slIUibo0UNMa_-Szx65ngU4rQPugQMcDRM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQ0MzIwODU3MDQ5OTg5MTIvUm1pR3RVMEFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "CODED",
       "wallet": "0xcb1862d265c726b57592f795a4c20cbfbc892899",
       "postCount": 8,
       "score": 39.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xxcoded",
+      "avatarUrl": "https://images.asksurf.ai/wo5G7sa4aUfNx7_DRj5YLzt645cff3VJvmYnx7B3x7M/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDQ2NTgwNjU4MTU4NTEwMDgvak5rOGJwem9fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "deFiprinces",
       "wallet": "0x56c4924FDA0a46490f2135Ca259e7Bf1aFfE9B52",
       "postCount": 8,
       "score": 39,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mzsandy18",
+      "avatarUrl": "https://images.asksurf.ai/c5AI5dePzcx4HyLdqx_TImflxn2-1jUu8sVCpsqnelY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3OTk3NDY2MDMzNjE2NDQ1NDQvcG1Gemt1Rm8uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Rosetina Degen 🎩🎒",
       "wallet": "0x53bB62BFBa912847D0B8d3eff55542bAE991bb0D",
       "postCount": 4,
       "score": 38.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rosetina_degen",
+      "avatarUrl": "https://images.asksurf.ai/Th9Gvq2AJfZvJk68zJHWdrk5y1O8IzVcAEiwN7lXbMc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4MzIwNjM3Nzk3NDE1NjkwMjQvRUVPUFM0R0Ffbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "tyr 🐺",
       "wallet": "0xd9926e2232b49bab2e1543613d286622411accaa",
       "postCount": 4,
       "score": 38.08,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "psypth",
+      "avatarUrl": "https://images.asksurf.ai/7iq4_hlKVqVThWo1oM4WTPBOSjZpK6FFjfTnN9lx2S0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTAzNTYwNjc3OTcyNTgyNDAvM0VEbFNuNWlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dzola",
       "wallet": "0xC6776bBa507Ed718C9D7AeE70b0eA1B1C26ec8Af",
       "postCount": 4,
       "score": 37.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dzola17",
+      "avatarUrl": "https://images.asksurf.ai/vaKRITpLlD4OUeOnnl1gWXcFFXqvxnUPlJh8BCm_hOw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDE0NjQ5MDUwNzQwODU4ODgvb0VVV1lOUXdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SpilsA",
       "wallet": "0xC967255394fa6BD630F8405bD69b51d70Ad73F01",
       "postCount": 8,
       "score": 37.44,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "spilsa",
+      "avatarUrl": "https://images.asksurf.ai/Q-cjpY8LO-_Jqrv23DcSKevWw1vaAVly-J03RtBzVEE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMjExMDY5NDU1OTc0NDAvcXlQS0FYdm5fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Wozbekk",
       "wallet": "0x19221Aa28cc6269293bC6A3bae4001C93CE38cBf",
       "postCount": 10,
       "score": 37.44,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "wozbekk",
+      "avatarUrl": "https://images.asksurf.ai/gcWxWXxJTmD1q83uTshkRPv0d2eucPpqgIiDA7bicpk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMjIzNjgxMTgyMzUxMzYvVlVQYVV4SWNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "HBO",
       "wallet": "0x1A062aA6EFD4Be430B71Fa1436d72ec24bB381AB",
       "postCount": 12,
       "score": 36.86,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hbo_data",
+      "avatarUrl": "https://images.asksurf.ai/c-4RbjuFNwTpvL4qDv4L6l8kBbtqxoGAsn1aLTqSlrg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDMwNzIwNjI1NTA2MDk5MjAvQzRPS09TWHVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Em Bi grvt🍏",
       "wallet": "0x9202744fc4f6ae71272f6204c707e1bfd3694fae",
       "postCount": 8,
       "score": 36.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "bilivo8",
+      "avatarUrl": "https://images.asksurf.ai/isZRAtsBa25jLhv04S95n7nQf7fzkk5NOf-Duv4Gtuw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5Njg4OTE0NzY2MDUyODg0NDkvRkRxMlB6enQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "David",
       "wallet": "0x863e3ca52239be57ff34209f26f416f4a083de3d",
       "postCount": 6,
       "score": 36.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kappybruh",
+      "avatarUrl": "https://images.asksurf.ai/jeueRXS-vczOL7rG2n56CQJe-LWnYPhhUxcOKCWUb24/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4NTY5MDU4MDcxNzIxNzc5MjUvMGhVTTVCbk1fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ValeriiVSL | 𝔽rAI",
       "wallet": "0x71004760Eb3F6Fb351358aBD8cfe7B481F5e086A",
       "postCount": 6,
       "score": 36.4,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "eloghinova",
+      "avatarUrl": "https://images.asksurf.ai/rqG5H438mTqZcNVyL6InDSjL4S4RS77UQGNI9j-I1Mc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzUzOTQ1MjIzODE2OTcwMjQveGtSYjF6a3Zfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Oscar",
       "wallet": "0x5F41297c6c24B5C549E2f673c1e4038bf0cf76f9",
       "postCount": 4,
       "score": 36,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "only_one_oscar1",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "6iks",
       "wallet": "0x9EA429C0EB345A5b73a2ea696fb8B819E57D2fdd",
       "postCount": 22,
       "score": 35.72,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cikkss108",
+      "avatarUrl": "https://images.asksurf.ai/nOQb8b7TvYar8mFKrRmrmQ_DWRd0NuLbzj6IFks2RyU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjc5ODE4Njg4NzY5MTQ2ODgvZmJlSjEzc3hfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "rebeccacoupland",
       "wallet": "0x9c6b6EE9f10e2a63d94974b7A37Df0F1D7457B16",
       "postCount": 8,
       "score": 35.7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rebeccacoupland",
+      "avatarUrl": "https://images.asksurf.ai/gBQitRXlWZH8Mw7H4DoMKHeawi0DzQeAt3eitNdcF1w/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMjExMDIzNjk1ODcyMDEvUUwtYTczSk5fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ayıfero",
       "wallet": "0xABE08B81Dd3D7d67d8Aa753CE37195D02aB4383D",
       "postCount": 8,
       "score": 35.7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sol_ayfr_",
+      "avatarUrl": "https://images.asksurf.ai/l6uEA1vjjJOVTwbJnkdDQCjzXK1P8DGSlMX6jxOFf80/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MjA5ODI2MDc5NTQ1OTk5MzYvNGF5V2ktQTlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SYNEX",
       "wallet": "0x11e6f1205160b970feb003161f18edffc58fBb73",
       "postCount": 6,
       "score": 35.52,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "synex98_36",
+      "avatarUrl": "https://images.asksurf.ai/87B4t4w4mam6ejFr4vTdccBVAe2-sPzYe-ArFIhXGhU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTY0OTk2NjYzMTQyNTYzODQvanBIbGZnMGdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Crypty Universe📊",
       "wallet": "0x8996a21b8cf30a741078f995d9a58f6c543a0ca4",
       "postCount": 4,
       "score": 35.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "qirnft",
+      "avatarUrl": "https://images.asksurf.ai/zTO1tY-fLNUHQ-D0R_4GwcfiXxjuLm-m9Huy7T4_sBw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTExNjUzNDczMDc1ODU1MzcvWk9HdDlCbnhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "MNWeb3",
       "wallet": "0xa3b1dc050f3a81f6fb5ffe52a7dc995545304198",
       "postCount": 12,
       "score": 35.06,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mrvictor2626",
+      "avatarUrl": "https://images.asksurf.ai/Ay4Ggha9D1Yvah3D_5vpByyZVM_ulazTG70Q6Ta6STs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTg4MzcxMjAxMTk3NTQ3NTIvSUo3akVsZEMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ozan",
       "wallet": "0xDaa357631250d237E46C2648c7CbF32Ed470A55d",
       "postCount": 8,
       "score": 35,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "azaztrader01",
+      "avatarUrl": "https://images.asksurf.ai/2yO6keLaeQi4QjGeuXjDOV_u2UCPiwviiQAAAe93ka4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTgxODkzMDQyOTI0NzQ4ODAveGk0VWgxUk1fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SofiX.eth (reader arc) 📖",
       "wallet": "0x3d3c9859CDe8eF1A51456f7166BB17d7CFb1D6e6",
       "postCount": 4,
       "score": 34.92,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "onlyreaderx_",
+      "avatarUrl": "https://images.asksurf.ai/QzKdUa7BGhW4mDsNEqiDl8H2KTotGXJEGZEBfJH8V2A/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDY1NjIxOTMxNzgwMTc3OTMvOE5RRHdTSWRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SADIQ ",
       "wallet": "0x002CcB36a4e4Da1c24c6C84F8939D0141529c3ef",
       "postCount": 6,
       "score": 34.78,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jitusorkar12",
+      "avatarUrl": "https://images.asksurf.ai/06QlF_2wkmjPHymV6mEfY0dGGbyJ8YndkBWRYxOg7jI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjM2NzQ5ODg2ODQxNDg3MzcvVV9IR1JjaTZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mr_Josephhh 🤖ボッ",
       "wallet": "0xB23f40e5F70b5617aB0918123C39Aa20fb9Bc620",
       "postCount": 8,
       "score": 33.96,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "josephoffiong4k",
+      "avatarUrl": "https://images.asksurf.ai/cKvdEa-OptMdZ3bYzFNby7q16FAz4ddKyWXj7L1p6CU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTUwMDAxNDkzNzU0MDE5ODQvd0pWTkhtXzMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ABBA",
       "wallet": "0x03fa24549d896DD8B582568BD17c27B1f63B1f10",
       "postCount": 6,
       "score": 33.94,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "abba__80",
+      "avatarUrl": "https://images.asksurf.ai/EzTpwbkSZpFffnYDBCHxPyKw4lKz-sbPkRldasgW54g/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTYxMDU1OTY0NzUzMjIzNjgvN05tcDZzVm5fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "LEV",
       "wallet": "0x6c3a90c5Da8b1D74dEdE154B0e441927F2C97524",
       "postCount": 10,
       "score": 33.64,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "lev_eth",
+      "avatarUrl": "https://images.asksurf.ai/EOuSr9QbtlRDhI4Qg4gZEiSJLq-OdcmsePk3Z6Cp9Ik/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5Mzg5MjgzNTk4NzU5OTc2OTYvQWdCWlNkeUNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "呆呆呆呆🔸🐬TermMax",
       "wallet": "0x0D35D958ea4646D9378644848222dCcE4127BBa2",
       "postCount": 10,
       "score": 33.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dashubtc",
+      "avatarUrl": "https://images.asksurf.ai/Fw4Us0z9L0Ynxbau_UMEe7ocbtr73MGNqfN9HQ0SIBk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDg1ODU2OTgyMjA0MDQ3MzgvU0JCT2tRS2MuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Eccentric 🦈 KGeN 🐬TermMax",
       "wallet": "0xB794CbB6FDca6E47d537De61010675669A86Ff57",
       "postCount": 8,
       "score": 33.4,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xeccentric",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "heymen33",
       "wallet": "0xC2838c5F882f43958ac6993b5195618595C3F283",
       "postCount": 4,
       "score": 32.88,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "atlas16022015",
+      "avatarUrl": "https://images.asksurf.ai/e8G-LyjmM1SIyoTEB-v0BM3tYpxQe4q2ZQlnqi_q0D4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3ODg5MTY1NjU5ODA2MTA1NjIvSERFbEpkV3Nfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "hakan",
       "wallet": "0xF5C7F48887536E4E8F4a947472546bA81E74c569",
       "postCount": 6,
       "score": 32.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hakanbilgetekin",
+      "avatarUrl": "https://images.asksurf.ai/qs-FfxzDXoZNs16WQFv1WIPMZ0wg_83fUG0QTrpjEIM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTM0MjczNTM5MTAwMTM5NTMvN29STHJLNWtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "mesut",
       "wallet": "0x543e3C00E9C6C0Ed2Ef420302a574F1DCFa83e93",
       "postCount": 6,
       "score": 32.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "varyant3500",
+      "avatarUrl": "https://images.asksurf.ai/MT4-R4rGHP7ajanHix3oZc1zZXJ55NDIrJeZ03JKbWk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3Nzc3NDAyNTQ4MDk2NDA5NjAvdnUxc3YyX2hfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "luluca_pp",
       "wallet": "0x750Ff9679d229CcC28Ba6E011bAc955926333146",
       "postCount": 6,
       "score": 32.12,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "luluca_pp",
+      "avatarUrl": "https://images.asksurf.ai/e2QgGgCxXyCaYRjJuY_1ANymamQ1mrRKb5b-hQFBRoU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTkwNDYyMjEwNDU3NjAvdmx6NV80QnBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "apelkorv",
       "wallet": "0x86515adbbc3A02D7f5cceD10885150502C776cBC",
       "postCount": 6,
       "score": 32.06,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "apelkorv",
+      "avatarUrl": "https://images.asksurf.ai/GOyT8R5yYS_YdZQgfeSzF9bksG306UbFVD66zflsNjQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MTU0NTUyNTQ4MTA2MjQvcFVtRlgybE9fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nexora",
       "wallet": "0x9ff4359d5f8611084e608139d99deefe740b9d3c",
       "postCount": 4,
       "score": 32.02,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nex0ra_",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "0xvinhpham",
       "wallet": "0x3aedb97569ad578038498af46f071045b1f36476",
       "postCount": 8,
       "score": 32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xvinhpham",
+      "avatarUrl": "https://images.asksurf.ai/WgUOtKeM7cyfFgWezD5aqhuNVPsd_VTio5OkeqdF-II/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzI0MzgzMDA5NDcyMzQ4MTYveGVuSFBBUmEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Aemar (✱ ✱)",
       "wallet": "0x1d89d1cde8f01e5620debbcae90c312246a9f68c",
       "postCount": 6,
       "score": 32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "aemar00",
+      "avatarUrl": "https://images.asksurf.ai/FHJsFsreZXSwx-wMdlxztfOIn01iXDad9pG-pcRG2Ls/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDMxMTkwMjEyNTI2MjAyODgvak9LMXJoS1Bfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Sajib",
       "wallet": "0x3De953c945C8C5E351b5667904fCBd1AdC558A20",
       "postCount": 6,
       "score": 32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sajib_999",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "XLⓂ️",
       "wallet": "0x697c9B0E6b16c1239d82F9f01D792796887a396b",
       "postCount": 8,
       "score": 32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "xlmeta_x",
+      "avatarUrl": "https://images.asksurf.ai/NIXK5sWu0D5m_zg-ZiIsMuuhknHP5IKvfkcRJbcla5M/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDMyODEzMTgxMTMzOTg3ODQvRWR1RnhxV0wuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "callmeperry3",
       "wallet": "0xeCe7205C26F7D58b1eD899fac8e68D2EE49247b4",
       "postCount": 4,
       "score": 32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "callmeperry3",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "𝐃Ξ𝐆Ξ𝐍𝐊𝐈𝐃",
       "wallet": "0xbdfa3d13E5644fBa20aB3EB1d354693D404D281b",
       "postCount": 6,
       "score": 31.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "degen_kid01",
+      "avatarUrl": "https://images.asksurf.ai/_sGa-66CTF3_BhSfAspmYgrcD_LusTx3ozAJkiak824/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzgwMTM1MDIyMjExNzY4MzMva0tuRWNmSU4uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dhark💙",
       "wallet": "0x85293459625474693ee335f430be38e7e84516e6",
       "postCount": 6,
       "score": 31.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "devcraft05",
+      "avatarUrl": "https://images.asksurf.ai/hh67g8NnZldSY8GvXGMntI7gVQY6caj-jKFCplpccwk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzM0OTY4Nzc1NTU5OTA1MjgvcjZ2MnlHUGkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "edgar",
       "wallet": "0xc2ce378434bF3500e5CF894F7eC57Be6C8AA1466",
       "postCount": 6,
       "score": 31.14,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "phu_prosperity8",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "WingroveRobert",
       "wallet": "0xc47BE2036326bA92Fa68DC2F2BA16952b8f85604",
       "postCount": 6,
       "score": 31.06,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "wingroverobert",
+      "avatarUrl": "https://images.asksurf.ai/eV4V2MdLN34ooGNYCRAHWFxDU12A6WHti5gOq5xDwWs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMjM3OTI0ODI5Mzg4ODAvYmdtZXA4dVdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "KASIM Muhammad",
       "wallet": "0xFfFb536b929118A05785786f182333ff855d4339",
       "postCount": 6,
       "score": 31.02,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "er_madamce",
+      "avatarUrl": "https://images.asksurf.ai/5Bhzkf8C-swTKQBtcmbGHxMBUU6luHr7Xdkk5UyH3IE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDA3OTQ4MTYyMzQwMDQ0ODAvVDlsZncycW5fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "CRYPTO ALVERON",
       "wallet": "0x713c8aEa444C2Ad739D0f7fD84a8951830735bF6",
       "postCount": 10,
       "score": 31,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "crypto_alveron",
+      "avatarUrl": "https://images.asksurf.ai/cZkCAD9pu1IioyNKKt0XahFjD2nUv0aGg05po9BnzEc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDY3MDUyMDMxODYyMjUxNTIvVl9CcjFpUDUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "MIKEY",
       "wallet": "0xbbbbdf3ab00a2b1e72893b712ae484b8b0a903e8",
       "postCount": 6,
       "score": 30.98,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "crypto4mikey",
+      "avatarUrl": "https://images.asksurf.ai/qRJiR9hoNCkMeN02xdzCUfX3VRPBWB2YuNxPpLHnkvE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjgwMDMzNTc2OTcxMzg2ODgvS0VkS20zNjBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Amie",
       "wallet": "0x885f7b41cff62c8309bd609b8bca4332dafd3675",
       "postCount": 6,
       "score": 30.94,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "amadarln2",
+      "avatarUrl": "https://images.asksurf.ai/azTXkZ9Teycvzh08oX_VHAvb-37d5pJLAWZ68G9nxzs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjgyMDUwMjM0MDMyNzAxNDQvMTVhdkM5aHlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Gujil Ruipa",
       "wallet": "0x147da61d038Faee3b73Fa90AdcE9A2abC2d87558",
       "postCount": 6,
       "score": 30.86,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "gujilruipa",
+      "avatarUrl": "https://images.asksurf.ai/nwOlyq6mTRGuYoAm2ghkZoU00rvcwfOHEX_f7_EFNS0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzkwMDE1MjUwMDAwNTY4MzIvb2pKajI2SXlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Shawon MN",
       "wallet": "0x6c35a1bc15F0508c434Dc118Aa5a6f1f3Fe57418",
       "postCount": 4,
       "score": 30.02,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "abdulmu09708501",
+      "avatarUrl": "https://images.asksurf.ai/AU5dacqwRcTZQAdcMMBP1K-idNg28gaucBzfe7rh91w/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3MTc0MTEwMjQyNDMxNzk1MjAvVkk5ckZBN3Rfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "EyoAugusti",
       "wallet": "0x71e8E723a83305C8625AfA7BD135e502F7714d09",
       "postCount": 4,
       "score": 30,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "eyoaugusti73181",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Viora",
       "wallet": "0x6865D33a359b2ab9D46CAE2762e9Ed3Fa9a4145e",
       "postCount": 6,
       "score": 30,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "gamerfigirl",
+      "avatarUrl": "https://images.asksurf.ai/Jmwefjd0XxV7CNcRbAVt_V3oexQtuEtHPpWwsgDXs9o/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDU5OTYyMTAyNjQzNjMwMDgvNmc3dHVKMEkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Black Miami🧚🏿‍♂️",
       "wallet": "0x86678f2b6ca3f126666c59612f2428528340cfb6",
       "postCount": 6,
       "score": 29.84,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "blackmiami2",
+      "avatarUrl": "https://images.asksurf.ai/K_PnYSTr-C0gyNOyECh3inb1dowhx3m8w6oLb_-Y_HU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODQyODUzMjU1NjE3NTM2NDkvRXdZbDIyanZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "BigFarm 🌸",
       "wallet": "0xf93a9bd47f02cb3e89d5e9d0fbd18e4a21ff9511",
       "postCount": 12,
       "score": 29.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "bigfarm_x",
+      "avatarUrl": "https://images.asksurf.ai/803aB5MBHQQ1Qpc-yIE6vITyDTcMhEHxdImbx-zotTA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjcwNjYxMzk5Mjc5NzM4ODgvc2R2S2p1TnIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Monkey D. Rupiah 🤖ボッ 🐬TermMax",
       "wallet": "0xB72Baf8959052Fa2386F27584c7a1F708709f885",
       "postCount": 6,
       "score": 29.48,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xrupiah2020",
+      "avatarUrl": "https://images.asksurf.ai/ff3izqiuicwCl7mHSDpvdqRLRKhgQEojMgpmaQsTOIY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTM2NzI5MzkzODkzMDQ4MzIvM0YzVHE1U0Vfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyen Phan Hoai Nam",
       "wallet": "0x3074dB7DdfEF10a64925a6a6123379679F86EAa1",
       "postCount": 8,
       "score": 29.34,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "overlen001",
+      "avatarUrl": "https://images.asksurf.ai/_ZGKP5qcDOKvxVrUy9jEzOn_wJPZr5sqlqQfy_ZUEy4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjY1MDE1MTU4NzYzODA2NzQvN3R4V2FfLTZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "JhaliaArmas",
       "wallet": "0x0e5Dd9602Ab1584776cA0163bc9F0830B0274338",
       "postCount": 8,
       "score": 29.32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jhaliaarmas",
+      "avatarUrl": "https://images.asksurf.ai/NyBkvKDoCYtIeE0o7mYucgC3Frlou3X9tDgaEiViVuA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTE2NjI4NDI0NzExODIzMzYvaG9VOVJXWTdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Indra DJ",
       "wallet": "0xb6A5feD504dF5c3a61B5bf83Fb01e5Eb1A7F3DbC",
       "postCount": 6,
       "score": 29,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "indradjuni",
+      "avatarUrl": "https://images.asksurf.ai/rmyxjWNfR2y9lfZARkWDKnXHOa47JYM4dTyWMYAAiPk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzA1MzMyMzA1MDAzOTcwNTYvVlFCenVXSHIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Choi_Soo_Sun_",
       "wallet": "0x949aB7B5d74D4de6936e0C6fa02146C47A1dBbf5",
       "postCount": 8,
       "score": 28.96,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "choi_soo_sun_",
+      "avatarUrl": "https://images.asksurf.ai/QbNI_qCr3TXsAktivG090nIFmFbghfXIK2VlanFjXho/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE0MzQ3MTkxNDE0NjY5MzkzOTMvOXdyMkNmMUFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Chorux",
       "wallet": "0xBfB6b759E824CfdFe81e475DE2a4dad15f31c765",
       "postCount": 4,
       "score": 28.58,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "chorux666",
+      "avatarUrl": "https://images.asksurf.ai/T7QvLT-EaAHHg0hCjiy1UoeA5NltUog8lv5AhZrEYkg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5Mjg0MjIzMzU3Mjk1NTM0MDgvOEhKNEtTcl9fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Verma",
       "wallet": "0x96FB478eAda938765Ba686DF6988a6EAAB49e416",
       "postCount": 8,
       "score": 28.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dkverma89",
+      "avatarUrl": "https://images.asksurf.ai/xrIDxLl4ri5g3IYpR1b8n6G00XmWNo8p_ra9aDS0PU4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTA0MTk3ODY4ODc2NTEzMjgveDhxQ1lJQ2kuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Scott",
       "wallet": "0xed3624c2f9e5cfed7b045141b5d1df68f9a960e6",
       "postCount": 6,
       "score": 28.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "iamscott08",
+      "avatarUrl": "https://images.asksurf.ai/K_T-2TVmZNmMPSyVeBh9cU0y8F1Dqi_gTbN6IQRz7mk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODcyMTM4NTU2NjgyODk1MzYvVkVSTHFHZUguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Tarik_DeFi",
       "wallet": "0xB6381D7958EB73E0f8771FDf3350B33d4bB9f235",
       "postCount": 4,
       "score": 28.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mdtarik1390649",
+      "avatarUrl": "https://images.asksurf.ai/soXhUIBXBaBG5ACtPmgTtSjudHh6YeHsI_FxUCUS-u0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzcyMzkwNTM3MDAyODg1MTIvVHQzY2h3cmMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dapper",
       "wallet": "0x590997bf8f5249fb6703c151ddd7c19b0434abd3",
       "postCount": 10,
       "score": 28.34,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dapper_cea",
+      "avatarUrl": "https://images.asksurf.ai/BfDPsuUwzl2AzYCxMo9UKkwAX6CFAxaZqVpLGAYfcUU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDg5NDIxNDM1NDE2NzM5ODQvYm51R0NzMk1fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Knox.eth🍌",
       "wallet": "0xAF83a69b531e52D184fEAE7D3F3cA3697dCfF592",
       "postCount": 6,
       "score": 27.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kumar58429",
+      "avatarUrl": "https://images.asksurf.ai/AG2Cso7MD_1ghHWW5qEhPQHNgEAO4aR4GVNODWjQogE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODUzNzY4ODY4ODU4NTExMzYvQzFzOHF1MVguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Clinton",
       "wallet": "0xf8e5bdF253aD5Be1d254433cF0Ee2E179A35E8e4",
       "postCount": 12,
       "score": 26.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "clinton910z",
+      "avatarUrl": "https://images.asksurf.ai/iHJ1uC5P9_Pbaa5lEIehod_RS_HAIEYGz9-5gKHrC4w/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzEyMTE0NTM2MjYzMzExNDMvMlNIUWo3RGYuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Timcrypt",
       "wallet": "0xc1e337bf5977d0947f6a298c0a8be225093f1716",
       "postCount": 8,
       "score": 26.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "slim_timothy24",
+      "avatarUrl": "https://images.asksurf.ai/-c9EBdJiDqLtXpPgtYFV9HGAKNvGXxZUOyfl68gpMUU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDYxNTQyNTc0NTY5OTYzNTIvQzV1UVJINkkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Trenchwalker",
       "wallet": "0xabe2e29a2916b1d494eb2ceb998b46d8c06ec2e6",
       "postCount": 16,
       "score": 26.46,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "trenchwalker_io",
+      "avatarUrl": "https://images.asksurf.ai/Ni_DT_KeOQPG24_iY8w2iDpFSN_nkWRhq9Fau3ikSrU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzI3MTA5NDYzMzQ4OTIwMzIvdFlEeG91OGwuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ahonaf Shariar Nihal",
       "wallet": "0x3e84F76A360af2fb9e2b33fe015d7bdd3953b260",
       "postCount": 8,
       "score": 26.4,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0x_nihal",
+      "avatarUrl": "https://images.asksurf.ai/aWKE093OqJc1chI4gmiaCxI8sH8sP6r39rUMy8PFWlY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzQ2NzY3NTMxNDM3MjYwODAvRm5qcXpKU1Ffbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "patricia ana .❤",
       "wallet": "0xCe84c05918315Fbc43348a886EC6839264241843",
       "postCount": 6,
       "score": 26.38,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mateocpatricia",
+      "avatarUrl": "https://images.asksurf.ai/FtKDY5kaWDwY9Ia8ZHuRH_vJ-VMHseUGTeh8h7vGjso/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMjQ1OTk4NjU0MDU0NDAvc3UzZllrVGdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Yemi",
       "wallet": "0xb60914d451886297FE4e3517bc0970BAC1E4E0B9",
       "postCount": 14,
       "score": 26.38,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "x.com/amosope2",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Eternal",
       "wallet": "0x408b95510e8e5a1d065ebd8ac8858eacc8478ad8",
       "postCount": 6,
       "score": 26.32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "eternals_io",
+      "avatarUrl": "https://images.asksurf.ai/CCafrbmm7sTK137M8N7lhbkryZriv3F43lJ7vYOUaCY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzI1MjE5MzQwOTg0Njg4NjQvUDNYaXNtUlFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "NightCitizen",
       "wallet": "0xa5d4479e06e1C397d81869436f622AAE06b801C9",
       "postCount": 8,
       "score": 26,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nightcitizen",
+      "avatarUrl": "https://images.asksurf.ai/SD1OIDps_c8DvCxeU-o4g5tBZ6y9HIvAJd0GUSmiYKA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTM0OTM2NzU2NTUxNjgvVWxXbnBCdjlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mustapha bappayo",
       "wallet": "0xdadaff041dd50ff24317382e51325a708de446f2",
       "postCount": 6,
       "score": 25.96,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "musty_hasheedu",
+      "avatarUrl": "https://images.asksurf.ai/GxHTWm1gE-zauNen7E7lVW5f-ZNVIbzbKqTUNwdT8_0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTg0NTc5NDg3MDAyMTczNDQvbzJ3dGswYXJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Andy the Jet 🐬TermMax",
       "wallet": "0xfe2cB10B37Cb2060C21b1f4fB9Ac5e8AF1CdCA2D",
       "postCount": 10,
       "score": 25.66,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "gpaandy",
+      "avatarUrl": "https://images.asksurf.ai/5xt5keqosUkTMVK0yJ20q6gQBy8eNuaZS01xvABG6jU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQ4NjI1MTgyMDQ4Mzc4ODgvSE5Da05mZ0dfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Kyo",
       "wallet": "0x00edf8e6eee1706bca287d6e9ed23bf767fc4a07",
       "postCount": 8,
       "score": 25.52,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kyo_nld",
+      "avatarUrl": "https://images.asksurf.ai/99P-NVxo-RpWs3m6qlNbh4MpC5fFF4oiGhaVWMg5oYE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDkyMzI1Njg0NjI1NDA4MDAvaGdIVkNNdzFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dannyboy_0x",
       "wallet": "0x081d4609e4948e678021112fac0c442d4f6d355b",
       "postCount": 6,
       "score": 25.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dannyboy_0x",
+      "avatarUrl": "https://images.asksurf.ai/prELsOU6U7l5SJhFn3Mp4agwLTvddzToXw6KRVdHgr0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODAxNDMwNzUzNjU4NDI5NDQvZHk5SEhpZ0wuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Frankly Speaking",
       "wallet": "0xB5f319AaB9a35cFaf7b079c20cC43590Fb1252F0",
       "postCount": 6,
       "score": 25.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mr_frank5",
+      "avatarUrl": "https://images.asksurf.ai/B4N-ZfeRkpFNd0QasLTli5Z65aI3HCihcLW21AasOlo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzgwMDg1MDczMDAwMjQzMjEvdXpUcW9XdGcuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Oguntoba folagbade williams",
       "wallet": "0xdd8062e955799ddb7e1849ef1f830345e3a13d72",
       "postCount": 10,
       "score": 25.12,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ler_oyy",
+      "avatarUrl": "https://images.asksurf.ai/CUjYxsdH3ixHd1jxw-ZP0DT0fnSVQKaZIEx2VVJiGBM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODkxODMzNDcyOTA2NDQ0ODAvaF9TN25vNTBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "rheRealjohnDoe⛓️🎗️ボッ",
       "wallet": "0x8074C4Fe871B511Cd7416083b15fA72AE68fE8ce",
       "postCount": 6,
       "score": 25,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "torettoj283",
+      "avatarUrl": "https://images.asksurf.ai/9ENbsOrMJLa_PThMxF1jRh32E9wuq7bKwRxqeR__yIc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjUxODE4NjI5ODU4NjcyNjQvVm9uSzE0NXNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "lorento",
       "wallet": "0x564345897F26d1653A88BD1456d4090ebeB4405c",
       "postCount": 4,
       "score": 24.88,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptolorento",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SAJIB",
       "wallet": "0xEa4Acb9c4C8F068EAF38e9EFb658F04650318dAF",
       "postCount": 4,
       "score": 24.86,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sajib1006",
+      "avatarUrl": "https://images.asksurf.ai/od4nltp_4psA-huq8h1Bre2pXyqkC1eizBrZ5rfKWOI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDAwMzM3NzE2NDc2MDI2ODgvckJCdFRtYktfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mariko0x",
       "wallet": "0xEd49Eb1503fD3cC40744bF1474926Faaf6a08BDf",
       "postCount": 8,
       "score": 24.54,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mariko0x",
+      "avatarUrl": "https://images.asksurf.ai/kJ_tHkgIjrTAVPnjjShrW79xmm28T-8b1vBI5DAAs3s/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjEwODcwNTI4MDk2OTExMzYveTBJREQ5MGtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Thuy Signals",
       "wallet": "0x0d73E1f2bbdB8a39C19e94fF71C6765429DDE485",
       "postCount": 8,
       "score": 24.18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "thuykeo56",
+      "avatarUrl": "https://images.asksurf.ai/H6J-WWIOqPILmDJm9NrbwGgMzTootalRsJMjXuiGZAM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDM0NjU2ODM2NDQ4NDE5ODQvZk5ZU2NPWlpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "花白区块链.🐬TermMax🕊",
       "wallet": "0x49Cf9f12d3E78E3A5A6B34073274d11d6b012e62",
       "postCount": 14,
       "score": 24,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "bnbtc8",
+      "avatarUrl": "https://images.asksurf.ai/_-yGQDyRaRgsDzUo9puH0CK20VMdC4KKtctd7hwX3rQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDg1ODU2MDc2MjM0MzgzMzYvdVl5dGJPVS0uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "FoFan",
       "wallet": "0x9df5cf833ced34428d7be5efc421f1075f7a96f7",
       "postCount": 6,
       "score": 23.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "fofan_eth",
+      "avatarUrl": "https://images.asksurf.ai/9a6QsRMGY8X3bFINJeqyrLa-AApQax8zSbdpBRh5btY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4MDY5ODk3MDY1NTY1ODM5Mzcvb2pfOHp6OFYuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Oluwafemi👑❤️🚀",
       "wallet": "0xeB007A72346edf26e9910957AF4c2c14853EDE2d",
       "postCount": 16,
       "score": 23.34,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "thefemog",
+      "avatarUrl": "https://images.asksurf.ai/IsAASfmdTfkVpVZB4r2Y-7wa9J_T89xY2sYkzWuKNpM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODE2MTAxNzg5MTYwMzY2MDgvMWpjTzdhdG4uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Griner",
       "wallet": "0x68db396c4f88fe96d9ec7d3c9bc80baf82bb7f87",
       "postCount": 8,
       "score": 23.32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "congyinglingxia",
+      "avatarUrl": "https://images.asksurf.ai/Yh2RrlkMLq-z7nuYOnWDvV-uQq0kNF1myn1lqPCFRZU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTYwMjY3MDYxNDI3ODU1MzYvNTY2d0JfV2xfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Pham Phu Dung",
       "wallet": "0x9f4eb3a88ba7a263facebd58d56b6c6f879db34f",
       "postCount": 10,
       "score": 22.2,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ppham101295",
+      "avatarUrl": "https://images.asksurf.ai/Zvde-xRuvT6_6_EbjmKZUYKas-qzYi8o5TUVVTP0CsU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDU5OTk1NjQxMjY1NzY2NDUvaWp6Q0hqNExfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Willow",
       "wallet": "0x7410dd515287bf51a95cf7e3fd220210413c9b5c",
       "postCount": 8,
       "score": 22,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "surprise6198",
+      "avatarUrl": "https://images.asksurf.ai/E3JzMEe7awLJMZZOLwm4h3H82gVL8WcYu10QUeJsvIM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDM0MjMxNTEzNTE1OTUwMDgvaGZjT2Q1VTNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Li🥳🥳 🦇 (✱ ✱)",
       "wallet": "0xcfdd620d944361a91860b846679594bceab2738c",
       "postCount": 6,
       "score": 22,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "xel_god",
+      "avatarUrl": "https://images.asksurf.ai/HK4Ca7Jy4ppukKakshS3B2mDPlG7x_Rk8uiAPr40Quk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDczNDE4OTE4MzEwOTEyMDAvazgtM3FGVmwuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Hizqil",
       "wallet": "0xa64768627f4eBdCac40CD830485987ac2E6a760d",
       "postCount": 4,
       "score": 21.96,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hizqilsky",
+      "avatarUrl": "https://images.asksurf.ai/kEXiQC-7FqrZLUIMjWzasM20OJkqrfqCKn0AbJyriPs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjk3NjAxOTE2MTM1MzQyMDgvVm1UYmhsN1Rfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mr.Jack 🐬TermMax",
       "wallet": "0x7ddb22b48ccb1104f24e98d5f74b97f46c9ec888",
       "postCount": 10,
       "score": 21.94,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xhypeeth",
+      "avatarUrl": "https://images.asksurf.ai/1769nNdMbtoa6ijX5-9YS9_BqUDC127tYyRJLJ2W3k0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTY0MTk2NjQ4MDU3NDA1NDQvMm5oUnpIUHVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Krnkmr",
       "wallet": "0x61eE15C1831ed97005f1dCa65f9821745eC766Ad",
       "postCount": 4,
       "score": 21.6,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "krnkmr",
+      "avatarUrl": "https://images.asksurf.ai/BQcD9BVqSWC2s5pb3GZ6pjBl6KfyRhBG1bgQ2kNRo-0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MDkzNjUxMDg1NTU3NzcvZ0dobzQzaFNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Promzy",
       "wallet": "0x96421ac7d040518ac5e667201254d032864f3e23",
       "postCount": 16,
       "score": 21.36,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "promzy__m",
+      "avatarUrl": "https://images.asksurf.ai/QPj4o6mUXUQoadbnQYoL9lxKFtrKSKqvZkGCP-xAl6s/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4OTExNTcxMjMzMzkyNzIxOTIvcnVWVUl0el9fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Furkan",
       "wallet": "0xff3a3cfc42d27e85dba9ea85f0bfec34bd632f9a",
       "postCount": 4,
       "score": 21.04,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "akdogancoin",
+      "avatarUrl": "https://images.asksurf.ai/7xFEbetkW96iTJ221gIu5NneUnea6_9rAu2Q5atU50M/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDA4NTkyMTUxNTQzMDI5NzgvUUF3RTlmNFVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Babe !!",
       "wallet": "0x09b44e1722d6b9CBe020fC045e463b1bAf3d6e6D",
       "postCount": 4,
       "score": 21,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "wucktuu",
+      "avatarUrl": "https://images.asksurf.ai/CUNpsrU2f4VzEYsB1WLf7wMcdaZMESYrRG9PNmpJvQ0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzM4MTMxMzc3MjA1NDUyODMvbHppckVXLTIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "TabDel0x 🐉🐉",
       "wallet": "0x5777DA469aF845AdE4E0c89D7AEcA5db9879E0B2",
       "postCount": 4,
       "score": 20.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xdragonhash",
+      "avatarUrl": "https://images.asksurf.ai/MQEjZ9RPWYWC6QkC9cengG7VqX8O21ClScDImUd5OCM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTY5NzYyMjA0ODAxODQzMjAvakxNQmlVbEouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "jani_jenus.eth 𖤐",
       "wallet": "0xF4cEB967489c0ED4065cB48efF4506409B145ded",
       "postCount": 6,
       "score": 20.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jani_jenus",
+      "avatarUrl": "https://images.asksurf.ai/yb5sh7jZavvomgzOWp88Z6XL62GnY_-02fJLiJ_t2wQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDMwMTMyODUyNjQzODgwOTgvZ1pjQmEyUGkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Lan Anh",
       "wallet": "0x5c689c48001bf8bd5F732A88911A66A99639e056",
       "postCount": 4,
       "score": 20.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "lannnanhh",
+      "avatarUrl": "https://images.asksurf.ai/XZDHLU2g1K3E3ieSD49gsED2cqo5UWd8Y9YRx8I-8-A/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjcxMjE2MjExNDUyODA1MTIvVHl6ZGtUSWhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Travis",
       "wallet": "0x150905B32B99a5974b846466096Cf51EDf8FDc96",
       "postCount": 6,
       "score": 20.3,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "traviskrypto",
+      "avatarUrl": "https://images.asksurf.ai/B5WhynF0QrSJvvuxsUZxVgzzxs0ctqz2cLY55QDL5uI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTQ2MDYxNTc0NzAzODQxMjgvdzZZLVNmeUtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "kosturmabeni1",
       "wallet": "0x8F772Af47D8B510D859f47398b43864DDd3F435D",
       "postCount": 6,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hellethhhh",
+      "avatarUrl": "https://images.asksurf.ai/v8BZ85k0aTwvHIiy9ZNlC7sjGyURp_umQYTCdB1XALw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODY1MjkwMDMyOTAzMDA0MTYvWlI4NG9XYWtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Jimmysnooploo",
       "wallet": "0x91d49E37c64eb0cb24D24Ed2D38119c9AB78f3D5",
       "postCount": 12,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jimmysnooploo",
+      "avatarUrl": "https://images.asksurf.ai/OhGraNhxE8oU7NW5a-or3BjRZbMxQwyZiVYdZbpN1ds/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMjIzNTQ4MjIyNjI3ODQvaEpVbVhOZHZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Musttt",
       "wallet": "0x3e9c8585c9bd6426d7f9ae0d52c3757235cbde20",
       "postCount": 4,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "musttt_web3",
+      "avatarUrl": "https://images.asksurf.ai/XkX6wSymY9gMRBS1ol58a8je55zeslwPQr9Z-pIERDU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQyMDg1ODEzNDQ3OTY2NzMvWUg2NGlKbkpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "KaMii",
       "wallet": "0x0E880cA87895132880c1FfC97B331F341dA01051",
       "postCount": 4,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cmkamii",
+      "avatarUrl": "https://images.asksurf.ai/3tZHO2AnT-UDkxuxbLv0sjyRkbFeT6Omyf7jp4LjRjs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MjQ3MTI5MDE0MjU3MDkwNTYvb2ZvdmtaNFMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dee",
       "wallet": "0xDC3F93744EC88DE6782b70b6bcD668F6A334EFBA",
       "postCount": 4,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dee_e6",
+      "avatarUrl": "https://images.asksurf.ai/RhoSBwTt4LbponbusPSL4rQ1PJaeZnczuFZIUdMM7II/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIyNzYxNzY5Mjg4NzQ1MDEvbFh4WkhzUFlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "jul",
       "wallet": "0x898E7BA5997Edf98aC95E19a2D8dc417Fbe80621",
       "postCount": 12,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jul56502344",
+      "avatarUrl": "https://images.asksurf.ai/ACE_uknoENeCIaj2y1JcYGjy1C4RreWvKnebWW2wAi0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4MzczMDYzNjcyNTE3MzA0MzMvTjF1alhOZmlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Lord OBI",
       "wallet": "0x75a640EF71a77D856f6F8A5Cc3B1d43AF44827AE",
       "postCount": 2,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "lordobi_swc",
+      "avatarUrl": "https://images.asksurf.ai/MVlFTSj_KkhIvFjeaVhtyV2bA2aC4rfYK4KeYN13628/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTE0NDIzOTExOTQ5NDM0ODgvWmxVZDRPUnRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mad Magic Sol 🥇🐬TermMax",
       "wallet": "0xc88FA8BF8a0A451b5DE6D1ccd35F89fB92962bd7",
       "postCount": 4,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "madmagicsol",
+      "avatarUrl": "https://images.asksurf.ai/rz4-qloROolEzl2N0mkVdSnHgCtcFIYrKgpqleXEG_E/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzI0MDM5NzUyMjg3ODA1NDQvbW1wMjFCMUUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SHAKIB",
       "wallet": "0x442bE7DFd31a9C71D1b3d3cB3cE1A4Cf3dBeDa85",
       "postCount": 4,
       "score": 20,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "shakibmunsi0",
+      "avatarUrl": "https://images.asksurf.ai/DNLSs2i3PCAW46I67ZTMjEo-D2lP1paRQlfwrKFwVJM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDQ2NTY2MDYyODY2OTIzNTIvdXBuemktYkcuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "padres_fernando",
       "wallet": "0xF02F4DD849F027D49041b0c3F8e653Cf8E3EDF1e",
       "postCount": 4,
       "score": 19.72,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "padres_fernando",
+      "avatarUrl": "https://images.asksurf.ai/AZ36XRheokTpzH5wK2fwUveiHtYTxci8Nos4uQway08/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTY0NTM1MTIwNzMyMTYvTHZXVUpIVnNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Rylnei",
       "wallet": "0x7428295c6b7ebecfa25d91e05d47a2a59dfa6c90",
       "postCount": 8,
       "score": 19.6,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rylnei",
+      "avatarUrl": "https://images.asksurf.ai/y-5EXIEoCV_V_IiV_FQ0jtE1GLQgeWWUa64DGLIl-EU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjE2NzEyNTY4NjEzNTE5MzYvc1pkdlpLaFJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Kalista",
       "wallet": "0x4548534b1a5b599F57AeA9e7e2174603bf0d967b",
       "postCount": 6,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0x_kalista",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "motion.",
       "wallet": "0x70a64632342c465BFa08bb8c7e2d962cFdF1Dbe3",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xulfr",
+      "avatarUrl": "https://images.asksurf.ai/kxX0dJITgPASeZXRQ_5ZC68RuGemvHNE7qU3mbKdGmQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDcxMTk2NTkyMzQzMjQ0ODAvVUg4YXUwdk8uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ZEXOR",
       "wallet": "0xEC7355518962E00Fb192F8c0be16C277Dd593e82",
       "postCount": 6,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xzexor",
+      "avatarUrl": "https://images.asksurf.ai/M9LY1zARR1K-CbMsiBYWXe78rsVZb73lwA0D2XI8n2M/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MDc5MTQyNzE0NTI3OTA3ODQvSUxtMi1xTzIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Shreeram Jangid",
       "wallet": "0xd9c60e1159e5acc20552382600a50f8cda1525e7",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "1shreeram0",
+      "avatarUrl": "https://images.asksurf.ai/CFCcnpYT0ZZEak45l6eF1EfGxYqZYha7tjcVyB4kVHY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTgzMDAzOTUyMzIzNjI0OTYvLTF6NVdudXIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "REJAUL Ⓜ️",
       "wallet": "0x7C056212702A3Df8bDc5F18aE7b6B9ed6657E6E0",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mrr1572",
+      "avatarUrl": "https://images.asksurf.ai/Shx6V8aqh0Gj62-6cAtL5nxX_fEI2yM9eEIY1z2fhA8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDMwMDE0ODkyOTIxNjkyMTYvTUhCOGJXVGwuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Sultan",
       "wallet": "0x113465e5062a655e7503122575AF392D55b73b59",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sultannasir51",
+      "avatarUrl": "https://images.asksurf.ai/CHO9sauHBdeGFPo0ddIWJl3J3Z6yrMgNlg0aEdzKPSE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzEwNzUyNzI3OTIwOTI2NzIvT2Q3VkFxVU1fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Wilson",
       "wallet": "0x87b636ad699636617dd7b69dd0973e46d4ef6103",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "wilsonpablo108",
+      "avatarUrl": "https://images.asksurf.ai/Kr0Ehj0HeD_LjAKtjpxF98jfqt6nuCCvT7sC91w7liQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDAxNjUyOTQ4NzUwMzM2MDgvTERrSnFBV2guanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "𝔻ℝ 𝕊𝕋𝔸𝕌ℕℂℍ Ⓜ️ ⚡",
       "wallet": "0x48BBbB8989bCA0C9655Fbd716AC511a1F03E9d5F",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ahsanzohaib",
+      "avatarUrl": "https://images.asksurf.ai/3XAFZTBcIxJlvutN_l9zI6nyOQfuf0WTl1db5c00KJA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDQ3ODc0MDM5MTU5Njg1MTMvTWFZbV9JVWQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Catinat",
       "wallet": "0xbAbFF80ceDFb5D663332D8DA03c56be85293627C",
       "postCount": 6,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "catinat25",
+      "avatarUrl": "https://images.asksurf.ai/G2MbKgCLwHGFA2Hc6CuGeZOJyUGBGeAI9-lv8oEx3dM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzg2NjU4NDk2NTQxMTIyNTYvOTJVS2NEM0Nfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "CryptoJuñior",
       "wallet": "0x9e7486e6e393ebBd68F73Bf1D74A901d1553AC3C",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "juior2012",
+      "avatarUrl": "https://images.asksurf.ai/1GSzM4AXK1zgPEShEsOJk41KrWvVDiRNS1MtKuCqY9g/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDA1NzMyNzYyNTk1OTgzMzkvQWE1UW50VzUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Lucky Luke",
       "wallet": "0x176987a76d999bf117377aaaa6c2e54c44fcf6f7",
       "postCount": 6,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "luckyluke_eth",
+      "avatarUrl": "https://images.asksurf.ai/m21ori7jPtDYXuhId14P0vB_INZm3a0oV6wbBjdKqp0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjI5NjE4NTMyNjIxMTA3MjAvcHBtcnU5akVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "𝐌𝐞𝐡𝐞𝐝𝐢",
       "wallet": "0x14D21355Db8569736A583e0197385f5C26888Fbe",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mehedi_onchain_",
+      "avatarUrl": "https://images.asksurf.ai/EswPeooOpuABhLUADfAUVv82F6hLg3JH1TmEszzppOM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDQyNzk3Nzk4OTgzMzkzMjgvLURuRzNxaWIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Max",
       "wallet": "0x6A14588d869E0B11Dd8bcA209aB982315036fAb0",
       "postCount": 4,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "realmaxfi",
+      "avatarUrl": "https://images.asksurf.ai/p4_bneBuD-JfSWrbS6iB0N1sM84vSl9nn4gd_tgwZXQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDc0MjYwMTEwMDUwNzEzNjIvbV9Dc2w3bm8uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Sheetly",
       "wallet": "0xcc6c55a1ee9c0771d184738203e4311ce79bc747",
       "postCount": 2,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sheetlyxbt",
+      "avatarUrl": "https://images.asksurf.ai/4ltNNqJfIK16JUIkHJWN-dye729MvTEbDldjvtSSo2c/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzE4NjY0NjAwMDQ2MzA1MzQvdTBfNjhNVHRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "tEO",
       "wallet": "0x951258c3e166ca7f5cefac5bcd099778d5767885",
       "postCount": 6,
       "score": 19.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "teelacream1",
+      "avatarUrl": "https://images.asksurf.ai/7InHXu9XOvvfP4BkL7vcsqwefyzA7LQNtrqtOL2Ucjk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5Mjk2Njk2NDkyMjM4ODQ4MDAveHJxRDhIN2hfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "X E N O | 🐬TermMax",
       "wallet": "0x82813d1528f0b25360639460070080a756c69029",
       "postCount": 16,
       "score": 19.48,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xxenoweb3",
+      "avatarUrl": "https://images.asksurf.ai/vemhde510D1Q0Ulfcv7GkAtufTDL2z7i08gIKv-7Av8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE0NzQ2MDM2NzIwNTE3MTIvYlF6LWJtZ29fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Aista",
       "wallet": "0xC8D3ddeF1Fc8240739D60965a102E3F7bf8BAE30",
       "postCount": 8,
       "score": 19.46,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "theeeapostle",
+      "avatarUrl": "https://images.asksurf.ai/nUHHEssXOr4KxwFfly8LcAKLUjh3HOXvkSPHdVdOPuY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4NTExNTUzMTkyODk3OTQ1NjAvUWg0cDQ0eTZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Grace Iwuchukwu",
       "wallet": "0x561d7dc6dc66d4d2e3fe33d138f7de10ca01cef7",
       "postCount": 4,
       "score": 19.44,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ahmazingammahh",
+      "avatarUrl": "https://images.asksurf.ai/38gLjjhOWAjRM-FxqK_B6X8Ms56SorJB7MVkZMgOOE0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDY0MjY5NzQ2MzQyOTEyMDAvc0hDUThESzRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "iamlequanghuong",
       "wallet": "0x23934e253c4f9c44f73a85b350c00a72e1d9c20b",
       "postCount": 2,
       "score": 19.3,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "iamlequanghuong",
+      "avatarUrl": "https://images.asksurf.ai/4Y0uheSkLYSoV1X2YlAGc_bmxwQYl461S9tibNemknA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDQ5MTcxMjQ2MzI4NzkxMDQvTWhBa3R1NWpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ha",
       "wallet": "0x9219d387224d1d9bc9009cb6395a2f2e0094726b",
       "postCount": 6,
       "score": 19.28,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "saoha93",
+      "avatarUrl": "https://images.asksurf.ai/6PbLh3WB0swD7pK9jz5OKQohDTm7tx_0Y99aGwMpkuM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzI2MDA5MDk0ODczNjIwNDgvMU00TEphaUdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Daniel",
       "wallet": "0xfcd795d81b0c8f45afa1b5eefd9e02fe29e6f6d7",
       "postCount": 2,
       "score": 19.16,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dan_cryypt",
+      "avatarUrl": "https://images.asksurf.ai/Xn-8DzY4GCXiSt8R0hmffalTIgAg-llBxrjssZ6s98s/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTA2MTYxNzk4MTE4NDQwOTcvUnpsZHJDaXdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "𝕊𝕡𝕣𝕚𝕥𝕖",
       "wallet": "0xe2f6aebd4dff1c6593fb0a645d5a6b3ba8111a38",
       "postCount": 8,
       "score": 19,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xsprite_",
+      "avatarUrl": "https://images.asksurf.ai/rEG7i3aHWkJz4hWoJdw1sCVjQkvsbfizGtrQ7_8IB3w/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTMyMjQ5MTY1MDY1MjU2OTYvczc4dk9ETjcuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mankhan",
       "wallet": "0x09e4ed69b90612a178f117ccabbacc1979901c3d",
       "postCount": 4,
       "score": 19,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "anhdaden811",
+      "avatarUrl": "https://images.asksurf.ai/JKFIiWB8FoE5LAt-LsXpnecm261H0ooKzjNOHmf0kkY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQ5NzMyNjcyODM2NDg1MTgvY1Y4N3pOS25fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Busaba บุษบา",
       "wallet": "0x7aE8adFcC778c66c312bFbaC84Eff1402836ce7d",
       "postCount": 2,
       "score": 19,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jeniferweb3diva",
+      "avatarUrl": "https://images.asksurf.ai/1JOMbvEG1V6WE32bYvKhIT6SEiAPMcX_z2R45Ve7cGc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzA2OTc1NTMwMDg5MTg1MjgvVEhXektqWGJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Fabulous💸",
       "wallet": "0xBEBF32f7b33B41f8B141F168f1f61Bf4Bc4AE774",
       "postCount": 4,
       "score": 18.82,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "fabulous__xx",
+      "avatarUrl": "https://images.asksurf.ai/l2vEdMEmhzUxMOv6iJhyp2s-oHQUg3pneSnQhSZimEE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDE5NDU4MTA1MjM5NTkyOTYvVUw4QVQtQmFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Traderibo",
       "wallet": "0x7eac578521fe48f8ef5068563f67e768b8a85f9d",
       "postCount": 6,
       "score": 18.8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "traderibo123",
+      "avatarUrl": "https://images.asksurf.ai/bV9zWJXBUuoc-0WruxNZQew834saKwlRg5iGYTbocRM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODA1NDgwMjc3MzIzNDg5MjgvVWlXblQ5cHdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "eric.eth",
       "wallet": "0x88E6fAF07919c849a6dD8c46416D2616db61AdA6",
       "postCount": 6,
       "score": 18.76,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "eric0xbt",
+      "avatarUrl": "https://images.asksurf.ai/nIRFkr0uQNWAP7pYSxSE2joj56zinE6-Yer4azaug0c/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDYzOTg1MDczODU0OTE0NTYvRVhRdGtmSGEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Enzo",
       "wallet": "0xCDA9BFD21b74ffEB74Ad1300256f3f5d6F77Fe3b",
       "postCount": 4,
       "score": 18.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "enzoxbtc",
+      "avatarUrl": "https://images.asksurf.ai/KDJUASArYhVovd3EOGvwEweqtX6zLpbPpIDborrvNws/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTgwNTAxOTc5MjczMDUyMTYvbV9zREtpOTcuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Papy",
       "wallet": "0x2A4AC7409D43D111A3E471087226618538fF2B71",
       "postCount": 2,
       "score": 18.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "just_johnny4",
+      "avatarUrl": "https://images.asksurf.ai/_OdZyJTQhOcVdz0aiYZPR-0P-vAJk5V_PlRCoKDWeis/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTkxMTc4MzYwMTk0MDQ4MDAvUnNid0gwQkpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ERKAN",
       "wallet": "0x3F31Fd7A98f90638b1263AAe656aF79A2002dc1B",
       "postCount": 2,
       "score": 18.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kingandnft",
+      "avatarUrl": "https://images.asksurf.ai/eN2Wex4dVtb9v4SYhWLHSni-QKDr0ZOmO173TAq2wjY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDAzMDQ5MTEzNzY5NDUxNjEvTUdqWkM2Tzhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Benjamin",
       "wallet": "0xA316547E27bCF7F175eF4d5044D22Da6AE6d9edc",
       "postCount": 2,
       "score": 18.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kodd25",
+      "avatarUrl": "https://images.asksurf.ai/rPHWxk6clQu6w2Z_-sAxL2xlBYLwnAfYTSCvd_idbF4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDk0MzQwNjQ0MDM4NDkyMTcvaUJoNlFPcXlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Taheer",
       "wallet": "0x45b97f753f7cdbf2bc70fe013b854adb714a13b3",
       "postCount": 2,
       "score": 18.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "teesjnr",
+      "avatarUrl": "https://images.asksurf.ai/OvIK8fLwj-5NNMbinMPWN-J6Wy1q50LjCWitMoforak/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzY4OTA3MTU1MTU4NzEyMzIvOGJnR0JfV3Nfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Keng N",
       "wallet": "0xD924d8402Ce135957DC35fe338C61690e24861aD",
       "postCount": 10,
       "score": 18.38,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xkeng",
+      "avatarUrl": "https://images.asksurf.ai/Axbn-DjZDZU3-l-V0kA_QnBN7mqcwC4Jw6Tpq30CAb0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjU2NjAwOTY2MzEwODcxMDQvWGxJNmVnYmJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mr. Jax 🐬TermMax",
       "wallet": "0x03193b2a5580ed18cb36efdac81b323bc746f33e",
       "postCount": 6,
       "score": 18.36,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hieutrinhvn",
+      "avatarUrl": "https://images.asksurf.ai/rOxSoZLHuSFCY1PCUssfX2_XOsCEw5Yv4z2PyOB4Ckg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzg0NTc5MDk4Nzc5MTk3NDQvdUptMXZ6dGRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Victor Edwin",
       "wallet": "0xd57e1aacd744e231868cec97fa038f7f65c915ef",
       "postCount": 16,
       "score": 18.24,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "caccy_001",
+      "avatarUrl": "https://images.asksurf.ai/KoCNiXnLh2JE2tOypgR9m6yhNS97ssCEhzUg5v7KIMg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4NTU5MTMyMjMyOTMxODE5NTIvVEJWVHlkQzFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "FAHAD",
       "wallet": "0x15B47032e5D0ed4373E37Df8fB5962e88fA4dD89",
       "postCount": 4,
       "score": 18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xfahadxy",
+      "avatarUrl": "https://images.asksurf.ai/wPkQzoVXHRZRtTXNZe1SA7MYplF_kvIVtKdvYyAt9ro/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzEwODkzMTA1NjU1NDM5MzcvT2p4TkN0a3ouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mustafa",
       "wallet": "0xfe4a4Bda927BDEe6f6650d419Fd3cD9018d4660D",
       "postCount": 4,
       "score": 18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mustafakopan11",
+      "avatarUrl": "https://images.asksurf.ai/Kih9ru0ib5gPQr9lZzAwsfIODtGVNnpbxIGlGy5W9aA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjEzNzU5Nzc2NjY3ODExODQvVTctY3RaR01fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "EZRAVERSE",
       "wallet": "0x03CA1a1A0040597679402d71813C0Dbe877f4116",
       "postCount": 4,
       "score": 18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ezraverse_x",
+      "avatarUrl": "https://images.asksurf.ai/-MnMo2d7moml26jCntxca7jwsINLhY7IerUfDRPNluo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzMxOTA5NzYzODcyMzE3NDQvdWM5TW91dGZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SkullZ",
       "wallet": "0x23edd37103613e3d86a4274ce0dcba1fb72f1e8a",
       "postCount": 4,
       "score": 18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "skuullls",
+      "avatarUrl": "https://images.asksurf.ai/QU_muJbGH4-kiMz9U1AE-bThNx_CCrQKXrw5gcxO3Pg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDgwOTYzODIyODExMzQwODAvaUV5SmhwYVJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "dee",
       "wallet": "0xdDA875aB21eEFFEaE8DAfC5Ae3bFd21d9acE6d21",
       "postCount": 4,
       "score": 18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "derusxbt",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "saint lee",
       "wallet": "0xfe3bc1eb469c70bfb462a9e208826e990bb078c0",
       "postCount": 4,
       "score": 17.9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "saintlee04",
+      "avatarUrl": "https://images.asksurf.ai/Z-E9BvX4R3LQEtlB0cpftTjY9zni43fW70z1gOgIjLs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTE1NDE1NzU5NDQ2NjMwNDMvQnVGVjB0Sjdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Cobra_10K",
       "wallet": "0x698173b62cb87686b2c038493bb9d538ac608287",
       "postCount": 4,
       "score": 17.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "madarm49564",
+      "avatarUrl": "https://images.asksurf.ai/VR7IMYAudTbBeJBpiuQaEoYDV_SAUeoKVOFYiaGiVFA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5Mzk2NDEyMjM4NzYxNDEwNTYvSm1oWlM0dzguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "pprimnida ʕ••̫͡•ʔ•Noya",
       "wallet": "0xc4f1e9000e039e97dc5092fba83c8d34dd41f727",
       "postCount": 4,
       "score": 17.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dqnnt1999",
+      "avatarUrl": "https://images.asksurf.ai/TmFScheWCIaOVPs5HL4zLk8nBPUrtuRK5p1iWL2VK14/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjM1NTk1OTI0NTkwNjMyOTYvWThtZHNiS1ouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nwabueze Ikechi Isaac",
       "wallet": "0xfee7968d2337e3f3e80be40c728f3f7aa9255c09",
       "postCount": 4,
       "score": 17.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "growth13130",
+      "avatarUrl": "https://images.asksurf.ai/CejJiDwKwvppL332JyBDBsxGxC4Yh5mrkBrkUJaCgXk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzA4NTA4NTE3MDgxODY2MjQvZUdpSkdVR2Vfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "AnhsDuc",
       "wallet": "0x94F4e89c91BD375Eb9aa78E4bDbDd67cbF12e18A",
       "postCount": 4,
       "score": 17,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "pro_hi2592005",
+      "avatarUrl": "https://images.asksurf.ai/jLNHzm84eaoETYbf6S-MsXgBjiUpKzsoKI6X6_2it2g/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTA2NzE2NjU4OTA2Mzk4NzIvYWhScU9GN29fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Phuong 👊",
       "wallet": "0x2c8165f7636b6a020727b756f5a48438371317df",
       "postCount": 2,
       "score": 16.68,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "phuongphuong",
+      "avatarUrl": "https://images.asksurf.ai/evUD0jsBJblV-tG7CODEG18_3TbaB76cpknxsD4alJM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzUzMDAxNDA4NDQ3ODU2NjQvQl95eGNmRmZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "tamtd",
       "wallet": "0x82032F4f85f4A9ADfC0B1a881D7c8C93653E4812",
       "postCount": 4,
       "score": 16.66,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tamtd",
+      "avatarUrl": "https://images.asksurf.ai/1M2bHAJWm_IdVMAXe1RplesrefUBvF9nY04N-sysAF8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MjQxMjkwMjUwNzcyNDgvVEM1RmYxNTRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "0x处长Jason",
       "wallet": "0x84bf184ab1a0cbe65531f14c2ab0a891253f19bc",
       "postCount": 6,
       "score": 16.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hz9r8nxljason",
+      "avatarUrl": "https://images.asksurf.ai/ogNvU5iT8bfyYNj_raMdEgyAz6kkwZDeziZhfRT9ugQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MjIzMjY1MTQxMDYwNDAzMjAvM3JiNTdia1Vfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Paul",
       "wallet": "0x7c818C391Db52bEB3F77DD6BF4468eaC5518fFC1",
       "postCount": 4,
       "score": 16.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "paulxbtc",
+      "avatarUrl": "https://images.asksurf.ai/LRqkgZG6ZqOMOakj88PEiamHFQdEwe9ONKlEBaJQQjI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzY4ODI2MDMxODI3NjgxMzEvYnc2RHNSaDlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "bobthebeanbaby",
       "wallet": "0x00aF28f49C01E28c4F25C2c3a7f33E508D777A07",
       "postCount": 8,
       "score": 16.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "bobthebeanbaby",
+      "avatarUrl": "https://images.asksurf.ai/11-1xWt0NaGubP0T1LUV1Xm2ysVa87nlgFuq6jBRs9o/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTkwNDAwOTMxNDcxMzYvVVRaWlUwOHBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "XQuack",
       "wallet": "0x5c3f31561228fff228fff16b48007375336cde56",
       "postCount": 4,
       "score": 16.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "yuhveil2_2",
+      "avatarUrl": "https://images.asksurf.ai/mYl5pczUsYvAm2Z1-T7YXKzw49aOwerXmXBXWYXC54U/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MjUzNjE0NzIxMjcwODI0OTYvbWRaM0NuU0YuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "MsxChriz",
       "wallet": "0xe9f1e71E409cF1808925519d427Aa5AC65396Fd0",
       "postCount": 4,
       "score": 16.42,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "msxchriz",
+      "avatarUrl": "https://images.asksurf.ai/07EkXCBxlTUOqs67YQ2Kn2bqXjXfg8pVSjV3OOnojZk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDA1NTA2MzkyNzM0MzUxMzYvY2c5a1ZLT29fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Trấn Thành",
       "wallet": "0xc83c8916a1b9414de7f42deef4eb01917ec74451",
       "postCount": 6,
       "score": 16.32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tranthanhbk",
+      "avatarUrl": "https://images.asksurf.ai/AzPOk55vMpTF12vM4-h0Q9G776_t_9pMWr9ENcaDbPs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjIyNzM5NzM4NjY5NzExMzYvZVE4Z0Y1VTdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "GhazalBasma",
       "wallet": "0x5129aA3ad7Dd8539bc3929702686FfcFa9f024C9",
       "postCount": 4,
       "score": 16.06,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ghazalbasma",
+      "avatarUrl": "https://images.asksurf.ai/ODoOV42JwUvHXFQ7yBhvOf5EDv9GI1DxCkzSKQa5vx8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MjU0MDk1NjI4NzM4NTYvSUdEODl0TlBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "TRAN DANG HOP",
       "wallet": "0x21b45103dd05c43969daF3CbB4277391777e2eC7",
       "postCount": 6,
       "score": 16,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tdh1302",
+      "avatarUrl": "https://images.asksurf.ai/0RDzBsk-9ZuHKITXzCcqmcwJFEkGRefMkQhIdjak2LA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzUyNjgxMjc1OTMwNDYwMTcvYWNnRmZmNXRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Abdullahi Falalu",
       "wallet": "0xF96ad411eAe22DDc8aA7Da3D496413DF50FBa8fc",
       "postCount": 4,
       "score": 15.84,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "falalu83",
+      "avatarUrl": "https://images.asksurf.ai/Xj3G87Z10EFMnpaiT8hSeugQUrvSE6IqLG1pUYEMlaY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDY0ODU4NDM0NDAzMDgyMjQvWXUxZ09wdVJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Base.eth",
       "wallet": "0x3aC5974fD4866700ba013D4e1159Bf7E3D6d6256",
       "postCount": 2,
       "score": 15.76,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptonews678",
+      "avatarUrl": "https://images.asksurf.ai/tnClq5vZH2yxSA0rouJwuKxcx9S9GDnx-egIoK2DWhA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4OTIyMTIxMjcyOTkxOTA3ODUvbGR4eDNxQzFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Emire",
       "wallet": "0x4EA3e78C11FcE7DD4d7e3AA8F37Cca193E9325B9",
       "postCount": 2,
       "score": 15.74,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "emiremetax",
+      "avatarUrl": "https://images.asksurf.ai/6gaHFEVj470GV-e56PZ5k7As3gzf1Uds_-dydmQQc78/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjEzNjk4MzMxMDc5MzkzMjgvX1F5bDFab0Rfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "JuanJoParejo",
       "wallet": "0x04301601de687236E912a8c22A31625D6EeA3c5F",
       "postCount": 4,
       "score": 15.48,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "juanjoparejo",
+      "avatarUrl": "https://images.asksurf.ai/YYLUmYMfJD8lbshQMPMTG84WkEQUWK9k8jkyF92T2cY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MTU0NDM0MjI2MzgwODkvZWFxWkE5bE5fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Brooklyn",
       "wallet": "0xC8678170e0E793AF3DaeEdbFB07c045a8b4bb393",
       "postCount": 4,
       "score": 15,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "binlan883",
+      "avatarUrl": "https://images.asksurf.ai/i7bGzMEpfcFdWWVEiGxwuVHHoYjZYnqoZrauG64lZkw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjAwMzkzNjc2NzEzNDkyNDgvVU5FRXI1Zmtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Deborah",
       "wallet": "0xE45c4407c27fC6e27a716367e2FCB3c9A83B68e5",
       "postCount": 4,
       "score": 15,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "deborah09167",
+      "avatarUrl": "https://images.asksurf.ai/qcikOO4HpSJqCAEjxHgxlzG5ax4jOJD3qHcT_P4LtJw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzAxMTQzNjIxMDc5MjAzODQvRFZRWDhYcGIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "𝑆𝑎𝑛𝑙𝑜𝑢𝑖𝑠𝑠𝑠",
       "wallet": "0x86c33d544a8fcf77cbbbfe5b17ca3542ab7abb9c",
       "postCount": 4,
       "score": 15,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sanlouissk",
+      "avatarUrl": "https://images.asksurf.ai/BnslYXqOZdTySbaxVEmmEfkuuEsC4XVvGwA4S9p-QwU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDI4MTc4Njg0NDY5OTQ0MzQvMFpsWDVqbzguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "atichat khunchumnan",
       "wallet": "0xa48b036b9FE9192552F6911c7d15d3b943e2811f",
       "postCount": 4,
       "score": 14.86,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "bumprx",
+      "avatarUrl": "https://images.asksurf.ai/AO7ay65H86PhRl2JHnen-wad9PMTQfQaWMIOnK_1xxM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MTA5NDU5MjQ5MTExMDUvdEZCYjFCbTJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyễn Thị Linh ❤️",
       "wallet": "0xCECAfe0749D91E990B51e879952322d35a7072d5",
       "postCount": 16,
       "score": 14.74,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "linh180796",
+      "avatarUrl": "https://images.asksurf.ai/hKs0kXfVpZQafKVA-qYoQmR_FwNZ-aMgpnN59VJhsgg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDEzMjU5MzYyNjA2NTMwNTYvcVVYckthbFRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ChainBuilder.pro",
       "wallet": "0x73e5D578929799f707707B3e73adCb43907D5eA9",
       "postCount": 4,
       "score": 14.62,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "chainbuilderpro",
+      "avatarUrl": "https://images.asksurf.ai/B3eR7V2bDEUE9wUP8xTzvQw1XyaXTmOxL8g7D2L5Ox8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDMyMjk5NTY0NDA5OTM3OTIvUzd2ZVkxSDJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Youngmin Lee",
       "wallet": "0x02454407Cc4a7Dc79788372929bFc767d5e1D7e5",
       "postCount": 6,
       "score": 14,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "readnrest0",
+      "avatarUrl": "https://images.asksurf.ai/eXQQ8QxgRmwe1KFsfYqnNdjldaOkp7KJApmizFRI-k8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MzIwNjU3NzEwNjIyNjM4MDgvNFY5U2tIMTBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Abuhanif",
       "wallet": "0x3430Ce58a8D5E3e31C1F73e0f3377BA65d92Aefb",
       "postCount": 2,
       "score": 13.92,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hanifgaming123",
+      "avatarUrl": "https://images.asksurf.ai/SlaqY8hnYfugyUFN13wkoYYyvwhniEhz5bb9OtH_yz0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjcxMjExNjc4NDk3MDEzNzYvaTdlTk56VXpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ishaq",
       "wallet": "0x6a5a3825554dDc464084909ffD722191708B1c0e",
       "postCount": 2,
       "score": 13.7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ishaq0x_",
+      "avatarUrl": "https://images.asksurf.ai/SpZ1TnlfXQm-VbUN9YVn5PR4d68L0Sv_ZKYf6ZmIUuQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTYwOTA2Mzk0Njk3ODA5OTIvTVNLTmg3QnBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Hannah",
       "wallet": "0x15123bE4663dDe5eba8a4457A3050a3545367c05",
       "postCount": 6,
       "score": 13.7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "thaiha_nhth",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "serdar",
       "wallet": "0x197bA93c3Fc804446626083bb8bba679F90222a8",
       "postCount": 4,
       "score": 13.62,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xmrcurly",
+      "avatarUrl": "https://images.asksurf.ai/Ojo9WGSRhTtvsYE4LZGpZ9o0f_u85gOD4dON3J5gq0k/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjk5NTgxMzEzMDkyMzYyMjQva0lkcm1GYlpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "John kelly",
       "wallet": "0x4d2127Fbe2eF183135cE38C08f397C19901daD1C",
       "postCount": 4,
       "score": 13.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "johnkelly639934",
+      "avatarUrl": "https://images.asksurf.ai/9lW7c1AeonyAYd3lp3LE8vDUpMx6jzQYJ0hd4f7xDN4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODgwNDQ0OTA0NTI0MTQ0NjQvdFVOSHQzNzlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mert Görmüş",
       "wallet": "0x8b0f24feec036aff6a6651b811492ddd90b82a09",
       "postCount": 4,
       "score": 13.36,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mertonghen2",
+      "avatarUrl": "https://images.asksurf.ai/fKYhfBPS9BIJSp9x6ZK8QPaHAmCpgSxSImxwVRH78W8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDc1MzE3NjMwNDg4MDg0NDgvQk9nOHZtMDRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "RurouniYu",
       "wallet": "0x784369FaB89a92F242b92452Cb19aAc0097ca4C3",
       "postCount": 8,
       "score": 13.12,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rurouniyu",
+      "avatarUrl": "https://images.asksurf.ai/tsW17QdtlWnZiC7_9852YJTNuztAy9zp-uHiDdqlQSg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODk1ODI4MTUyNDM5ODg5OTMvRUpZOUdNeXlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Urteamsfavoritecoach",
       "wallet": "0xae982f37Ef5F7922b7A497cba3b23C441C7cac38",
       "postCount": 2,
       "score": 13.04,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "thekrietor",
+      "avatarUrl": "https://images.asksurf.ai/1JpDRu6zMBPIxOEkxtpWu8ByEr2XTg4fB_LC4o5zfJo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE2NDg4MDcxNTgzNjI5MTQ4MTcveG1vdWpYREdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "EFO_xx",
       "wallet": "0xd758e4edbf63c23957214282b13ca9bfb5b72676",
       "postCount": 4,
       "score": 13,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "efo_xx",
+      "avatarUrl": "https://images.asksurf.ai/_4poNlYngonliq54SuN1nc71ve9PYEdfN54ANuHsA5I/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTE5NjI0NzQzMDEwMzQ0OTYvQ24tWXJpRnYuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "无法忍让🤖ボッ",
       "wallet": "0x93eecddd94fa42f1b0c082e79ea1998a91216acb",
       "postCount": 4,
       "score": 13,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "st243852",
+      "avatarUrl": "https://images.asksurf.ai/pzXfCK9bBKwKhr6UQufbz0FSGF0qA4NQpuMqOQHwQCM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDkxODEzODY3NzU5MDgzNTIvLVZnVlJDWEkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dave Brown",
       "wallet": "0xc750758366FA248Ec54590d8f98dF3358368238d",
       "postCount": 4,
       "score": 12.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dhavied_brown",
+      "avatarUrl": "https://images.asksurf.ai/-IRHhjUP9kzzOEXkgYId8JQ9p17QyongyruAH9LQ37U/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQ5MDk1Mjc1MDY2NDkwODgvaXlXdDRnNW1fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Rejoice",
       "wallet": "0x650E317113C7e883d58AbA5fbD472e5F195C27c3",
       "postCount": 2,
       "score": 12.46,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "iam_rejoice1",
+      "avatarUrl": "https://images.asksurf.ai/C8-GS-kM6cuQdgA_XVMc53Ty92mw-c-oP2CG-MG04q8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTgzMjc4MzAxOTEzODI1MjgvNXpXc0d4ekVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Richard",
       "wallet": "0xecec188d4299d8f00d8942f9b2e9b7210e9bb614",
       "postCount": 8,
       "score": 12.4,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rickdeetweets",
+      "avatarUrl": "https://images.asksurf.ai/LFN4SydnqZ-NyVOLaiz2vGpcSk8XXHYKTyMYf8Z25TA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTMyOTgxNDUzNjgyMTk2NDkvbXZ6WVBsVTBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Daniel",
       "wallet": "0xfc7e35F51c1Cf318fccbe677D9289924ec852164",
       "postCount": 4,
       "score": 12.18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "siraj_dev122",
+      "avatarUrl": "https://images.asksurf.ai/uIt80rom84AzHXvFytL-d8nmrwjIopE59MxZ3tqaOZ0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTI3MzE1NjYzOTc5MTUxMzYvd2k0VlVPU0hfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Young OG",
       "wallet": "0xAFE9f4654cD8237ffbbe9379F20021499Ba51431",
       "postCount": 2,
       "score": 12.02,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "young3stog",
+      "avatarUrl": "https://images.asksurf.ai/JfrOfTTnhLv0uwbk_3C6XiUI6heC1LgrnIuxwRvc0cA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTQ2OTM4MDM4MzYyNjAzNTIvZ0Jvdi0zMW9fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "车九",
       "wallet": "0xe0facb302a52844833729181d9a0a5c8894895db",
       "postCount": 4,
       "score": 12,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "zuijiu61637",
+      "avatarUrl": "https://images.asksurf.ai/CTrKXduP_BxxrNvThI6DSSxjO-lCaHhcQYCXP7K94Fc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDU0MTI5NjY5MDA5MzY3MDQvVnNxTUNuMUouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "0reweb3",
       "wallet": "0x182c60f0d2beb81C99B7f52b3f1310F670294B45",
       "postCount": 10,
       "score": 11.56,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0reweb3",
+      "avatarUrl": "https://images.asksurf.ai/-LRDO45g9n1noZ5mWiKFxFO41TK9e7HY1uI-pIzea1Y/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTMwMzk3ODUwNDk5NDgxNjAvZDA3VV9iSXRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Luis",
       "wallet": "0x1a04d1f97F7CF151Cc76bb3d51d2dffaf29dcc4B",
       "postCount": 2,
       "score": 11.44,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "luis_usaa",
+      "avatarUrl": "https://images.asksurf.ai/y2A9GNngaOfH0k21rTRPxOKl1TSVCrev9lFBGEG_F8Q/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTk1NzYwMzk3NTczNjkzNDQvYXhvUHVIeUdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "| The Heroman",
       "wallet": "0xd6a83529fDaBb0c8711A58b1244263862dbe9969",
       "postCount": 4,
       "score": 11.42,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "heroman0x",
+      "avatarUrl": "https://images.asksurf.ai/33mix-RyHS8gIQsGA5I_AJeqXJLVmhwo0QG48DdqAaM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTE4NjI1MzQ1NTExMzAxMTIvV1ZSS0tRYkVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Juss",
       "wallet": "0x979Efc72454e7343b17180a92c53df87C5E3D562",
       "postCount": 2,
       "score": 11.32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "juss_vedas",
+      "avatarUrl": "https://images.asksurf.ai/YMaksu-JkjoXbHcGFOrSIruYRRyj6UK-0Q3pNvAi0Tw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjY5ODU3MTMyMTY5NzA3NTIvTGZYSmNPa1pfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "8IGHTY 4OUR",
       "wallet": "0x7525c1edf43cdb991fdae5ec70bb4546e5aa0ce7",
       "postCount": 2,
       "score": 11.16,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "8ighty4our84",
+      "avatarUrl": "https://images.asksurf.ai/vC-2d_MKem7suJTt9TkeZaNs-Pirele2IiSZkg_lIyw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MjYzMzM1Nzk2MzU2MDU1MDQvdXZTYWFrZlpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mira",
       "wallet": "0x68B0026004A79e5998533a5ab6A836c42d2d7632",
       "postCount": 2,
       "score": 11,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0x_miraweb3",
+      "avatarUrl": "https://images.asksurf.ai/_ve05XOBsfkegvoNEQleZlUF4wmxaB90fHN5uYRElCY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5Mjc3MjY3MDc4NDg0NzQ2MjQvRTZIQjFqeVouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ryu 龙",
       "wallet": "0xc02fBf1D030Ad97b84c1E1A533d37a6A2a1Db2B3",
       "postCount": 2,
       "score": 11,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xgoryu",
+      "avatarUrl": "https://images.asksurf.ai/fBMhtxLOmzGXYYlmkq9eVgA53PiibnL8T1TGWKxG7po/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzIyMTc3NDY1NzA5NTI3MDUvVHdrZmpBTmYuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "CRYPTO FOYSAL",
       "wallet": "0xd6F2F95A5fCDc00c53e2e638D56d5A50b7814b8b",
       "postCount": 2,
       "score": 11,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptofoysal_",
+      "avatarUrl": "https://images.asksurf.ai/M_HVBftxda_iBQq-h64Nweq9cB6Ttu3L5QuhPDfsPhQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTk2NDg0NDQ3MTA1ODQzMjAvQkRyaU5uOG1fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Cuowngf",
       "wallet": "0xf90225c6f9A8588235C67825FbAE4A4291d44b31",
       "postCount": 2,
       "score": 11,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "minyu1609",
+      "avatarUrl": "https://images.asksurf.ai/AZhsMPShUWJ60HYqs4WOg2CflZbOvWRhJClE--ndYN4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDY0MTcwNDIzNTkwNzA3MjEvZjVRN2YweTUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Sam 🂾",
       "wallet": "0x13b55e5284d66e5b44667244af871764361d89bb",
       "postCount": 2,
       "score": 11,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "skysaksham",
+      "avatarUrl": "https://images.asksurf.ai/LnDsQYdaYRyL2YB_c7RYuk__RHeV3q-ZhERC_Ybvmzc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDU4MzgwOTk2MTI2NTU2MTYvRTk5UzR3T3cuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "0xcuongdo",
       "wallet": "0xd48E13DE39d4CB4F70a83ACfB3866fBC8b9B947c",
       "postCount": 2,
       "score": 10.94,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xcuongdo1203",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Saino",
       "wallet": "0x0983e5fa77c7eD9F6337e39bb18a3C50947c5019",
       "postCount": 2,
       "score": 10.82,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sainoleno",
+      "avatarUrl": "https://images.asksurf.ai/FB8eHaIImGYZCyTKPVlS9PL3_n6G5ftofYCbeNIBmU0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjE5NTEzNDQwNDc3MTg0MDAvY0plcERPT2Jfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Abubakar Zulkifilu Adam",
       "wallet": "0x61fc128e27cc1cfc42598fb411a3ffa82eac808a",
       "postCount": 4,
       "score": 10.74,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "arewa_96",
+      "avatarUrl": "https://images.asksurf.ai/QXo257cIA_wkxlLoyaZ9_J4v6b9H_iqucIm5snzN6Yo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTgwODY2MjQ3MTQ3ODQ3NjgvVUx6TzJXbjRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Neki",
       "wallet": "0xa3a19133ad1b8a7140cb2f8d69bb40b546c68884",
       "postCount": 12,
       "score": 10.64,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nekiweb3",
+      "avatarUrl": "https://images.asksurf.ai/AUOowuFgaCpv9fEMF36gMmit6Kc5fDOyrkMdvIMdAOE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDc1NTc1NjQ2MzczMjczNjEvdnY2RFVYTzdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Crypto Hustle",
       "wallet": "0xf2d11B5d9aE8c69D058Bb51E3a60077Ab8534b1E",
       "postCount": 2,
       "score": 10.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptohustle360",
+      "avatarUrl": "https://images.asksurf.ai/wTYr6fYoqrxZUaaNz6YUUK8C2mu2T_rPiDf_Un1gdgc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDYyMDUxODYxOTcwNzM5MjAvcFBkOUV6aXcuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Tsukuyomi.eth",
       "wallet": "0x149d485f982015b9fa7071dfbbcad66b494cb9e5",
       "postCount": 2,
       "score": 10.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ringman90",
+      "avatarUrl": "https://images.asksurf.ai/XhpZu1cHoaayNrCt0LKdkO12JpBlRx9ZyEBUyZN4ej8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTA0MzAzODQ0MjE0Nzg0MDEvVldzS2NhcXIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "batinho",
       "wallet": "0x81f28a69bd2ad3405b7a87272a10e2fb0b2bbfb0",
       "postCount": 2,
       "score": 10.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "batinho13",
+      "avatarUrl": "https://images.asksurf.ai/BjXKz5DjICEevYLq2fke-EwWxrZY-bLlWKz8Awx_uug/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDAyNTMwMDEyODIzMzg4MTYvamNHYXJLcExfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "crypto_lifestyle",
       "wallet": "0x27232e2719988467e9d8b415b084fb40f5b816b5",
       "postCount": 2,
       "score": 10.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "lifesty93141824",
+      "avatarUrl": "https://images.asksurf.ai/yO_AOI5nhhYy0caU84iQ2D2GcYsIUIKF_pAFGfc26Pw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MDY3MTg3ODg3MDEwMjQyNTYvUnI3bVk5N2EuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "le long binh",
       "wallet": "0x39134f5b54aae49a76c4c015c0a5c41241181e55",
       "postCount": 2,
       "score": 10.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "queotamky",
+      "avatarUrl": "https://images.asksurf.ai/viTYeda0RZVpWAruDFzgh75Gj1xSg8UCdKWDk05XoQ8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjc5ODE3MTIzMDM4MTI2MDgvOGZiRzI0Yldfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "nomaden",
       "wallet": "0x2899b1d9a696ae5317f7988384abe88393f5a2a5",
       "postCount": 2,
       "score": 10.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tkcyfc",
+      "avatarUrl": "https://images.asksurf.ai/uAttxE8956uAcBh22zQ5K3EyL4PcUroTxSA4lNqdZkE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDQxMDE1MzY3NTkxMTE2ODAvQ0FDWUR1VEkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ada Jim🍄💎❤️ Memecoin",
       "wallet": "0x028cC8339CfaDbB0E706981118a5D91A725aDCCB",
       "postCount": 2,
       "score": 10.34,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "adajim4",
+      "avatarUrl": "https://images.asksurf.ai/tafwfwWY4V9WAHCtp5lqbTIommPaZW5EKeqjNdia6GA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE1Mjk0OTM4MjYzMzg5Njc1NTIvbnlCcHd6RnUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "CAO NGỌC SƠN",
       "wallet": "0x0e3d54f71600ad3e71ea8334177b441bb3ed8537",
       "postCount": 2,
       "score": 10.32,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nhibestad",
+      "avatarUrl": "https://images.asksurf.ai/hvSgk48DsP6-qXt1f3s6tImySAC00sy96mQUuTb1eS0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDY1MjkwNzk5OTA5NTYwMzQvSUY3dmdjcFJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Hellm | π",
       "wallet": "0xfd3b50bb02d9ef01c36703e49d050dfc3f5b3690",
       "postCount": 2,
       "score": 10.3,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "helpermc",
+      "avatarUrl": "https://images.asksurf.ai/eD3q1xtPevZce3nxzPWb5-UML5N8Va3qPSCiTsFpfaU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTM3MDYwMjMxNzM5NDMyOTYvbVhEUVVDNmNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Moeez",
       "wallet": "0x5eba6e6842ad7e314df0c71e0103de504a1e77c8",
       "postCount": 2,
       "score": 10.26,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "crypto_matka",
+      "avatarUrl": "https://images.asksurf.ai/BnLHHdfUglDfQFmU7dzZOiXrRtNpbA-HnDO4i4OW6Gs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDczNDcxMzgyMTMzNTk2MTcva2lEc01qUkFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ItsDackie",
       "wallet": "0xdb79578522d2397341954831911b71712136282c",
       "postCount": 8,
       "score": 10.26,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "itsdackie",
+      "avatarUrl": "https://images.asksurf.ai/o0CuKWpgpxuP6p4trxZeoBjzUPlTAdzZMd1kGt7gyAg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzMxNjU2NTMwMjEyMjkwNTYvaVlPLWY1MEpfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "sweetl",
       "wallet": "0x7ec063ccee44945f2c6e7893aad91450a4d1275a",
       "postCount": 2,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xsweetly",
+      "avatarUrl": "https://images.asksurf.ai/W4uLg-XVojL6_lPvADDQziTjOY64MyuGABIfFq-eWsM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDYxMzU4NzM2MjA4MDM1ODQvTGZXQ0dwQk4uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Abdsalam Akinyemi",
       "wallet": "0x3e4bc5f26711fc6af2dd5ff0d234973a185075a3",
       "postCount": 4,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "akinsola06",
+      "avatarUrl": "https://images.asksurf.ai/xrQ2vuXfxNROVV_aXm2YSVYSJmkdLDJceRMC4mhmolo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzc4OTQ4ODUwMTAwMzA1OTIvV1pvcjhCYmlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Breathe Agent",
       "wallet": "0x645f4dc1C08D30BC4c1763bb7A9F97E5f5AA3420",
       "postCount": 2,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "breathe_agent",
+      "avatarUrl": "https://images.asksurf.ai/xxhVfC8FeEclvCiHqND7eHVhlbqlmNJMIJ93RrbfKzc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDUwMzc0MTk2OTU4OTg2MjQvQU1xSUV5Z3hfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Kha Huynh",
       "wallet": "0xFf9622a41d37760e390e577A581A13d1D7cD2EC7",
       "postCount": 2,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "khahuynh1995",
+      "avatarUrl": "https://images.asksurf.ai/_duN_zJjc6-v4DIHa1738TcQ_SPRxUM2svaR4eBYz00/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjM5NDI4MzAxOTMwNjU5ODQvUS1md2pHN1dfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "NeoH0DL",
       "wallet": "0x304261e5Df3801bD25CF2912Ec1af32Cad25D604",
       "postCount": 6,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "neoh0dl",
+      "avatarUrl": "https://images.asksurf.ai/KMReKaKjzzoxx5CcZ2X2-IrNoZltmFG_HP0Se1f7A2w/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQ2NDE0MzU4NTM3OTUzMjgvaDNMRWJEUEQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ali",
       "wallet": "0x7eee4653d932dca391b94a807f7a0ec3dbaac8b0",
       "postCount": 2,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "svrkee01",
+      "avatarUrl": "https://images.asksurf.ai/dgFvfuJsKe7slBl7tab23U_zTi23EPl7HtLi3_f9zFM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MzQzNjQ3ODY2OTI4OTg4MTYvTUhPNzZwOTAuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "zdapricorn.eth",
       "wallet": "0x88054bD4a3D77E11D09702532D594ecFA7777fBA",
       "postCount": 2,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kaitran_94",
+      "avatarUrl": "https://images.asksurf.ai/rJyLAEZQbfWUvj5xkX9pEUA4Y5t_y0J7KE5D6GaXqT4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3OTY5NDQ3ODk2NTQ2Nzk1NTIvVGg2N1REaTMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "privacy ish🪿",
       "wallet": "0x2df868f3176ed8f95d3b0d617a508e2478454ddd",
       "postCount": 4,
       "score": 10,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "okeymorak",
+      "avatarUrl": "https://images.asksurf.ai/Sh7e9sM1YSQUHtnca5CXpSSkEX2LLln-q9yuJIxsceI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTU0MDg2NzIyNjkxNTIyNTYveGZNNEljQ2suanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "cryptoverse.sui",
       "wallet": "0x5768fEE0a0b0A8EB28C4AE5c0eB39C50f084064C",
       "postCount": 14,
       "score": 9.78,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptoverse67",
+      "avatarUrl": "https://images.asksurf.ai/xBNXPc-UwYkGDpXQSwsigueoROBCj1j6qsX1LKGurzY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODA5MjY2NTg5Mzc4NTYwMDEvTzVtVkcwdmlfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Học viện X ✨",
       "wallet": "0x2e673d065258dbc4b640686e82968025c09feeb9",
       "postCount": 2,
       "score": 9.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nguoithieunhi",
+      "avatarUrl": "https://images.asksurf.ai/zu71-hNYO6SKpfKgwISe242NLUUaVqpqqlGK5vkQceI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzMzOTQ1MzA0MTkxMjIxNzYvNWxpdjQzRVQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Miizan",
       "wallet": "0xcd7fd3e0e6BbaF586439444284d8F228fA426B0D",
       "postCount": 2,
       "score": 9.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "real_h_ero",
+      "avatarUrl": "https://images.asksurf.ai/bMbh6GlS46ZGWj7xOZmsGuv1gLxwO0p6KqtMPx50MSo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjM2Mjk5MTI1NTM1MTcwNTYvd2VXVTltTGZfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Rdx | π",
       "wallet": "0x757e602000f34fc2099d5af2bba1bd2e5bf49f25",
       "postCount": 6,
       "score": 9.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "furyrdx712",
+      "avatarUrl": "https://images.asksurf.ai/qWBW6r9_uoTzF-yFyhT55yz4NTLybiR4jX89BQ62eks/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTg1MDA0ODA2MDQzNzI5OTIvb0dreEhldGguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Maza",
       "wallet": "0x8779a475bd06f46c88ec10768e540c4f719c9d87",
       "postCount": 4,
       "score": 9.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "maza65ct",
+      "avatarUrl": "https://images.asksurf.ai/Nvmt3zokRRexLk4HY7l9mEWMXYrV6iHK9ekQRDf7Dks/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODQxMjYyNDc0MDA4Mjg5MzAva0hGeXVaU3Vfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "pogo",
       "wallet": "0x667Af77577F86C86252EC7e6C7Bc400E8494A8e1",
       "postCount": 2,
       "score": 9.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "pogo7867",
+      "avatarUrl": "https://images.asksurf.ai/pbtAXDBatwafVLwSyafJlRzbpVOgSzx0J0p6omOdfu8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTMyMjg3Njg1NDc0MDk5MjAvMnpzUWs1a25fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Wilson",
       "wallet": "0xfe1D07F523ED7A45417Ec38bD78515828956c8AE",
       "postCount": 2,
       "score": 9.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "wilson_syo",
+      "avatarUrl": "https://images.asksurf.ai/ZOA8vCGFxtZbe5lynALjR7I9p6VK8wo7gO3VCXCrvTY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5NjQ5MjE0NTg0NTg2MjQvQ0FRd3BCSnkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "D3rek",
       "wallet": "0xb4722f075317f877e7f595131a4c9bbf3ec3800a",
       "postCount": 14,
       "score": 9.18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "d3rekson",
+      "avatarUrl": "https://images.asksurf.ai/uMqa8jUXYH4IyMRHkeaW20JR0r66g9Uc-0CtKur2AQw/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzY4Njk5MjQxOTk0NzcyNDgvS09FdmpBVEEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Chakdl",
       "wallet": "0x6FC4a111e62c0a10f0246be5424E83c72938FE06",
       "postCount": 6,
       "score": 9.18,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "chakdl",
+      "avatarUrl": "https://images.asksurf.ai/kxly5sr1JIBTd0CtyVdVFe0BCTqwsv_fIVBurV2zTDk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE5MTU0NDkwMDEwMTMyNDgvVUNHMnlDTXFfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "milinerose",
       "wallet": "0x668eb55cff1C157Dcb36F3C34c35665f03eA465c",
       "postCount": 6,
       "score": 9.1,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "milinerose",
+      "avatarUrl": "https://images.asksurf.ai/Oljo79r6XvGws3Aq8AeiRXwr-pXzJFEPIR4yiaUHpE0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTk5ODQ0MzI0MDI0MzIvSkRjSFpKVDVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "minako",
       "wallet": "0xC1d37688867118246A3C80Ad7705F1c69AE1f6d9",
       "postCount": 18,
       "score": 9.04,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "minako_rpm",
+      "avatarUrl": "https://images.asksurf.ai/bp-QmfO2LmmsQOi-8Vtqfd55yIdai5UXOUaedPZsGR0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTM1OTAwMzc0MTgzNDQ0NDgvMWpQYjRFdEUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ameen",
       "wallet": "0x44b6De46CDfA8A2c16c1bd2D13DF8f07D0835c64",
       "postCount": 12,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "amenouboy",
+      "avatarUrl": "https://images.asksurf.ai/vZjvjTkHMNPDThbsBiV5C8Y0B44juxWHyll_ZocGTig/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTk1MTcxNDQxMjAxNTIwNjQvNzd2RThnMHUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "APU",
       "wallet": "0xd3A8a80267Cd70a45def5054D0c10EbE87F3A1a0",
       "postCount": 2,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "apu_yap",
+      "avatarUrl": "https://images.asksurf.ai/r4H9w46Hpppnw97til_U2IOYR9Kvt2Icg_I5hMrMC7E/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjM3NDQ1OTYyNzUyNzc4MjQvbjhrUnZYLS0uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dreams Growth🍌",
       "wallet": "0x08725ab091B016470f5dE76677ac4Bd81beE5022",
       "postCount": 2,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dreamsgrowth",
+      "avatarUrl": "https://images.asksurf.ai/X1UqxHWubCmLZJvyHJeLdqo18BfSp_auLH-w5rfU1lo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDU0MDc0MDA2NTI2NDAyNTYvMHRVR095ZWhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "OxMax 🌊",
       "wallet": "0x989CA9262d96B467DC8B03042F37A81A3b0368d1",
       "postCount": 2,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mr_a_pvt",
+      "avatarUrl": "https://images.asksurf.ai/WQ0qK-KerTsvudTXUr6hb8sPjlgvHxWI2WUtamyFnIs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzM0NTI4ODc1MjgxNjEyODAvWDdpcWZnbGYuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "AMINU",
       "wallet": "0xcb172bf110940d6c8ebd32b4a41d1101495690f5",
       "postCount": 4,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "aaminhajj__",
+      "avatarUrl": "https://images.asksurf.ai/_liE7Iu5qY4A1c4nPm7JO5zf1nu7U_H0-0moOVhCOWk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQ4OTkzOTY2MzA4OTY2NDAvekhjUEJOdGMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "nzt",
       "wallet": "0xce48E68904B2EDD163384b3D4c8c2B22DDa05671",
       "postCount": 6,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nazarius_amb",
+      "avatarUrl": "https://images.asksurf.ai/-GaMxHuDbkpzx_ZlzmruRpn9XQehgbCAGd7tELSJj78/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQyMDAxMzcyNDYxMzgzNjkvS3lCVkd0NmJfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ridaatul Islam",
       "wallet": "0x27Ac609C4B4A2574a94F9d68ecA429CFA8738E6a",
       "postCount": 2,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ridaatul_islam",
+      "avatarUrl": "https://images.asksurf.ai/m-UNtz_MKOj5X1iIWUwxyR1GgjgLcC9f-BCYlJAR3sU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTA3OTA4MTkwMjA5MzEwNzIvWmhRX0VXUjIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "QUEEN ( MONALISA )",
       "wallet": "0x64d9D1b040FbbEb8119B779D4F4B91531A0Fe903",
       "postCount": 2,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tremstrak",
+      "avatarUrl": "https://images.asksurf.ai/bmGTluplSQhf_1aojz4uNFScRlMvIcgbAfojMIYwSBE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODkyNzk5NDQ1OTAxODQ0NDgvOEE5bnpjNzEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "NGO DUY DINH",
       "wallet": "0x1199c5df13deecdc03433df7dde890fbee56fc1e",
       "postCount": 2,
       "score": 9,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "xsharedaily",
+      "avatarUrl": "https://images.asksurf.ai/XjM8khcuQ7EGzQ8gyBGWbZpcoVvLnQaTcF0VSn5Vcv0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3MDMwODgzMjA2MzU2OTkyMDAvenU5emVvNXNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "chaeri",
       "wallet": "0x76F160F89a15920bE51dC66Aa957f490146F744d",
       "postCount": 4,
       "score": 8.98,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "chaeri___",
+      "avatarUrl": "https://images.asksurf.ai/avAYO8A96eHRpT_nR29_m2nJz-4tJaYNncuJOMLwCos/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE2NjYyMDQ5MTA0MTE3NzYvQTRvLVVTdnBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "samest",
       "wallet": "0x0A98FfB8E9702E093AfBefD50A228E6B4b8A1a80",
       "postCount": 10,
       "score": 8.98,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "olapadesam00",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "MÅÑÔ",
       "wallet": "0x43d459dd6a4e50206cd3FAd65D592E73781ac3fd",
       "postCount": 4,
       "score": 8.8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mano143302",
+      "avatarUrl": "https://images.asksurf.ai/fS4bg0Ikmc2UAqJdQJxgnvh3sig-eF_mgdKG89fPGHI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDAzMDk2OTgwMDg2ODI0OTgvYkNGNlFwc2dfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SAYED DOHA",
       "wallet": "0x7A4D7538e48F775678337597826D225ed3134Bd0",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xdoha",
+      "avatarUrl": "https://images.asksurf.ai/YoGu48X6RZYPkuN8gD4QXPHWCJEdJPRu_Oh1XVbo4ww/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTM3MDIzMTQ1OTE1ODAxNjEveDBnR25idzIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Richie 🎮🤙",
       "wallet": "0x25a58F5033C901e535bfE23Ed89C68b8E87738c5",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "0xr1chie",
+      "avatarUrl": "https://images.asksurf.ai/ILp-jwr_5j0aQDbigTcwqDYOjTNIQ_YmWViLEd5ncCA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDYyMDU3NTM3MjgzNjA0NDgvbzBHX291SDIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "蓝｜目标A9📈",
       "wallet": "0xa2b9091f1a71c4e2d78214f772e9801be5c52ec3",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "a9lansir",
+      "avatarUrl": "https://images.asksurf.ai/PUhUjiW1z_9w3woG0pSQRHECkiUYsWtqTFIzJUZTW88/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzYzMjY4Nzk2MTE5ODU5MjAvTDBQVXV1bUouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Franklinn",
       "wallet": "0x9EE7d46c895697cfDAA3863FEF9fbD942Bb9ee95",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "franklinn311",
+      "avatarUrl": "https://images.asksurf.ai/plAtDWwkK8A_zuTq33vZnOwLgv_sF8GZ8HYNek9KJq8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MzgzNjczMDI2Mjc0MDU4MjQvZ09nMlFTSGguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Kaganboss",
       "wallet": "0xD6846Eca71f7f57defEe8301142dcfb006E71140",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "towertemennigru",
+      "avatarUrl": "https://images.asksurf.ai/QXZCrAiUJ2G1TUpwixEg4B9QXMB58iGKidwoyqIX_Lo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDAxNzk3MTQ3NjE5MjQ2MDgvQS1HcHdxZjEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Vala6",
       "wallet": "0x4898B1481cA18FD98ABA2b5Eb86B12eF6633c03D",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "vala6",
+      "avatarUrl": "https://images.asksurf.ai/EeCermf-_nTIFBjh0CgBxf3sXDVM1gyxkEK2kaU7Mtg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTY0NjYyMTY1NTg1OTIvdy1FdFB0aUNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Mohit Farazy | π² ☂️",
       "wallet": "0x9a185e76e57f472382c30f89a961fb22f9d9ee41",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mohitfarazy01",
+      "avatarUrl": "https://images.asksurf.ai/LNcUxEUMwguhdNokGpzIb31cEZMowXtiHpoD8b-3tcc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4OTI1ODgwNDkyMDYyODgzODQveUhSNmJreHhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "path9photos",
       "wallet": "0xa06165FC508E7df5043dCA84ce7070F351eF8676",
       "postCount": 2,
       "score": 8.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "path9photos",
+      "avatarUrl": "https://images.asksurf.ai/Xiz0Ia4CoXYuqmssi-5GvsjqSiKumXkPOYmMSVSwCNE/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDIwMTY0NDYyMzQ4OTAyNDAvZG12Q1FZSFVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Fasah",
       "wallet": "0xBD4Cc603cED7057fE1025A6101879cAA61ddb43B",
       "postCount": 2,
       "score": 8.36,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "fasahmeta_x",
+      "avatarUrl": "https://images.asksurf.ai/YunzTK7EhDdRA3lm8vo5rNF5DwzoSUQH2SUlZ3QnKr8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTc1MzkxNjYxNzU3MzE3MTIvaEs5MkpwWU5fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyen Hong Thinh",
       "wallet": "0xBf8aC28a677db23Aba7144F1357b71D7881f6E53",
       "postCount": 4,
       "score": 8.3,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "yashashre1",
+      "avatarUrl": "https://images.asksurf.ai/1zbSSlT2XqpG6VMAlIumAVaurK4btmSQ2PFS61CqdRs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTU1MjU2MjkxNzgxNTA5MTMvbGNmemMzb3Rfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "🔅IBNU ABDULHAKEEM 📿☪️ 📊",
       "wallet": "0xbe65fa54eb13e60a42c29ed96ceceeecd31d56dd",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "abdulhakeemson0",
+      "avatarUrl": "https://images.asksurf.ai/9_Trkca2HhoA8KBKsymMegPsEMApFCqb6CpsMzdFQow/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDA2Mzc4NDg4NDA1MTE0ODkvSVY0THVuUmQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "EMİN",
       "wallet": "0x8b585A97ac32045A6C675462339928abF6f1d8f8",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "eminahmadov14",
+      "avatarUrl": "https://images.asksurf.ai/2eu01wizMfeUr4U9fl2RwlBVhOQilFMSKqTpuxUdmXs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDcxODExNjQyMzA4Njg5OTIvc1NYQ2pQQkhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "PᐃVEL.eth🍌",
       "wallet": "0xC57336E882575Ae8d97ab6d73c4c02f82B449252",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "iparvel56536",
+      "avatarUrl": "https://images.asksurf.ai/B8dKKINZFX4j6tWDsBIamvntytQ744yrdZ9FJ381gM4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzMxMjYwMjQ1MjQwMTc2NjQvM0trLVB4V1IuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nobita | MeKongLabs",
       "wallet": "0x77ED5b57A08436C218eCCe26fa9DEf66E149e0F4",
       "postCount": 4,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "juilan_mr",
+      "avatarUrl": "https://images.asksurf.ai/ucBdr6h85T9vaA92_1nLx8G03o9bX4xhnqoP80tpk1s/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE2MjAyNzM4MjMzMzI1ODk1NjgvdVFEdEttaHkuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyen Huu Phuc",
       "wallet": "0xE44D72598D16132214D38ad499880AA1cdA05372",
       "postCount": 4,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jupxeno",
+      "avatarUrl": "https://images.asksurf.ai/-1YtSezuwOW6JK0RYBs3jjIzdTtstLB5aB0wUTr1sXQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzgxMjEwMzMxMTE0MjA5Mjgvd3h3M3gybGdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Aloved",
       "wallet": "0x2da82580d6a07a3375aac232ace6b9698ee8d4af",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "labia_cake",
+      "avatarUrl": "https://images.asksurf.ai/SIZ6q-rswwAaeY6kzH09lX124CTPziUAEqJ5e5sfSOY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTYxMzI5NTU4NzA0MjkxODYvRmlMNlpVeTMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Grace",
       "wallet": "0x3d3903152c3d5fbb4e1a8d2474e7fc4779ef00fc",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ola_of_oyo",
+      "avatarUrl": "https://images.asksurf.ai/RvwvJolHsFu-X2EddHOwLBd-MxhMF8iv0uUEASjSmPM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjAyODUzNTM2ODk5MDMxMDQvaDlKVUE0NmouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "16",
       "wallet": "0x93BBD282f808fd5dF7a9b5Ba23a7B64591D75e0F",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "remigirl1919",
+      "avatarUrl": "https://images.asksurf.ai/qvS96O3Y5Pb1a2MMPJ8F492Zfe5SruqxSZR8kvvDT60/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTEwMDgyNzQwOTk3ODE2MzIvb1p2VUpGeXAuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Miyulux",
       "wallet": "0x128B4D9A062d137710F362d2b5c0B81E2726cC40",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "iam_miyulux",
+      "avatarUrl": "https://images.asksurf.ai/g_v4y7NSgwMBWDaYiXGEplWMQsC-Z_IY7klSKGJ69HY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDcwNDEwNTY4Njk2ODcyOTYvOTRsNjY1dDQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "kerem",
       "wallet": "0xb7B36D147A85949F3bb96a8ef348fB420209bd40",
       "postCount": 6,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "keremabi16",
+      "avatarUrl": "https://images.asksurf.ai/rdSmJ-G-TgV_bvadQ6LWSCttobVLj8Kqz93ZccaMYAg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODI5MjMzODA3MDY3MDU0MDgvYUsyaElNZjBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "mirza",
       "wallet": "0x849c5E5e8851c8409c6fFc54e26CaD303b236921",
       "postCount": 6,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mirza_sarmin",
+      "avatarUrl": "https://images.asksurf.ai/Ia70ark4bdrO7xV3aRRCxMtBlzb8SNA-Net2HSt56sc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NDk4OTE4MjUwODA0MjI0MDIvLTZrTDRMVURfbm9ybWFsLnBuZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Sakyra Airoko",
       "wallet": "0xc0a26b567430e1b4708a26677c07b04e94e37a8c",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mucphone1",
+      "avatarUrl": "https://images.asksurf.ai/jund8SWXsl_bMIvCLDhIbHCEvi2CkPQjCLXDxLTPDVg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDI2MjEzMzk2MTQ1Mjc0ODgvQndOT0dWdFYuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "不耐烦",
       "wallet": "0xdd1d28ad03140878b243db448d6bb97a7c4f5198",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "not7717",
+      "avatarUrl": "https://images.asksurf.ai/cl_GihHVXCdcXSLEgRYPank_JSQ5KhGmivHQC01uH3E/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODk1NDc5NTU5NTU5MjkwODgvY3VYaEpZeDQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "三炮投研（Alpha版）",
       "wallet": "0x9dcb761509c3e37b87619662bf666a4f0999c95f",
       "postCount": 2,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sanpaoalpha",
+      "avatarUrl": "https://images.asksurf.ai/1JaK9kyZBgbBvQMuCtrfnfZgapKtswXLN7d1492pY38/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzIzMzIzMzE5NDUwNTAxMTIvc3V2Wk9VWlMuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "loni taft",
       "wallet": "0xb96cbccd63d9e6f38c1c051a7e3d9bd63589d405",
       "postCount": 4,
       "score": 8,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "tldn43",
+      "avatarUrl": "https://images.asksurf.ai/m9GFerZ8P8NjDqZopYgvMiP6lTGTNEl28ICeZTTxONM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDI2NTAxNzc1NzY4MDAyNjAvTVBMWFNhT01fbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "abri",
       "wallet": "0x6c64263Db81687f843B6Ab4A37977F8b940dFbb5",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "abri_crypto",
+      "avatarUrl": "https://images.asksurf.ai/wvybTB-LoJX5XmFrfXv0eQuVtoc9tDC9WgFtSkOMCkY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDUxMzk4ODEwMTAzNzI2MDgvZm1LUkNGemcuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Area21Spa",
       "wallet": "0x334B6C8C6CDa8A60B1F0619b8C1fc82dBEad81c0",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "area21spatampa",
+      "avatarUrl": "https://images.asksurf.ai/0YI_m03sMUp7b9sOIRLxXGJUGZ5zQ9cYJA-F5zw-TwU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjIxOTE2MTEzNTEyMTYxMjgvaEk5Wmk5akEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Crypto大山",
       "wallet": "0x09d5f220e7f81f54dcf1c9b62c0491be7e8d91bd",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptoall3in",
+      "avatarUrl": "https://images.asksurf.ai/H82z4OZppraAwcDyf1GFwtbylj0cEHEU35YgKebsUkc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTkyMzQ4NjI2NjMwMzI4MzMveHBzazVUQXAuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Crypto Freedom",
       "wallet": "0x4830aca0ca5056a706203eed94f6a55565e06b3c",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "cryptomodeerf",
+      "avatarUrl": "https://images.asksurf.ai/AsnRgoBAZKl0AMjhCY4Le-pfjYUIkjw_FEh17FBPc_g/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDU1MTUxMTYwNjcxNDM2ODAvTnpTbFAtSEEuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dark-德古拉",
       "wallet": "0x7558de7293d1d3f4963f0d2e79b4e6a60c9a58f8",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "darkracula",
+      "avatarUrl": "https://images.asksurf.ai/ErHumO3UFjsv90tIaKKIh2hB9J-08DzTfVU4tvygJoc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTU3ODMwNDAwNDA0MDI5NDcveXJoYXdMUmUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Gaming All in",
       "wallet": "0xb5f77a066d421c3fab48dfc9ddd2f030bf334147",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "gamingallin8",
+      "avatarUrl": "https://images.asksurf.ai/C7htHGmvvOOytPgMdBLDl03_mvUGcObNrU5CqvMjdkA/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDU1MTIyNTE4MzU1OTY4MDAvZF92QVUwTk0uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "MM",
       "wallet": "0x9ed35b26d3ee2da7dfa195e095b366461e9dc775",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mm3yap",
+      "avatarUrl": "https://images.asksurf.ai/We_68wyoZlFI26POIsmBR3iUl3qgWi2LG-gtEHces8U/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5OTA2ODY1NjkxMjExMzI1NDkvbkRpcS13WjguanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "İskender Kabul",
       "wallet": "0x3a5d74045A04f46C0FdAa9776FbFD317FFa7Ea68",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "dexterderler",
+      "avatarUrl": "https://images.asksurf.ai/jsw7bo4jh8HXiHqZLLxGmaQ4n-UwGO38Qc3K87J6AAU/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDE4NDMwMDQxNzY5OTg0MDAvUXJUNl9EVDhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "坐等机会的老韭菜.E",
       "wallet": "0x91f2f26edcb50e934091a880667fe33f6d715532",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ihd321",
+      "avatarUrl": "https://images.asksurf.ai/gG4SXVPJbZg5arT5NfC39Zx-OTDe7GyCRhWUby7CAkc/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzM0NDk4Mzk4NjMzNjE1MzYvdG8xam9lXzIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "jaydeexbt",
       "wallet": "0x36b661f0820e72bf8be96568d52a72f3ebb673f6",
       "postCount": 6,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jaydeexbt",
+      "avatarUrl": "https://images.asksurf.ai/IzL5bpd0mQ9OjXxjYrAspSYVgqe_NVIYFpQNllbJJY8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTM0NjIzODk2OTg4OTE3NzYvY0NiWnpveHRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Sevgi.Eth ADD+",
       "wallet": "0x555Eb90bA0Fd7379eDcc5692F1a3A1c4D3155d8A",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "kosturmabeni2",
+      "avatarUrl": "https://images.asksurf.ai/gbjHmbhWPua1fS434-MI5AUiHn2v9xkzhzJzSm9QqrI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4ODY1MzEyNDU4NzU1Njg2NDAvcXZFMWxyeGVfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Jason",
       "wallet": "0x7046863ae4e11bf32d60b52c8bc23dd0cf31ecbf",
       "postCount": 2,
       "score": 7,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "x420690",
+      "avatarUrl": "https://images.asksurf.ai/6GgEAMnKAXPIpTaZDEm8uEqcZ0QTsn12Yq2G3agoxi8/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTA2MzAwNDg1ODg2NzMwMjQvcmVJQy1mV1Rfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Vibers😇",
       "wallet": "0xd229E2eAe32F218311Dd93693217FF6dd5B87bF4",
       "postCount": 2,
       "score": 6.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "remzzyvibez",
+      "avatarUrl": "https://images.asksurf.ai/aQFcuwj3M6QM56Mazbsyo05vPuAt5G5Oc8j_-EJy5lk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDM0ODc3NjE3OTQwMzk4MDkvZ0ZLVndlUjBfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "SSWeb3_",
       "wallet": "0x4acceb9637f1915633610dd0edaac7acf32f012e",
       "postCount": 4,
       "score": 6.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ssweb3_",
+      "avatarUrl": "https://images.asksurf.ai/GAsdztPx72ts6UTjHwofrdfuQg1yuIaeS1ei6tMCCks/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NTY2MzU0MDM4MTUxNzAwNDgvODNZSllHaGwuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ilker",
       "wallet": "0x1dB5E2D74313f7643955054d2518BEC663Bc9738",
       "postCount": 2,
       "score": 6.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "azmangil76",
+      "avatarUrl": "https://images.asksurf.ai/3YuKTbQDsxBHRDnh_GnsHJScbhMGG5OOfIj50HB8UEs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzE3NjUyNzAyMTg1NDcyMDAvSUgxWXd2ZWtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Aleleeh",
       "wallet": "0x81c75e7249de85a36ff1103f048dcef162414188",
       "postCount": 2,
       "score": 6.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "casio8112",
+      "avatarUrl": "https://images.asksurf.ai/HE9-QzcND9_iS5DqC_JrYNpX-6H96PiN2hOlP5zB1Wk/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MzEzNTcxMjMzOTQ1NjQwOTYvOURxdjlCcTNfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "oAth",
       "wallet": "0xfbf6cb4fa1dd2e457b96aec9907857948246810b",
       "postCount": 2,
       "score": 6.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "fillipsxn",
+      "avatarUrl": "https://images.asksurf.ai/RQoj8092TxBUXPsclPMZ9Td6GlPi_AuaLiijz3vWW7U/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjkyMDQzNzIwMTkyOTgzMDUvZkpxbGxKT0IuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "immortal",
       "wallet": "0x01007670bd0304cb26603e5c71ce469dc2bbce77",
       "postCount": 2,
       "score": 6.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "im3mortal",
+      "avatarUrl": "https://images.asksurf.ai/dhYo2aRPciz9nznGYBRVW63FSeUoXSAdfcep2q5G2z4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODM0NTc5NzI5Mzc0NTc2NjQvZVUxc29hQy0uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Ling🐬TermMax",
       "wallet": "0x98b1452Ad6EBDf3019F7DaDD5BF93d4D147Eb7B6",
       "postCount": 10,
       "score": 6.42,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "lin98201",
+      "avatarUrl": "https://images.asksurf.ai/IjPuN8d5WhHeq5fEaEfR7GSGaHmEbRcwciWdEoir_3c/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDAwNzcyOTMyOTc3NTgyMDgvdThWU3JoWEtfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyễn Hồng Nhung",
       "wallet": "0xfcd3f83648aff5abff318afff00f4e2b4ffda7c5",
       "postCount": 10,
       "score": 5.72,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "pigrichh",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "jin li",
       "wallet": "0xabe2cccdafed6cec19e47a3794eeb487e646bc0f",
       "postCount": 2,
       "score": 5.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "jinli217978",
+      "avatarUrl": "https://images.asksurf.ai/5AeHVwT50rm9O9NnfZYpaeRddDMleUHcbYrPmT01sJo/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MTQzMDE5ODUzOTE4Mjg5OTIvbHp2MkJPUDEucG5n",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "9955995king",
       "wallet": "0xe5055bcd239f51e2d09d318bF32A11Ff3a6c2beb",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "9955995king",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ApeAURA",
       "wallet": "0x9F5623E6bA9aAd8d9ca16377CBF5cCEB36C9fF27",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "all_time_ape",
+      "avatarUrl": "https://images.asksurf.ai/328uCYGHxd_qYDuLZAOQ5myzuPG6siumQXsrt5FjSx0/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjkwNjI3NDc3MjA0MzM2NjUvVUtxYWVlTDUuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Crypto梭哈",
       "wallet": "0x02f6dd084188c2c238e5e50bd75667da0b4bc31d",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "all3in4out",
+      "avatarUrl": "https://images.asksurf.ai/AntGLka7XnFj9HVIEWX5gsNxnOFg4o1s2ViCOoRpvAQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5MjQ1MDY1MzMxNTQ3MTc3MDAvMk5lN3hqN28uanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Phoenix Ranger 🦾",
       "wallet": "0x76dab6bce9bbdba28d562703abdcac2774c9f2dc",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "darhtch",
+      "avatarUrl": "https://images.asksurf.ai/Fb5-rYXLKZpKm3hLJm3sJk1BTQ_XCR6P2WGFwyzhlwI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NzI3NDg4MzAxNDQ2MDYyMDgvbGVreExYbVIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Funboys_78",
       "wallet": "0x1aba551d336ecc4e4e9957745a239c555977833b",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "funboys_78",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Coke",
       "wallet": "0x650Ff11EC206A42Af72b9D29623A9BF5f927D7be",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "fxxjing",
+      "avatarUrl": "https://images.asksurf.ai/PDCMlIEccHa3_IMOSvplsd31Ap0-CUGNHj-g6SNAKDQ/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE3NDMyNTgyNjY5OTY3OTc0NDAvb0hRVTA5Q2ouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "A Ghost",
       "wallet": "0x000e07f64faf882efb6de762e92caafd021056ac",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ghosta789",
+      "avatarUrl": "https://images.asksurf.ai/AWMleSysj1uGqY8xxbgKLa-IhQLwUDZO5GcDaxHkxq4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDU0OTYxODQ4NjYzMTIxOTIvT1dpbWtacGouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Lucky02568",
       "wallet": "0x83d9095d0ae5af34df56c073f78b17da20781a2c",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "lucky02568",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "𝗦𝗔𝗚𝗢𝗥 𝗖𝗔𝗣𝗜𝗧𝗔𝗟",
       "wallet": "0xD39285d3878d621320d4a603cC230161dd33ed98",
       "postCount": 4,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "mdsagorisl19566",
+      "avatarUrl": "https://images.asksurf.ai/cWQ7zReevC5DTjY4nGFFeWam5NTzRJOg4DeR_IpGuXI/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMjk5ODMyMzIyNDczNTMzNDQvVjYxLU1JcnQuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Marufhassan76",
       "wallet": "0x8460Af0eba04aC9d6F74290e6cb54344f97977Ee",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "marufhassan76",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Nguyen Nam",
       "wallet": "0xb31fa6f0029377820c5c01216da717244b61a957",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nguyendohoangna",
+      "avatarUrl": "https://images.asksurf.ai/3ij_Myuesd4ZcLSfUrc1-3SF8Hp63FxkS46QocBs2Tg/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTkwMDA5MjM1MjQzMjUzNzcvREdvX3lZT1Rfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "NudistmaleZ",
       "wallet": "0x0b0ed1f17c0d00dbd80e4cda37f50d22fd8e3212",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "nudistmalez",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "OnlyPulo",
       "wallet": "0xe71429c68b2a0c55c56f8316f9ba2cb78419ac77",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "onlypulo",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "OxxAkash",
       "wallet": "0xB650e795fbBbe90E7fC5aefBFfC518F1B973445f",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "oxxakash",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Pluto_Crrypt1",
       "wallet": "0xd8747642cec99a9fd2f834e0008c48828c5b8a4c",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "pluto_crrypt1",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "PumpVaultBase",
       "wallet": "0x9749eed9fe2027697c755d906c1ae70af44e9a92",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "pumpvaultbase",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "XiaoZhi_BTC",
       "wallet": "0x39b217114b4b8b4d4f5c66044d3fb89483d58202",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "xiaozhi_btc",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "张行程",
       "wallet": "0xBe185faFf8a5447127C041037092b488d9c3fc38",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "zhangxing50480",
+      "avatarUrl": "https://images.asksurf.ai/YqcxGbK8pN8N6Serm04cHGgBDsMeEJdGZT-a-M_u3zs/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE4NzcyMTY1NzM0ODE2OTMxODcvZEE5UjZPUlMucG5n",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "_cjsy_eth_",
       "wallet": "0xb60691cd7fe2aaebac98b2bab3a3c0665d14918a",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "_cjsy_eth_",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Alpha.等风",
       "wallet": "0xfcb36187bcafab981ee787b5b08a845e961008cf",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "all7i8n9",
+      "avatarUrl": "https://images.asksurf.ai/DsqzRU-36Yp0qV7cJKxiDJOzwYaGtZXTXhre_AmD56g/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDMyMzQ2MjY2NDc0OTA1NjAvZU9Kakp0azAuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "brightness96",
       "wallet": "0x8409cb7eded7807e8440c0c267a6acdfa164bb4e",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "brightness96",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ddcat80",
       "wallet": "0xe9ca28d97aa7c2739bb2f7d7c89a500e44caeff0",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "ddcat80",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "Dr Pengu",
       "wallet": "0x35be0738c74cfa88720b26b6d6c74ff373b767b1",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "drpengu6",
+      "avatarUrl": "https://images.asksurf.ai/_aQAIErRp2lQgxLLfgnQbK_0YDWg42yIZxl-UsqX5_g/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5NjQyMDU4ODc5OTM2NTEyMDAvdjhPTjRnU3cuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "hien_xxxx",
       "wallet": "0xba647f9fe1909c758015da067941b738478ef0a6",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "hien_xxxx",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "i_m_m_",
       "wallet": "0x562982024F31889fc025f718eD565887aB5a99dC",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "i_m_m_",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "ᑭᖇᗩY乙",
       "wallet": "0x1d7Af3d1de21354BBFFE7d22761AeDDCBE71D216",
       "postCount": 4,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "prayz_dev",
+      "avatarUrl": "https://images.asksurf.ai/kkEdjhVMzYtpHCFdnBRymB3ImEd4ym3_w1DuTHA_yEM/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwNDQ3NTA2NTAyMDMxNDQxOTIvR1daLWtXblRfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "publicitsx",
       "wallet": "0x3d804a2091e631ba2662c7f64a7e82ce21f6daa6",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "publicitsx",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "qingshanbing",
       "wallet": "0x86bc57ee241565c0da6dc6e0efed9b26ce10c470",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "qingshanbing",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "t0xic🦠",
       "wallet": "0x8E0eCa460Cf2940B69cc6984E75c6Bdafc55323D",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "rmvai640",
+      "avatarUrl": "https://images.asksurf.ai/spIFMK3IbxQZNO2N-DbNtmq0TGJTIEVgD6-bDAEHoX4/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzE5ODI2NDU2OTg3OTg1MTQxNzcvT2hFbmR2MlIuanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "sugardad076",
       "wallet": "0x28bab1b2d9e51b1a90b22fd4c346db6b8dc44cb2",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "sugardad076",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "无双-明灯（🐬 TermMax）",
       "wallet": "0x0579704631f4042da4ed7eb5d5b808bcb15143d1",
       "postCount": 2,
       "score": 4.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "youguqi2023",
+      "avatarUrl": "https://images.asksurf.ai/-6Vanjjx4sTv7-g2rX9KMI78_sEH1mHT3P4Sy3sONto/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMzQzMTY1NDUyMzM3MDI5MTIvUmIyUHVxdmouanBn",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "| Arion |",
       "wallet": "0x8445a688e7bfa2a159af2f1f5f619920e4afa689",
       "postCount": 6,
       "score": 1.16,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "arionnz",
+      "avatarUrl": "https://images.asksurf.ai/wvWo9dQsPyyFgM791uqZn_BzlbWGGNAVZrboTddSRko/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTMyNDA1OTU0Nzc2NzYwMzIvSS1PcE5haHdfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     },
     {
       "username": "adeee🧡",
       "wallet": "0x2fbc28158512fe2d3b1679396f2cd56a6b62abab",
       "postCount": 8,
       "score": 0.5,
-      "srEligible": false
+      "srEligible": false,
+      "xHandle": "adekiiiteee",
+      "avatarUrl": "https://images.asksurf.ai/kTtSFiF-dcXoKUjZgRr0OKjPQsPlLsqlBh-E_7Q0tOY/aHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMTg5NzIwNTQwODM1ODQwMDAvcnMzdzM2Umhfbm9ybWFsLmpwZw",
+      "checkpoints": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
     }
   ],
   "warnings": [],
@@ -2514,8 +5669,10 @@
     "0x611c3f4b257fa7f330061d5407bb0f6ada52cada",
     "0x6d69e2d103ce4c147fa189ee3fdfb88159c907cf",
     "0x6e7dbb10343c03da3f07dc6b6a4747c7748fd47a",
+    "0x724346b1be83c0e435ef28a357abadabfd2323ba",
     "0x73b6bdf237ed04f40e5684f3e5718f9239b5d64a",
     "0x7fcbefae32efde50630e91b8b2346887838a7fbd",
+    "0x83421e3a5f84c744bbc39133fa5bfb5705dd90a4",
     "0x88b791a2fa058b183ccbfc11d36027c7a7e0d362",
     "0x8e0da9865a8b2ee06921b877222dabe4c4d3d8d9",
     "0x96993c0ab74299f3c304a08de30dc2a3f1e072b4",
@@ -2530,7 +5687,7 @@
     "0xd5a065e5c38c7d87f6b90e920f4e1acc9722d97a",
     "0xf5fe70ac5c12905cd802c890c2a401194554d692"
   ],
-  "eligibleSnapshotUpdatedAt": "2026-05-16T14:43:23.846Z",
+  "eligibleSnapshotUpdatedAt": "2026-05-18T04:06:09.237Z",
   "epoch1CarryoverApplied": true,
   "guaranteedEpoch1BaselinesMerged": [
     "0x73b6bdf237ed04f40e5684f3e5718f9239b5d64a",
@@ -2541,12 +5698,12 @@
     "0xd5a065e5c38c7d87f6b90e920f4e1acc9722d97a",
     "0x97bc998dbdd5d5a9df74cb589f4eabd516d4a22a"
   ],
-  "snapshotDayKey": "2026-05-16",
+  "snapshotDayKey": "2026-05-18",
   "isBootstrap": false,
   "postWindow": {
-    "startMs": 1778691600000,
-    "endMs": 1778778000000,
-    "eligibilityDayKey": "2026-05-15"
+    "startMs": 1778864400000,
+    "endMs": 1778950800000,
+    "eligibilityDayKey": "2026-05-17"
   },
   "cronTimezoneNote": "17:00 UTC = 00:00 GMT+7"
 }

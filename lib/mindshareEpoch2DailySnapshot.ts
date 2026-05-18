@@ -8,12 +8,16 @@ import {
   writeEpoch2LeaderboardSnapshot,
   type Epoch2LeaderboardSnapshotFile,
 } from './mindshareEpoch2DailyState'
-import { gmt7PostCountWindowForSnapshot, postSubmittedInWindow } from './mindshareEpoch2Gmt7'
+import { gmt7PostCountWindowForSnapshot } from './mindshareEpoch2Gmt7'
 import {
   buildMindshareEpoch2LeaderboardPayload,
   type MindshareEpoch2LeaderboardPayload,
 } from './mindshareEpoch2LeaderboardBuild'
-import { flattenMindshareSubmissionPosts, postsMatchingCountedKeys } from './mindshareEpoch2Posts'
+import {
+  flattenMindshareSubmissionPosts,
+  postsMatchingCountedKeys,
+  shouldScorePostForEpoch2DailySnapshot,
+} from './mindshareEpoch2Posts'
 import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
 import { readEpoch2SrEligibleWalletsFromSnapshot, runMindshareEpoch2SrEligibilitySnapshot } from './mindshareEpoch2SrSnapshot'
 
@@ -83,12 +87,15 @@ export async function runMindshareEpoch2DailySnapshot(
   const rows = await readMindshareSubmissionsCsv(options.csvPath)
   const allPosts = flattenMindshareSubmissionPosts(rows)
 
-  const postsToScore = allPosts.filter((p) => {
-    if (!eligibleWallets.has(p.walletLower)) return false
-    if (counted.has(epoch2PostKey(p.walletLower, p.tweetId))) return false
-    const submittedMs = p.submittedAtMs ?? 0
-    return postSubmittedInWindow(submittedMs, postWindow.startMs, postWindow.endMs)
-  })
+  const postsToScore = allPosts.filter((p) =>
+    shouldScorePostForEpoch2DailySnapshot(p, {
+      eligibleWallets,
+      countedKeys: counted,
+      countedPostKeys: dailyState.countedPostKeys,
+      postWindow,
+      isBootstrap,
+    }),
+  )
 
   const countedPostsForRecount = postsMatchingCountedKeys(allPosts, dailyState.countedPostKeys)
 

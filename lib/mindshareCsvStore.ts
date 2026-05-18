@@ -21,6 +21,45 @@ function resolveMindshareCsvPath(customPath?: string): string {
   return customPath?.trim() ? resolve(customPath.trim()) : fallbackPath
 }
 
+/**
+ * Split file content into CSV records (RFC 4180: newlines inside quoted fields are not row breaks).
+ */
+export function parseCsvRecords(content: string): string[] {
+  const records: string[] = []
+  let cur = ''
+  let inQuotes = false
+  for (let i = 0; i < content.length; i += 1) {
+    const c = content[i]!
+    if (inQuotes) {
+      if (c === '"') {
+        const next = content[i + 1]
+        if (next === '"') {
+          cur += '""'
+          i += 1
+        } else {
+          inQuotes = false
+          cur += c
+        }
+      } else {
+        cur += c
+      }
+    } else if (c === '"') {
+      inQuotes = true
+      cur += c
+    } else if (c === '\r' || c === '\n') {
+      if (c === '\r' && content[i + 1] === '\n') i += 1
+      if (cur.length > 0) {
+        records.push(cur)
+        cur = ''
+      }
+    } else {
+      cur += c
+    }
+  }
+  if (cur.length > 0) records.push(cur)
+  return records
+}
+
 /** Parse one CSV line (RFC 4180-style quotes). */
 export function parseCsvDataLine(line: string): string[] {
   const out: string[] = []
@@ -83,14 +122,14 @@ export async function readMindshareSubmissionsCsv(customPath?: string): Promise<
   } catch {
     return []
   }
-  const lines = content.split(/\r?\n/).filter((l) => l.trim().length > 0)
-  if (lines.length === 0) return []
-  const header = lines[0]!.replace(/^\uFEFF/, '').trimEnd()
+  const records = parseCsvRecords(content).filter((r) => r.trim().length > 0)
+  if (records.length === 0) return []
+  const header = records[0]!.replace(/^\uFEFF/, '').trimEnd()
   if (header !== CSV_HEADER && header !== CSV_HEADER_SR && header !== CSV_HEADER_LEGACY) {
     return []
   }
   const hasSubmittedAt = header === CSV_HEADER
-  const dataLines = lines.slice(1)
+  const dataLines = records.slice(1)
   const rows: MindshareSubmissionRow[] = []
   for (const line of dataLines) {
     const cells = parseCsvDataLine(line)

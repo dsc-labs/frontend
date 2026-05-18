@@ -264,8 +264,12 @@ async function main() {
 
   const csv = fs.readFileSync(CSV_PATH, 'utf8');
   const lines = csv.split(/\r?\n/).filter((l) => l.trim().length > 0);
-  const header = lines[0].trim();
-  if (!/^x handle,wallet,name,post submited(,sr balance)?$/i.test(header)) {
+  const header = lines[0].replace(/^\uFEFF/, '').trim();
+  if (
+    header !== 'x handle,wallet,name,post submited' &&
+    header !== 'x handle,wallet,name,post submited,sr balance' &&
+    header !== 'x handle,wallet,name,post submited,sr balance,submitted at'
+  ) {
     console.error('Unexpected CSV header:', header);
     process.exit(1);
   }
