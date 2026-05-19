@@ -15,6 +15,7 @@
     "lib/baseJsonRpc.ts",
     "lib/baseBlockAtTime.ts",
     "lib/mindshareEpoch2SrHistoricalBackfill.ts",
+    "lib/mindshareEpoch2SrBalanceAtDay.ts",
     "lib/mindshareEpoch2Checkpoints.ts",
     "lib/mindshareEpoch2Gmt7.ts",
     "lib/twitterAvatar.ts",

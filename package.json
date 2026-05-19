@@ -11,6 +11,7 @@
     "epoch2:backfill-sr-day": "node scripts/backfill-epoch2-sr-day.cjs",
     "epoch2:recount": "node scripts/epoch2-recount.mjs",
     "epoch2:sr-backfill-day": "node scripts/epoch2-sr-backfill-day.mjs",
+    "epoch2:check-sr": "tsx scripts/check-epoch2-sr-eligibility.mjs",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
