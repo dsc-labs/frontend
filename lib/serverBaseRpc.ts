@@ -8,3 +8,10 @@ export function getServerBaseRpcUrl(): string | undefined {
   if (explicit) return explicit
   return process.env.VITE_BASE_RPC_URL?.trim() || undefined
 }
+
+/** Archive-capable Base RPC for historical `eth_call` / block lookups (falls back to {@link getServerBaseRpcUrl}). */
+export function getServerArchiveRpcUrl(): string | undefined {
+  const archive = process.env.BASE_ARCHIVE_RPC_URL?.trim()
+  if (archive) return archive
+  return getServerBaseRpcUrl()
+}

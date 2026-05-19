@@ -25,7 +25,7 @@ async function runPool<T>(items: T[], concurrency: number, fn: (item: T) => Prom
   await Promise.all(Array.from({ length: items.length ? n : 0 }, () => worker()))
 }
 
-function defaultSnapshotLogPath(): string {
+export function defaultSnapshotLogPath(): string {
   const custom = process.env.MINDSHARE_EPOCH2_SR_SNAPSHOT_LOG_PATH?.trim()
   if (custom) return resolve(custom)
   if (process.env.VERCEL) {

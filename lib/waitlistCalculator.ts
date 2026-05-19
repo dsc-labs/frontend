@@ -19,11 +19,16 @@ export function balanceOfCall(walletAddress: string): string {
   return `0x70a08231000000000000000000000000${normalized}`
 }
 
+export type Erc20BalanceBlockTag = 'latest' | `0x${string}`
+
 export async function fetchErc20Balance(params: {
   rpcUrl: string
   tokenAddress: string
   walletAddress: string
+  /** `latest` or hex block number (e.g. `0x1a2b3c`). Requires archive RPC for old blocks. */
+  blockTag?: Erc20BalanceBlockTag
 }): Promise<bigint> {
+  const blockTag = params.blockTag ?? 'latest'
   const res = await fetch(params.rpcUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -31,7 +36,7 @@ export async function fetchErc20Balance(params: {
       id: 1,
       jsonrpc: '2.0',
       method: 'eth_call',
-      params: [{ to: params.tokenAddress, data: balanceOfCall(params.walletAddress) }, 'latest'],
+      params: [{ to: params.tokenAddress, data: balanceOfCall(params.walletAddress) }, blockTag],
     }),
   })
   const json = (await res.json()) as { result?: string; error?: { message?: string } }

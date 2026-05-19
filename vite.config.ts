@@ -391,6 +391,35 @@ function attachMindshareEpoch2RefreshDevCron(server: ViteDevServer | PreviewServ
   else server.httpServer?.once('listening', bind)
 }
 
+async function serveEpoch2SrBackfillDayIfMatched(
+  req: IncomingMessage,
+  res: ServerResponse,
+  pathname: string,
+  env: Record<string, string>,
+): Promise<boolean> {
+  if (!pathname.startsWith('/api/mindshare/epoch2-sr-backfill-day')) return false
+  if (req.method !== 'GET' && req.method !== 'POST') {
+    res.statusCode = 405
+    res.setHeader('Allow', 'GET, POST')
+    res.end('Method Not Allowed')
+    return true
+  }
+  try {
+    applyMindshareEpoch2Env(env)
+    const handler = (await import('./api/mindshare/epoch2-sr-backfill-day')).default
+    const host = req.headers.host ?? 'localhost'
+    const vercelReq = await incomingToVercelRequest(req, host)
+    const vercelRes = patchVercelResponse(res)
+    await handler(vercelReq, vercelRes)
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : 'Epoch 2 SR backfill failed'
+    res.statusCode = 500
+    res.setHeader('Content-Type', 'application/json; charset=utf-8')
+    res.end(JSON.stringify({ ok: false, error: message }))
+  }
+  return true
+}
+
 async function serveEpoch2RecountIfMatched(
   req: IncomingMessage,
   res: ServerResponse,
@@ -638,6 +667,7 @@ export default defineConfig(({ mode }) => {
 
             if (await serveEpoch2RefreshIfMatched(req, res, pathname, env)) return
             if (await serveEpoch2RecountIfMatched(req, res, pathname, env)) return
+            if (await serveEpoch2SrBackfillDayIfMatched(req, res, pathname, env)) return
 
             if (pathname.startsWith('/api/mindshare/epoch2-sr-snapshot')) {
               if (req.method !== 'GET' && req.method !== 'POST') {
@@ -807,6 +837,7 @@ export default defineConfig(({ mode }) => {
 
             if (await serveEpoch2RefreshIfMatched(req, res, pathname, env)) return
             if (await serveEpoch2RecountIfMatched(req, res, pathname, env)) return
+            if (await serveEpoch2SrBackfillDayIfMatched(req, res, pathname, env)) return
 
             if (pathname.startsWith('/api/mindshare/epoch2-sr-snapshot')) {
               if (req.method !== 'GET' && req.method !== 'POST') {

@@ -56,3 +56,11 @@ export function gmt7PostCountWindowForSnapshot(
 export function postSubmittedInWindow(submittedAtMs: number, startMs: number, endMs: number): boolean {
   return submittedAtMs >= startMs && submittedAtMs < endMs
 }
+
+/**
+ * UTC instant when the 17:00 UTC cron records SR eligibility for GMT+7 calendar day `eligibilityDayKey`
+ * (= 00:00 GMT+7 on the following calendar day).
+ */
+export function gmt7SrEligibilitySnapshotInstantMs(eligibilityDayKey: string): number {
+  return gmt7DayStartMs(eligibilityDayKey) + MS_PER_DAY
+}
