@@ -1,5 +1,6 @@
 import { EPOCH_2_END_MS } from './mindshareEpoch2Constants'
 import {
+  bootstrapPostKeySet,
   readEpoch2DailyState,
   readEpoch2LeaderboardSnapshot,
   writeEpoch2DailyState,
@@ -82,6 +83,7 @@ export async function runMindshareEpoch2LeaderboardRecount(options: {
       postsToScore: [],
       previousCountedKeys: countedPostKeys,
       countedPostsForRecount,
+      bootstrapPostKeys: bootstrapPostKeySet(dailyState.bootstrapPostKeys),
     },
   })
 
@@ -126,6 +128,7 @@ export async function runMindshareEpoch2LeaderboardRecount(options: {
     lastSnapshotAt: payload.generatedAt,
     lastSnapshotDayKey: dailyState.lastSnapshotDayKey ?? snapshotDayKey,
     countedPostKeys,
+    bootstrapPostKeys: dailyState.bootstrapPostKeys,
   })
   const leaderboardSnapshotPath = await writeEpoch2LeaderboardSnapshot(snapshotFile)
 

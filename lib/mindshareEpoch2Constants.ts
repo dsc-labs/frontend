@@ -11,6 +11,9 @@ export const EPOCH2_PUBLIC_ENGAGEMENT_STATS = {
   totalEngagement: 31_842 + 12_476 + 4_983,
 } as const
 
+/** Score multiplier for posts counted on the **first** (bootstrap) midnight snapshot. */
+export const EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER = 5
+
 export function epoch2DaysRemaining(nowMs = Date.now()): number {
   const t = EPOCH_2_END_MS - nowMs
   if (t <= 0) return 0

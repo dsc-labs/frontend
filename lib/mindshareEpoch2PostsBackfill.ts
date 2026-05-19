@@ -4,6 +4,7 @@ import {
   loadEpoch2SrEligibilityByDay,
 } from './mindshareEpoch2Checkpoints'
 import {
+  bootstrapPostKeySet,
   epoch2PostKey,
   readEpoch2DailyState,
   readEpoch2LeaderboardSnapshot,
@@ -46,9 +47,10 @@ export function replayEpoch2CountedPostKeys(options: {
   initialCountedKeys?: string[]
   /** When false and not `replace`, skip bootstrap window (only add per-day windows). */
   bootstrapAlreadyCompleted?: boolean
-}): { countedPostKeys: string[]; byDay: Epoch2PostsBackfillDayResult[] } {
+}): { countedPostKeys: string[]; bootstrapPostKeys: string[]; byDay: Epoch2PostsBackfillDayResult[] } {
   const dayKeys = options.dayKeys ?? EPOCH2_CHECKPOINT_DAY_KEYS
   const counted = new Set(options.replace ? [] : (options.initialCountedKeys ?? []))
+  const bootstrapPostKeys = new Set<string>()
   const byDay: Epoch2PostsBackfillDayResult[] = []
   let isBootstrap =
     options.replace === true || (options.bootstrapAlreadyCompleted !== true && counted.size === 0)
@@ -80,7 +82,9 @@ export function replayEpoch2CountedPostKeys(options: {
           isBootstrap,
         })
       ) {
-        counted.add(epoch2PostKey(p.walletLower, p.tweetId))
+        const key = epoch2PostKey(p.walletLower, p.tweetId)
+        counted.add(key)
+        if (isBootstrap) bootstrapPostKeys.add(key)
       }
     }
 
@@ -93,7 +97,7 @@ export function replayEpoch2CountedPostKeys(options: {
     isBootstrap = false
   }
 
-  return { countedPostKeys: [...counted], byDay }
+  return { countedPostKeys: [...counted], bootstrapPostKeys: [...bootstrapPostKeys], byDay }
 }
 
 export type MindshareEpoch2PostsBackfillResult =
@@ -158,7 +162,7 @@ export async function runMindshareEpoch2PostsBackfill(options: {
   const rows = await readMindshareSubmissionsCsv(options.csvPath)
   const allPosts = flattenMindshareSubmissionPosts(rows)
 
-  const { countedPostKeys, byDay } = replayEpoch2CountedPostKeys({
+  const { countedPostKeys, bootstrapPostKeys, byDay } = replayEpoch2CountedPostKeys({
     allPosts,
     eligibilityByDay,
     dayKeys,
@@ -177,6 +181,7 @@ export async function runMindshareEpoch2PostsBackfill(options: {
       postsToScore: [],
       previousCountedKeys: countedPostKeys,
       countedPostsForRecount,
+      bootstrapPostKeys: bootstrapPostKeySet(bootstrapPostKeys),
     },
   })
 
@@ -202,6 +207,7 @@ export async function runMindshareEpoch2PostsBackfill(options: {
     lastSnapshotAt: payload.generatedAt,
     lastSnapshotDayKey: dailyState.lastSnapshotDayKey ?? snapshotDayKey,
     countedPostKeys,
+    bootstrapPostKeys,
   })
   const leaderboardSnapshotPath = await writeEpoch2LeaderboardSnapshot(snapshotFile)
 

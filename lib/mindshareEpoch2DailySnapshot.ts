@@ -3,6 +3,7 @@ import { dirname } from 'node:path'
 import { defaultEpoch2DailySnapshotLogPath } from './mindshareEpoch2DataPaths'
 import { EPOCH_2_END_MS } from './mindshareEpoch2Constants'
 import {
+  bootstrapPostKeySet,
   epoch2PostKey,
   readEpoch2DailyState,
   writeEpoch2DailyState,
@@ -98,6 +99,13 @@ export async function runMindshareEpoch2DailySnapshot(
 
   const countedPostsForRecount = postsForCountedKeys(allPosts, dailyState.countedPostKeys, rows)
 
+  const bootstrapKeysThisRun = postsToScore.map((p) => epoch2PostKey(p.walletLower, p.tweetId))
+  const bootstrapForScoring = bootstrapPostKeySet(
+    isBootstrap
+      ? [...dailyState.bootstrapPostKeys, ...bootstrapKeysThisRun]
+      : dailyState.bootstrapPostKeys,
+  )
+
   const payload = await buildMindshareEpoch2LeaderboardPayload({
     bearerToken: options.bearerToken,
     csvPath: options.csvPath,
@@ -106,6 +114,7 @@ export async function runMindshareEpoch2DailySnapshot(
       postsToScore,
       previousCountedKeys: dailyState.countedPostKeys,
       countedPostsForRecount,
+      bootstrapPostKeys: bootstrapForScoring,
     },
   })
 
@@ -114,6 +123,9 @@ export async function runMindshareEpoch2DailySnapshot(
     const key = epoch2PostKey(p.walletLower, p.tweetId)
     if (!newCountedKeys.includes(key)) newCountedKeys.push(key)
   }
+  const bootstrapPostKeys = isBootstrap
+    ? [...new Set([...dailyState.bootstrapPostKeys, ...bootstrapKeysThisRun])]
+    : dailyState.bootstrapPostKeys
 
   const snapshotFile: Epoch2LeaderboardSnapshotFile = {
     ...payload,
@@ -134,6 +146,7 @@ export async function runMindshareEpoch2DailySnapshot(
     lastSnapshotAt: payload.generatedAt,
     lastSnapshotDayKey: postWindow.snapshotDayKey,
     countedPostKeys: newCountedKeys,
+    bootstrapPostKeys,
   })
   const leaderboardSnapshotPath = await writeEpoch2LeaderboardSnapshot(snapshotFile)
 

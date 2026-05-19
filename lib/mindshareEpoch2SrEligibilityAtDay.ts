@@ -1,4 +1,5 @@
 import { findBlockNumberAtOrBefore, blockNumberToHex } from './baseBlockAtTime'
+import { sleepMs, withRpcRetry } from './rpcRetry'
 import { EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE } from './mindshareEpoch2Constants'
 import { gmt7SrEligibilitySnapshotInstantMs } from './mindshareEpoch2Gmt7'
 import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
@@ -47,9 +48,8 @@ export async function computeEpoch2SrEligibilityForDay(options: {
   const eligibilityDayKey = options.eligibilityDayKey.trim()
   const targetMs = gmt7SrEligibilitySnapshotInstantMs(eligibilityDayKey)
   const targetTimestampSec = Math.floor(targetMs / 1000)
-  const { blockNumber, blockTimestampSec } = await findBlockNumberAtOrBefore(
-    options.rpcUrl,
-    targetTimestampSec,
+  const { blockNumber, blockTimestampSec } = await withRpcRetry(() =>
+    findBlockNumberAtOrBefore(options.rpcUrl, targetTimestampSec),
   )
   const blockNumberHex = blockNumberToHex(blockNumber)
 
@@ -72,23 +72,30 @@ export async function computeEpoch2SrEligibilityForDay(options: {
       Number(
         process.env.MINDSHARE_EPOCH2_SR_SNAPSHOT_RPC_CONCURRENCY ||
           process.env.MINDSHARE_EPOCH2_SR_BACKFILL_RPC_CONCURRENCY ||
-          '8',
-      ) || 8,
+          '2',
+      ) || 2,
     ),
+  )
+  const delayMs = Math.max(
+    0,
+    Number(process.env.MINDSHARE_EPOCH2_SR_RPC_DELAY_MS ?? '200') || 200,
   )
 
   await runPool(keys, conc, async (w) => {
     try {
-      const raw = await fetchErc20Balance({
-        rpcUrl: options.rpcUrl,
-        tokenAddress: WAITLIST_SR_TOKEN,
-        walletAddress: w,
-        blockTag: blockNumberHex,
-      })
+      const raw = await withRpcRetry(() =>
+        fetchErc20Balance({
+          rpcUrl: options.rpcUrl,
+          tokenAddress: WAITLIST_SR_TOKEN,
+          walletAddress: w,
+          blockTag: blockNumberHex,
+        }),
+      )
       unitsByWallet.set(w, rawBalanceToTokenUnits(raw, SR_TOKEN_DECIMALS))
     } catch {
       rpcFailures += 1
     }
+    if (delayMs > 0) await sleepMs(delayMs)
   })
 
   const balancesByWallet: Record<string, number> = {}

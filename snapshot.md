@@ -126,6 +126,7 @@ Submissions store **`submitted at`** (ISO-8601) on new CSV rows. Legacy rows wit
 
 - **Window:** all posts with `submittedAt` **before** that midnight (legacy rows count as “before bootstrap”).
 - **Rule:** if the wallet is **SR-eligible** at that snapshot, those posts enter the cumulative leaderboard.
+- **Score:** posts counted on this run are stored in `bootstrapPostKeys` and earn **×5** on cumulative score (`EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER` in `lib/mindshareEpoch2Constants.ts`). Later nights are ×1.
 
 ### Every later midnight
 
@@ -188,9 +189,9 @@ Local dev: daily SR/score cron optional (`MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=
 These X handles are **always** on the leaderboard at **ranks 1–7** in this order, **always SR-eligible**, regardless of $SR balance:
 
 1. Goon_crypto  
-2. 0xzagen  
+2. 0xweekend59  
 3. 100xDarren  
-4. 0xweekend59  
+4. 0xzagen  
 5. 3DMax_Virtuals  
 6. bizbrainzuni  
 7. office2crypto  

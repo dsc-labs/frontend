@@ -21,9 +21,9 @@ import {
   loadGuaranteedTop7Wallets,
 } from './mindshareEpoch2GuaranteedTop7'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
-import { epoch2DaysRemaining } from './mindshareEpoch2Constants'
+import { EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER, epoch2DaysRemaining } from './mindshareEpoch2Constants'
 import { applyEpoch2EngagementToStats, resolveEpoch2EngagementTotals } from './mindshareEpoch2EngagementStats'
-import { epoch2PostKey, readEpoch2DailyState } from './mindshareEpoch2DailyState'
+import { bootstrapPostKeySet, epoch2PostKey, readEpoch2DailyState } from './mindshareEpoch2DailyState'
 import {
   cacheEntryFresh,
   readEpoch2MetricsCache,
@@ -259,6 +259,8 @@ type DailyScoringOptions = {
   previousCountedKeys: string[]
   /** All CSV posts already in `previousCountedKeys` — re-scored from cache each run (not seed). */
   countedPostsForRecount: Epoch2FlattenedPost[]
+  /** Posts from the bootstrap snapshot — cumulative score × {@link EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER}. */
+  bootstrapPostKeys: Set<string>
 }
 
 function tweetIdsFromCountedPostKeys(keys: string[]): string[] {
@@ -298,6 +300,7 @@ function scoreDailyPostsFromCache(
   defaultQ: number,
   eligibleWalletKeys: Set<string>,
   seedByWallet: Map<string, { wallet: string; username: string; score: number; posts: number }>,
+  bootstrapPostKeys: Set<string>,
 ): { users: Epoch2ApiUser[]; engagementByTweetId: Map<string, TweetMetricsSnapshot> } {
   const engagementByTweetId = new Map<string, TweetMetricsSnapshot>()
   const byWallet = new Map(seedByWallet)
@@ -349,7 +352,9 @@ function scoreDailyPostsFromCache(
       comments: snap.replyCount,
       retweets: retweetsForScore(snap),
     }
-    agg.score += epoch2FinalScoreForPost(post, followers)
+    const postScore = epoch2FinalScoreForPost(post, followers)
+    const mult = bootstrapPostKeys.has(postKey) ? EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER : 1
+    agg.score += postScore * mult
     engagementByTweetId.set(p.tweetId, snap)
   }
 
@@ -394,14 +399,24 @@ function displayUsername(rowOrPost: MindshareSubmissionRow | Epoch2FlattenedPost
 }
 
 /** Score all posts in CSV from cache (legacy live rebuild). */
-function scoreAllPostsFromCache(
+async function scoreAllPostsFromCache(
   rows: MindshareSubmissionRow[],
   cache: Epoch2MetricsCacheFile,
   defaultQ: number,
   eligibleWalletKeys: Set<string>,
-): { users: Epoch2ApiUser[]; engagementByTweetId: Map<string, TweetMetricsSnapshot> } {
+  bootstrapPostKeys: Set<string>,
+): Promise<{ users: Epoch2ApiUser[]; engagementByTweetId: Map<string, TweetMetricsSnapshot> }> {
   const posts = flattenMindshareSubmissionPosts(rows)
-  return scoreDailyPostsFromCache(posts, posts, posts.map((p) => p.tweetId), cache, defaultQ, eligibleWalletKeys, new Map())
+  return scoreDailyPostsFromCache(
+    posts,
+    posts,
+    posts.map((p) => p.tweetId),
+    cache,
+    defaultQ,
+    eligibleWalletKeys,
+    new Map(),
+    bootstrapPostKeys,
+  )
 }
 
 async function finalizeEpoch2UsersForDisplay(
@@ -546,11 +561,18 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       defaultQ,
       eligibleWalletKeys,
       seedByWallet,
+      options.dailyScoring.bootstrapPostKeys,
     )
     users = scored.users
     engagementByTweetId = scored.engagementByTweetId
   } else {
-    const scored = scoreAllPostsFromCache(rows, cache, defaultQ, eligibleWalletKeys)
+    const scored = await scoreAllPostsFromCache(
+      rows,
+      cache,
+      defaultQ,
+      eligibleWalletKeys,
+      bootstrapPostKeySet(dailyState.bootstrapPostKeys),
+    )
     users = scored.users
     engagementByTweetId = scored.engagementByTweetId
   }

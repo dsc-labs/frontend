@@ -9,10 +9,10 @@ import { normalizeXUsername } from './xTweetMetrics'
 /** Fixed Epoch 2 podium (order = ranks 1–7). */
 export const EPOCH2_GUARANTEED_TOP7_HANDLES: readonly string[] = [
   'goon_crypto',
-  '3dmax_virtuals',
-  '0xzagen',
-  '100xdarren',
   '0xweekend59',
+  '100xdarren',
+  '0xzagen',
+  '3dmax_virtuals',
   'bizbrainzuni',
   'office2crypto',
 ] as const

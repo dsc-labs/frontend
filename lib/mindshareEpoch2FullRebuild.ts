@@ -1,4 +1,5 @@
 import { EPOCH2_CHECKPOINT_DAY_KEYS } from './mindshareEpoch2Checkpoints'
+import { sleepMs } from './rpcRetry'
 import { applyEpoch2SnapshotDirToProcessEnv, epoch2DataRoot } from './mindshareEpoch2DataPaths'
 import { runMindshareEpoch2PostsBackfill } from './mindshareEpoch2PostsBackfill'
 import { runMindshareEpoch2SrHistoricalBackfill } from './mindshareEpoch2SrHistoricalBackfill'
@@ -36,7 +37,12 @@ export async function runEpoch2FullRebuild(options: {
   const csvPath = process.env.MINDSHARE_SUBMISSIONS_CSV_PATH
 
   const srDays: Awaited<ReturnType<typeof runMindshareEpoch2SrHistoricalBackfill>>[] = []
-  for (const day of dayKeys) {
+  const dayPauseMs = Math.max(
+    0,
+    Number(process.env.MINDSHARE_EPOCH2_SR_DAY_PAUSE_MS ?? '8000') || 8000,
+  )
+  for (let i = 0; i < dayKeys.length; i += 1) {
+    const day = dayKeys[i]!
     const r = await runMindshareEpoch2SrHistoricalBackfill({
       eligibilityDayKey: day,
       csvPath,
@@ -44,6 +50,7 @@ export async function runEpoch2FullRebuild(options: {
     })
     if (!r.ok) return { ok: false, error: r.error }
     srDays.push(r)
+    if (dayPauseMs > 0 && i < dayKeys.length - 1) await sleepMs(dayPauseMs)
   }
 
   const posts = await runMindshareEpoch2PostsBackfill({

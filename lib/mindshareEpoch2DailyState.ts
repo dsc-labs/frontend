@@ -21,6 +21,8 @@ export type Epoch2DailyState = {
   lastSnapshotDayKey: string | null
   /** `walletLower:tweetId` keys already scored into the cumulative leaderboard. */
   countedPostKeys: string[]
+  /** Subset of `countedPostKeys` from the bootstrap snapshot — score × {@link EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER}. */
+  bootstrapPostKeys: string[]
 }
 
 export type Epoch2LeaderboardSnapshotFile = MindshareEpoch2LeaderboardPayload & {
@@ -42,6 +44,9 @@ export async function readEpoch2DailyState(): Promise<Epoch2DailyState> {
     const countedPostKeys = Array.isArray(j.countedPostKeys)
       ? j.countedPostKeys.map((k) => String(k))
       : []
+    const bootstrapPostKeys = Array.isArray(j.bootstrapPostKeys)
+      ? j.bootstrapPostKeys.map((k) => String(k))
+      : []
     const guaranteedEpoch1BaselinesMerged = Array.isArray(j.guaranteedEpoch1BaselinesMerged)
       ? j.guaranteedEpoch1BaselinesMerged.map((w) => String(w).toLowerCase())
       : []
@@ -52,6 +57,7 @@ export async function readEpoch2DailyState(): Promise<Epoch2DailyState> {
       lastSnapshotAt: j.lastSnapshotAt ? String(j.lastSnapshotAt) : null,
       lastSnapshotDayKey: j.lastSnapshotDayKey ? String(j.lastSnapshotDayKey) : null,
       countedPostKeys,
+      bootstrapPostKeys,
     }
   } catch {
     return {
@@ -61,8 +67,13 @@ export async function readEpoch2DailyState(): Promise<Epoch2DailyState> {
       lastSnapshotAt: null,
       lastSnapshotDayKey: null,
       countedPostKeys: [],
+      bootstrapPostKeys: [],
     }
   }
+}
+
+export function bootstrapPostKeySet(keys: string[]): Set<string> {
+  return new Set(keys.map((k) => k.trim()).filter(Boolean))
 }
 
 export async function writeEpoch2DailyState(state: Epoch2DailyState): Promise<string> {
