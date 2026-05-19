@@ -22,6 +22,7 @@ import {
 } from './mindshareEpoch2GuaranteedTop7'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
 import { epoch2DaysRemaining } from './mindshareEpoch2Constants'
+import { applyEpoch2EngagementToStats, resolveEpoch2EngagementTotals } from './mindshareEpoch2EngagementStats'
 import { epoch2PostKey, readEpoch2DailyState } from './mindshareEpoch2DailyState'
 import {
   cacheEntryFresh,
@@ -60,6 +61,7 @@ export type Epoch2ApiStats = {
   totalLikes: number
   totalComments: number
   totalRetweets: number
+  totalEngagement: number
 }
 
 export type Epoch2ApiUser = {
@@ -130,6 +132,7 @@ function emptyEpoch2Stats(nowMs: number): Epoch2ApiStats {
     totalLikes: 0,
     totalComments: 0,
     totalRetweets: 0,
+    totalEngagement: 0,
   }
 }
 
@@ -418,8 +421,12 @@ export async function getMindshareEpoch2LeaderboardForDisplay(options: {
   if (!options.forceRefresh) {
     const snap = await readEpoch2LeaderboardSnapshot()
     if (snap) {
+      const rows = await readMindshareSubmissionsCsv(options.csvPath)
+      const cache = await readEpoch2MetricsCache()
+      const engagement = resolveEpoch2EngagementTotals(rows, cache)
       return {
         ...snap,
+        stats: applyEpoch2EngagementToStats(snap.stats, engagement),
         users: await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap),
       }
     }
@@ -548,14 +555,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     engagementByTweetId = scored.engagementByTweetId
   }
 
-  let totalLikes = 0
-  let totalComments = 0
-  let totalRetweets = 0
-  for (const m of Array.from(engagementByTweetId.values())) {
-    totalLikes += m.likeCount
-    totalComments += m.replyCount
-    totalRetweets += retweetsForScore(m)
-  }
+  const engagementTotals = resolveEpoch2EngagementTotals(rows, cache)
 
   if (applyEpoch1Carryover && epoch1Carryover.length > 0) {
     users = mergeEpoch1CarryoverIntoUsers(users, epoch1Carryover, prizeWinnerWallets, eligibleWalletKeys)
@@ -604,9 +604,10 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       totalMindsharePosts: totalPosts,
       totalScore: Math.round(totalScore * 100) / 100,
       daysRemaining: epoch2DaysRemaining(nowMs),
-      totalLikes,
-      totalComments,
-      totalRetweets,
+      totalLikes: engagementTotals.totalLikes,
+      totalComments: engagementTotals.totalComments,
+      totalRetweets: engagementTotals.totalRetweets,
+      totalEngagement: engagementTotals.totalEngagement,
     },
     users,
     warnings: [],

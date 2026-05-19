@@ -10,6 +10,8 @@
     "epoch2:sr-balances": "node scripts/query-epoch2-sr-balances.cjs",
     "epoch2:backfill-sr-day": "node scripts/backfill-epoch2-sr-day.cjs",
     "epoch2:recount": "node scripts/epoch2-recount.mjs",
+    "epoch2:posts-backfill": "node scripts/epoch2-posts-backfill.mjs",
+    "epoch2:rebuild": "tsx scripts/epoch2-rebuild.mjs",
     "epoch2:sr-backfill-day": "node scripts/epoch2-sr-backfill-day.mjs",
     "epoch2:check-sr": "tsx scripts/check-epoch2-sr-eligibility.mjs",
     "epoch2:trace-wallet": "tsx scripts/trace-wallet-snapshots.mjs",

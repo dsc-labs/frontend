@@ -1,4 +1,8 @@
 # StrikeRobot Mindshare Challenge — Optimized Realtime Scoring System
+
+**Epoch 2 ops:** when scores are snapshotted, SR gates, and cron/backfill APIs → [`snapshot.md`](./snapshot.md).  
+**This file:** rubric and math (`lib/mindshareEpoch2Score.ts`).
+
 ---
 
 # 1. Quality Content — Max 7 Points

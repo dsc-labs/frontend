@@ -1,21 +1,15 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { dirname } from 'node:path'
 import type { MindshareEpoch2LeaderboardPayload } from './mindshareEpoch2LeaderboardBuild'
 
-function dataRoot(): string {
-  if (process.env.VERCEL) return resolve('/tmp', 'mma-robot', 'mindshare')
-  return resolve(process.cwd(), 'data', 'mindshare')
-}
-
-export function defaultEpoch2DailyStatePath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_DAILY_STATE_PATH?.trim()
-  return custom ? resolve(custom) : resolve(dataRoot(), 'epoch2_daily_state.json')
-}
-
-export function defaultEpoch2LeaderboardSnapshotPath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_LEADERBOARD_SNAPSHOT_PATH?.trim()
-  return custom ? resolve(custom) : resolve(dataRoot(), 'epoch2_leaderboard_snapshot.json')
-}
+export {
+  defaultEpoch2DailyStatePath,
+  defaultEpoch2LeaderboardSnapshotPath,
+} from './mindshareEpoch2DataPaths'
+import {
+  defaultEpoch2DailyStatePath,
+  defaultEpoch2LeaderboardSnapshotPath,
+} from './mindshareEpoch2DataPaths'
 
 export type Epoch2DailyState = {
   bootstrapCompleted: boolean

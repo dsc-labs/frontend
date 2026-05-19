@@ -1,13 +1,11 @@
 import { appendFile, mkdir, readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { dirname } from 'node:path'
 
+import { defaultEpoch2SrSnapshotLogPath } from './mindshareEpoch2DataPaths'
+
+/** @deprecated Use `defaultEpoch2SrSnapshotLogPath` from `mindshareEpoch2DataPaths`. */
 export function defaultSnapshotLogPath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_SR_SNAPSHOT_LOG_PATH?.trim()
-  if (custom) return resolve(custom)
-  if (process.env.VERCEL) {
-    return resolve('/tmp', 'mma-robot', 'mindshare', 'epoch2_sr_snapshots.jsonl')
-  }
-  return resolve(process.cwd(), 'data', 'mindshare', 'epoch2_sr_snapshots.jsonl')
+  return defaultEpoch2SrSnapshotLogPath()
 }
 
 export async function readSnapshotLogLines(logPath = defaultSnapshotLogPath()): Promise<string[]> {

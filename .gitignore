@@ -19,6 +19,11 @@ waitlist_state.json
 data/waitlist/state.json
 data/waitlist/csv/
 
+# Epoch 2 production snapshots (built on server; never commit)
+data/newmindshare/*
+!data/newmindshare/.gitkeep
+!data/newmindshare/README.md
+
 # Mindshare: ignore runtime/cache; keep backups + daily snapshots in git
 data/mindshare/*
 !data/mindshare/.gitkeep

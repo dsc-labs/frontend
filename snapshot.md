@@ -1,6 +1,6 @@
 # Epoch 2 — What We Snapshot
 
-This document describes **what data is frozen or refreshed on a schedule** for the Mindshare Epoch 2 leaderboard (`/epoch2`). It complements `score.md` (how scores are calculated) and the ops crons in `vercel.json`.
+This document describes **what data is frozen or refreshed on a schedule** for the Mindshare Epoch 2 leaderboard (`/epoch2`). It complements [`score.md`](./score.md) (how scores are calculated) and the ops crons in `vercel.json`.
 
 ---
 
@@ -8,13 +8,43 @@ This document describes **what data is frozen or refreshed on a schedule** for t
 
 | What | When | Stored in | Used for |
 | ---- | ---- | --------- | -------- |
-| **Daily job (SR + scores)** | Once per day at **00:00 GMT+7** (`0 17 * * *` UTC) | See below | Eligibility, cumulative scores, public leaderboard |
-| **Submissions** | On each form submit | `mindshare_submissions.csv` (+ `submitted at` column) | Which posts exist and **when** they were submitted |
+| **Daily job (SR + scores)** | Once per day at **00:00 GMT+7** (`0 17 * * *` UTC) | See [Files written](#files-written) | Eligibility, cumulative scores, public leaderboard |
+| **Submissions** | On each form submit | `mindshare_submissions.csv` (+ `submitted at`) | Which posts exist and **when** they were submitted |
+| **Operator backfill** | Manual | Same files | Replay SR days and/or full post counting 15→19 |
 
-Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`** written by the daily job. It does **not** re-score on every page load.
+Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`**. It does **not** re-score on every page load.
 
-**Endpoint:** `GET` / `POST` `/api/mindshare/epoch2-sr-snapshot` (cron)  
-**Code:** `lib/mindshareEpoch2DailySnapshot.ts` (orchestrates SR + X + scoring)
+**Cron endpoint:** `GET` / `POST` `/api/mindshare/epoch2-sr-snapshot`  
+**Orchestrator:** `lib/mindshareEpoch2DailySnapshot.ts`
+
+---
+
+## Two separate mechanisms
+
+| Mechanism | Question it answers | Source of truth |
+| --------- | ------------------- | ----------------- |
+| **SR eligibility** | Did this wallet hold **> 10,000** $SR at **midnight GMT+7** for day *D*? | On-chain balance at **archive block** → `epoch2_sr_snapshots.jsonl` (per day) + `epoch2_sr_eligible_wallets.json` (latest night, for gating) |
+| **Post counting + scoring** | Which tweets count toward score, and how many points? | CSV + `submitted at` + GMT+7 **post windows** + per-day SR list → `epoch2_daily_state.json` `countedPostKeys` → `epoch2_leaderboard_snapshot.json` |
+
+SR eligibility does **not** depend on how many tweets someone submitted. One tweet with >10k $SR can be SR-eligible; many tweets with 0 $SR on-chain at the checkpoint do not score.
+
+The CSV **`sr balance`** column is informational for the form only; gating uses **on-chain** snapshots (not that column).
+
+---
+
+## Where posts are counted and scored (code)
+
+```text
+runMindshareEpoch2DailySnapshot          lib/mindshareEpoch2DailySnapshot.ts
+  ├─ runMindshareEpoch2SrEligibilitySnapshot   (SR only)
+  ├─ flattenMindshareSubmissionPosts           lib/mindshareEpoch2Posts.ts
+  ├─ shouldScorePostForEpoch2DailySnapshot     (gate: SR + window + not counted)
+  └─ buildMindshareEpoch2LeaderboardPayload    lib/mindshareEpoch2LeaderboardBuild.ts
+       └─ scoreDailyPostsFromCache → epoch2FinalScoreForPost   lib/mindshareEpoch2Score.ts
+```
+
+**Counted** = wallet added to `countedPostKeys` as `walletLower:tweetId`.  
+**Scored** = metrics from `epoch2_metrics_cache.json` × quality × follower multiplier (see `score.md`).
 
 ---
 
@@ -22,12 +52,69 @@ Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`** written by the dai
 
 At **00:00 GMT+7** each day (17:00 UTC, no DST), one run does:
 
-1. **SR eligibility** — on-chain $SR for every wallet in the CSV; eligible if balance **> 10,000** → `epoch2_sr_eligible_wallets.json`
+1. **SR eligibility** — archive RPC balance at the block for midnight GMT+7 → `epoch2_sr_eligible_wallets.json` + append/replace line in `epoch2_sr_snapshots.jsonl`
 2. **X metrics** — tweet engagement + follower counts for posts being scored → `epoch2_metrics_cache.json`
-3. **Cumulative scores** — add points for newly counted posts → `epoch2_leaderboard_snapshot.json` + `epoch2_daily_state.json`
+3. **Cumulative scores** — add points for **new** posts in tonight’s window → `epoch2_leaderboard_snapshot.json` + `epoch2_daily_state.json`
 
 Operator alias (same logic): `/api/mindshare/epoch2-refresh`  
 Manual rebuild: `GET /api/mindshare/test-epoch2-leaderboard?refresh=1` (auth where required)
+
+---
+
+## Operator API endpoints
+
+All operator routes use the same auth as waitlist crons: `Authorization: Bearer $CRON_SECRET`, or `WAITLIST_CRON_SECRET`, or `x-cron-secret`. Local only: `MINDSHARE_EPOCH2_CRON_SKIP_AUTH=1`.
+
+| Endpoint | Method | What it does |
+| -------- | ------ | ------------- |
+| `/api/mindshare/epoch2-sr-snapshot` | GET, POST | **Production cron:** tonight’s SR + one post window + score |
+| `/api/mindshare/epoch2-refresh` | GET, POST | Same as `epoch2-sr-snapshot` |
+| `/api/mindshare/epoch2-sr-backfill-day` | GET, POST | One historical SR day → jsonl (`?day=YYYY-MM-DD`, optional `&replace=1`) |
+| `/api/mindshare/epoch2-posts-backfill` | GET, POST | Replay post counting **15→19** + score all (`?replace=1`, optional `&days=…`, `&runSr=1`) |
+| `/api/mindshare/epoch2-rebuild` | GET, POST | **Full rebuild** in `data/newmindshare`: SR all days + posts + score (`?latestSr=1`, optional `&dataDir=`) |
+| `/api/mindshare/epoch2-recount` | GET, POST | Re-score existing `countedPostKeys` only; no new posts, no SR |
+| `/api/mindshare/test-epoch2-leaderboard` | GET | Dev/test read or `?refresh=1` rebuild |
+
+**Code paths:** `lib/mindshareEpoch2SrSnapshot.ts`, `lib/mindshareEpoch2SrHistoricalBackfill.ts`, `lib/mindshareEpoch2PostsBackfill.ts`, `lib/mindshareEpoch2LeaderboardRecount.ts`
+
+### Full post replay (first → last checkpoint day)
+
+Replays **which posts enter `countedPostKeys`** for each GMT+7 eligibility day (**2026-05-15 … 2026-05-19**) using **`epoch2_sr_snapshots.jsonl`** per day, then scores all of them.
+
+```bash
+# Prerequisite: SR jsonl line per day (archive RPC)
+for d in 2026-05-15 2026-05-16 2026-05-17 2026-05-18; do
+  curl -sS -X POST "http://127.0.0.1:4022/api/mindshare/epoch2-sr-backfill-day?day=$d&replace=1" \
+    -H "Authorization: Bearer $CRON_SECRET"
+done
+
+curl -sS -X POST "http://127.0.0.1:4022/api/mindshare/epoch2-posts-backfill?replace=1" \
+  -H "Authorization: Bearer $CRON_SECRET"
+```
+
+| Query | Meaning |
+| ----- | ------- |
+| `replace=1` | Rebuild `countedPostKeys` from scratch (recommended) |
+| `days=2026-05-15,2026-05-16` | Subset of checkpoint days (default 15–19) |
+| `runSr=1` | Also run tonight’s SR snapshot before replay |
+
+Without `replace=1`, only **missing** keys that would have counted on replay are added (existing keys kept).
+
+### npm scripts
+
+| Command | Maps to |
+| ------- | ------- |
+| `npm run epoch2:rebuild` | `epoch2-rebuild` (SR days + posts + score in `data/newmindshare`) |
+| `npm run epoch2:posts-backfill -- --replace` | `epoch2-posts-backfill?replace=1` |
+| `npm run epoch2:posts-backfill -- --replace --days 2026-05-15,2026-05-16` | subset days |
+| `npm run epoch2:sr-backfill-day -- --day 2026-05-16 --replace` | `epoch2-sr-backfill-day` |
+| `npm run epoch2:recount` | `epoch2-recount` |
+| `npm run epoch2:check-sr -- <handle>` | Per-wallet SR checkpoints |
+| `npm run epoch2:check-sr -- --wallet 0x… --chain` | + on-chain balance per day |
+| `npm run epoch2:trace-wallet -- <handle\|0x…>` | CSV + jsonl + leaderboard trace |
+| `npx tsx scripts/check-wallet-posts.mjs <0x…>` | `postCount` / `postsToScore` debug |
+
+Override API URL via `EPOCH2_POSTS_BACKFILL_API_URL`, `EPOCH2_RECOUNT_API_URL`, etc. (see `.env.example`).
 
 ---
 
@@ -48,7 +135,11 @@ Submissions store **`submitted at`** (ISO-8601) on new CSV rows. Legacy rows wit
 - **Rule:** only **new** posts in that window (not already counted) are scored, and only if the wallet is eligible **that** night.
 - **Cumulative:** total score and post count on `/epoch2` are the sum of all posts counted on prior eligible days.
 
-Posts submitted while ineligible, or outside the window for that eligibility day, are **not** scored that night. They may count on a later day if the wallet becomes eligible and the post falls in that day’s window (except legacy posts, which only count on bootstrap).
+Posts submitted while ineligible, or outside the window for that eligibility day, are **not** scored that night. They may count on a later day if the wallet becomes eligible and the post falls in that day’s window (except legacy posts without `submitted at`, which score once when SR-eligible after bootstrap).
+
+### Checkpoint days (UI)
+
+Shown on `/epoch2` as five booleans (15–19 May GMT+7), from **last** SR jsonl line per `eligibilityDayKey` in `epoch2_sr_snapshots.jsonl`. Guaranteed top 7 are always shown as eligible.
 
 ---
 
@@ -56,14 +147,16 @@ Posts submitted while ineligible, or outside the window for that eligibility day
 
 | File | Purpose |
 | ---- | ------- |
-| `epoch2_sr_eligible_wallets.json` | Latest eligible wallets (`updatedAt`, `walletsLower`) |
-| `epoch2_sr_snapshots.jsonl` | Audit log per SR run |
-| `epoch2_metrics_cache.json` | X API cache (tweet + follower snapshots at daily run) |
-| `epoch2_leaderboard_snapshot.json` | Public leaderboard payload (`generatedAt`, `users`, `stats`, …) |
-| `epoch2_daily_state.json` | `countedPostKeys`, `bootstrapCompleted`, last run metadata |
-| `epoch2_daily_snapshots.jsonl` | Audit log per daily run |
+| `data/newmindshare/epoch2_sr_eligible_wallets.json` | Latest eligible wallets for **post gating** |
+| `data/newmindshare/epoch2_sr_snapshots.jsonl` | Audit + **per-day** SR lists |
+| `data/newmindshare/epoch2_metrics_cache.json` | X API cache |
+| `data/newmindshare/epoch2_leaderboard_snapshot.json` | Public leaderboard |
+| `data/newmindshare/epoch2_daily_state.json` | `countedPostKeys`, bootstrap flags |
+| `data/newmindshare/epoch2_daily_snapshots.jsonl` | Audit log per daily run |
 
-Env overrides: `MINDSHARE_EPOCH2_LEADERBOARD_SNAPSHOT_PATH`, `MINDSHARE_EPOCH2_DAILY_STATE_PATH`, etc. (see `.env.example`).
+**Production layout:** live `mindshare_submissions.csv` (repo root) + built snapshots in **`data/newmindshare/`** (hardcoded in `lib/mindshareEpoch2DataPaths.ts`, gitignored). Details: [`data/newmindshare/README.md`](./data/newmindshare/README.md).
+
+**Required for SR:** `BASE_ARCHIVE_RPC_URL` (or fallback `BASE_RPC_URL` if archive-capable).
 
 ---
 
@@ -123,7 +216,7 @@ A high-scoring not-eligible account never ranks above an eligible account with a
 | **1–101** | **No Epoch 1 carryover** — may compete normally; score comes from Epoch 2 posts only |
 | **102+** | **Merged once** into cumulative `score` and `postCount` (added on top of new Epoch 2 daily scores) |
 
-Tracked in `epoch2_daily_state.json` as `epoch1CarryoverApplied`. Re-deploy with an existing snapshot: run one daily job (`epoch2-sr-snapshot` or `?refresh=1`) to apply the merge.
+Tracked in `epoch2_daily_state.json` as `epoch1CarryoverApplied`. Re-deploy with an existing snapshot: run one daily job (`epoch2-sr-snapshot` or `?refresh=1`) or `epoch2-posts-backfill` to apply the merge.
 
 ---
 
@@ -131,4 +224,26 @@ Tracked in `epoch2_daily_state.json` as `epoch1CarryoverApplied`. Re-deploy with
 
 `x handle,wallet,name,post submited,sr balance,submitted at`
 
-New submits get `submitted at` automatically. Older files are migrated to add empty `submitted at` on legacy rows.
+New submits get `submitted at` automatically. Older files are migrated to add empty `submitted at` on legacy rows. One CSV row can list **multiple tweet URLs** (multiline `post submited` field); each URL is a separate post after flattening.
+
+---
+
+## Troubleshooting a wallet
+
+```bash
+W=0x…   # or use handle with trace-wallet
+
+grep -i "$W" mindshare_submissions.csv
+grep -c "$W:" data/newmindshare/epoch2_daily_state.json
+
+npm run epoch2:trace-wallet -- "$W"
+npm run epoch2:check-sr -- "$W" --chain
+npx tsx scripts/check-wallet-posts.mjs "$W"
+```
+
+| Symptom | Likely cause |
+| ------- | ------------- |
+| In SR jsonl but not on leaderboard | `countedPostKeys` empty or post outside window when eligible |
+| `balancesByWallet` shows `0` | Not failing SR — file lists **all** CSV wallets; check `walletsLower` |
+| Same wallet on jsonl lines 3–4 | Duplicate **manual re-runs** for the same `eligibilityDayKey` |
+| `postCount` wrong vs CSV | Run `epoch2-recount` or `epoch2-posts-backfill?replace=1` after fixing cache |

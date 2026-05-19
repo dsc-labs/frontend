@@ -1,7 +1,7 @@
-import { readdir, readFile } from 'node:fs/promises'
-import { resolve } from 'node:path'
+import { readFile } from 'node:fs/promises'
 
 import { EPOCH2_GUARANTEED_TOP7_HANDLES } from './mindshareEpoch2GuaranteedTop7'
+import { defaultEpoch2SrSnapshotLogPath } from './mindshareEpoch2DataPaths'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
 import { gmt7DayKeyFromMs, gmt7PreviousDayKey } from './mindshareEpoch2Gmt7'
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
@@ -24,15 +24,6 @@ type SrSnapshotLogLine = {
   eligibleWalletsLower?: string[]
 }
 
-function defaultSrSnapshotLogPath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_SR_SNAPSHOT_LOG_PATH?.trim()
-  if (custom) return resolve(custom)
-  if (process.env.VERCEL) {
-    return resolve('/tmp', 'mma-robot', 'mindshare', 'epoch2_sr_snapshots.jsonl')
-  }
-  return resolve(process.cwd(), 'data', 'mindshare', 'epoch2_sr_snapshots.jsonl')
-}
-
 function resolveEligibilityDayKey(line: SrSnapshotLogLine): string | null {
   if (line.eligibilityDayKey?.trim()) return line.eligibilityDayKey.trim()
   const at = line.at?.trim()
@@ -50,7 +41,7 @@ function resolveEligibilityDayKey(line: SrSnapshotLogLine): string | null {
 export async function loadEpoch2SrEligibilityByDay(): Promise<Map<string, Set<string>>> {
   let raw: string
   try {
-    raw = await readFile(defaultSrSnapshotLogPath(), 'utf8')
+    raw = await readFile(defaultEpoch2SrSnapshotLogPath(), 'utf8')
   } catch {
     return new Map()
   }

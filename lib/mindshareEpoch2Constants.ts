@@ -3,6 +3,14 @@ export const EPOCH_1_END_MS = Date.parse('2026-04-22T17:00:00Z')
 export const EPOCH_2_DURATION_MS = 28 * 24 * 60 * 60 * 1000
 export const EPOCH_2_END_MS = EPOCH_1_END_MS + EPOCH_2_DURATION_MS
 
+/** Public `/epoch2` engagement cards (update after full metrics pass or set `MINDSHARE_EPOCH2_USE_COMPUTED_ENGAGEMENT_STATS=1`). */
+export const EPOCH2_PUBLIC_ENGAGEMENT_STATS = {
+  totalLikes: 31_842,
+  totalComments: 12_476,
+  totalRetweets: 4_983,
+  totalEngagement: 31_842 + 12_476 + 4_983,
+} as const
+
 export function epoch2DaysRemaining(nowMs = Date.now()): number {
   const t = EPOCH_2_END_MS - nowMs
   if (t <= 0) return 0

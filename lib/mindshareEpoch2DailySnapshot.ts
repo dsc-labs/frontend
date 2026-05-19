@@ -1,5 +1,6 @@
 import { appendFile, mkdir } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { dirname } from 'node:path'
+import { defaultEpoch2DailySnapshotLogPath } from './mindshareEpoch2DataPaths'
 import { EPOCH_2_END_MS } from './mindshareEpoch2Constants'
 import {
   epoch2PostKey,
@@ -22,12 +23,7 @@ import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
 import { readEpoch2SrEligibleWalletsFromSnapshot, runMindshareEpoch2SrEligibilitySnapshot } from './mindshareEpoch2SrSnapshot'
 
 function defaultDailyLogPath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_DAILY_SNAPSHOT_LOG_PATH?.trim()
-  if (custom) return resolve(custom)
-  const root = process.env.VERCEL
-    ? resolve('/tmp', 'mma-robot', 'mindshare')
-    : resolve(process.cwd(), 'data', 'mindshare')
-  return resolve(root, 'epoch2_daily_snapshots.jsonl')
+  return defaultEpoch2DailySnapshotLogPath()
 }
 
 export type MindshareEpoch2DailySnapshotResult =

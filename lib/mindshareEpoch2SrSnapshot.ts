@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { dirname } from 'node:path'
+import { defaultEpoch2SrEligibleWalletsPath } from './mindshareEpoch2DataPaths'
 import { readEpoch2DailyState } from './mindshareEpoch2DailyState'
 import {
   EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE,
@@ -11,16 +12,7 @@ import { defaultSnapshotLogPath, writeEpoch2SrSnapshotLogLine } from './mindshar
 import { getServerArchiveRpcUrl } from './serverBaseRpc'
 
 export { defaultSnapshotLogPath } from './mindshareEpoch2SrSnapshotLog'
-
-/** Current SR-eligible wallet list for post scoring (updated each daily job). */
-export function defaultEpoch2SrEligibleWalletsPath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_SR_ELIGIBLE_WALLETS_PATH?.trim()
-  if (custom) return resolve(custom)
-  if (process.env.VERCEL) {
-    return resolve('/tmp', 'mma-robot', 'mindshare', 'epoch2_sr_eligible_wallets.json')
-  }
-  return resolve(process.cwd(), 'data', 'mindshare', 'epoch2_sr_eligible_wallets.json')
-}
+export { defaultEpoch2SrEligibleWalletsPath } from './mindshareEpoch2DataPaths'
 
 export type Epoch2SrEligibleWalletsFile = {
   updatedAt: string

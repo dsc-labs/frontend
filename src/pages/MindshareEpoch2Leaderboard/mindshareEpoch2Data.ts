@@ -10,6 +10,7 @@ export type Epoch2StatsInput = {
   totalLikes: number
   totalComments: number
   totalRetweets: number
+  totalEngagement: number
 }
 
 export type Epoch2LeaderboardUser = {

@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { dirname } from 'node:path'
 
+import { defaultEpoch2MetricsCachePath } from './mindshareEpoch2DataPaths'
 import type { TweetMetricsSnapshot } from './xTweetMetrics'
 
 export type Epoch2MetricsCacheFile = {
@@ -27,13 +28,8 @@ export type Epoch2MetricsCacheFile = {
   >
 }
 
-function defaultCachePath(): string {
-  return resolve(process.cwd(), 'data', 'mindshare', 'epoch2_metrics_cache.json')
-}
-
 export function resolveEpoch2MetricsCachePath(): string {
-  const p = process.env.MINDSHARE_EPOCH2_METRICS_CACHE_PATH?.trim()
-  return p ? resolve(p) : defaultCachePath()
+  return defaultEpoch2MetricsCachePath()
 }
 
 export async function readEpoch2MetricsCache(): Promise<Epoch2MetricsCacheFile> {

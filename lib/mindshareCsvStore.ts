@@ -2,6 +2,8 @@ import { appendFile, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { mkdir } from 'node:fs/promises'
 
+import { defaultMindshareSubmissionsCsvPath } from './mindshareEpoch2DataPaths'
+
 export type MindshareSubmissionRow = {
   xHandle: string
   walletAddress: string
@@ -17,8 +19,8 @@ const CSV_HEADER_SR = 'x handle,wallet,name,post submited,sr balance'
 const CSV_HEADER = 'x handle,wallet,name,post submited,sr balance,submitted at'
 
 function resolveMindshareCsvPath(customPath?: string): string {
-  const fallbackPath = resolve(process.cwd(), 'mindshare_submissions.csv')
-  return customPath?.trim() ? resolve(customPath.trim()) : fallbackPath
+  if (customPath?.trim()) return resolve(customPath.trim())
+  return defaultMindshareSubmissionsCsvPath()
 }
 
 /**
