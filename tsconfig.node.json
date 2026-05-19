@@ -33,6 +33,8 @@
     "lib/mindshareEpoch2WaitlistEligibility.ts",
     "lib/mindshareEpoch2SrEligibility.ts",
     "lib/mindshareEpoch2SrSnapshot.ts",
+    "lib/mindshareEpoch2SrSnapshotLog.ts",
+    "lib/mindshareEpoch2SrEligibilityAtDay.ts",
     "lib/mindshareEpoch2MetricsCache.ts",
     "lib/xTweetMetrics.ts",
     "lib/mindshareEpoch2Score.ts",

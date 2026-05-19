@@ -1,40 +1,18 @@
-import { mkdir, appendFile, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
-import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
+import { readEpoch2DailyState } from './mindshareEpoch2DailyState'
 import {
   EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE,
   EPOCH_2_END_MS,
 } from './mindshareEpoch2Constants'
-import { readEpoch2DailyState } from './mindshareEpoch2DailyState'
 import { gmt7PostCountWindowForSnapshot } from './mindshareEpoch2Gmt7'
-import { fetchErc20Balance, rawBalanceToTokenUnits, SR_TOKEN_DECIMALS } from './waitlistCalculator'
-import { WAITLIST_SR_TOKEN } from './waitlistPricing'
-import { getServerBaseRpcUrl } from './serverBaseRpc'
+import { computeEpoch2SrEligibilityForDay } from './mindshareEpoch2SrEligibilityAtDay'
+import { defaultSnapshotLogPath, writeEpoch2SrSnapshotLogLine } from './mindshareEpoch2SrSnapshotLog'
+import { getServerArchiveRpcUrl } from './serverBaseRpc'
 
-async function runPool<T>(items: T[], concurrency: number, fn: (item: T) => Promise<void>): Promise<void> {
-  let i = 0
-  async function worker() {
-    for (;;) {
-      if (i >= items.length) return
-      const idx = i
-      i += 1
-      await fn(items[idx]!)
-    }
-  }
-  const n = Math.min(Math.max(1, concurrency), Math.max(1, items.length))
-  await Promise.all(Array.from({ length: items.length ? n : 0 }, () => worker()))
-}
+export { defaultSnapshotLogPath } from './mindshareEpoch2SrSnapshotLog'
 
-export function defaultSnapshotLogPath(): string {
-  const custom = process.env.MINDSHARE_EPOCH2_SR_SNAPSHOT_LOG_PATH?.trim()
-  if (custom) return resolve(custom)
-  if (process.env.VERCEL) {
-    return resolve('/tmp', 'mma-robot', 'mindshare', 'epoch2_sr_snapshots.jsonl')
-  }
-  return resolve(process.cwd(), 'data', 'mindshare', 'epoch2_sr_snapshots.jsonl')
-}
-
-/** Current SR-eligible wallet list for the live leaderboard (updated by midnight snapshot only). */
+/** Current SR-eligible wallet list for post scoring (updated each daily job). */
 export function defaultEpoch2SrEligibleWalletsPath(): string {
   const custom = process.env.MINDSHARE_EPOCH2_SR_ELIGIBLE_WALLETS_PATH?.trim()
   if (custom) return resolve(custom)
@@ -48,15 +26,17 @@ export type Epoch2SrEligibleWalletsFile = {
   updatedAt: string
   thresholdExclusive: number
   walletsLower: string[]
-  /** Latest on-chain $SR (human units) per wallet from the last snapshot. */
+  /** $SR (human units) per wallet at the snapshot block for `eligibilityDayKey`. */
   balancesByWallet?: Record<string, number>
-  /** GMT+7 eligibility day this snapshot applies to. */
   eligibilityDayKey?: string
+  balanceSource?: 'archive-block'
+  blockNumber?: number
+  targetTimestampSec?: number
 }
 
 /**
- * Latest daily SR eligibility snapshot for gating the **live** Epoch 2 leaderboard.
- * Returns null if missing or invalid.
+ * Latest SR eligibility snapshot used to gate **post scoring** on the next step of the daily job.
+ * Balances are at the archive block for `eligibilityDayKey`, not chain `latest`.
  */
 export async function readEpoch2SrEligibleWalletsFromSnapshot(): Promise<Epoch2SrEligibleWalletsFile | null> {
   const p = defaultEpoch2SrEligibleWalletsPath()
@@ -74,6 +54,11 @@ export async function readEpoch2SrEligibleWalletsFromSnapshot(): Promise<Epoch2S
           ? j.thresholdExclusive
           : EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE,
       walletsLower,
+      balancesByWallet: j.balancesByWallet,
+      eligibilityDayKey: j.eligibilityDayKey ? String(j.eligibilityDayKey) : undefined,
+      balanceSource: j.balanceSource === 'archive-block' ? 'archive-block' : undefined,
+      blockNumber: typeof j.blockNumber === 'number' ? j.blockNumber : undefined,
+      targetTimestampSec: typeof j.targetTimestampSec === 'number' ? j.targetTimestampSec : undefined,
     }
   } catch {
     return null
@@ -92,25 +77,28 @@ export type MindshareEpoch2SrSnapshotResult =
       ok: true
       skipped: false
       atIso: string
-      /** Cron is scheduled at 17:00 UTC (= 00:00 GMT+7, no DST). */
       cronTimezoneNote: '17:00 UTC = 00:00 GMT+7'
+      eligibilityDayKey: string
       thresholdExclusive: number
       totalMindshareWallets: number
       eligibleCount: number
       eligibleWalletsLower: string[]
       rpcFailures: number
+      blockNumber: number
+      blockTimestampSec: number
+      targetTimestampSec: number
+      balanceSource: 'archive-block'
       logPath: string
       eligibleWalletsPath: string
+      logWriteAction: 'appended' | 'replaced'
     }
   | { ok: false; error: string }
 
 /**
- * Midnight snapshot: recompute on-chain SR for every mindshare CSV wallet; eligible if SR **>**
- * {@link EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE}. Writes:
- * - `epoch2_sr_eligible_wallets.json` — consumed by the live leaderboard for SR gating only
- * - jsonl audit log (append one line)
+ * SR eligibility for `eligibilityDayKey` at the archive block for midnight GMT+7.
+ * Writes checkpoint jsonl + `epoch2_sr_eligible_wallets.json` (used only for post window gating).
  *
- * No-op after {@link EPOCH_2_END_MS}.
+ * Post counting/scoring is handled separately in {@link runMindshareEpoch2DailySnapshot}.
  */
 export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()): Promise<MindshareEpoch2SrSnapshotResult> {
   if (nowMs >= EPOCH_2_END_MS) {
@@ -123,92 +111,82 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     }
   }
 
-  const rpcUrl = getServerBaseRpcUrl()
+  const rpcUrl = getServerArchiveRpcUrl()
   if (!rpcUrl) {
-    return { ok: false, error: 'Missing BASE_RPC_URL or VITE_BASE_RPC_URL (required for on-chain SR snapshot)' }
+    return {
+      ok: false,
+      error:
+        'Missing BASE_ARCHIVE_RPC_URL or BASE_RPC_URL (archive RPC required for SR eligibility at midnight GMT+7)',
+    }
   }
 
   const dailyState = await readEpoch2DailyState()
   const isBootstrap = !dailyState.bootstrapCompleted
   const { eligibilityDayKey } = gmt7PostCountWindowForSnapshot(nowMs, isBootstrap)
 
-  const rows = await readMindshareSubmissionsCsv(process.env.MINDSHARE_SUBMISSIONS_CSV_PATH)
-  const keys = [
-    ...new Set(
-      rows
-        .map((r) => r.walletAddress.trim().toLowerCase())
-        .filter((w) => w.startsWith('0x') && w.length === 42),
-    ),
-  ]
-
-  const threshold = EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE
-  const unitsByWallet = new Map<string, number>()
-  let rpcFailures = 0
-  const conc = Math.max(
-    1,
-    Math.min(32, Number(process.env.MINDSHARE_EPOCH2_SR_SNAPSHOT_RPC_CONCURRENCY || '8') || 8),
-  )
-
-  await runPool(keys, conc, async (w) => {
-    const addr = w.startsWith('0x') ? w : `0x${w}`
-    try {
-      const raw = await fetchErc20Balance({
-        rpcUrl,
-        tokenAddress: WAITLIST_SR_TOKEN,
-        walletAddress: addr,
-      })
-      const units = rawBalanceToTokenUnits(raw, SR_TOKEN_DECIMALS)
-      unitsByWallet.set(w, units)
-    } catch {
-      rpcFailures += 1
-    }
+  const computed = await computeEpoch2SrEligibilityForDay({
+    eligibilityDayKey,
+    rpcUrl,
+    csvPath: process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
   })
 
-  const eligibleWalletsLower = keys.filter((w) => (unitsByWallet.get(w) ?? 0) > threshold).sort()
-
-  const atIso = new Date().toISOString()
+  const runAtIso = new Date().toISOString()
   const logPath = defaultSnapshotLogPath()
-  await mkdir(dirname(logPath), { recursive: true })
-  const balancesByWallet: Record<string, number> = {}
-  for (const w of keys) {
-    const units = unitsByWallet.get(w)
-    if (typeof units === 'number' && Number.isFinite(units)) balancesByWallet[w] = units
-  }
 
   const line = JSON.stringify({
-    at: atIso,
-    eligibilityDayKey,
+    at: computed.targetAtIso,
+    recordedAt: runAtIso,
+    eligibilityDayKey: computed.eligibilityDayKey,
     cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
-    thresholdExclusive: threshold,
-    totalMindshareWallets: keys.length,
-    eligibleCount: eligibleWalletsLower.length,
-    eligibleWalletsLower,
-    rpcFailures,
+    thresholdExclusive: computed.thresholdExclusive,
+    totalMindshareWallets: computed.totalMindshareWallets,
+    eligibleCount: computed.eligibleCount,
+    eligibleWalletsLower: computed.eligibleWalletsLower,
+    rpcFailures: computed.rpcFailures,
+    balanceSource: 'archive-block',
+    blockNumber: computed.blockNumber,
+    blockNumberHex: computed.blockNumberHex,
+    blockTimestampSec: computed.blockTimestampSec,
+    targetTimestampSec: computed.targetTimestampSec,
   })
-  await appendFile(logPath, `${line}\n`, 'utf8')
+
+  const logWriteAction = await writeEpoch2SrSnapshotLogLine({
+    logPath,
+    eligibilityDayKey: computed.eligibilityDayKey,
+    line,
+  })
 
   const eligibleWalletsPath = defaultEpoch2SrEligibleWalletsPath()
   await mkdir(dirname(eligibleWalletsPath), { recursive: true })
   const body: Epoch2SrEligibleWalletsFile = {
-    updatedAt: atIso,
-    thresholdExclusive: threshold,
-    walletsLower: eligibleWalletsLower,
-    balancesByWallet,
-    eligibilityDayKey,
+    updatedAt: runAtIso,
+    thresholdExclusive: computed.thresholdExclusive,
+    walletsLower: computed.eligibleWalletsLower,
+    balancesByWallet: computed.balancesByWallet,
+    eligibilityDayKey: computed.eligibilityDayKey,
+    balanceSource: 'archive-block',
+    blockNumber: computed.blockNumber,
+    targetTimestampSec: computed.targetTimestampSec,
   }
   await writeFile(eligibleWalletsPath, `${JSON.stringify(body, null, 2)}\n`, 'utf8')
 
   return {
     ok: true,
     skipped: false,
-    atIso,
+    atIso: runAtIso,
     cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
-    thresholdExclusive: threshold,
-    totalMindshareWallets: keys.length,
-    eligibleCount: eligibleWalletsLower.length,
-    eligibleWalletsLower,
-    rpcFailures,
+    eligibilityDayKey: computed.eligibilityDayKey,
+    thresholdExclusive: computed.thresholdExclusive,
+    totalMindshareWallets: computed.totalMindshareWallets,
+    eligibleCount: computed.eligibleCount,
+    eligibleWalletsLower: computed.eligibleWalletsLower,
+    rpcFailures: computed.rpcFailures,
+    blockNumber: computed.blockNumber,
+    blockTimestampSec: computed.blockTimestampSec,
+    targetTimestampSec: computed.targetTimestampSec,
+    balanceSource: 'archive-block',
     logPath,
     eligibleWalletsPath,
+    logWriteAction,
   }
 }

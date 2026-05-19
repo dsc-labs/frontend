@@ -4,8 +4,10 @@ import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
 
 /**
  * Vercel Cron: `0 17 * * *` (17:00 UTC = **00:00 GMT+7**) until Epoch 2 ends.
- * Daily midnight GMT+7: SR eligibility + X metrics refresh + cumulative scores (see `lib/mindshareEpoch2DailySnapshot.ts`).
- * Writes `epoch2_sr_eligible_wallets.json`, `epoch2_leaderboard_snapshot.json`, and daily state. Eligible = on-chain SR **> 10_000**.
+ * Daily midnight GMT+7 (see `lib/mindshareEpoch2DailySnapshot.ts`):
+ * 1. SR eligibility at archive block for midnight GMT+7 (`BASE_ARCHIVE_RPC_URL`)
+ * 2. Post counting/scoring via GMT+7 day windows (separate from SR)
+ * Writes `epoch2_sr_eligible_wallets.json`, `epoch2_leaderboard_snapshot.json`, and daily state.
  *
  * Auth: same as waitlist / epoch2-refresh (`CRON_SECRET` Bearer, `WAITLIST_CRON_SECRET`, or `x-cron-secret`).
  * Local `npm run dev`: optional same schedule via Vite — see `attachMindshareEpoch2SrSnapshotDevCron` in `vite.config.ts` (enable: `MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1`).

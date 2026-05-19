@@ -53,7 +53,10 @@ export type MindshareEpoch2DailySnapshotResult =
   | { ok: false; error: string }
 
 /**
- * Midnight GMT+7 job: SR eligibility snapshot + X metrics refresh + cumulative score update.
+ * Midnight GMT+7 job (two separate steps):
+ * 1. SR eligibility — archive RPC balances at the block for midnight GMT+7 (`runMindshareEpoch2SrEligibilitySnapshot`)
+ * 2. Posts + scores — GMT+7 post windows + X metrics (`buildMindshareEpoch2LeaderboardPayload`); uses SR list from step 1 only for gating
+ *
  * Public `/epoch2` reads the written leaderboard snapshot until the next run.
  */
 export async function runMindshareEpoch2DailySnapshot(
