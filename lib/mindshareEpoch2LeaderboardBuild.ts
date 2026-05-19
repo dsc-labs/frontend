@@ -12,7 +12,10 @@ import {
   loadEpoch1PrizeWinnerWallets,
   mergeEpoch1CarryoverIntoUsers,
 } from './mindshareEpoch1Carryover'
-import { enrichEpoch2UsersWithCheckpointsAndSrBalance } from './mindshareEpoch2Checkpoints'
+import {
+  countEpoch2ParticipantStats,
+  enrichEpoch2UsersWithCheckpointsAndSrBalance,
+} from './mindshareEpoch2Checkpoints'
 import { enrichEpoch2UsersWithProfiles } from './mindshareEpoch2ProfileEnrichment'
 import { refreshXUserProfilesInCache } from './mindshareEpoch2XProfiles'
 import {
@@ -398,6 +401,40 @@ function displayUsername(rowOrPost: MindshareSubmissionRow | Epoch2FlattenedPost
   return h.startsWith('@') ? h : `@${h}`
 }
 
+/**
+ * Every wallet with at least one post URL in the CSV appears on `/epoch2`.
+ * Wallets with no counted/scored posts stay at score 0 (e.g. never SR-eligible on checkpoint nights).
+ */
+function mergeCsvSubmittersIntoEpoch2Users(
+  users: Epoch2ApiUser[],
+  rows: MindshareSubmissionRow[],
+  eligibleWalletKeys: Set<string>,
+): Epoch2ApiUser[] {
+  const byWallet = new Map<string, Epoch2ApiUser>()
+  for (const u of users) {
+    const wk = walletKey(u.wallet)
+    if (wk) byWallet.set(wk, u)
+  }
+
+  for (const row of rows) {
+    const wk = walletKey(row.walletAddress)
+    if (!wk.startsWith('0x') || wk.length !== 42) continue
+    if (!extractPostUrlsFromSubmissionField(row.postSubmitted).length) continue
+    if (byWallet.has(wk)) continue
+    const handle = normalizeXUsername(row.xHandle)
+    byWallet.set(wk, {
+      username: displayUsername(row),
+      wallet: row.walletAddress.trim(),
+      postCount: 0,
+      score: 0,
+      srEligible: eligibleWalletKeys.has(wk),
+      ...(handle ? { xHandle: handle } : {}),
+    })
+  }
+
+  return sortEpoch2UsersByEligibilityThenScore([...byWallet.values()])
+}
+
 /** Score all posts in CSV from cache (legacy live rebuild). */
 async function scoreAllPostsFromCache(
   rows: MindshareSubmissionRow[],
@@ -439,10 +476,12 @@ export async function getMindshareEpoch2LeaderboardForDisplay(options: {
       const rows = await readMindshareSubmissionsCsv(options.csvPath)
       const cache = await readEpoch2MetricsCache()
       const engagement = resolveEpoch2EngagementTotals(rows, cache)
+      const users = await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap)
+      const participantStats = countEpoch2ParticipantStats(users)
       return {
         ...snap,
-        stats: applyEpoch2EngagementToStats(snap.stats, engagement),
-        users: await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap),
+        stats: applyEpoch2EngagementToStats({ ...snap.stats, ...participantStats }, engagement),
+        users,
       }
     }
   }
@@ -485,7 +524,6 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     users = guaranteedEmpty.users
     const totalScore = users.reduce((s, u) => s + u.score, 0)
     const totalPosts = users.reduce((s, u) => s + u.postCount, 0)
-    const eligibleParticipants = users.filter((u) => u.srEligible).length
     const epoch1ProfileRowsEmpty = await loadEpoch1LeaderboardRows()
     const profileHandlesEmpty = new Set<string>()
     for (const u of users) {
@@ -505,14 +543,13 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       : await readEpoch2MetricsCache()
     users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRowsEmpty, [], cacheEmpty)
     users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap)
+    const participantStatsEmpty = countEpoch2ParticipantStats(users)
 
     return {
       ok: true,
       generatedAt,
       stats: {
-        totalParticipants: users.length,
-        eligibleParticipants,
-        notEligibleParticipants: users.length - eligibleParticipants,
+        ...participantStatsEmpty,
         totalMindsharePosts: totalPosts,
         totalScore: Math.round(totalScore * 100) / 100,
         daysRemaining: epoch2DaysRemaining(nowMs),
@@ -583,12 +620,12 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     users = mergeEpoch1CarryoverIntoUsers(users, epoch1Carryover, prizeWinnerWallets, eligibleWalletKeys)
   }
 
+  users = mergeCsvSubmittersIntoEpoch2Users(users, rows, eligibleWalletKeys)
+
   const guaranteed = applyGuaranteedTop7(users, guaranteedEpoch1, epoch1BaselinesMerged)
   users = guaranteed.users
   const newGuaranteedBaselines = guaranteed.epoch1BaselinesMerged
 
-  const eligibleParticipants = users.filter((u) => u.srEligible).length
-  const notEligibleParticipants = users.length - eligibleParticipants
   const totalScore = users.reduce((s, u) => s + u.score, 0)
   const totalPosts = users.reduce((s, u) => s + u.postCount, 0)
   const epoch1Merged = applyEpoch1Carryover && epoch1Carryover.length > 0
@@ -615,14 +652,13 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     : cache
   users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRows, rows, cacheForProfiles)
   users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap)
+  const participantStats = countEpoch2ParticipantStats(users)
 
   return {
     ok: true,
     generatedAt,
     stats: {
-      totalParticipants: users.length,
-      eligibleParticipants,
-      notEligibleParticipants,
+      ...participantStats,
       totalMindsharePosts: totalPosts,
       totalScore: Math.round(totalScore * 100) / 100,
       daysRemaining: epoch2DaysRemaining(nowMs),

@@ -142,6 +142,8 @@ Posts submitted while ineligible, or outside the window for that eligibility day
 
 Shown on `/epoch2` as five booleans (15–19 May GMT+7), from **last** SR jsonl line per `eligibilityDayKey` in `epoch2_sr_snapshots.jsonl`. Guaranteed top 7 are always shown as eligible.
 
+**Eligible Participants** stat (top card): count of everyone on the leaderboard with **≥1 checkpoint tick** (at least one `true` in `checkpoints[]`). This is not the same as “eligible on the latest night only” (`srEligible` from `epoch2_sr_eligible_wallets.json`).
+
 ---
 
 ## Files written
@@ -245,6 +247,8 @@ npx tsx scripts/check-wallet-posts.mjs "$W"
 | Symptom | Likely cause |
 | ------- | ------------- |
 | In SR jsonl but not on leaderboard | `countedPostKeys` empty or post outside window when eligible |
+| In CSV but missing after rebuild | Never SR-eligible on checkpoint nights → 0 counted posts (shows at score 0 after fix); verify with `epoch2:trace-wallet` |
+| In CSV, score 0, not in SR jsonl | On-chain $SR was ≤10k at midnight checkpoints; CSV `sr balance` is not used for gating |
 | `balancesByWallet` shows `0` | Not failing SR — file lists **all** CSV wallets; check `walletsLower` |
 | Same wallet on jsonl lines 3–4 | Duplicate **manual re-runs** for the same `eligibilityDayKey` |
 | `postCount` wrong vs CSV | Run `epoch2-recount` or `epoch2-posts-backfill?replace=1` after fixing cache |

@@ -90,6 +90,26 @@ export function checkpointsForWallet(
   return EPOCH2_CHECKPOINT_DAY_KEYS.map((day) => eligibilityByDay.get(day)?.has(wk) ?? false)
 }
 
+/** At least one SR checkpoint tick (15–19 May) passed. */
+export function userHasAnyCheckpointEligible(checkpoints?: boolean[]): boolean {
+  return Boolean(checkpoints?.some(Boolean))
+}
+
+/** Public stat card: eligible = ≥1 checkpoint tick, not latest-night `srEligible` only. */
+export function countEpoch2ParticipantStats(users: Epoch2ApiUser[]): {
+  totalParticipants: number
+  eligibleParticipants: number
+  notEligibleParticipants: number
+} {
+  const totalParticipants = users.length
+  const eligibleParticipants = users.filter((u) => userHasAnyCheckpointEligible(u.checkpoints)).length
+  return {
+    totalParticipants,
+    eligibleParticipants,
+    notEligibleParticipants: totalParticipants - eligibleParticipants,
+  }
+}
+
 export async function enrichEpoch2UsersWithCheckpointsAndSrBalance(
   users: Epoch2ApiUser[],
   eligibleSnap: Epoch2SrEligibleWalletsFile | null,

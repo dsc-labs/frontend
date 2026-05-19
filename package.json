@@ -15,6 +15,7 @@
     "epoch2:sr-backfill-day": "node scripts/epoch2-sr-backfill-day.mjs",
     "epoch2:check-sr": "tsx scripts/check-epoch2-sr-eligibility.mjs",
     "epoch2:trace-wallet": "tsx scripts/trace-wallet-snapshots.mjs",
+    "epoch2:score-user": "tsx scripts/score-user-epochs.mjs",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
