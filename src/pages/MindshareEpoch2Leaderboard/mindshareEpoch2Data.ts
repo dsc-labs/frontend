@@ -32,7 +32,7 @@ export type Epoch2LeaderboardUser = {
   checkpoints?: boolean[]
 }
 
-/** GMT+7 eligibility days (15–19 May 2026) — keep in sync with `lib/mindshareEpoch2Checkpoints.ts`. */
+/** Full epoch checkpoint calendar — keep in sync with `lib/mindshareEpoch2Checkpoints.ts`. */
 export const EPOCH2_CHECKPOINTS = [
   { dayKey: '2026-05-15', dateLabel: '15 May 2026' },
   { dayKey: '2026-05-16', dateLabel: '16 May 2026' },
@@ -41,10 +41,23 @@ export const EPOCH2_CHECKPOINTS = [
   { dayKey: '2026-05-19', dateLabel: '19 May 2026' },
 ] as const
 
+export type Epoch2CheckpointColumn = { dayKey: string; dateLabel: string }
+
+const MS_PER_DAY = 24 * 60 * 60 * 1000
+
+/** Client fallback when API has no `checkpointDays` (same rule as server). */
+export function epoch2PublishedCheckpointsClient(nowMs = Date.now()): Epoch2CheckpointColumn[] {
+  return EPOCH2_CHECKPOINTS.filter(
+    (cp) => nowMs >= Date.parse(`${cp.dayKey}T00:00:00+07:00`) + MS_PER_DAY,
+  )
+}
+
 /** JSON from `GET /api/mindshare/test-epoch2-leaderboard` (matches server builder output). */
 export type Epoch2LeaderboardApiPayload = {
   ok: true
   generatedAt: string
+  /** Days whose midnight SR snapshot has already run (19 May hidden until that cron). */
+  checkpointDays?: Epoch2CheckpointColumn[]
   stats: Epoch2StatsInput
   users: Epoch2LeaderboardUser[]
   warnings: string[]

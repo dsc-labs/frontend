@@ -15,6 +15,8 @@ import {
 import {
   countEpoch2ParticipantStats,
   enrichEpoch2UsersWithCheckpointsAndSrBalance,
+  epoch2CheckpointColumns,
+  type Epoch2CheckpointColumn,
 } from './mindshareEpoch2Checkpoints'
 import { enrichEpoch2UsersWithProfiles } from './mindshareEpoch2ProfileEnrichment'
 import { refreshXUserProfilesInCache } from './mindshareEpoch2XProfiles'
@@ -23,6 +25,7 @@ import {
   loadGuaranteedTop7Epoch1Rows,
   loadGuaranteedTop7Wallets,
 } from './mindshareEpoch2GuaranteedTop7'
+import { applyEpoch2OperatorAdjustments } from './mindshareEpoch2OperatorAdjustments'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
 import { EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER, epoch2DaysRemaining } from './mindshareEpoch2Constants'
 import { applyEpoch2EngagementToStats, resolveEpoch2EngagementTotals } from './mindshareEpoch2EngagementStats'
@@ -90,6 +93,8 @@ export type Epoch2ApiUser = {
 export type MindshareEpoch2LeaderboardPayload = {
   ok: true
   generatedAt: string
+  /** SR checkpoint columns currently shown (only days whose midnight snapshot has run). */
+  checkpointDays: Epoch2CheckpointColumn[]
   stats: Epoch2ApiStats
   users: Epoch2ApiUser[]
   /** Always empty on public responses; operational detail stays in server logs. */
@@ -147,6 +152,7 @@ function emptyPayload(
   return {
     ok: true,
     generatedAt,
+    checkpointDays: epoch2CheckpointColumns(nowMs),
     stats: emptyEpoch2Stats(nowMs),
     users: [],
     warnings: [],
@@ -459,8 +465,10 @@ async function scoreAllPostsFromCache(
 async function finalizeEpoch2UsersForDisplay(
   users: Epoch2ApiUser[],
   eligibleSnap: Epoch2SrEligibleWalletsFile | null,
+  nowMs = Date.now(),
 ): Promise<Epoch2ApiUser[]> {
-  return enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
+  const enriched = await enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
+  return applyEpoch2OperatorAdjustments(enriched, nowMs)
 }
 
 export async function getMindshareEpoch2LeaderboardForDisplay(options: {
@@ -476,11 +484,14 @@ export async function getMindshareEpoch2LeaderboardForDisplay(options: {
       const rows = await readMindshareSubmissionsCsv(options.csvPath)
       const cache = await readEpoch2MetricsCache()
       const engagement = resolveEpoch2EngagementTotals(rows, cache)
-      const users = await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap)
+      const nowMs = Date.now()
+      const users = await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap, nowMs)
       const participantStats = countEpoch2ParticipantStats(users)
+      const totalScore = Math.round(users.reduce((s, u) => s + u.score, 0) * 100) / 100
       return {
         ...snap,
-        stats: applyEpoch2EngagementToStats({ ...snap.stats, ...participantStats }, engagement),
+        checkpointDays: epoch2CheckpointColumns(nowMs),
+        stats: applyEpoch2EngagementToStats({ ...snap.stats, ...participantStats, totalScore }, engagement),
         users,
       }
     }
@@ -548,6 +559,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     return {
       ok: true,
       generatedAt,
+      checkpointDays: epoch2CheckpointColumns(nowMs),
       stats: {
         ...participantStatsEmpty,
         totalMindsharePosts: totalPosts,
@@ -651,16 +663,18 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       })
     : cache
   users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRows, rows, cacheForProfiles)
-  users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap)
+  users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap, nowMs)
   const participantStats = countEpoch2ParticipantStats(users)
+  const adjustedTotalScore = users.reduce((s, u) => s + u.score, 0)
 
   return {
     ok: true,
     generatedAt,
+    checkpointDays: epoch2CheckpointColumns(nowMs),
     stats: {
       ...participantStats,
       totalMindsharePosts: totalPosts,
-      totalScore: Math.round(totalScore * 100) / 100,
+      totalScore: Math.round(adjustedTotalScore * 100) / 100,
       daysRemaining: epoch2DaysRemaining(nowMs),
       totalLikes: engagementTotals.totalLikes,
       totalComments: engagementTotals.totalComments,

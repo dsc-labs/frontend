@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises'
 import { EPOCH2_GUARANTEED_TOP7_HANDLES } from './mindshareEpoch2GuaranteedTop7'
 import { defaultEpoch2SrSnapshotLogPath } from './mindshareEpoch2DataPaths'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
-import { gmt7DayKeyFromMs, gmt7PreviousDayKey } from './mindshareEpoch2Gmt7'
+import { gmt7DayKeyFromMs, gmt7PreviousDayKey, gmt7SrEligibilitySnapshotInstantMs } from './mindshareEpoch2Gmt7'
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
 import { normalizeXUsername } from './xTweetMetrics'
 
@@ -17,6 +17,32 @@ export const EPOCH2_CHECKPOINT_DAY_KEYS = [
 ] as const
 
 export type Epoch2CheckpointDayKey = (typeof EPOCH2_CHECKPOINT_DAY_KEYS)[number]
+
+const EPOCH2_CHECKPOINT_DATE_LABELS: Record<Epoch2CheckpointDayKey, string> = {
+  '2026-05-15': '15 May 2026',
+  '2026-05-16': '16 May 2026',
+  '2026-05-17': '17 May 2026',
+  '2026-05-18': '18 May 2026',
+  '2026-05-19': '19 May 2026',
+}
+
+export type Epoch2CheckpointColumn = { dayKey: Epoch2CheckpointDayKey; dateLabel: string }
+
+/**
+ * Checkpoint columns shown on `/epoch2`.
+ * Day *D* appears only after its SR snapshot instant (00:00 GMT+7 on calendar day *D+1*).
+ * E.g. 19 May is hidden until tonight's midnight GMT+7 cron — not when `epoch2-rebuild` backfills it early.
+ */
+export function epoch2PublishedCheckpointDayKeys(nowMs = Date.now()): Epoch2CheckpointDayKey[] {
+  return EPOCH2_CHECKPOINT_DAY_KEYS.filter((day) => nowMs >= gmt7SrEligibilitySnapshotInstantMs(day))
+}
+
+export function epoch2CheckpointColumns(nowMs = Date.now()): Epoch2CheckpointColumn[] {
+  return epoch2PublishedCheckpointDayKeys(nowMs).map((dayKey) => ({
+    dayKey,
+    dateLabel: EPOCH2_CHECKPOINT_DATE_LABELS[dayKey],
+  }))
+}
 
 type SrSnapshotLogLine = {
   at?: string
@@ -84,10 +110,12 @@ export function checkpointsForWallet(
   walletLower: string,
   eligibilityByDay: Map<string, Set<string>>,
   isGuaranteed: boolean,
+  nowMs = Date.now(),
 ): boolean[] {
-  if (isGuaranteed) return EPOCH2_CHECKPOINT_DAY_KEYS.map(() => true)
+  const published = epoch2PublishedCheckpointDayKeys(nowMs)
+  if (isGuaranteed) return published.map(() => true)
   const wk = walletLower.trim().toLowerCase()
-  return EPOCH2_CHECKPOINT_DAY_KEYS.map((day) => eligibilityByDay.get(day)?.has(wk) ?? false)
+  return published.map((day) => eligibilityByDay.get(day)?.has(wk) ?? false)
 }
 
 /** At least one SR checkpoint tick (15–19 May) passed. */
@@ -124,7 +152,7 @@ export async function enrichEpoch2UsersWithCheckpointsAndSrBalance(
     return {
       ...u,
       ...(typeof bal === 'number' && Number.isFinite(bal) ? { srBalance: Math.round(bal * 10) / 10 } : {}),
-      checkpoints: checkpointsForWallet(wk, eligibilityByDay, guaranteed.has(wk)),
+      checkpoints: checkpointsForWallet(wk, eligibilityByDay, guaranteed.has(wk), Date.now()),
     }
   })
 }

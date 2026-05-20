@@ -231,6 +231,23 @@ New submits get `submitted at` automatically. Older files are migrated to add em
 
 ---
 
+## Operator wallet migrations (`lib/mindshareEpoch2OperatorAdjustments.ts`)
+
+Verified manual fixes (wallet change, SR checkpoint ticks, final score) are applied on every `/epoch2` read after SR enrichment. Edit `EPOCH2_OPERATOR_ADJUSTMENTS` and redeploy. Each array entry is **one competitor**; wallet “merge” only collapses duplicate rows for that same handle (e.g. two old TNr1ck wallets → one row), never two different people.
+
+| Handle | Wallet | Checkpoints (15 May = 1 … 19 May = 5) | Score |
+| ------ | ------ | ------------------------------------- | ----- |
+| TNr1ck | `0x3e33a63d7B64bCCE6bC7B0e38cbaAACfab0ca8b8` | 1, 2, 3 | 265.2 |
+| Anh_Mot0 | `0xD80A598A2E16145B620BfFA6fd48F00dA788eB12` | 1, 2, 4, 5 | 215.8 |
+| Villa_PHM | `0xf31a42744c247cde808188d171c7E9B227022dc3` | 1, 4, 5 | 196.42 |
+| phantomfills_hl | (unchanged; match by handle) | 1, 4, 5 | 103.35 |
+
+**Below top 8 (score only):** JokerIBlack 426.45, sheepmek1 401.72, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, Trong_Hatachi 317.28, hitasyurek 296.44, muhitonx 271.83, sothh84 249.17, LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28.
+
+Also update `mindshare_submissions.csv` (and Epoch 1 export wallet for carryover) when a wallet changes.
+
+---
+
 ## Troubleshooting a wallet
 
 ```bash
