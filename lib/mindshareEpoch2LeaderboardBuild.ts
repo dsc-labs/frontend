@@ -15,7 +15,7 @@ import {
 import {
   countEpoch2ParticipantStats,
   enrichEpoch2UsersWithCheckpointsAndSrBalance,
-  epoch2CheckpointColumns,
+  epoch2CheckpointColumnsAll,
   type Epoch2CheckpointColumn,
 } from './mindshareEpoch2Checkpoints'
 import { enrichEpoch2UsersWithProfiles } from './mindshareEpoch2ProfileEnrichment'
@@ -87,7 +87,7 @@ export type Epoch2ApiUser = {
   srEligible: boolean
   /** On-chain $SR from latest daily snapshot (human units). */
   srBalance?: number
-  /** SR eligibility per GMT+7 day (15–19 May); true = passed that night's snapshot. */
+  /** SR eligibility per GMT+7 day (15–18 + 20 May); true = passed that night's snapshot. */
   checkpoints?: boolean[]
 }
 
@@ -160,7 +160,7 @@ function emptyPayload(
   return {
     ok: true,
     generatedAt,
-    checkpointDays: epoch2CheckpointColumns(nowMs),
+    checkpointDays: epoch2CheckpointColumnsAll(),
     stats: emptyEpoch2Stats(nowMs),
     users: [],
     warnings: [],
@@ -508,7 +508,7 @@ export async function getMindshareEpoch2LeaderboardForDisplay(options: {
       const totalScore = Math.round(users.reduce((s, u) => s + u.score, 0) * 100) / 100
       return {
         ...snap,
-        checkpointDays: epoch2CheckpointColumns(nowMs),
+        checkpointDays: epoch2CheckpointColumnsAll(),
         stats: applyEpoch2EngagementToStats({ ...snap.stats, ...participantStats, totalScore }, engagement),
         users,
       }
@@ -577,7 +577,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
     return {
       ok: true,
       generatedAt,
-      checkpointDays: epoch2CheckpointColumns(nowMs),
+      checkpointDays: epoch2CheckpointColumnsAll(),
       stats: {
         ...participantStatsEmpty,
         totalMindsharePosts: totalPosts,
@@ -688,7 +688,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
   return {
     ok: true,
     generatedAt,
-    checkpointDays: epoch2CheckpointColumns(nowMs),
+    checkpointDays: epoch2CheckpointColumnsAll(),
     stats: {
       ...participantStats,
       totalMindsharePosts: totalPosts,

@@ -47,14 +47,7 @@ export function formatShortWallet(wallet: string, head = 5, tail = 5): string {
   return `0x${hex.slice(0, head)}...${hex.slice(-tail)}`
 }
 
-/** e.g. `12:00 PM, May 15, 2026` for the snapshot line above the table. */
-export function formatEpoch2SnapshotLabel(iso: string): string {
-  const d = new Date(iso)
-  if (!Number.isFinite(d.getTime())) return iso
-  const time = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
-  const date = d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-  return `${time}, ${date}`
-}
+
 
 export function formatDisplayHandle(username: string): string {
   const t = username.trim()

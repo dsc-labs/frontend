@@ -24,7 +24,7 @@ export async function runEpoch2FullRebuild(options: {
   dataDir?: string
   /** Rebuild countedPostKeys from scratch (default true). */
   replacePosts?: boolean
-  /** Checkpoint days to backfill SR for (default 15–19). */
+  /** Checkpoint days to backfill SR for (default 15–18 + 20 May). */
   dayKeys?: string[]
   /** After posts backfill, run live SR snapshot for “tonight” → `epoch2_sr_eligible_wallets.json`. */
   runLatestSrSnapshot?: boolean

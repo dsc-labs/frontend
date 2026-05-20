@@ -7,13 +7,13 @@ import { gmt7DayKeyFromMs, gmt7PreviousDayKey, gmt7SrEligibilitySnapshotInstantM
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
 import { normalizeXUsername } from './xTweetMetrics'
 
-/** GMT+7 eligibility days shown as status checkpoints (15 → 19 May). */
+/** GMT+7 eligibility days shown as status checkpoints (15–18 + 20 May; no 19 May tick). */
 export const EPOCH2_CHECKPOINT_DAY_KEYS = [
   '2026-05-15',
   '2026-05-16',
   '2026-05-17',
   '2026-05-18',
-  '2026-05-19',
+  '2026-05-20',
 ] as const
 
 export type Epoch2CheckpointDayKey = (typeof EPOCH2_CHECKPOINT_DAY_KEYS)[number]
@@ -23,15 +23,14 @@ const EPOCH2_CHECKPOINT_DATE_LABELS: Record<Epoch2CheckpointDayKey, string> = {
   '2026-05-16': '16 May 2026',
   '2026-05-17': '17 May 2026',
   '2026-05-18': '18 May 2026',
-  '2026-05-19': '19 May 2026',
+  '2026-05-20': '20 May 2026',
 }
 
 export type Epoch2CheckpointColumn = { dayKey: Epoch2CheckpointDayKey; dateLabel: string }
 
 /**
- * Checkpoint columns shown on `/epoch2`.
- * Day *D* appears only after its SR snapshot instant (00:00 GMT+7 on calendar day *D+1*).
- * E.g. 19 May is hidden until tonight's midnight GMT+7 cron — not when `epoch2-rebuild` backfills it early.
+ * Checkpoint columns that have “published” (SR jsonl recorded) by wall-clock.
+ * Prefer `epoch2CheckpointColumnsAll()` for the leaderboard payload so all five ticks (15–18 + 20 May) align with `checkpoints[]`.
  */
 export function epoch2PublishedCheckpointDayKeys(nowMs = Date.now()): Epoch2CheckpointDayKey[] {
   return EPOCH2_CHECKPOINT_DAY_KEYS.filter((day) => nowMs >= gmt7SrEligibilitySnapshotInstantMs(day))
@@ -39,6 +38,14 @@ export function epoch2PublishedCheckpointDayKeys(nowMs = Date.now()): Epoch2Chec
 
 export function epoch2CheckpointColumns(nowMs = Date.now()): Epoch2CheckpointColumn[] {
   return epoch2PublishedCheckpointDayKeys(nowMs).map((dayKey) => ({
+    dayKey,
+    dateLabel: EPOCH2_CHECKPOINT_DATE_LABELS[dayKey],
+  }))
+}
+
+/** All five checkpoint columns for `/epoch2` (no clock-based hiding). */
+export function epoch2CheckpointColumnsAll(): Epoch2CheckpointColumn[] {
+  return EPOCH2_CHECKPOINT_DAY_KEYS.map((dayKey) => ({
     dayKey,
     dateLabel: EPOCH2_CHECKPOINT_DATE_LABELS[dayKey],
   }))
@@ -110,15 +117,13 @@ export function checkpointsForWallet(
   walletLower: string,
   eligibilityByDay: Map<string, Set<string>>,
   isGuaranteed: boolean,
-  nowMs = Date.now(),
 ): boolean[] {
-  const published = epoch2PublishedCheckpointDayKeys(nowMs)
-  if (isGuaranteed) return published.map(() => true)
+  if (isGuaranteed) return EPOCH2_CHECKPOINT_DAY_KEYS.map(() => true)
   const wk = walletLower.trim().toLowerCase()
-  return published.map((day) => eligibilityByDay.get(day)?.has(wk) ?? false)
+  return EPOCH2_CHECKPOINT_DAY_KEYS.map((day) => eligibilityByDay.get(day)?.has(wk) ?? false)
 }
 
-/** At least one SR checkpoint tick (15–19 May) passed. */
+/** At least one SR checkpoint tick (15–18 + 20 May) passed. */
 export function userHasAnyCheckpointEligible(checkpoints?: boolean[]): boolean {
   return Boolean(checkpoints?.some(Boolean))
 }
@@ -150,7 +155,7 @@ export async function enrichEpoch2UsersWithCheckpointsAndSrBalance(
     const wk = u.wallet.trim().toLowerCase()
     const bal = balances[wk]
     const isGuaranteed = guaranteed.has(wk)
-    const checkpoints = checkpointsForWallet(wk, eligibilityByDay, isGuaranteed, Date.now())
+    const checkpoints = checkpointsForWallet(wk, eligibilityByDay, isGuaranteed)
     const checkpointEligible = userHasAnyCheckpointEligible(checkpoints)
     return {
       ...u,

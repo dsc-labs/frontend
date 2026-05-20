@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Replay Epoch 2 post counting (checkpoint days 15→19) and score all counted posts.
+ * Replay Epoch 2 post counting (checkpoint days 15→18 & 20) and score all counted posts.
  *
  * Usage:
  *   npm run epoch2:posts-backfill -- --replace

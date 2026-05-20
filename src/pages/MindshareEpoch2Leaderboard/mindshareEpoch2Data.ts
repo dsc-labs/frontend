@@ -28,7 +28,7 @@ export type Epoch2LeaderboardUser = {
   srEligible: boolean
   /** On-chain $SR from latest daily snapshot. */
   srBalance?: number
-  /** Daily SR eligibility for 15–19 May (GMT+7). */
+  /** Daily SR eligibility for 15–18 + 20 May (GMT+7). */
   checkpoints?: boolean[]
 }
 
@@ -38,25 +38,21 @@ export const EPOCH2_CHECKPOINTS = [
   { dayKey: '2026-05-16', dateLabel: '16 May 2026' },
   { dayKey: '2026-05-17', dateLabel: '17 May 2026' },
   { dayKey: '2026-05-18', dateLabel: '18 May 2026' },
-  { dayKey: '2026-05-19', dateLabel: '19 May 2026' },
+  { dayKey: '2026-05-20', dateLabel: '20 May 2026' },
 ] as const
 
 export type Epoch2CheckpointColumn = { dayKey: string; dateLabel: string }
 
-const MS_PER_DAY = 24 * 60 * 60 * 1000
-
-/** Client fallback when API has no `checkpointDays` (same rule as server). */
-export function epoch2PublishedCheckpointsClient(nowMs = Date.now()): Epoch2CheckpointColumn[] {
-  return EPOCH2_CHECKPOINTS.filter(
-    (cp) => nowMs >= Date.parse(`${cp.dayKey}T00:00:00+07:00`) + MS_PER_DAY,
-  )
+/** Client fallback when API has no `checkpointDays` (matches server: all five columns). */
+export function epoch2PublishedCheckpointsClient(_nowMs = Date.now()): Epoch2CheckpointColumn[] {
+  return [...EPOCH2_CHECKPOINTS]
 }
 
 /** JSON from `GET /api/mindshare/test-epoch2-leaderboard` (matches server builder output). */
 export type Epoch2LeaderboardApiPayload = {
   ok: true
   generatedAt: string
-  /** Days whose midnight SR snapshot has already run (19 May hidden until that cron). */
+  /** Five checkpoint columns from the API (`epoch2CheckpointColumnsAll` on server). */
   checkpointDays?: Epoch2CheckpointColumn[]
   stats: Epoch2StatsInput
   users: Epoch2LeaderboardUser[]

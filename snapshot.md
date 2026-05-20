@@ -10,7 +10,7 @@ This document describes **what data is frozen or refreshed on a schedule** for t
 | ---- | ---- | --------- | -------- |
 | **Daily job (SR + scores)** | Once per day at **00:00 GMT+7** (`0 17 * * *` UTC) | See [Files written](#files-written) | Eligibility, cumulative scores, public leaderboard |
 | **Submissions** | On each form submit | `mindshare_submissions.csv` (+ `submitted at`) | Which posts exist and **when** they were submitted |
-| **Operator backfill** | Manual | Same files | Replay SR days and/or full post counting 15→19 |
+| **Operator backfill** | Manual | Same files | Replay SR days and/or full post counting 15→18 & 20 |
 
 Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`**. It does **not** re-score on every page load. The response **excludes** anyone with **score ≤ 0** (they do not appear on the board).
 
@@ -79,7 +79,7 @@ All operator routes use the same auth as waitlist crons: `Authorization: Bearer 
 
 ### Full post replay (first → last checkpoint day)
 
-Replays **which posts enter `countedPostKeys`** for each GMT+7 eligibility day (**2026-05-15 … 2026-05-19**) using **`epoch2_sr_snapshots.jsonl`** per day, then scores all of them.
+Replays **which posts enter `countedPostKeys`** for each GMT+7 eligibility day (**2026-05-15 … 2026-05-18** and **2026-05-20** — no separate 19 May tick) using **`epoch2_sr_snapshots.jsonl`** per day, then scores all of them.
 
 ```bash
 # Prerequisite: SR jsonl line per day (archive RPC)
@@ -95,7 +95,7 @@ curl -sS -X POST "http://127.0.0.1:4022/api/mindshare/epoch2-posts-backfill?repl
 | Query | Meaning |
 | ----- | ------- |
 | `replace=1` | Rebuild `countedPostKeys` from scratch (recommended) |
-| `days=2026-05-15,2026-05-16` | Subset of checkpoint days (default 15–19) |
+| `days=2026-05-15,2026-05-16` | Subset of checkpoint days (default 15–18 + 20 May) |
 | `runSr=1` | Also run tonight’s SR snapshot before replay |
 
 Without `replace=1`, only **missing** keys that would have counted on replay are added (existing keys kept).
@@ -165,7 +165,7 @@ Shown on `/epoch2` as five booleans (15–19 May GMT+7), from **last** SR jsonl 
 
 ## “The Latest Snapshot” on `/epoch2`
 
-Shows **`generatedAt`** from `epoch2_leaderboard_snapshot.json` — the last **daily** rebuild, not live X data.
+The leaderboard page labels the snapshot **12:00 AM, May 20, 2026** (hardcoded). The API payload still includes **`generatedAt`** from `epoch2_leaderboard_snapshot.json` — the last **daily** rebuild, not live X data.
 
 ---
 

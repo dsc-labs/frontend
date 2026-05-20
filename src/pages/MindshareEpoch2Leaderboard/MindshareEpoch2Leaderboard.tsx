@@ -11,7 +11,6 @@ import { epoch2PublishedCheckpointsClient } from './mindshareEpoch2Data'
 import { Epoch2LeaderboardTable } from './Epoch2LeaderboardTable'
 import { Epoch2StatCards } from './Epoch2StatCards'
 import { enrichEpoch2UsersForDisplay } from './epoch2ClientProfileEnrichment'
-import { formatEpoch2SnapshotLabel } from './mindshareEpoch2Format'
 import './MindshareEpoch2Leaderboard.css'
 
 const EPOCH2_SEO_TITLE = 'Mindshare Challenge — Epoch 2 Leaderboard'
@@ -52,7 +51,6 @@ const MindshareEpoch2Leaderboard = () => {
   const [checkpointDays, setCheckpointDays] = useState<Epoch2CheckpointColumn[]>(() =>
     epoch2PublishedCheckpointsClient(),
   )
-  const [generatedAt, setGeneratedAt] = useState<string | null>(null)
   const [errorNotice, setErrorNotice] = useState<string | null>(null)
 
   useEffect(() => {
@@ -81,14 +79,12 @@ const MindshareEpoch2Leaderboard = () => {
         setCheckpointDays(
           json.checkpointDays?.length ? json.checkpointDays : epoch2PublishedCheckpointsClient(),
         )
-        setGeneratedAt(json.generatedAt)
         setErrorNotice(null)
         setLoadState('ready')
       } catch (e) {
         if (!cancelled) {
           setStats(null)
           setUsers(null)
-          setGeneratedAt(null)
           const detail = e instanceof Error ? e.message : 'Request failed'
           setErrorNotice(detail)
           setLoadState('error')
@@ -103,9 +99,6 @@ const MindshareEpoch2Leaderboard = () => {
       cancelled = true
     }
   }, [])
-
-  const snapshotLabel =
-    generatedAt != null ? formatEpoch2SnapshotLabel(generatedAt) : null
 
   return (
     <div className="mindshare-epoch2-page">
@@ -125,11 +118,9 @@ const MindshareEpoch2Leaderboard = () => {
         ) : null}
         {loadState === 'ready' && stats !== null && users !== null ? (
           <>
-            {snapshotLabel ? (
-              <p className="epoch2-lb-snapshot">
-                The Latest Snapshot: <strong>{snapshotLabel}</strong>
-              </p>
-            ) : null}
+            <p className="epoch2-lb-snapshot">
+              The Latest Snapshot: <strong>12:00 AM, May 20, 2026</strong>
+            </p>
             <Epoch2StatCards stats={stats} />
             {users.length === 0 ? (
               <p className="epoch2-lb-notice" role="status">

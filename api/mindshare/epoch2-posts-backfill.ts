@@ -24,7 +24,7 @@ function queryDays(req: VercelRequest): string[] | undefined {
  *
  * Query:
  * - `replace=1` — rebuild `countedPostKeys` from scratch (recommended)
- * - `days=2026-05-15,2026-05-16` — subset of checkpoint days (default: 15–19)
+ * - `days=2026-05-15,2026-05-16` — subset of checkpoint days (default: 15–18 + 20 May)
  * - `runSr=1` — also run tonight's SR snapshot before replay
  *
  * Prerequisite: `epoch2_sr_snapshots.jsonl` has a line per day (`epoch2-sr-backfill-day`).

@@ -213,7 +213,7 @@ async function buildChainEligibilityByDay(walletLower, dayKeys, rpcUrl, guarante
 }
 
 /**
- * Replay counting 15→19; return which of this wallet's posts were first counted each day.
+ * Replay counting 15→18 & 20; return which of this wallet's posts were first counted each day.
  * @param {{ useChain?: boolean, chainByDay?: Map<string, object> }} options
  */
 function replayWalletByDay(walletLower, allPosts, eligibilityByDay, dayKeys, options = {}) {

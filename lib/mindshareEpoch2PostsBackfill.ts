@@ -122,7 +122,7 @@ export type MindshareEpoch2PostsBackfillResult =
   | { ok: false; error: string }
 
 /**
- * Operator backfill: determine `countedPostKeys` by replaying checkpoint days 15→19 (or subset),
+ * Operator backfill: determine `countedPostKeys` by replaying checkpoint days 15→18 & 20 (or subset),
  * then fetch X metrics and write the leaderboard snapshot.
  *
  * Prerequisite: SR lines in `epoch2_sr_snapshots.jsonl` for each day (use `epoch2-sr-backfill-day`).

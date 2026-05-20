@@ -117,7 +117,7 @@ Requires `CRON_SECRET` (Bearer), `TWITTER_BEARER_TOKEN`, `BASE_ARCHIVE_RPC_URL`.
 | Script | Purpose |
 | ------ | ------- |
 | `epoch2:rebuild` | Full SR + post replay → `data/newmindshare/` (reads root CSV) |
-| `epoch2:posts-backfill -- --replace` | Replay post counting for days **15→19**, then score all |
+| `epoch2:posts-backfill -- --replace` | Replay post counting for days **15→18 & 20**, then score all |
 | `epoch2:sr-backfill-day -- --day 2026-05-16 --replace` | One historical SR checkpoint line (archive RPC) |
 | `epoch2:recount` | Re-score existing `countedPostKeys` only |
 | `epoch2:check-sr -- <handle\|0x…> [--chain]` | SR checkpoints per day vs jsonl / chain |

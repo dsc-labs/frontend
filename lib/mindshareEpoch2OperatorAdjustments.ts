@@ -1,7 +1,4 @@
-import {
-  EPOCH2_CHECKPOINT_DAY_KEYS,
-  epoch2PublishedCheckpointDayKeys,
-} from './mindshareEpoch2Checkpoints'
+import { EPOCH2_CHECKPOINT_DAY_KEYS } from './mindshareEpoch2Checkpoints'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
 import { normalizeXUsername } from './xTweetMetrics'
 
@@ -106,9 +103,8 @@ function matchesAdjustment(u: Epoch2ApiUser, adj: Epoch2OperatorAdjustment): boo
   return false
 }
 
-function checkpointsFromSnapshots(snapshots: readonly number[], nowMs: number): boolean[] {
-  const published = epoch2PublishedCheckpointDayKeys(nowMs)
-  return published.map((dayKey) => {
+function checkpointsFromSnapshots(snapshots: readonly number[]): boolean[] {
+  return EPOCH2_CHECKPOINT_DAY_KEYS.map((dayKey) => {
     const idx = (EPOCH2_CHECKPOINT_DAY_KEYS as readonly string[]).indexOf(dayKey) + 1
     return idx > 0 && snapshots.includes(idx)
   })
@@ -131,7 +127,7 @@ function buildMergedUser(
 
   if (group.length === 0) {
     const checkpoints = adj.checkpointSnapshots?.length
-      ? checkpointsFromSnapshots(adj.checkpointSnapshots, nowMs)
+      ? checkpointsFromSnapshots(adj.checkpointSnapshots)
       : undefined
     const score = typeof adj.score === 'number' && Number.isFinite(adj.score) ? adj.score : 0
     return {
@@ -168,7 +164,7 @@ function buildMergedUser(
   if (typeof adj.score === 'number' && Number.isFinite(adj.score)) score = adj.score
 
   let checkpoints = adj.checkpointSnapshots?.length
-    ? checkpointsFromSnapshots(adj.checkpointSnapshots, nowMs)
+    ? checkpointsFromSnapshots(adj.checkpointSnapshots)
     : group.find((u) => u.checkpoints)?.checkpoints
 
   if (adj.forceNotEligible) {

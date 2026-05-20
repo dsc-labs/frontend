@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Full Epoch 2 rebuild: SR eligibility (days 15→19) + post counting + scores.
+ * Full Epoch 2 rebuild: SR eligibility (days 15→18 & 20) + post counting + scores.
  *
  * - Reads live mindshare_submissions.csv (repo root by default)
  * - Writes snapshots to data/newmindshare/ (or MINDSHARE_EPOCH2_DATA_DIR)
