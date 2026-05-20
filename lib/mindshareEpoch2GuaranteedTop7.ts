@@ -17,23 +17,24 @@ export const EPOCH2_GUARANTEED_TOP7_HANDLES: readonly string[] = [
   'office2crypto',
 ] as const
 
-/**
- * Minimum score lift between rank N+1 and N (index 0 = rank 8 → 7 boundary).
- * Deterministic so nightly cron does not jitter; gaps look like real score spacing.
- */
-const GAP_ABOVE_NEXT_RANK: readonly number[] = [4.91, 3.47, 5.21, 2.86, 6.14, 4.33, 7.52]
-
 /** Max score gap between rank 8 (first organic eligible) and rank 7; cascades up through ranks 1–7. */
 const MAX_GAP_RANK8_TO_RANK7 = 10
 
+/**
+ * Deterministic pseudo-random gap above the next-lower rank (slot 0 = rank 7 above rank 8).
+ * Stable across cron runs but irregular (≈2.2–13.1 pts) so the podium does not look evenly stepped.
+ */
 function gapAboveNextRank(slotFromBottom: number): number {
-  const i = Math.max(0, Math.min(slotFromBottom, GAP_ABOVE_NEXT_RANK.length - 1))
-  return GAP_ABOVE_NEXT_RANK[i]!
-}
-
-/** Small extra cents when we must bump (stable per slot, not 0.01 every time). */
-function bumpCents(slotFromBottom: number): number {
-  return ((slotFromBottom * 17 + 31) % 89) / 100
+  let h = 0x811c9dc5
+  const tag = `mma-epoch2-top7-gap:v2:${slotFromBottom}`
+  for (let i = 0; i < tag.length; i += 1) {
+    h ^= tag.charCodeAt(i)
+    h = Math.imul(h, 0x01000193)
+  }
+  const u1 = ((h >>> 0) % 10_000) / 10_000
+  const u2 = ((Math.imul(h ^ 0x9e3779b9, 0x85ebca6b) >>> 0) % 100) / 100
+  const gap = 2.18 + u1 * 10.62 + u2 * 0.94
+  return Math.round(gap * 100) / 100
 }
 
 export function normalizeLeaderboardHandle(raw: string): string {
@@ -162,18 +163,17 @@ export function applyGuaranteedTop7(
   const topEligibleOther = others.filter((u) => u.srEligible).sort((a, b) => b.score - a.score)[0]?.score ?? 0
 
   // Rank 7 → 1: enforce order with varied gaps only when a score is too low (keep real scores when already high enough).
-  let minRequired = topEligibleOther + gapAboveNextRank(0) + bumpCents(0)
+  let minRequired = topEligibleOther + gapAboveNextRank(0)
   for (let i = guaranteedOrdered.length - 1; i >= 0; i -= 1) {
     const g = guaranteedOrdered[i]!
     const slotFromBottom = guaranteedOrdered.length - 1 - i
     if (g.score < minRequired) {
       g.score = roundScore(minRequired)
     }
-    const gapSlot = Math.min(slotFromBottom + 1, GAP_ABOVE_NEXT_RANK.length - 1)
-    minRequired = g.score + gapAboveNextRank(gapSlot) + bumpCents(gapSlot)
+    minRequired = g.score + gapAboveNextRank(slotFromBottom + 1)
   }
 
-  // Rank 7 → 1: cap scores when the podium sits far above rank 8+ (e.g. 199 vs 68); keep small gaps within top 7.
+  // Rank 7 → 1: cap scores when the podium sits far above rank 8+ (e.g. 199 vs 68); keep irregular gaps within top 7.
   let maxAllowedFromRank8 = topEligibleOther + MAX_GAP_RANK8_TO_RANK7
   for (let i = guaranteedOrdered.length - 1; i >= 0; i -= 1) {
     const g = guaranteedOrdered[i]!
@@ -181,8 +181,7 @@ export function applyGuaranteedTop7(
       g.score = roundScore(maxAllowedFromRank8)
     }
     const slotFromBottom = guaranteedOrdered.length - 1 - i
-    const gapSlot = Math.min(slotFromBottom + 1, GAP_ABOVE_NEXT_RANK.length - 1)
-    maxAllowedFromRank8 = g.score + gapAboveNextRank(gapSlot) + bumpCents(gapSlot)
+    maxAllowedFromRank8 = g.score + gapAboveNextRank(slotFromBottom + 1)
   }
 
   const merged = [...guaranteedOrdered, ...sortEpoch2UsersByEligibilityThenScore(others)]
