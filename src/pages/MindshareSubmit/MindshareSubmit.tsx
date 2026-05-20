@@ -14,7 +14,7 @@ import {
 } from '../../lib/xOAuthClient'
 import {
   getMindshareEpochPhase,
-  EPOCH_3_START_GMT7_LABEL,
+  EPOCH_3_START_UTC_LABEL,
   isMindshareSubmissionOpen,
   mindshareCountdownEndMs,
 } from '../../lib/mindshareEpochSchedule'
@@ -455,7 +455,7 @@ const MindshareSubmit = () => {
             <div className="mindshare-submit-closed-panel" role="status">
               <p className="mindshare-submit-closed">
                 Epoch 2 submissions are closed. The countdown above runs until Epoch 3 begins at{' '}
-                {EPOCH_3_START_GMT7_LABEL}.
+                {EPOCH_3_START_UTC_LABEL}.
               </p>
               <Link to="/mindshare-challenge" className="mindshare-submit-actions-link">
                 Back to challenge

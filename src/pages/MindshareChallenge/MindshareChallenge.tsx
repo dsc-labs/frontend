@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
 import {
+  EPOCH_2_END_MS,
+  EPOCH_3_START_MS,
   getMindshareEpochPhase,
-  isEpoch2LeaderboardPublic,
+  isEpoch3PreviewPublic,
   isMindshareSubmissionOpen,
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
-  nextGmt7MidnightMs,
-  EPOCH_3_START_GMT7_LABEL,
+  EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
 import './MindshareChallenge.css'
@@ -105,7 +106,6 @@ function SubmitMindshareLink({ open }: { open: boolean }) {
 }
 
 function Epoch2LeaderboardButton() {
-  const publicLeaderboard = isEpoch2LeaderboardPublic()
   const [nowMs, setNowMs] = useState(() => Date.now())
 
   useEffect(() => {
@@ -113,10 +113,9 @@ function Epoch2LeaderboardButton() {
     return () => window.clearInterval(id)
   }, [])
 
-  const nextMidnightMs = nextGmt7MidnightMs(nowMs)
-  const hoverLabel = publicLeaderboard
-    ? formatCountdownToGmt7Midnight(nextMidnightMs, nowMs)
-    : 'Coming Soon'
+  const previewPublic = isEpoch3PreviewPublic(nowMs)
+  const countdownEndMs = previewPublic ? EPOCH_3_START_MS : EPOCH_2_END_MS
+  const hoverLabel = formatCountdownToGmt7Midnight(countdownEndMs, nowMs)
 
   const labelStack = (
     <span className="mindshare-leaderboard-label-stack">
@@ -136,13 +135,13 @@ function Epoch2LeaderboardButton() {
     </span>
   )
 
-  if (publicLeaderboard) {
+  if (previewPublic) {
     return (
       <Link
-        to="/sraaaepoch2"
+        to="/epoch3-preview"
         className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--live"
-        aria-label={`Epoch 2 Leaderboard, next update at midnight GMT+7 in ${hoverLabel}`}
-        title="Next leaderboard update at midnight GMT+7"
+        aria-label={`Epoch 3 preview, Epoch 3 starts in ${hoverLabel}`}
+        title="Open Epoch 3 preview"
       >
         {labelStack}
         {arrow}
@@ -155,8 +154,8 @@ function Epoch2LeaderboardButton() {
       type="button"
       className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--disabled"
       aria-disabled="true"
-      aria-label="Epoch 2 Leaderboard unavailable"
-      title="Epoch 2 leaderboard is not public yet"
+      aria-label={`Epoch 2 Leaderboard opens at midnight GMT+7 in ${hoverLabel}`}
+      title="Available at midnight GMT+7 tonight"
     >
       {labelStack}
       {arrow}
@@ -279,7 +278,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
           <h3>Duration</h3>
           <p className="mindshare-duration-box">
             {phase === 'epoch3_countdown'
-              ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_GMT7_LABEL}.`
+              ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
               : articleEpoch === 1
                 ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
                 : articleEpoch === 2

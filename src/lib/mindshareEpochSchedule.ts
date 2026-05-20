@@ -22,7 +22,8 @@ export const EPOCH_3_GAP_MS = 3 * 24 * 60 * 60 * 1000
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 
 export const EPOCH_2_END_GMT7_LABEL = '12:00 AM GMT+7, May 21, 2026'
-export const EPOCH_3_START_GMT7_LABEL = '12:00 AM GMT+7, May 24, 2026'
+/** User-facing Epoch 3 start (= `EPOCH_3_START_MS`, same instant as 00:00 GMT+7 on 24 May 2026). */
+export const EPOCH_3_START_UTC_LABEL = '17:00 UTC, May 23, 2026'
 
 const GMT7_OFFSET_MS = 7 * 60 * 60 * 1000
 const MS_PER_DAY = 24 * 60 * 60 * 1000
@@ -42,11 +43,19 @@ export function nextGmt7MidnightMs(nowMs = Date.now()): number {
   return gmt7DayStartMs(gmt7DayKeyFromMs(nowMs)) + MS_PER_DAY
 }
 
-/** When false, the challenge page shows a disabled Epoch 2 Leaderboard control (no link to `/sraaaepoch2`). */
-export const EPOCH2_LEADERBOARD_PUBLIC = false
+/**
+ * Epoch 2 leaderboard table (`/sraaaepoch2`). Kept off the challenge page; use preview gate below instead.
+ */
+export function isEpoch2LeaderboardTablePublic(_nowMs = Date.now()): boolean {
+  return false
+}
 
-export function isEpoch2LeaderboardPublic(): boolean {
-  return EPOCH2_LEADERBOARD_PUBLIC
+/**
+ * After Epoch 2 ends (midnight GMT+7 tonight): Epoch 3 preview is public and the challenge-page
+ * “Epoch 2 Leaderboard” control links to `/epoch3-preview`.
+ */
+export function isEpoch3PreviewPublic(nowMs = Date.now()): boolean {
+  return nowMs >= EPOCH_2_END_MS
 }
 
 export type MindshareEpochPhase = 'epoch1' | 'epoch2' | 'epoch3_countdown' | 'epoch3'
