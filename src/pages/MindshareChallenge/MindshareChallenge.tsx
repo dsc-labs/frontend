@@ -10,6 +10,7 @@ import {
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
+  EPOCH_2_END_MS,
   nextDailySnapshotUtcMs,
   EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
@@ -113,9 +114,8 @@ function Epoch2LeaderboardButton() {
   }, [])
 
   const previewLinked = isEpoch3PreviewLinkedFromChallenge(nowMs)
-  const hoverLabel = previewLinked
-    ? formatUtcCountdown(nextDailySnapshotUtcMs(nowMs), nowMs)
-    : 'Coming Soon'
+  const hoverEndMs = previewLinked ? nextDailySnapshotUtcMs(nowMs) : EPOCH_2_END_MS
+  const hoverLabel = formatUtcCountdown(hoverEndMs, nowMs)
 
   const labelStack = (
     <span className="mindshare-leaderboard-label-stack">
@@ -154,8 +154,8 @@ function Epoch2LeaderboardButton() {
       type="button"
       className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--disabled"
       aria-disabled="true"
-      aria-label="Epoch 2 Leaderboard, coming soon"
-      title="Available after Epoch 2 ends"
+      aria-label={`Epoch 2 Leaderboard, available in ${hoverLabel}`}
+      title={`Countdown: ${hoverLabel}`}
     >
       {labelStack}
       {arrow}
@@ -280,7 +280,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
             {phase === 'epoch3_countdown' || phase === 'epoch3'
               ? !submissionsOpen
                 ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
-                : `Epoch 2 submissions are still open during this preview. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
+                : `Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
               : articleEpoch === 1
                 ? 'Epoch 1 runs for 2 weeks. All submissions within this period will be counted.'
                 : articleEpoch === 2

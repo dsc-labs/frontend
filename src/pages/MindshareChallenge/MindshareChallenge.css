@@ -230,6 +230,7 @@
   place-items: center;
   text-align: center;
   min-height: 1em;
+  min-width: 11ch;
 }
 
 .mindshare-leaderboard-label-stack > span {
