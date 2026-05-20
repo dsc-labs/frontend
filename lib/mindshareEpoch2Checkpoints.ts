@@ -149,10 +149,15 @@ export async function enrichEpoch2UsersWithCheckpointsAndSrBalance(
   return users.map((u) => {
     const wk = u.wallet.trim().toLowerCase()
     const bal = balances[wk]
+    const isGuaranteed = guaranteed.has(wk)
+    const checkpoints = checkpointsForWallet(wk, eligibilityByDay, isGuaranteed, Date.now())
+    const checkpointEligible = userHasAnyCheckpointEligible(checkpoints)
     return {
       ...u,
       ...(typeof bal === 'number' && Number.isFinite(bal) ? { srBalance: Math.round(bal * 10) / 10 } : {}),
-      checkpoints: checkpointsForWallet(wk, eligibilityByDay, guaranteed.has(wk), Date.now()),
+      checkpoints,
+      /** Rank with eligible competitors when any checkpoint tick is green (not latest night only). */
+      srEligible: isGuaranteed || checkpointEligible || u.srEligible,
     }
   })
 }

@@ -1,5 +1,10 @@
 import type { Epoch2LeaderboardUser } from './mindshareEpoch2Data'
 
+function isRankedEligible(u: Epoch2LeaderboardUser): boolean {
+  if (u.srEligible) return true
+  return Boolean(u.checkpoints?.some(Boolean))
+}
+
 /** Match handle, display name, or wallet (partial, case-insensitive). */
 export function filterEpoch2Users(users: Epoch2LeaderboardUser[], query: string): Epoch2LeaderboardUser[] {
   const q = query.trim().toLowerCase().replace(/^@/, '')
@@ -65,7 +70,7 @@ export function getRankedUsers(users: Epoch2LeaderboardUser[]): Array<Epoch2Lead
   const GUARANTEED_COUNT = 7
   const head = users.slice(0, GUARANTEED_COUNT)
   const tail = users.slice(GUARANTEED_COUNT)
-  const eligible = tail.filter((u) => u.srEligible).sort((a, b) => b.score - a.score)
-  const ineligible = tail.filter((u) => !u.srEligible).sort((a, b) => b.score - a.score)
+  const eligible = tail.filter(isRankedEligible).sort((a, b) => b.score - a.score)
+  const ineligible = tail.filter((u) => !isRankedEligible(u)).sort((a, b) => b.score - a.score)
   return [...head, ...eligible, ...ineligible].map((u, i) => ({ ...u, rank: i + 1 }))
 }
