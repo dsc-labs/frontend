@@ -347,6 +347,28 @@ a.mindshare-submit-identity-btn {
   color: #1a1a1a;
 }
 
+.mindshare-submit-closed {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #c8c8c8;
+  background: #f0f0f0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+.mindshare-submit-form-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.mindshare-submit-form-fieldset:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 @media (max-width: 860px) {
   .mindshare-submit-container {
     padding-top: 110px;

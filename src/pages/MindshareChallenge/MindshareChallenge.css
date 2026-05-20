@@ -164,6 +164,19 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.14);
 }
 
+.mindshare-submit-link--closed {
+  background: #e8e8e8;
+  border-color: #b0b0b0;
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.mindshare-submit-closed-hint {
+  font-weight: 500;
+  font-size: 14px;
+}
+
 .mindshare-submit-arrow {
   font-size: 18px;
   line-height: 1;

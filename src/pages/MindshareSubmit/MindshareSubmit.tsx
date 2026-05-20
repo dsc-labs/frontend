@@ -14,6 +14,8 @@ import {
 } from '../../lib/xOAuthClient'
 import {
   getMindshareEpochPhase,
+  EPOCH_3_START_GMT7_LABEL,
+  isEpoch2MindshareSubmissionOpen,
   mindshareCountdownEndMs,
 } from '../../lib/mindshareEpochSchedule'
 import './MindshareSubmit.css'
@@ -135,6 +137,7 @@ const MindshareSubmit = () => {
   }, [])
 
   const phase = getMindshareEpochPhase(scheduleNowMs)
+  const submissionsOpen = isEpoch2MindshareSubmissionOpen(phase)
   const countdownEndMs = mindshareCountdownEndMs(phase)
   const countdownExpiredLabel =
     phase === 'epoch3_countdown'
@@ -271,6 +274,10 @@ const MindshareSubmit = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!submissionsOpen) {
+      setSubmitMessage('Epoch 2 submissions are closed. New entries open with Epoch 3.')
+      return
+    }
     if (!xProfile?.username || !walletAddress) {
       setSubmitMessage('Please connect both X and Wallet before submitting.')
       return
@@ -444,24 +451,34 @@ const MindshareSubmit = () => {
             </div>
           </section>
 
-          <form className="mindshare-submit-form" onSubmit={onSubmit}>
-            <label className="mindshare-submit-field">
-              <span>Submit your mindshare about Strike Robot *</span>
-              <textarea
-                placeholder="You can submit one or multiple post URLs (e.g. https://x.com/your-post)"
-                rows={7}
-                value={form.mindshareUrls}
-                onChange={(e) => setForm((prev) => ({ ...prev, mindshareUrls: e.target.value }))}
-                required
-              />
-            </label>
+          {!submissionsOpen ? (
+            <p className="mindshare-submit-closed" role="status">
+              Epoch 2 submissions closed at midnight GMT+7 when Epoch 2 ended. The countdown above runs until
+              Epoch 3 begins at {EPOCH_3_START_GMT7_LABEL} (3 days after Epoch 2 ended). Submit will stay closed
+              until Epoch 3 entry rules are announced.
+            </p>
+          ) : null}
 
-            <div className="mindshare-submit-actions">
-              <button type="submit" disabled={submitBusy || !isIdentityLinked}>
-                {submitBusy ? 'Submitting...' : 'Submit Entry'}
-              </button>
-              <Link to="/mindshare-challenge">Back to challenge</Link>
-            </div>
+          <form className="mindshare-submit-form" onSubmit={onSubmit}>
+            <fieldset disabled={!submissionsOpen} className="mindshare-submit-form-fieldset">
+              <label className="mindshare-submit-field">
+                <span>Submit your mindshare about Strike Robot *</span>
+                <textarea
+                  placeholder="You can submit one or multiple post URLs (e.g. https://x.com/your-post)"
+                  rows={7}
+                  value={form.mindshareUrls}
+                  onChange={(e) => setForm((prev) => ({ ...prev, mindshareUrls: e.target.value }))}
+                  required={submissionsOpen}
+                />
+              </label>
+
+              <div className="mindshare-submit-actions">
+                <button type="submit" disabled={submitBusy || !isIdentityLinked || !submissionsOpen}>
+                  {submitBusy ? 'Submitting...' : 'Submit Entry'}
+                </button>
+                <Link to="/mindshare-challenge">Back to challenge</Link>
+              </div>
+            </fieldset>
             {submitMessage ? <p className="mindshare-submit-status">{submitMessage}</p> : null}
           </form>
         </section>
