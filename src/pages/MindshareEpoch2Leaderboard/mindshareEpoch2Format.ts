@@ -5,6 +5,17 @@ function isRankedEligible(u: Epoch2LeaderboardUser): boolean {
   return Boolean(u.checkpoints?.some(Boolean))
 }
 
+function hasCheckpointTick(u: Epoch2LeaderboardUser): boolean {
+  return Boolean(u.checkpoints?.some(Boolean))
+}
+
+function compareByCheckpointThenScore(a: Epoch2LeaderboardUser, b: Epoch2LeaderboardUser): number {
+  const aTick = hasCheckpointTick(a) ? 1 : 0
+  const bTick = hasCheckpointTick(b) ? 1 : 0
+  if (bTick !== aTick) return bTick - aTick
+  return b.score - a.score
+}
+
 /** Match handle, display name, or wallet (partial, case-insensitive). */
 export function filterEpoch2Users(users: Epoch2LeaderboardUser[], query: string): Epoch2LeaderboardUser[] {
   const q = query.trim().toLowerCase().replace(/^@/, '')
@@ -57,13 +68,13 @@ export function formatDisplayHandle(username: string): string {
 
 /**
  * Ranks 1–7: API order (guaranteed top 7).
- * Rank 8+: eligible by score, then not eligible by score (matches server sort).
+ * Rank 8+: eligible with ≥1 tick first, then score-only eligible, then not eligible (matches server).
  */
 export function getRankedUsers(users: Epoch2LeaderboardUser[]): Array<Epoch2LeaderboardUser & { rank: number }> {
   const GUARANTEED_COUNT = 7
   const head = users.slice(0, GUARANTEED_COUNT)
   const tail = users.slice(GUARANTEED_COUNT)
-  const eligible = tail.filter(isRankedEligible).sort((a, b) => b.score - a.score)
+  const eligible = tail.filter(isRankedEligible).sort(compareByCheckpointThenScore)
   const ineligible = tail.filter((u) => !isRankedEligible(u)).sort((a, b) => b.score - a.score)
   return [...head, ...eligible, ...ineligible].map((u, i) => ({ ...u, rank: i + 1 }))
 }

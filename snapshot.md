@@ -203,12 +203,12 @@ Scores for ranks 1–7 use a **fixed ladder**: each step is **+46.95** above the
 ### Rank order after the top 7
 
 1. **Ranks 1–7** — guaranteed list above (fixed order).  
-2. **Rank 8+** — all **SR-eligible** competitors, sorted by **score** (highest first).  
+2. **Rank 8+** — **SR-eligible** competitors: **≥1 checkpoint tick** first (then by score), then eligible with **zero ticks** (latest-night only), then by score.  
 3. **Below eligible** — **not eligible** competitors, sorted by **score** (highest first).
 
 If the same @handle appears in `mindshare_submissions.csv` with **two different wallets**, only one row is shown in the top 7 (Epoch 1 export wallet wins when present); extra wallet rows are hidden so you do not see duplicate @handles further down at score 0.
 
-A high-scoring not-eligible account never ranks above an eligible account with a lower score.
+Anyone with at least one green checkpoint ranks above an eligible account with zero ticks, even if the latter has a higher score. A not-eligible account never ranks above an eligible one.
 
 ---
 
