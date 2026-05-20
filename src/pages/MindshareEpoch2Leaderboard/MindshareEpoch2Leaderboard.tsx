@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import Header from '../../components/common/Header/Header'
 import { PageSEO } from '../../components/common/PageSEO/PageSEO'
-import type { Epoch2LeaderboardApiPayload, Epoch2LeaderboardUser, Epoch2StatsInput } from './mindshareEpoch2Data'
+import type {
+  Epoch2CheckpointColumn,
+  Epoch2LeaderboardApiPayload,
+  Epoch2LeaderboardUser,
+  Epoch2StatsInput,
+} from './mindshareEpoch2Data'
+import { epoch2PublishedCheckpointsClient } from './mindshareEpoch2Data'
 import { Epoch2LeaderboardTable } from './Epoch2LeaderboardTable'
 import { Epoch2StatCards } from './Epoch2StatCards'
 import { enrichEpoch2UsersForDisplay } from './epoch2ClientProfileEnrichment'
@@ -69,6 +75,9 @@ const MindshareEpoch2Leaderboard = () => {
         if (cancelled) return
         setStats(json.stats)
         setUsers(enrichEpoch2UsersForDisplay(json.users))
+        setCheckpointDays(
+          json.checkpointDays?.length ? json.checkpointDays : epoch2PublishedCheckpointsClient(),
+        )
         setGeneratedAt(json.generatedAt)
         setErrorNotice(null)
         setLoadState('ready')
@@ -124,7 +133,7 @@ const MindshareEpoch2Leaderboard = () => {
                 No participants on the leaderboard yet. Scores update on a schedule; check back soon.
               </p>
             ) : (
-              <Epoch2LeaderboardTable users={users} stats={stats} />
+              <Epoch2LeaderboardTable users={users} stats={stats} checkpointDays={checkpointDays} />
             )}
           </>
         ) : null}
