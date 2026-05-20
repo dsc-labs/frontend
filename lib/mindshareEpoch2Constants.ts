@@ -1,7 +1,10 @@
-/** Aligns with `MindshareChallenge.tsx` epoch window (Epoch 2 end = Epoch 1 end + 28d). */
+/** Aligns with `src/lib/mindshareEpochSchedule.ts` (Epoch 2 end = Epoch 1 end + 28d). */
 export const EPOCH_1_END_MS = Date.parse('2026-04-22T17:00:00Z')
 export const EPOCH_2_DURATION_MS = 28 * 24 * 60 * 60 * 1000
 export const EPOCH_2_END_MS = EPOCH_1_END_MS + EPOCH_2_DURATION_MS
+/** Gap before Epoch 3 (UI countdown on `/mindshare-challenge`). */
+export const EPOCH_3_GAP_MS = 3 * 24 * 60 * 60 * 1000
+export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 
 /** Public `/epoch2` engagement cards (update after full metrics pass or set `MINDSHARE_EPOCH2_USE_COMPUTED_ENGAGEMENT_STATS=1`). */
 export const EPOCH2_PUBLIC_ENGAGEMENT_STATS = {

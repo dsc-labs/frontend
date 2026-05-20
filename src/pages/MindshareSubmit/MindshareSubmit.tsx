@@ -12,6 +12,10 @@ import {
   startXOAuthPkceFlow,
   type XOAuthStoredProfile,
 } from '../../lib/xOAuthClient'
+import {
+  getMindshareEpochPhase,
+  mindshareCountdownEndMs,
+} from '../../lib/mindshareEpochSchedule'
 import './MindshareSubmit.css'
 
 type SubmissionState = {
@@ -20,9 +24,6 @@ type SubmissionState = {
 
 const X_OAUTH_CLIENT_ID = (import.meta.env.VITE_X_OAUTH_CLIENT_ID as string | undefined)?.trim() || undefined
 const BASE_RPC_URL = (import.meta.env.VITE_BASE_RPC_URL as string | undefined)?.trim() || undefined
-const EPOCH_1_END = new Date('2026-04-22T17:00:00Z')
-const EPOCH_2_DURATION_MS = 28 * 24 * 60 * 60 * 1000
-const EPOCH_2_END = new Date(EPOCH_1_END.getTime() + EPOCH_2_DURATION_MS)
 const TRACKED_TOKEN = {
   address: '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9',
   name: 'Strike Robot',
@@ -53,9 +54,8 @@ function getRemaining(end: Date, nowMs: number) {
   return { days, hours, minutes, seconds: secs, expired: false }
 }
 
-const MindshareCountdown = ({ end, epoch, onComplete }: MindshareCountdownProps) => {
+const MindshareCountdown = ({ end, expiredLabel }: MindshareCountdownProps) => {
   const [nowMs, setNowMs] = useState(() => Date.now())
-  const hasTriggeredRef = useRef(false)
 
   useEffect(() => {
     const id = window.setInterval(() => setNowMs(Date.now()), 1000)
@@ -64,16 +64,10 @@ const MindshareCountdown = ({ end, epoch, onComplete }: MindshareCountdownProps)
 
   const { days, hours, minutes, seconds, expired } = getRemaining(end, nowMs)
 
-  useEffect(() => {
-    if (!expired || hasTriggeredRef.current || !onComplete) return
-    hasTriggeredRef.current = true
-    onComplete()
-  }, [expired, onComplete])
-
   if (expired) {
     return (
       <p className="mindshare-submit-countdown-expired" role="status">
-        Epoch {epoch} has ended.
+        {expiredLabel}
       </p>
     )
   }
@@ -134,9 +128,21 @@ async function fetchTokenBalanceFromBaseRpc(walletAddress: string): Promise<bigi
 }
 
 const MindshareSubmit = () => {
-  const [activeEpoch, setActiveEpoch] = useState<1 | 2>(() =>
-    Date.now() > EPOCH_1_END.getTime() ? 2 : 1,
-  )
+  const [scheduleNowMs, setScheduleNowMs] = useState(() => Date.now())
+
+  useEffect(() => {
+    const id = window.setInterval(() => setScheduleNowMs(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
+  const phase = getMindshareEpochPhase(scheduleNowMs)
+  const countdownEndMs = mindshareCountdownEndMs(phase)
+  const countdownExpiredLabel =
+    phase === 'epoch3_countdown'
+      ? 'Epoch 3 has begun.'
+      : phase === 'epoch2'
+        ? 'Epoch 2 has ended.'
+        : 'Epoch 1 has ended.'
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const { getAccessToken } = usePrivy()
@@ -227,14 +233,6 @@ const MindshareSubmit = () => {
 
   const walletAddress = address
   const isIdentityLinked = !!xProfile && !!walletAddress
-  const countdownEnd = activeEpoch === 1 ? EPOCH_1_END : EPOCH_2_END
-
-  const handleCountdownComplete = () => {
-    if (activeEpoch === 1) {
-      setActiveEpoch(2)
-    }
-  }
-
   useEffect(() => {
     if (!walletAddress) {
       setTokenBalance(null)
@@ -335,11 +333,16 @@ const MindshareSubmit = () => {
       <main className="mindshare-submit-container">
         <section className="mindshare-submit-shell">
           <header className="mindshare-submit-head">
-            <MindshareCountdown
-              end={countdownEnd}
-              epoch={activeEpoch}
-              onComplete={handleCountdownComplete}
-            />
+            {countdownEndMs != null ? (
+              <MindshareCountdown
+                end={new Date(countdownEndMs)}
+                expiredLabel={countdownExpiredLabel}
+              />
+            ) : (
+              <p className="mindshare-submit-countdown-expired" role="status">
+                Epoch 3 is underway.
+              </p>
+            )}
             <h1>SUBMIT YOUR MINDSHARE</h1>
           </header>
 

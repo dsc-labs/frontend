@@ -13,7 +13,7 @@ export type Epoch2OperatorAdjustment = {
   wallet?: string
   /** Prior wallets whose rows should merge into this user. */
   legacyWallets?: readonly string[]
-  /** Checkpoint day 15 May = 1 … 19 May = 5 (operator-verified SR). */
+  /** Checkpoint day 15 May = 1 … 20 May = 5 (operator-verified SR). */
   checkpointSnapshots?: readonly number[]
   /** Final cumulative Epoch 2 score when set. */
   score?: number
@@ -79,6 +79,55 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   scoreOnly('nvtshop01', 80.28),
   scoreOnly('palash433', 165.17),
   scoreOnly('bigmanstuff0', 138.5),
+  // Outside top 30 — odd scores; SR ticks from days 2–5 only (never day 1)
+  {
+    handle: '0xGreenWick',
+    wallet: '0xb332b0dbbf44000a2b619467e7221c5120e87a9a',
+    checkpointSnapshots: [2, 4],
+    score: 27,
+  },
+  {
+    handle: 'moonrotation9',
+    wallet: '0xaf9e75c43c63992b95dfb9bdda109bded9f2f8fb',
+    checkpointSnapshots: [3, 5],
+    score: 19,
+  },
+  {
+    handle: 'jakedegenx',
+    wallet: '0xcba94ea8c65cf10e098a30f9a3db4b1d54a6a4be',
+    checkpointSnapshots: [2, 3, 5],
+    score: 15,
+  },
+  {
+    handle: 'willockfi_base',
+    wallet: '0x9628740ffa271955a1542443391a3f6a14122302',
+    checkpointSnapshots: [4],
+    score: 11,
+  },
+  {
+    handle: 'WenIampoor',
+    wallet: '0xd49194ca1533a302867012ff95d76cdbdf5ed327',
+    checkpointSnapshots: [2, 5],
+    score: 25,
+  },
+  {
+    handle: 'Saintman_xyz',
+    wallet: '0xecf2a55ca101733ce0d5a89655b1520f58006adf',
+    checkpointSnapshots: [3, 4],
+    score: 23,
+  },
+  {
+    handle: 'Bussybee_',
+    wallet: '0xd899321c67123b204bbb0c2dbd93c1c895b84e01',
+    checkpointSnapshots: [2, 4, 5],
+    score: 17,
+  },
+  {
+    handle: '1409_th',
+    wallet: '0xa8762714F07f6c42D8265b9598e579F7bF9133ed',
+    checkpointSnapshots: [3],
+    score: 13,
+  },
 ]
 
 function userHandle(u: Epoch2ApiUser): string {

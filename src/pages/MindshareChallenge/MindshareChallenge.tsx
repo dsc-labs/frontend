@@ -1,13 +1,15 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
+import {
+  getMindshareEpochPhase,
+  mindshareArticleEpoch,
+  mindshareChallengeTitle,
+  mindshareCountdownEndMs,
+} from '../../lib/mindshareEpochSchedule'
 import './MindshareChallenge.css'
-
-const EPOCH_1_END = new Date('2026-04-22T17:00:00Z')
-const EPOCH_2_DURATION_MS = 28 * 24 * 60 * 60 * 1000
-const EPOCH_2_END = new Date(EPOCH_1_END.getTime() + EPOCH_2_DURATION_MS)
 
 function pad2(n: number) {
   return n.toString().padStart(2, '0')
@@ -28,13 +30,11 @@ function getRemaining(end: Date, nowMs: number) {
 
 type MindshareCountdownProps = {
   end: Date
-  epoch: 1 | 2
-  onComplete?: () => void
+  expiredLabel: string
 }
 
-const MindshareCountdown = ({ end, epoch, onComplete }: MindshareCountdownProps) => {
+const MindshareCountdown = ({ end, expiredLabel }: MindshareCountdownProps) => {
   const [nowMs, setNowMs] = useState(() => Date.now())
-  const hasTriggeredRef = useRef(false)
 
   useEffect(() => {
     const id = window.setInterval(() => setNowMs(Date.now()), 1000)
@@ -43,16 +43,10 @@ const MindshareCountdown = ({ end, epoch, onComplete }: MindshareCountdownProps)
 
   const { days, hours, minutes, seconds, expired } = getRemaining(end, nowMs)
 
-  useEffect(() => {
-    if (!expired || hasTriggeredRef.current || !onComplete) return
-    hasTriggeredRef.current = true
-    onComplete()
-  }, [expired, onComplete])
-
   if (expired) {
     return (
       <p className="mindshare-countdown-expired" role="status">
-        Epoch {epoch} has ended.
+        {expiredLabel}
       </p>
     )
   }
@@ -124,12 +118,17 @@ const MindshareChallenge = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="mindshare-title">STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH {activeEpoch}</h1>
-          <MindshareCountdown
-            end={countdownEnd}
-            epoch={activeEpoch}
-            onComplete={handleCountdownComplete}
-          />
+          <h1 className="mindshare-title">{mindshareChallengeTitle(phase)}</h1>
+          {countdownEndMs != null ? (
+            <MindshareCountdown
+              end={new Date(countdownEndMs)}
+              expiredLabel={countdownExpiredLabel}
+            />
+          ) : (
+            <p className="mindshare-countdown-expired" role="status">
+              Epoch 3 is underway.
+            </p>
+          )}
         </motion.div>
 
         <article className="mindshare-article">
@@ -156,15 +155,19 @@ const MindshareChallenge = () => {
                 →
               </span>
             </Link>
-            <Epoch2LeaderboardComingSoonButton />
+            <Epoch2LeaderboardButton live={epoch2LeaderboardLive} />
           </div>
 
-          <h2>EPOCH {activeEpoch} BREAKDOWN</h2>
+          <h2>EPOCH {articleEpoch} BREAKDOWN</h2>
           <h3>Duration</h3>
           <p className="mindshare-duration-box">
-            {activeEpoch === 1
-              ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
-              : 'Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. All submissions within this period will be counted.'}
+            {phase === 'epoch3_countdown'
+              ? 'Epoch 2 has ended. Epoch 3 begins after the 3-day countdown (17:00 UTC on May 23, 2026).'
+              : articleEpoch === 1
+                ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
+                : articleEpoch === 2
+                  ? 'Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. All submissions within this period will be counted.'
+                  : 'Epoch 3 is open. Submission windows and rewards will be announced on this page.'}
           </p>
 
           <h3>Reward Pool</h3>
@@ -199,7 +202,7 @@ const MindshareChallenge = () => {
                 →
               </span>
             </Link>
-            <Epoch2LeaderboardComingSoonButton />
+            <Epoch2LeaderboardButton live={epoch2LeaderboardLive} />
           </div>
         </article>
       </div>
