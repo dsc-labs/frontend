@@ -49,6 +49,9 @@ const MindshareEpoch2Leaderboard = () => {
   const [loadState, setLoadState] = useState<LoadState>('loading')
   const [stats, setStats] = useState<Epoch2StatsInput | null>(null)
   const [users, setUsers] = useState<Epoch2LeaderboardUser[] | null>(null)
+  const [checkpointDays, setCheckpointDays] = useState<Epoch2CheckpointColumn[]>(() =>
+    epoch2PublishedCheckpointsClient(),
+  )
   const [generatedAt, setGeneratedAt] = useState<string | null>(null)
   const [errorNotice, setErrorNotice] = useState<string | null>(null)
 
