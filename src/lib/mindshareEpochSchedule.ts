@@ -22,6 +22,8 @@ export const EPOCH_3_GAP_MS = 3 * 24 * 60 * 60 * 1000
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 
 export const EPOCH_2_END_GMT7_LABEL = '12:00 AM GMT+7, May 21, 2026'
+/** User-facing Epoch 2 submit cutoff (= `EPOCH_2_END_MS`). */
+export const EPOCH_2_END_UTC_LABEL = '17:00 UTC, May 20, 2026'
 /** User-facing Epoch 3 start (= `EPOCH_3_START_MS`, same instant as 00:00 GMT+7 on 24 May 2026). */
 export const EPOCH_3_START_UTC_LABEL = '17:00 UTC, May 23, 2026'
 
@@ -51,10 +53,10 @@ export function isEpoch2LeaderboardTablePublic(_nowMs = Date.now()): boolean {
 }
 
 /**
- * After Epoch 2 ends (midnight GMT+7 tonight): Epoch 3 preview is public and the challenge-page
- * “Epoch 2 Leaderboard” control links to `/epoch3-preview`.
+ * After Epoch 2 ends (midnight GMT+7 tonight): the challenge-page “Epoch 2 Leaderboard” control
+ * links to `/epoch3-preview`. The preview URL itself is always open (no redirect).
  */
-export function isEpoch3PreviewPublic(nowMs = Date.now()): boolean {
+export function isEpoch3PreviewLinkedFromChallenge(nowMs = Date.now()): boolean {
   return nowMs >= EPOCH_2_END_MS
 }
 

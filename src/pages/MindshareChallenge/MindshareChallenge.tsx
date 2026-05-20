@@ -5,12 +5,13 @@ import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
 import {
   getMindshareEpochPhase,
-  isEpoch3PreviewPublic,
+  isEpoch3PreviewLinkedFromChallenge,
   isMindshareSubmissionOpen,
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
   nextGmt7MidnightMs,
+  EPOCH_2_END_UTC_LABEL,
   EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
@@ -99,7 +100,7 @@ function SubmitMindshareLink({ open }: { open: boolean }) {
   return (
     <button type="button" className="mindshare-submit-link mindshare-submit-link--closed" disabled>
       <strong>Submit Your Mindshare</strong>
-      <span className="mindshare-submit-closed-hint"> (closed until Epoch 3)</span>
+      <span className="mindshare-submit-closed-hint"> (Epoch 2 submissions closed)</span>
     </button>
   )
 }
@@ -112,8 +113,8 @@ function Epoch2LeaderboardButton() {
     return () => window.clearInterval(id)
   }, [])
 
-  const previewPublic = isEpoch3PreviewPublic(nowMs)
-  const hoverLabel = previewPublic
+  const previewLinked = isEpoch3PreviewLinkedFromChallenge(nowMs)
+  const hoverLabel = previewLinked
     ? formatCountdownToGmt7Midnight(nextGmt7MidnightMs(nowMs), nowMs)
     : 'Coming Soon'
 
@@ -135,7 +136,7 @@ function Epoch2LeaderboardButton() {
     </span>
   )
 
-  if (previewPublic) {
+  if (previewLinked) {
     return (
       <Link
         to="/epoch3-preview"
@@ -238,7 +239,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
         <PageSEO
           path={seoPath}
           title="Epoch 3 Preview — Mindshare Challenge"
-          metaDescription="Preview of the Epoch 3 mindshare challenge page after Epoch 2 ends: copy, countdown, and closed submissions."
+          metaDescription="Preview of the Epoch 3 mindshare challenge page. Epoch 2 submissions stay open until midnight GMT+7 tonight."
           noIndex
         />
       ) : (
@@ -277,13 +278,17 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
           <h2>EPOCH {articleEpoch} BREAKDOWN</h2>
           <h3>Duration</h3>
           <p className="mindshare-duration-box">
-            {phase === 'epoch3_countdown'
+            {!submissionsOpen && (phase === 'epoch3_countdown' || phase === 'epoch3')
               ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
-              : articleEpoch === 1
-                ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
-                : articleEpoch === 2
-                  ? 'Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. All submissions within this period will be counted.'
-                  : 'Epoch 3 is open. Submission windows and rewards will be announced on this page.'}
+              : submissionsOpen && phase === 'epoch2'
+                ? `Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. Submissions remain open until ${EPOCH_2_END_UTC_LABEL} (midnight GMT+7 tonight).`
+                : submissionsOpen && preview && phase === 'epoch3_countdown'
+                  ? `Epoch 2 submissions remain open until ${EPOCH_2_END_UTC_LABEL} (midnight GMT+7 tonight). Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
+                  : articleEpoch === 1
+                    ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
+                    : phase === 'epoch3'
+                      ? 'Epoch 3 is open. Submission windows and rewards will be announced on this page.'
+                      : 'Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. All submissions within this period will be counted.'}
           </p>
 
           <h3>Reward Pool</h3>
