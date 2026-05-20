@@ -4,25 +4,6 @@
   color: #111111;
 }
 
-.mindshare-preview-banner {
-  margin: 0 0 24px;
-  padding: 12px 16px;
-  border: 1px solid #c9a227;
-  background: #fff9e6;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #3d3500;
-}
-
-.mindshare-preview-banner code {
-  font-size: 13px;
-}
-
-.mindshare-preview-banner a {
-  color: #111111;
-  font-weight: 600;
-}
-
 .mindshare-container {
   max-width: 980px;
   margin: 0 auto;

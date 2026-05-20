@@ -208,13 +208,6 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
       <Header showSocialIcons />
 
       <div className="mindshare-container">
-        {preview ? (
-          <p className="mindshare-preview-banner" role="note">
-            <strong>Preview only.</strong> This is how <code>/mindshare-challenge</code> will look after Epoch 2
-            ends at midnight GMT+7. Epoch 3 goes live at {EPOCH_3_START_GMT7_LABEL}.{' '}
-            <Link to="/mindshare-challenge">Back to live page</Link>
-          </p>
-        ) : null}
         <motion.div
           className="mindshare-title-section"
           initial={{ opacity: 0, y: 20 }}
