@@ -105,10 +105,10 @@ Public leaderboard is served from **`data/newmindshare/epoch2_leaderboard_snapsh
 
 ### Daily job (production)
 
-**17:00 UTC** (= **00:00 GMT+7**): `GET` / `POST` `/api/mindshare/epoch2-sr-snapshot`
+**17:00 UTC** daily: `GET` / `POST` `/api/mindshare/epoch2-sr-snapshot`
 
-1. SR eligibility at archive block for midnight GMT+7 → `epoch2_sr_eligible_wallets.json`
-2. Count + score new posts in tonight’s GMT+7 window → `epoch2_daily_state.json`, `epoch2_leaderboard_snapshot.json`
+1. SR eligibility at archive block for 17:00 UTC → `epoch2_sr_eligible_wallets.json`
+2. Count + score new posts in the current eligibility window → `epoch2_daily_state.json`, `epoch2_leaderboard_snapshot.json`
 
 Requires `CRON_SECRET` (Bearer), `TWITTER_BEARER_TOKEN`, `BASE_ARCHIVE_RPC_URL`.
 

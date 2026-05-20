@@ -27,7 +27,7 @@ function parseReplace(req: VercelRequest): boolean {
 }
 
 /**
- * Operator-only: historical on-chain SR snapshot for one GMT+7 eligibility day (archive RPC).
+ * Operator-only: historical on-chain SR snapshot for one eligibility day (archive RPC).
  * Appends to `epoch2_sr_snapshots.jsonl` for checkpoint UI. Does not change live gating file.
  *
  * Query/body: `day=2026-05-16`, optional `replace=1` to overwrite an existing line for that day.

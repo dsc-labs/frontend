@@ -7,7 +7,7 @@ import { gmt7DayKeyFromMs, gmt7PreviousDayKey, gmt7SrEligibilitySnapshotInstantM
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
 import { normalizeXUsername } from './xTweetMetrics'
 
-/** GMT+7 eligibility days shown as status checkpoints (15–18 + 20 May; no 19 May tick). */
+/** Eligibility days shown as status checkpoints (15–18 + 20 May; no 19 May tick). */
 export const EPOCH2_CHECKPOINT_DAY_KEYS = [
   '2026-05-15',
   '2026-05-16',
@@ -66,7 +66,7 @@ function resolveEligibilityDayKey(line: SrSnapshotLogLine): string | null {
   const runDayGmt7 = gmt7DayKeyFromMs(atMs)
   // First checkpoint day backfill was stored without `eligibilityDayKey` (meant that calendar day).
   if (runDayGmt7 === EPOCH2_CHECKPOINT_DAY_KEYS[0]) return runDayGmt7
-  // Later manual/cron runs: midnight on D records eligibility for GMT+7 day D−1.
+  // Later manual/cron runs: 17:00 UTC on D records eligibility for day D−1.
   return gmt7PreviousDayKey(runDayGmt7)
 }
 

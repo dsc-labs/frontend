@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Epoch 1 score (if in export) + Epoch 2 score by GMT+7 checkpoint day for one user.
+ * Epoch 1 score (if in export) + Epoch 2 score by eligibility checkpoint day for one user.
  *
  * Sources: `mindshare_submissions.csv`, `leaderboard_export.csv`, SR jsonl, metrics cache, daily state.
  *
@@ -92,7 +92,7 @@ function defaultQualityScore() {
 function formatGmt7Instant(ms) {
   if (!Number.isFinite(ms) || ms <= 0) return '(before epoch / no submitted at)'
   const d = new Date(ms + 7 * 60 * 60 * 1000)
-  return `${d.toISOString().slice(0, 19).replace('T', ' ')} GMT+7`
+  return `${d.toISOString().slice(0, 19).replace('T', ' ')} UTC`
 }
 
 function formatPostWindow(postWindow, isBootstrap) {

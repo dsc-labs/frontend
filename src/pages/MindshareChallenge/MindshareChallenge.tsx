@@ -10,8 +10,7 @@ import {
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
-  nextGmt7MidnightMs,
-  EPOCH_2_END_UTC_LABEL,
+  nextDailySnapshotUtcMs,
   EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
@@ -76,7 +75,7 @@ const MindshareCountdown = ({ end, expiredLabel }: MindshareCountdownProps) => {
   )
 }
 
-function formatCountdownToGmt7Midnight(endMs: number, nowMs: number): string {
+function formatUtcCountdown(endMs: number, nowMs: number): string {
   const { days, hours, minutes, seconds, expired } = getRemaining(new Date(endMs), nowMs)
   if (expired) return 'Updating…'
   if (days > 0) {
@@ -115,7 +114,7 @@ function Epoch2LeaderboardButton() {
 
   const previewLinked = isEpoch3PreviewLinkedFromChallenge(nowMs)
   const hoverLabel = previewLinked
-    ? formatCountdownToGmt7Midnight(nextGmt7MidnightMs(nowMs), nowMs)
+    ? formatUtcCountdown(nextDailySnapshotUtcMs(nowMs), nowMs)
     : 'Coming Soon'
 
   const labelStack = (
@@ -156,7 +155,7 @@ function Epoch2LeaderboardButton() {
       className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--disabled"
       aria-disabled="true"
       aria-label="Epoch 2 Leaderboard, coming soon"
-      title="Available after midnight GMT+7 tonight"
+      title="Available after Epoch 2 ends"
     >
       {labelStack}
       {arrow}
@@ -239,7 +238,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
         <PageSEO
           path={seoPath}
           title="Epoch 3 Preview — Mindshare Challenge"
-          metaDescription="Preview of the Epoch 3 mindshare challenge page. Epoch 2 submissions stay open until midnight GMT+7 tonight."
+          metaDescription={`Preview of the Epoch 3 mindshare challenge page. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`}
           noIndex
         />
       ) : (
@@ -278,17 +277,15 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
           <h2>EPOCH {articleEpoch} BREAKDOWN</h2>
           <h3>Duration</h3>
           <p className="mindshare-duration-box">
-            {!submissionsOpen && (phase === 'epoch3_countdown' || phase === 'epoch3')
-              ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
-              : submissionsOpen && phase === 'epoch2'
-                ? `Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. Submissions remain open until ${EPOCH_2_END_UTC_LABEL} (midnight GMT+7 tonight).`
-                : submissionsOpen && preview && phase === 'epoch3_countdown'
-                  ? `Epoch 2 submissions remain open until ${EPOCH_2_END_UTC_LABEL} (midnight GMT+7 tonight). Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
-                  : articleEpoch === 1
-                    ? 'Epoch 1 runs for 2 weeks starting at 17:00 UTC on April 8, 2026. All submissions within this period will be counted.'
-                    : phase === 'epoch3'
-                      ? 'Epoch 3 is open. Submission windows and rewards will be announced on this page.'
-                      : 'Epoch 2 runs for 4 weeks starting at 17:00 UTC on April 22, 2026. All submissions within this period will be counted.'}
+            {phase === 'epoch3_countdown' || phase === 'epoch3'
+              ? !submissionsOpen
+                ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
+                : `Epoch 2 submissions are still open during this preview. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
+              : articleEpoch === 1
+                ? 'Epoch 1 runs for 2 weeks. All submissions within this period will be counted.'
+                : articleEpoch === 2
+                  ? 'Epoch 2 runs for 4 weeks. All submissions within this period will be counted.'
+                  : 'Epoch 3 is open. Submission windows and rewards will be announced on this page.'}
           </p>
 
           <h3>Reward Pool</h3>

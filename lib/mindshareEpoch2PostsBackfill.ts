@@ -36,7 +36,7 @@ export type Epoch2PostsBackfillDayResult = {
 
 /**
  * Replay post counting from first → last checkpoint day using SR lists in `epoch2_sr_snapshots.jsonl`
- * and the same GMT+7 window rules as the daily cron (`snapshot.md`).
+ * and the same eligibility-day window rules as the daily cron (`snapshot.md`).
  */
 export function replayEpoch2CountedPostKeys(options: {
   allPosts: Epoch2FlattenedPost[]
@@ -196,7 +196,7 @@ export async function runMindshareEpoch2PostsBackfill(options: {
       endMs: nowMs,
       eligibilityDayKey: snapshotDayKey,
     },
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
   }
 
   const dailyStatePath = await writeEpoch2DailyState({

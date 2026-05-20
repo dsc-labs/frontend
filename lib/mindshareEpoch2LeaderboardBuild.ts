@@ -87,7 +87,7 @@ export type Epoch2ApiUser = {
   srEligible: boolean
   /** On-chain $SR from latest daily snapshot (human units). */
   srBalance?: number
-  /** SR eligibility per GMT+7 day (15–18 + 20 May); true = passed that night's snapshot. */
+  /** SR eligibility per eligibility day (15–18 + 20 May); true = passed that 17:00 UTC snapshot. */
   checkpoints?: boolean[]
 }
 

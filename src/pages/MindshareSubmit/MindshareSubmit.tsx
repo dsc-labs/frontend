@@ -475,11 +475,24 @@ const MindshareSubmit = () => {
               </label>
 
               <div className="mindshare-submit-actions">
-                <button type="submit" disabled={submitBusy || !isIdentityLinked}>
+                <button
+                  type="submit"
+                  disabled={submitBusy || !isIdentityLinked}
+                  title={
+                    !isIdentityLinked
+                      ? 'Connect X and your wallet above to enable Submit Entry'
+                      : undefined
+                  }
+                >
                   {submitBusy ? 'Submitting...' : 'Submit Entry'}
                 </button>
                 <Link to="/mindshare-challenge">Back to challenge</Link>
               </div>
+              {!isIdentityLinked ? (
+                <p className="mindshare-submit-identity-hint" role="status">
+                  Connect <strong>X</strong> and your <strong>wallet</strong> above to enable Submit Entry.
+                </p>
+              ) : null}
               {submitMessage ? <p className="mindshare-submit-status">{submitMessage}</p> : null}
             </form>
           )}

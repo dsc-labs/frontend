@@ -29,7 +29,7 @@ export type Epoch2LeaderboardSnapshotFile = MindshareEpoch2LeaderboardPayload & 
   snapshotDayKey: string
   isBootstrap: boolean
   postWindow: { startMs: number; endMs: number; eligibilityDayKey: string }
-  cronTimezoneNote: '17:00 UTC = 00:00 GMT+7'
+  cronTimezoneNote: 'Daily snapshot at 17:00 UTC'
 }
 
 export function epoch2PostKey(walletLower: string, tweetId: string): string {

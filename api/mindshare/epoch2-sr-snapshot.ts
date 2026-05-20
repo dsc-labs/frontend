@@ -3,10 +3,10 @@ import { runMindshareEpoch2DailySnapshot } from '../../lib/mindshareEpoch2DailyS
 import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
 
 /**
- * Vercel Cron: `0 17 * * *` (17:00 UTC = **00:00 GMT+7**) until Epoch 2 ends.
- * Daily midnight GMT+7 (see `lib/mindshareEpoch2DailySnapshot.ts`):
- * 1. SR eligibility at archive block for midnight GMT+7 (`BASE_ARCHIVE_RPC_URL`)
- * 2. Post counting/scoring via GMT+7 day windows (separate from SR)
+ * Vercel Cron: `0 17 * * *` (17:00 UTC daily) until Epoch 2 ends.
+ * Daily snapshot (see `lib/mindshareEpoch2DailySnapshot.ts`):
+ * 1. SR eligibility at archive block for 17:00 UTC (`BASE_ARCHIVE_RPC_URL`)
+ * 2. Post counting/scoring via eligibility-day windows (separate from SR)
  * Writes `epoch2_sr_eligible_wallets.json`, `epoch2_leaderboard_snapshot.json`, and daily state.
  *
  * Auth: same as waitlist / epoch2-refresh (`CRON_SECRET` Bearer, `WAITLIST_CRON_SECRET`, or `x-cron-secret`).

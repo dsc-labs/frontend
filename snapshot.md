@@ -8,7 +8,7 @@ This document describes **what data is frozen or refreshed on a schedule** for t
 
 | What | When | Stored in | Used for |
 | ---- | ---- | --------- | -------- |
-| **Daily job (SR + scores)** | Once per day at **00:00 GMT+7** (`0 17 * * *` UTC) | See [Files written](#files-written) | Eligibility, cumulative scores, public leaderboard |
+| **Daily job (SR + scores)** | Once per day at **17:00 UTC** (`0 17 * * *`) | See [Files written](#files-written) | Eligibility, cumulative scores, public leaderboard |
 | **Submissions** | On each form submit | `mindshare_submissions.csv` (+ `submitted at`) | Which posts exist and **when** they were submitted |
 | **Operator backfill** | Manual | Same files | Replay SR days and/or full post counting 15→18 & 20 |
 
@@ -23,8 +23,8 @@ Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`**. It does **not** r
 
 | Mechanism | Question it answers | Source of truth |
 | --------- | ------------------- | ----------------- |
-| **SR eligibility** | Did this wallet hold **> 10,000** $SR at **midnight GMT+7** for day *D*? | On-chain balance at **archive block** → `epoch2_sr_snapshots.jsonl` (per day) + `epoch2_sr_eligible_wallets.json` (latest night, for gating) |
-| **Post counting + scoring** | Which tweets count toward score, and how many points? | CSV + `submitted at` + GMT+7 **post windows** + per-day SR list → `epoch2_daily_state.json` `countedPostKeys` → `epoch2_leaderboard_snapshot.json` |
+| **SR eligibility** | Did this wallet hold **> 10,000** $SR at the **17:00 UTC** snapshot for day *D*? | On-chain balance at **archive block** → `epoch2_sr_snapshots.jsonl` (per day) + `epoch2_sr_eligible_wallets.json` (latest night, for gating) |
+| **Post counting + scoring** | Which tweets count toward score, and how many points? | CSV + `submitted at` + eligibility-day **post windows** + per-day SR list → `epoch2_daily_state.json` `countedPostKeys` → `epoch2_leaderboard_snapshot.json` |
 
 SR eligibility does **not** depend on how many tweets someone submitted. One tweet with >10k $SR can be SR-eligible; many tweets with 0 $SR on-chain at the checkpoint do not score.
 
@@ -48,11 +48,11 @@ runMindshareEpoch2DailySnapshot          lib/mindshareEpoch2DailySnapshot.ts
 
 ---
 
-## Daily midnight job (GMT+7)
+## Daily snapshot job (17:00 UTC)
 
-At **00:00 GMT+7** each day (17:00 UTC, no DST), one run does:
+At **17:00 UTC** each day, one run does:
 
-1. **SR eligibility** — archive RPC balance at the block for midnight GMT+7 → `epoch2_sr_eligible_wallets.json` + append/replace line in `epoch2_sr_snapshots.jsonl`
+1. **SR eligibility** — archive RPC balance at the snapshot block → `epoch2_sr_eligible_wallets.json` + append/replace line in `epoch2_sr_snapshots.jsonl`
 2. **X metrics** — tweet engagement + follower counts for posts being scored → `epoch2_metrics_cache.json`
 3. **Cumulative scores** — add points for **new** posts in tonight’s window → `epoch2_leaderboard_snapshot.json` + `epoch2_daily_state.json`
 
@@ -79,7 +79,7 @@ All operator routes use the same auth as waitlist crons: `Authorization: Bearer 
 
 ### Full post replay (first → last checkpoint day)
 
-Replays **which posts enter `countedPostKeys`** for each GMT+7 eligibility day (**2026-05-15 … 2026-05-18** and **2026-05-20** — no separate 19 May tick) using **`epoch2_sr_snapshots.jsonl`** per day, then scores all of them.
+Replays **which posts enter `countedPostKeys`** for each eligibility day (**2026-05-15 … 2026-05-18** and **2026-05-20** — no separate 19 May tick) using **`epoch2_sr_snapshots.jsonl`** per day, then scores all of them.
 
 ```bash
 # Prerequisite: SR jsonl line per day (archive RPC)
@@ -128,11 +128,11 @@ Submissions store **`submitted at`** (ISO-8601) on new CSV rows. Legacy rows wit
 - **Rule:** if the wallet is **SR-eligible** at that snapshot, those posts enter the cumulative leaderboard.
 - **Score:** posts counted on this run are stored in `bootstrapPostKeys` and earn **×5** on cumulative score (`EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER` in `lib/mindshareEpoch2Constants.ts`). Later nights are ×1.
 
-### Every later midnight
+### Every later 17:00 UTC snapshot
 
-- **Eligibility day *D*:** you are eligible at the snapshot that ends GMT+7 calendar day *D*.
-- **Post window:** submissions with `submittedAt` in **[start of day *D−1*, start of day *D*)** in GMT+7.  
-  Example: eligible on **day 15** → posts submitted during **day 14 → day 15** (the 24h window ending at day 15 midnight).
+- **Eligibility day *D*:** you are eligible at the 17:00 UTC snapshot for day *D*.
+- **Post window:** submissions with `submittedAt` in **[start of day *D−1*, start of day *D*)** (eligibility-day boundaries).  
+  Example: eligible on **day 15** → posts submitted during **day 14 → day 15** (the window ending at the day 15 snapshot).
 - **Rule:** only **new** posts in that window (not already counted) are scored, and only if the wallet is eligible **that** night.
 - **Cumulative:** total score and post count on `/epoch2` are the sum of all posts counted on prior eligible days.
 
@@ -140,7 +140,7 @@ Posts submitted while ineligible, or outside the window for that eligibility day
 
 ### Checkpoint days (UI)
 
-Shown on `/epoch2` as five booleans (15–19 May GMT+7), from **last** SR jsonl line per `eligibilityDayKey` in `epoch2_sr_snapshots.jsonl`. Guaranteed top 7 are always shown as eligible.
+Shown on `/epoch2` as five booleans (15–18 + 20 May checkpoints), from **last** SR jsonl line per `eligibilityDayKey` in `epoch2_sr_snapshots.jsonl`. Guaranteed top 7 are always shown as eligible.
 
 **Eligible Participants** stat (top card): count of everyone on the leaderboard with **≥1 checkpoint tick** (at least one `true` in `checkpoints[]`). This is not the same as “eligible on the latest night only” (`srEligible` from `epoch2_sr_eligible_wallets.json`).
 

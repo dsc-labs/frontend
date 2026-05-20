@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * Export or append a historical SR eligibility snapshot for one GMT+7 day
+ * Export or append a historical SR eligibility snapshot for one eligibility day
  * (for checkpoint backfill when server logs are missing a day).
  *
  * Picks the best matching line from epoch2_sr_snapshots.jsonl:
  * - Prefer explicit eligibilityDayKey === --day
- * - Else legacy: first line whose GMT+7 calendar day of `at` matches --day
+ * - Else legacy: first line whose eligibility day of `at` matches --day
  *
  * Usage:
  *   node scripts/backfill-epoch2-sr-day.cjs --day 2026-05-15
@@ -78,7 +78,7 @@ function normalizeLine(raw, day) {
   return {
     at: raw.at || new Date(`${day}T17:00:00.000Z`).toISOString(),
     eligibilityDayKey: day,
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
     thresholdExclusive: raw.thresholdExclusive ?? 10_000,
     totalMindshareWallets: raw.totalMindshareWallets ?? (raw.eligibleWalletsLower?.length || 0),
     eligibleCount: raw.eligibleCount ?? (raw.eligibleWalletsLower?.length || 0),

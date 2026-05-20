@@ -47,7 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (!isMindshareSubmissionOpen()) {
-    sendJson(res, 403, { error: 'Epoch 2 submissions are closed. New entries open with Epoch 3.' })
+    sendJson(res, 403, { error: 'Epoch 2 submissions are closed (after 17:00 UTC cutoff). New entries open with Epoch 3.' })
     return
   }
 

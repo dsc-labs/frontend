@@ -1,26 +1,26 @@
-/** Fixed UTC+7 (GMT+7, no DST) for Epoch 2 daily boundaries. */
+/** Eligibility day keys align to the 17:00 UTC daily snapshot (fixed +7h offset, no DST). */
 export const EPOCH2_GMT7_OFFSET_MS = 7 * 60 * 60 * 1000
 const MS_PER_DAY = 24 * 60 * 60 * 1000
 
-/** Calendar date `YYYY-MM-DD` for instant `ms` in GMT+7. */
+/** Eligibility day `YYYY-MM-DD` for instant `ms` (17:00 UTC cron windows). */
 export function gmt7DayKeyFromMs(ms: number): string {
   return new Date(ms + EPOCH2_GMT7_OFFSET_MS).toISOString().slice(0, 10)
 }
 
-/** Start of GMT+7 calendar day `dayKey` as UTC epoch ms. */
+/** UTC instant for start of eligibility day `dayKey`. */
 export function gmt7DayStartMs(dayKey: string): number {
   return Date.parse(`${dayKey}T00:00:00+07:00`)
 }
 
-/** Previous GMT+7 calendar day. */
+/** Previous eligibility day. */
 export function gmt7PreviousDayKey(dayKey: string): string {
   return gmt7DayKeyFromMs(gmt7DayStartMs(dayKey) - MS_PER_DAY)
 }
 
 /**
- * Post counting window for a daily snapshot at `snapshotMs` (typically 00:00 GMT+7).
+ * Post counting window for a daily snapshot at `snapshotMs` (17:00 UTC tick).
  *
- * Normal run (after bootstrap): if eligible on day *D*, posts submitted during GMT+7 day *D−1*
+ * Normal run (after bootstrap): if eligible on day *D*, posts submitted during eligibility day *D−1*
  * count (user-facing “14 → 15” when *D* is the 15th).
  *
  * Bootstrap (first run): all posts with `submittedAt <` this midnight count when eligible.
@@ -58,8 +58,7 @@ export function postSubmittedInWindow(submittedAtMs: number, startMs: number, en
 }
 
 /**
- * UTC instant when the 17:00 UTC cron records SR eligibility for GMT+7 calendar day `eligibilityDayKey`
- * (= 00:00 GMT+7 on the following calendar day).
+ * UTC instant when the 17:00 UTC cron records SR eligibility for eligibility day `eligibilityDayKey`.
  */
 export function gmt7SrEligibilitySnapshotInstantMs(eligibilityDayKey: string): number {
   return gmt7DayStartMs(eligibilityDayKey) + MS_PER_DAY

@@ -14,7 +14,7 @@ export type SrBalanceAtEligibilityDayResult = {
   thresholdExclusive: number
 }
 
-/** On-chain $SR balance at the Epoch 2 SR snapshot instant for one GMT+7 eligibility day. */
+/** On-chain $SR balance at the Epoch 2 SR snapshot instant for one eligibility day. */
 export async function fetchSrBalanceAtEligibilityDay(options: {
   walletLower: string
   eligibilityDayKey: string

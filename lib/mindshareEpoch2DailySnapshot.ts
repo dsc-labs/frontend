@@ -50,9 +50,9 @@ export type MindshareEpoch2DailySnapshotResult =
   | { ok: false; error: string }
 
 /**
- * Midnight GMT+7 job (two separate steps):
- * 1. SR eligibility — archive RPC balances at the block for midnight GMT+7 (`runMindshareEpoch2SrEligibilitySnapshot`)
- * 2. Posts + scores — GMT+7 post windows + X metrics (`buildMindshareEpoch2LeaderboardPayload`); uses SR list from step 1 only for gating
+ * Daily 17:00 UTC job (two separate steps):
+ * 1. SR eligibility — archive RPC balances at the snapshot block (`runMindshareEpoch2SrEligibilitySnapshot`)
+ * 2. Posts + scores — eligibility-day post windows + X metrics (`buildMindshareEpoch2LeaderboardPayload`); uses SR list from step 1 only for gating
  *
  * Public `/epoch2` reads the written leaderboard snapshot until the next run.
  */
@@ -136,7 +136,7 @@ export async function runMindshareEpoch2DailySnapshot(
       endMs: postWindow.endMs,
       eligibilityDayKey: postWindow.eligibilityDayKey,
     },
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
   }
 
   const dailyStatePath = await writeEpoch2DailyState({

@@ -216,7 +216,7 @@ console.log(`Live SR:    ${typeof liveBalance === 'number' ? liveBalance.toLocal
 console.log(`Leaderboard: ${lbUser ? `yes — postCount ${lbUser.postCount}, score ${lbUser.score}` : 'not in users[]'}`)
 console.log(`Counted posts (daily state): ${countedPosts}`)
 console.log('')
-console.log('Day (GMT+7)     UI checkpoint    Snapshot log')
+console.log('Eligibility day UI checkpoint    Snapshot log')
 if (args.chain) console.log('                Chain SR (>10k)   Block @ 17:00 UTC boundary')
 console.log('─'.repeat(60))
 

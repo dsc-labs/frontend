@@ -28,7 +28,7 @@ export type MindshareEpoch2SrHistoricalBackfillResult =
       rpcFailures: number
       logPath: string
       writeAction: 'appended' | 'replaced'
-      cronTimezoneNote: '17:00 UTC = 00:00 GMT+7'
+      cronTimezoneNote: 'Daily snapshot at 17:00 UTC'
       balanceSource: 'archive-block'
     }
   | { ok: false; error: string }
@@ -88,7 +88,7 @@ export async function runMindshareEpoch2SrHistoricalBackfill(options: {
     at: computed.targetAtIso,
     recordedAt: new Date().toISOString(),
     eligibilityDayKey: computed.eligibilityDayKey,
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
     thresholdExclusive: computed.thresholdExclusive,
     totalMindshareWallets: computed.totalMindshareWallets,
     eligibleCount: computed.eligibleCount,
@@ -123,7 +123,7 @@ export async function runMindshareEpoch2SrHistoricalBackfill(options: {
     rpcFailures: computed.rpcFailures,
     logPath,
     writeAction,
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
     balanceSource: 'archive-block',
   }
 }

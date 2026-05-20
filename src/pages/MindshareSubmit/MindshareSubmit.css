@@ -347,6 +347,13 @@ a.mindshare-submit-identity-btn {
   color: #1a1a1a;
 }
 
+.mindshare-submit-identity-hint {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #444444;
+}
+
 .mindshare-submit-closed-panel {
   margin-top: 8px;
 }

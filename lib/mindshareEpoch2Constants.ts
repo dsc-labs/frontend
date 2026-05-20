@@ -1,8 +1,7 @@
-/** Aligns with `src/lib/mindshareEpochSchedule.ts`. */
+/** Aligns with `src/lib/mindshareEpochSchedule.ts` — do not change instants without updating both files. */
 export const EPOCH_1_END_MS = Date.parse('2026-04-22T17:00:00Z')
 export const EPOCH_2_END_MS = Date.parse('2026-05-21T00:00:00+07:00')
 export const EPOCH_2_DURATION_MS = EPOCH_2_END_MS - EPOCH_1_END_MS
-/** Gap before Epoch 3 (UI countdown on `/mindshare-challenge`). */
 export const EPOCH_3_GAP_MS = 3 * 24 * 60 * 60 * 1000
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 
@@ -16,6 +15,9 @@ export const EPOCH2_PUBLIC_ENGAGEMENT_STATS = {
 
 /** Score multiplier for posts counted on the **first** (bootstrap) midnight snapshot. */
 export const EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER = 5
+
+/** Written into snapshot JSON metadata. */
+export const EPOCH2_SNAPSHOT_CRON_NOTE = 'Daily snapshot at 17:00 UTC'
 
 /** Mindshare form + API submissions (closes when Epoch 2 ends). */
 export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {

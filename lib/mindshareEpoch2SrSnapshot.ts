@@ -69,7 +69,7 @@ export type MindshareEpoch2SrSnapshotResult =
       ok: true
       skipped: false
       atIso: string
-      cronTimezoneNote: '17:00 UTC = 00:00 GMT+7'
+      cronTimezoneNote: 'Daily snapshot at 17:00 UTC'
       eligibilityDayKey: string
       thresholdExclusive: number
       totalMindshareWallets: number
@@ -87,7 +87,7 @@ export type MindshareEpoch2SrSnapshotResult =
   | { ok: false; error: string }
 
 /**
- * SR eligibility for `eligibilityDayKey` at the archive block for midnight GMT+7.
+ * SR eligibility for `eligibilityDayKey` at the archive block for the 17:00 UTC snapshot.
  * Writes checkpoint jsonl + `epoch2_sr_eligible_wallets.json` (used only for post window gating).
  *
  * Post counting/scoring is handled separately in {@link runMindshareEpoch2DailySnapshot}.
@@ -108,7 +108,7 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     return {
       ok: false,
       error:
-        'Missing BASE_ARCHIVE_RPC_URL or BASE_RPC_URL (archive RPC required for SR eligibility at midnight GMT+7)',
+        'Missing BASE_ARCHIVE_RPC_URL or BASE_RPC_URL (archive RPC required for SR eligibility at 17:00 UTC snapshot)',
     }
   }
 
@@ -129,7 +129,7 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     at: computed.targetAtIso,
     recordedAt: runAtIso,
     eligibilityDayKey: computed.eligibilityDayKey,
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
     thresholdExclusive: computed.thresholdExclusive,
     totalMindshareWallets: computed.totalMindshareWallets,
     eligibleCount: computed.eligibleCount,
@@ -166,7 +166,7 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     ok: true,
     skipped: false,
     atIso: runAtIso,
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
     eligibilityDayKey: computed.eligibilityDayKey,
     thresholdExclusive: computed.thresholdExclusive,
     totalMindshareWallets: computed.totalMindshareWallets,

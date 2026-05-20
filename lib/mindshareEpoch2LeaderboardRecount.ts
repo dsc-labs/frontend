@@ -117,7 +117,7 @@ export async function runMindshareEpoch2LeaderboardRecount(options: {
     snapshotDayKey,
     isBootstrap,
     postWindow,
-    cronTimezoneNote: '17:00 UTC = 00:00 GMT+7',
+    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
   }
 
   const dailyStatePath = await writeEpoch2DailyState({

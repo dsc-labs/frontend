@@ -4,7 +4,7 @@ import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
 
 /**
  * Operator-only alias for the daily midnight job (`runMindshareEpoch2DailySnapshot`).
- * Production schedule: `vercel.json` → `/api/mindshare/epoch2-sr-snapshot` at `0 17 * * *` (00:00 GMT+7).
+ * Production schedule: `vercel.json` → `/api/mindshare/epoch2-sr-snapshot` at `0 17 * * *` (17:00 UTC).
  * Same auth as waitlist snapshot: `CRON_SECRET` Bearer, `WAITLIST_CRON_SECRET`, or `x-cron-secret`.
  * Local bypass (never on Vercel): `MINDSHARE_EPOCH2_CRON_SKIP_AUTH=1`.
  */

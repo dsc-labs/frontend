@@ -37,8 +37,8 @@ export type Epoch2SrEligibilityForDayResult = {
 }
 
 /**
- * SR eligibility for one GMT+7 `eligibilityDayKey`: $SR balance of every mindshare CSV wallet
- * at the archive block for {@link gmt7SrEligibilitySnapshotInstantMs} (midnight GMT+7 boundary).
+ * SR eligibility for one `eligibilityDayKey`: $SR balance of every mindshare CSV wallet
+ * at the archive block for {@link gmt7SrEligibilitySnapshotInstantMs} (17:00 UTC snapshot).
  */
 export async function computeEpoch2SrEligibilityForDay(options: {
   eligibilityDayKey: string

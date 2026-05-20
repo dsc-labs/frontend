@@ -206,7 +206,7 @@ function attachWaitlistDevCron(server: ViteDevServer | PreviewServer, loadedEnv:
   else server.httpServer?.once('listening', bind)
 }
 
-/** Next 17:00 UTC (= 00:00 GMT+7) from now, in milliseconds. */
+/** Next 17:00 UTC boundary from now, in milliseconds. */
 function msUntilNextUtc17(): number {
   const now = new Date()
   const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 17, 0, 0, 0))
@@ -222,7 +222,7 @@ function mindshareEpoch2SrSnapshotDevCronEnabled(loadedEnv: Record<string, strin
 }
 
 /**
- * `npm run dev` / `vite preview`: optional schedule GET /api/mindshare/epoch2-sr-snapshot at each 17:00 UTC (midnight GMT+7).
+ * `npm run dev` / `vite preview`: optional schedule GET /api/mindshare/epoch2-sr-snapshot at each 17:00 UTC.
  * Off by default; enable: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1. Production: Vercel Cron `0 17 * * *`.
  */
 function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewServer, loadedEnv: Record<string, string>) {
@@ -292,7 +292,7 @@ function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewS
 
     const nextAt = new Date(Date.now() + msUntilNextUtc17())
     console.info(
-      `[mindshare epoch2] SR eligibility dev cron: next snapshot ~${nextAt.toISOString()} (17:00 UTC = 00:00 GMT+7). Opt out: unset MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON or set MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED=1`,
+      `[mindshare epoch2] SR eligibility dev cron: next snapshot ~${nextAt.toISOString()} (17:00 UTC). Opt out: unset MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON or set MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED=1`,
     )
   }
 
@@ -791,7 +791,7 @@ export default defineConfig(({ mode }) => {
                   res.setHeader('Content-Type', 'application/json; charset=utf-8')
                   res.end(
                     JSON.stringify({
-                      error: 'Epoch 2 submissions are closed. New entries open with Epoch 3.',
+                      error: 'Epoch 2 submissions are closed (after 17:00 UTC cutoff). New entries open with Epoch 3.',
                     }),
                   )
                   return

@@ -1,6 +1,6 @@
 /**
  * SR Platform waitlist unlocks at a fixed instant (browser compares with Date.now()).
- * Thu 7 May 2026, 08:00 in GMT+7 (UTC+7).
+ * Thu 7 May 2026, 01:00 UTC.
  */
 const LAUNCH_AT_MS = Date.parse('2026-05-07T08:00:00+07:00')
 
