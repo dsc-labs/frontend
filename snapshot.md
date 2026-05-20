@@ -198,7 +198,7 @@ These X handles are **always** on the leaderboard at **ranks 1–7** in this ord
 6. bizbrainzuni  
 7. office2crypto  
 
-Scores are adjusted to stay above rank 8+ with **deterministic pseudo-random gaps** between ranks (≈2–13 pts, stable across cron runs—not a fixed ladder). If the podium is far above the first organic eligible score, ranks 1–7 are **capped** so rank 7 is at most ~10 points above rank 8 (same irregular gaps cascade up). Epoch 1 prize exclusion (ranks 1–101) does **not** apply to these seven wallets.
+Scores for ranks 1–7 use a **fixed ladder**: each step is **+46.95** above the next rank (rank 7 = first organic eligible score + 46.95, then +46.95 through rank 1). Applied on snapshot build and on every `/epoch2` page load. Epoch 1 prize exclusion (ranks 1–101) does **not** apply to these seven wallets.
 
 ### Rank order after the top 7
 

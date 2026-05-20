@@ -17,24 +17,25 @@ export const EPOCH2_GUARANTEED_TOP7_HANDLES: readonly string[] = [
   'office2crypto',
 ] as const
 
-/** Max score gap between rank 8 (first organic eligible) and rank 7; cascades up through ranks 1–7. */
-const MAX_GAP_RANK8_TO_RANK7 = 10
-
 /**
- * Deterministic pseudo-random gap above the next-lower rank (slot 0 = rank 7 above rank 8).
- * Stable across cron runs but irregular (≈2.2–13.1 pts) so the podium does not look evenly stepped.
+ * Fixed step between rank 8 → 7 → 6 → … → 1 (same spacing as the reference podium ladder).
+ * Rank 7 = rank8Score + step, rank 6 = rank7 + step, … rank 1 = rank7 + 6×step.
  */
-function gapAboveNextRank(slotFromBottom: number): number {
-  let h = 0x811c9dc5
-  const tag = `mma-epoch2-top7-gap:v2:${slotFromBottom}`
-  for (let i = 0; i < tag.length; i += 1) {
-    h ^= tag.charCodeAt(i)
-    h = Math.imul(h, 0x01000193)
+const TOP7_SCORE_STEP = 46.95
+
+function firstOrganicScoreAfterTop7(others: Epoch2ApiUser[]): number {
+  const sorted = sortEpoch2UsersByEligibilityThenScore(others)
+  return sorted[0]?.score ?? 0
+}
+
+/** Assign an even descending ladder to ranks 1–7 (seven entries, bottom-up from rank 8). */
+export function applyTop7ScoreLadder(guaranteedHead: Epoch2ApiUser[], rank8Score: number): void {
+  if (guaranteedHead.length === 0) return
+  let score = roundScore(rank8Score + TOP7_SCORE_STEP)
+  for (let i = guaranteedHead.length - 1; i >= 0; i -= 1) {
+    guaranteedHead[i]!.score = score
+    score = roundScore(score + TOP7_SCORE_STEP)
   }
-  const u1 = ((h >>> 0) % 10_000) / 10_000
-  const u2 = ((Math.imul(h ^ 0x9e3779b9, 0x85ebca6b) >>> 0) % 100) / 100
-  const gap = 2.18 + u1 * 10.62 + u2 * 0.94
-  return Math.round(gap * 100) / 100
 }
 
 export function normalizeLeaderboardHandle(raw: string): string {
@@ -107,6 +108,7 @@ export async function reorderEpoch2GuaranteedTop7ForDisplay(users: Epoch2ApiUser
   }
 
   const rest = users.filter((u) => !consumed.has(u))
+  applyTop7ScoreLadder(head, firstOrganicScoreAfterTop7(rest))
   return [...head, ...sortEpoch2UsersByEligibilityThenScore(rest)]
 }
 
@@ -189,29 +191,7 @@ export function applyGuaranteedTop7(
     guaranteedOrdered.push(u)
   }
 
-  const topEligibleOther = others.filter((u) => u.srEligible).sort((a, b) => b.score - a.score)[0]?.score ?? 0
-
-  // Rank 7 → 1: enforce order with varied gaps only when a score is too low (keep real scores when already high enough).
-  let minRequired = topEligibleOther + gapAboveNextRank(0)
-  for (let i = guaranteedOrdered.length - 1; i >= 0; i -= 1) {
-    const g = guaranteedOrdered[i]!
-    const slotFromBottom = guaranteedOrdered.length - 1 - i
-    if (g.score < minRequired) {
-      g.score = roundScore(minRequired)
-    }
-    minRequired = g.score + gapAboveNextRank(slotFromBottom + 1)
-  }
-
-  // Rank 7 → 1: cap scores when the podium sits far above rank 8+ (e.g. 199 vs 68); keep irregular gaps within top 7.
-  let maxAllowedFromRank8 = topEligibleOther + MAX_GAP_RANK8_TO_RANK7
-  for (let i = guaranteedOrdered.length - 1; i >= 0; i -= 1) {
-    const g = guaranteedOrdered[i]!
-    if (g.score > maxAllowedFromRank8) {
-      g.score = roundScore(maxAllowedFromRank8)
-    }
-    const slotFromBottom = guaranteedOrdered.length - 1 - i
-    maxAllowedFromRank8 = g.score + gapAboveNextRank(slotFromBottom + 1)
-  }
+  applyTop7ScoreLadder(guaranteedOrdered, firstOrganicScoreAfterTop7(others))
 
   const merged = [...guaranteedOrdered, ...sortEpoch2UsersByEligibilityThenScore(others)]
   return { users: merged, epoch1BaselinesMerged }
