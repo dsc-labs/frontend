@@ -99,7 +99,6 @@ function SubmitMindshareLink({ open }: { open: boolean }) {
   return (
     <button type="button" className="mindshare-submit-link mindshare-submit-link--closed" disabled>
       <strong>Submit Your Mindshare</strong>
-      <span className="mindshare-submit-closed-hint"> (Epoch 2 submissions closed)</span>
     </button>
   )
 }
@@ -278,9 +277,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
           <h3>Duration</h3>
           <p className="mindshare-duration-box">
             {phase === 'epoch3_countdown' || phase === 'epoch3'
-              ? !submissionsOpen
-                ? `Epoch 2 has ended. Submissions are closed during the 3-day countdown. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
-                : `Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
+              ? `Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`
               : articleEpoch === 1
                 ? 'Epoch 1 runs for 2 weeks. All submissions within this period will be counted.'
                 : articleEpoch === 2
