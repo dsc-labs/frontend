@@ -24,6 +24,7 @@ import {
   applyGuaranteedTop7,
   loadGuaranteedTop7Epoch1Rows,
   loadGuaranteedTop7Wallets,
+  reorderEpoch2GuaranteedTop7ForDisplay,
 } from './mindshareEpoch2GuaranteedTop7'
 import { applyEpoch2OperatorAdjustments } from './mindshareEpoch2OperatorAdjustments'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
@@ -483,7 +484,8 @@ async function finalizeEpoch2UsersForDisplay(
   nowMs = Date.now(),
 ): Promise<Epoch2ApiUser[]> {
   const enriched = await enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
-  return applyEpoch2OperatorAdjustments(enriched, nowMs)
+  const adjusted = applyEpoch2OperatorAdjustments(enriched, nowMs)
+  return reorderEpoch2GuaranteedTop7ForDisplay(adjusted)
 }
 
 export async function getMindshareEpoch2LeaderboardForDisplay(options: {

@@ -77,8 +77,37 @@ function userMatchesGuaranteed(
   handle: string,
   e1: Epoch1LeaderboardRow | undefined,
 ): boolean {
+  const target = normalizeLeaderboardHandle(handle)
   if (e1 && walletKey(u.wallet) === e1.walletLower) return true
-  return normalizeLeaderboardHandle(u.username) === handle
+  const h = normalizeXUsername(u.xHandle ?? u.username)
+  if (h && h === target) return true
+  return normalizeLeaderboardHandle(u.username) === target
+}
+
+/**
+ * Re-apply ranks 1–7 order on every `/epoch2` read (snapshot file may still list an old podium order).
+ * Does not change scores — only order and `srEligible` for the seven handles.
+ */
+export async function reorderEpoch2GuaranteedTop7ForDisplay(users: Epoch2ApiUser[]): Promise<Epoch2ApiUser[]> {
+  const epoch1ByHandle = await loadGuaranteedTop7Epoch1Rows()
+  const consumed = new Set<Epoch2ApiUser>()
+  const head: Epoch2ApiUser[] = []
+
+  for (const handle of EPOCH2_GUARANTEED_TOP7_HANDLES) {
+    const e1 = epoch1ByHandle.get(handle)
+    const u = users.find((c) => userMatchesGuaranteed(c, handle, e1))
+    if (!u) continue
+    consumed.add(u)
+    const xHandle = normalizeXUsername(handle) || normalizeXUsername(u.xHandle ?? u.username)
+    head.push({
+      ...u,
+      srEligible: true,
+      ...(xHandle ? { xHandle } : {}),
+    })
+  }
+
+  const rest = users.filter((u) => !consumed.has(u))
+  return [...head, ...sortEpoch2UsersByEligibilityThenScore(rest)]
 }
 
 function roundScore(n: number): number {
