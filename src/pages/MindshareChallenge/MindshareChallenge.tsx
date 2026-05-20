@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
-import { DefaultPageSEO } from '../../components/common/PageSEO/PageSEO'
+import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
 import {
   getMindshareEpochPhase,
   isEpoch2MindshareSubmissionOpen,
