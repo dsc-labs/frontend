@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
 import {
-  EPOCH_2_END_MS,
-  EPOCH_3_START_MS,
   getMindshareEpochPhase,
   isEpoch3PreviewPublic,
   isMindshareSubmissionOpen,
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
+  nextGmt7MidnightMs,
   EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
@@ -114,8 +113,9 @@ function Epoch2LeaderboardButton() {
   }, [])
 
   const previewPublic = isEpoch3PreviewPublic(nowMs)
-  const countdownEndMs = previewPublic ? EPOCH_3_START_MS : EPOCH_2_END_MS
-  const hoverLabel = formatCountdownToGmt7Midnight(countdownEndMs, nowMs)
+  const hoverLabel = previewPublic
+    ? formatCountdownToGmt7Midnight(nextGmt7MidnightMs(nowMs), nowMs)
+    : 'Coming Soon'
 
   const labelStack = (
     <span className="mindshare-leaderboard-label-stack">
@@ -154,8 +154,8 @@ function Epoch2LeaderboardButton() {
       type="button"
       className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--disabled"
       aria-disabled="true"
-      aria-label={`Epoch 2 Leaderboard opens at midnight GMT+7 in ${hoverLabel}`}
-      title="Available at midnight GMT+7 tonight"
+      aria-label="Epoch 2 Leaderboard, coming soon"
+      title="Available after midnight GMT+7 tonight"
     >
       {labelStack}
       {arrow}
