@@ -79,6 +79,11 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   scoreOnly('nvtshop01', 80.28),
   scoreOnly('palash433', 165.17),
   scoreOnly('bigmanstuff0', 138.5),
+  /** Eligible via partial SR ticks only (not all five). */
+  {
+    handle: 'valri_eth',
+    checkpointSnapshots: [2, 4],
+  },
   // Outside top 30 — odd scores; SR ticks from days 2–5 only (never day 1)
   {
     handle: '0xGreenWick',
