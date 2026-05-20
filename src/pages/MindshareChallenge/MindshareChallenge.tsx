@@ -5,10 +5,12 @@ import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
 import {
   getMindshareEpochPhase,
-  isEpoch2MindshareSubmissionOpen,
+  isEpoch2LeaderboardPublic,
+  isMindshareSubmissionOpen,
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
+  nextGmt7MidnightMs,
   EPOCH_3_START_GMT7_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
@@ -73,6 +75,15 @@ const MindshareCountdown = ({ end, expiredLabel }: MindshareCountdownProps) => {
   )
 }
 
+function formatCountdownToGmt7Midnight(endMs: number, nowMs: number): string {
+  const { days, hours, minutes, seconds, expired } = getRemaining(new Date(endMs), nowMs)
+  if (expired) return 'Updating…'
+  if (days > 0) {
+    return `${pad2(days)}d ${pad2(hours)}h ${pad2(minutes)}m ${pad2(seconds)}s`
+  }
+  return `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`
+}
+
 function SubmitMindshareLink({ open }: { open: boolean }) {
   if (open) {
     return (
@@ -86,46 +97,69 @@ function SubmitMindshareLink({ open }: { open: boolean }) {
     )
   }
   return (
-    <span className="mindshare-submit-link mindshare-submit-link--closed" aria-disabled="true">
+    <button type="button" className="mindshare-submit-link mindshare-submit-link--closed" disabled>
       <strong>Submit Your Mindshare</strong>
       <span className="mindshare-submit-closed-hint"> (closed until Epoch 3)</span>
-    </span>
+    </button>
   )
 }
 
-function Epoch2LeaderboardButton({ live }: { live: boolean }) {
-  if (live) {
+function Epoch2LeaderboardButton() {
+  const publicLeaderboard = isEpoch2LeaderboardPublic()
+  const [nowMs, setNowMs] = useState(() => Date.now())
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
+  const nextMidnightMs = nextGmt7MidnightMs(nowMs)
+  const hoverLabel = publicLeaderboard
+    ? formatCountdownToGmt7Midnight(nextMidnightMs, nowMs)
+    : 'Coming Soon'
+
+  const labelStack = (
+    <span className="mindshare-leaderboard-label-stack">
+      <span className="mindshare-leaderboard-label-default">
+        <strong>Epoch 2 Leaderboard</strong>
+      </span>
+      <span className="mindshare-leaderboard-label-hover" aria-hidden="true">
+        <strong className="mindshare-leaderboard-countdown">{hoverLabel}</strong>
+      </span>
+    </span>
+  )
+
+  const arrow = (
+    <span aria-hidden="true" className="mindshare-submit-arrow">
+      {' '}
+      →
+    </span>
+  )
+
+  if (publicLeaderboard) {
     return (
       <Link
         to="/sraaaepoch2"
-        className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn"
+        className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--live"
+        aria-label={`Epoch 2 Leaderboard, next update at midnight GMT+7 in ${hoverLabel}`}
+        title="Next leaderboard update at midnight GMT+7"
       >
-        <strong>Epoch 2 Leaderboard</strong>
-        <span aria-hidden="true" className="mindshare-submit-arrow">
-          {' '}
-          →
-        </span>
+        {labelStack}
+        {arrow}
       </Link>
     )
   }
+
   return (
     <button
       type="button"
-      className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn"
-      aria-label="Epoch 2 Leaderboard, coming soon"
+      className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--disabled"
+      aria-disabled="true"
+      aria-label="Epoch 2 Leaderboard unavailable"
+      title="Epoch 2 leaderboard is not public yet"
     >
-      <span className="mindshare-leaderboard-label-stack">
-        <span className="mindshare-leaderboard-label-default">
-          <strong>Epoch 2 Leaderboard</strong>
-        </span>
-        <span className="mindshare-leaderboard-label-hover">
-          <strong>Coming Soon</strong>
-        </span>
-      </span>
-      <span aria-hidden="true" className="mindshare-submit-arrow">
-        {' '}
-        →
-      </span>
+      {labelStack}
+      {arrow}
     </button>
   )
 }
@@ -181,10 +215,16 @@ export type MindshareChallengeViewProps = {
 }
 
 export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge', preview }: MindshareChallengeViewProps) {
+  const [nowMs, setNowMs] = useState(() => Date.now())
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
   const articleEpoch = mindshareArticleEpoch(phase)
   const countdownEndMs = mindshareCountdownEndMs(phase)
-  const epoch2LeaderboardLive = phase !== 'epoch1'
-  const submissionsOpen = isEpoch2MindshareSubmissionOpen(phase)
+  const submissionsOpen = isMindshareSubmissionOpen(nowMs)
 
   const countdownExpiredLabel =
     phase === 'epoch3_countdown'
@@ -232,7 +272,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
 
           <div className="mindshare-submit-row">
             <SubmitMindshareLink open={submissionsOpen} />
-            <Epoch2LeaderboardButton live={epoch2LeaderboardLive} />
+            <Epoch2LeaderboardButton />
           </div>
 
           <h2>EPOCH {articleEpoch} BREAKDOWN</h2>
@@ -273,7 +313,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
           <h3>Submit your contribution via the form below</h3>
           <div className="mindshare-submit-row">
             <SubmitMindshareLink open={submissionsOpen} />
-            <Epoch2LeaderboardButton live={epoch2LeaderboardLive} />
+            <Epoch2LeaderboardButton />
           </div>
         </article>
       </div>

@@ -347,6 +347,10 @@ a.mindshare-submit-identity-btn {
   color: #1a1a1a;
 }
 
+.mindshare-submit-closed-panel {
+  margin-top: 8px;
+}
+
 .mindshare-submit-closed {
   margin: 0 0 16px;
   padding: 12px 14px;
@@ -357,16 +361,13 @@ a.mindshare-submit-identity-btn {
   color: #1a1a1a;
 }
 
-.mindshare-submit-form-fieldset {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  min-width: 0;
-}
-
-.mindshare-submit-form-fieldset:disabled {
-  opacity: 0.6;
-  pointer-events: none;
+.mindshare-submit-actions-link {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #111111;
 }
 
 @media (max-width: 860px) {

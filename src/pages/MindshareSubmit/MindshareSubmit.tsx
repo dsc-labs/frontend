@@ -15,7 +15,7 @@ import {
 import {
   getMindshareEpochPhase,
   EPOCH_3_START_GMT7_LABEL,
-  isEpoch2MindshareSubmissionOpen,
+  isMindshareSubmissionOpen,
   mindshareCountdownEndMs,
 } from '../../lib/mindshareEpochSchedule'
 import './MindshareSubmit.css'
@@ -137,7 +137,7 @@ const MindshareSubmit = () => {
   }, [])
 
   const phase = getMindshareEpochPhase(scheduleNowMs)
-  const submissionsOpen = isEpoch2MindshareSubmissionOpen(phase)
+  const submissionsOpen = isMindshareSubmissionOpen(scheduleNowMs)
   const countdownEndMs = mindshareCountdownEndMs(phase)
   const countdownExpiredLabel =
     phase === 'epoch3_countdown'
@@ -452,15 +452,17 @@ const MindshareSubmit = () => {
           </section>
 
           {!submissionsOpen ? (
-            <p className="mindshare-submit-closed" role="status">
-              Epoch 2 submissions closed at midnight GMT+7 when Epoch 2 ended. The countdown above runs until
-              Epoch 3 begins at {EPOCH_3_START_GMT7_LABEL} (3 days after Epoch 2 ended). Submit will stay closed
-              until Epoch 3 entry rules are announced.
-            </p>
-          ) : null}
-
-          <form className="mindshare-submit-form" onSubmit={onSubmit}>
-            <fieldset disabled={!submissionsOpen} className="mindshare-submit-form-fieldset">
+            <div className="mindshare-submit-closed-panel" role="status">
+              <p className="mindshare-submit-closed">
+                Epoch 2 submissions are closed. The countdown above runs until Epoch 3 begins at{' '}
+                {EPOCH_3_START_GMT7_LABEL}.
+              </p>
+              <Link to="/mindshare-challenge" className="mindshare-submit-actions-link">
+                Back to challenge
+              </Link>
+            </div>
+          ) : (
+            <form className="mindshare-submit-form" onSubmit={onSubmit}>
               <label className="mindshare-submit-field">
                 <span>Submit your mindshare about Strike Robot *</span>
                 <textarea
@@ -468,19 +470,19 @@ const MindshareSubmit = () => {
                   rows={7}
                   value={form.mindshareUrls}
                   onChange={(e) => setForm((prev) => ({ ...prev, mindshareUrls: e.target.value }))}
-                  required={submissionsOpen}
+                  required
                 />
               </label>
 
               <div className="mindshare-submit-actions">
-                <button type="submit" disabled={submitBusy || !isIdentityLinked || !submissionsOpen}>
+                <button type="submit" disabled={submitBusy || !isIdentityLinked}>
                   {submitBusy ? 'Submitting...' : 'Submit Entry'}
                 </button>
                 <Link to="/mindshare-challenge">Back to challenge</Link>
               </div>
-            </fieldset>
-            {submitMessage ? <p className="mindshare-submit-status">{submitMessage}</p> : null}
-          </form>
+              {submitMessage ? <p className="mindshare-submit-status">{submitMessage}</p> : null}
+            </form>
+          )}
         </section>
       </main>
     </div>

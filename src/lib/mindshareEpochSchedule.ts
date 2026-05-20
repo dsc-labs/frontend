@@ -5,7 +5,7 @@
  *
  * Timeline:
  * - **Epoch 2 ends** → tonight’s midnight GMT+7 after the last Epoch 2 day (May 21, 2026 00:00 GMT+7).
- *   At that instant: Epoch 3 intro copy + “Begins In” countdown; `/mindshare-submit` closes.
+ *   At that instant: Epoch 3 intro copy + “Starts In” countdown; `/mindshare-submit` closes.
  * - **Epoch 3 starts** → **3 full days later** at the next midnight GMT+7 (May 24, 2026 00:00 GMT+7).
  */
 
@@ -24,6 +24,31 @@ export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 export const EPOCH_2_END_GMT7_LABEL = '12:00 AM GMT+7, May 21, 2026'
 export const EPOCH_3_START_GMT7_LABEL = '12:00 AM GMT+7, May 24, 2026'
 
+const GMT7_OFFSET_MS = 7 * 60 * 60 * 1000
+const MS_PER_DAY = 24 * 60 * 60 * 1000
+
+/** Calendar date `YYYY-MM-DD` for instant `ms` in GMT+7. */
+export function gmt7DayKeyFromMs(ms: number): string {
+  return new Date(ms + GMT7_OFFSET_MS).toISOString().slice(0, 10)
+}
+
+/** Start of GMT+7 calendar day `dayKey` as UTC epoch ms. */
+export function gmt7DayStartMs(dayKey: string): number {
+  return Date.parse(`${dayKey}T00:00:00+07:00`)
+}
+
+/** Next 00:00 GMT+7 after `nowMs` (daily leaderboard snapshot tick). */
+export function nextGmt7MidnightMs(nowMs = Date.now()): number {
+  return gmt7DayStartMs(gmt7DayKeyFromMs(nowMs)) + MS_PER_DAY
+}
+
+/** When false, the challenge page shows a disabled Epoch 2 Leaderboard control (no link to `/sraaaepoch2`). */
+export const EPOCH2_LEADERBOARD_PUBLIC = false
+
+export function isEpoch2LeaderboardPublic(): boolean {
+  return EPOCH2_LEADERBOARD_PUBLIC
+}
+
 export type MindshareEpochPhase = 'epoch1' | 'epoch2' | 'epoch3_countdown' | 'epoch3'
 
 export function getMindshareEpochPhase(nowMs = Date.now()): MindshareEpochPhase {
@@ -40,7 +65,7 @@ export function mindshareChallengeTitle(phase: MindshareEpochPhase): string {
     case 'epoch2':
       return 'STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH 2'
     case 'epoch3_countdown':
-      return 'Strike Robot Mindshare Challenge — Epoch 3 Begins In'
+      return 'Strike Robot Mindshare Challenge — Epoch 3 Starts In'
     case 'epoch3':
       return 'STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH 3'
   }
@@ -67,10 +92,12 @@ export function mindshareArticleEpoch(phase: MindshareEpochPhase): 1 | 2 | 3 {
   return 3
 }
 
-/**
- * Epoch 2 CSV submissions stay open through the last moment of Epoch 2.
- * They close at **Epoch 2 end midnight** (start of the 3-day Epoch 3 countdown), not when Epoch 3 goes live.
- */
+/** True while Epoch 1–2 accept new CSV rows (closes at `EPOCH_2_END_MS`, midnight GMT+7 after last Epoch 2 day). */
+export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
+  return nowMs < EPOCH_2_END_MS
+}
+
+/** @deprecated Prefer {@link isMindshareSubmissionOpen}. */
 export function isEpoch2MindshareSubmissionOpen(phase: MindshareEpochPhase): boolean {
   return phase === 'epoch1' || phase === 'epoch2'
 }

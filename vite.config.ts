@@ -7,6 +7,7 @@ import { Buffer } from 'node:buffer'
 import { resolveAvatar } from './lib/avatarRequest'
 import { appendMindshareSubmissionCsv } from './lib/mindshareCsvStore'
 import { applyMindshareEpoch2Env } from './lib/mindshareEpoch2Env'
+import { isMindshareSubmissionOpen } from './lib/mindshareEpoch2Constants'
 import { getMindshareEpoch2LeaderboardForDisplay } from './lib/mindshareEpoch2LeaderboardBuild'
 import { runMindshareEpoch2DailySnapshot } from './lib/mindshareEpoch2DailySnapshot'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
@@ -780,6 +781,17 @@ export default defineConfig(({ mode }) => {
                     JSON.stringify({
                       error:
                         'Missing required fields: name, xHandle, mindshareUrls, rewardWalletAddress',
+                    }),
+                  )
+                  return
+                }
+
+                if (!isMindshareSubmissionOpen()) {
+                  res.statusCode = 403
+                  res.setHeader('Content-Type', 'application/json; charset=utf-8')
+                  res.end(
+                    JSON.stringify({
+                      error: 'Epoch 2 submissions are closed. New entries open with Epoch 3.',
                     }),
                   )
                   return

@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { PrivyClient } from '@privy-io/server-auth'
 import { appendMindshareSubmissionCsv } from '../../lib/mindshareCsvStore'
+import { isMindshareSubmissionOpen } from '../../lib/mindshareEpoch2Constants'
 
 function getPrivyClient(): PrivyClient | null {
   const appId = process.env.PRIVY_APP_ID
@@ -42,6 +43,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await privyClient.verifyAuthToken(token)
   } catch {
     sendJson(res, 401, { error: 'Invalid or expired authorization token' })
+    return
+  }
+
+  if (!isMindshareSubmissionOpen()) {
+    sendJson(res, 403, { error: 'Epoch 2 submissions are closed. New entries open with Epoch 3.' })
     return
   }
 
