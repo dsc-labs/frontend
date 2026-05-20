@@ -8,6 +8,7 @@ import DataPlatform from './pages/DataPlatform/DataPlatform'
 import UseCases from './pages/UseCases/UseCases'
 import TechnologyStack from './pages/TechnologyStack/TechnologyStack'
 import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
+import MindshareEpoch3Preview from './pages/MindshareEpoch3Preview/MindshareEpoch3Preview'
 import Partners from './pages/Partners/Partners'
 import Models from './pages/Models/Models'
 import Leaderboard from './pages/Leaderboard/Leaderboard'
@@ -70,6 +71,7 @@ function App() {
                 <Route path="/use-cases" element={<UseCases />} />
                 <Route path="/technology-stack" element={<TechnologyStack />} />
                 <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
+                <Route path="/epoch3-preview" element={<MindshareEpoch3Preview />} />
                 <Route path="/sraaaepoch2" element={<MindshareEpoch2Leaderboard />} />
                 <Route path="/partners" element={<Partners />} />
                 <Route path="/models" element={<Models />} />

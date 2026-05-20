@@ -174,15 +174,13 @@ function MindshareChallengeIntro({ phase }: { phase: MindshareEpochPhase }) {
   )
 }
 
-const MindshareChallenge = () => {
-  const [nowMs, setNowMs] = useState(() => Date.now())
+export type MindshareChallengeViewProps = {
+  phase: MindshareEpochPhase
+  seoPath?: string
+  preview?: boolean
+}
 
-  useEffect(() => {
-    const id = window.setInterval(() => setNowMs(Date.now()), 1000)
-    return () => window.clearInterval(id)
-  }, [])
-
-  const phase = getMindshareEpochPhase(nowMs)
+export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge', preview }: MindshareChallengeViewProps) {
   const articleEpoch = mindshareArticleEpoch(phase)
   const countdownEndMs = mindshareCountdownEndMs(phase)
   const epoch2LeaderboardLive = phase !== 'epoch1'
@@ -197,10 +195,26 @@ const MindshareChallenge = () => {
 
   return (
     <div className="mindshare-page">
-      <DefaultPageSEO path="/mindshare-challenge" />
+      {preview ? (
+        <PageSEO
+          path={seoPath}
+          title="Epoch 3 Preview — Mindshare Challenge"
+          metaDescription="Preview of the Epoch 3 mindshare challenge page after Epoch 2 ends: copy, countdown, and closed submissions."
+          noIndex
+        />
+      ) : (
+        <DefaultPageSEO path={seoPath} />
+      )}
       <Header showSocialIcons />
 
       <div className="mindshare-container">
+        {preview ? (
+          <p className="mindshare-preview-banner" role="note">
+            <strong>Preview only.</strong> This is how <code>/mindshare-challenge</code> will look after Epoch 2
+            ends at midnight GMT+7. Epoch 3 goes live at {EPOCH_3_START_GMT7_LABEL}.{' '}
+            <Link to="/mindshare-challenge">Back to live page</Link>
+          </p>
+        ) : null}
         <motion.div
           className="mindshare-title-section"
           initial={{ opacity: 0, y: 20 }}
@@ -272,6 +286,17 @@ const MindshareChallenge = () => {
       </div>
     </div>
   )
+}
+
+const MindshareChallenge = () => {
+  const [nowMs, setNowMs] = useState(() => Date.now())
+
+  useEffect(() => {
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
+  return <MindshareChallengeView phase={getMindshareEpochPhase(nowMs)} />
 }
 
 export default MindshareChallenge
