@@ -33,9 +33,22 @@ export function epoch2EligibilityDayStartMs(dayKey: string): number {
   return Date.parse(`${dayKey}T00:00:00+07:00`)
 }
 
+/**
+ * Next 00:00 GMT+7 (17:00 UTC daily snapshot) strictly after `nowMs`.
+ * Matches “tomorrow midnight” on the eligibility calendar (same day boundary as Epoch 2 snapshots).
+ */
+export function nextTomorrowGmt7MidnightMs(nowMs = Date.now()): number {
+  const dayKey = epoch2EligibilityDayKeyFromMs(nowMs)
+  let target = epoch2EligibilityDayStartMs(dayKey) + MS_PER_DAY
+  while (target <= nowMs) {
+    target += MS_PER_DAY
+  }
+  return target
+}
+
 /** Next 17:00 UTC daily snapshot after `nowMs`. */
 export function nextDailySnapshotUtcMs(nowMs = Date.now()): number {
-  return epoch2EligibilityDayStartMs(epoch2EligibilityDayKeyFromMs(nowMs)) + MS_PER_DAY
+  return nextTomorrowGmt7MidnightMs(nowMs)
 }
 
 /** @deprecated Use {@link epoch2EligibilityDayKeyFromMs}. */

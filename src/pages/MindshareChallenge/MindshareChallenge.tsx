@@ -10,7 +10,7 @@ import {
   mindshareArticleEpoch,
   mindshareChallengeTitle,
   mindshareCountdownEndMs,
-  nextDailySnapshotUtcMs,
+  nextTomorrowGmt7MidnightMs,
   EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
@@ -113,7 +113,7 @@ function Epoch2LeaderboardButton() {
   }, [])
 
   const previewLinked = isEpoch3PreviewLinkedFromChallenge(nowMs)
-  const hoverLabel = formatUtcCountdown(nextDailySnapshotUtcMs(nowMs), nowMs)
+  const hoverLabel = formatUtcCountdown(nextTomorrowGmt7MidnightMs(nowMs), nowMs)
 
   const labelStack = (
     <span className="mindshare-leaderboard-label-stack">
@@ -138,8 +138,8 @@ function Epoch2LeaderboardButton() {
       <Link
         to="/epoch3-preview"
         className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--live"
-        aria-label={`Epoch 3 preview, next midnight in ${hoverLabel}`}
-        title={`Next midnight in ${hoverLabel}`}
+        aria-label={`Epoch 3 preview, tomorrow midnight in ${hoverLabel}`}
+        title={`Tomorrow midnight in ${hoverLabel}`}
       >
         {labelStack}
         {arrow}
@@ -152,8 +152,10 @@ function Epoch2LeaderboardButton() {
       type="button"
       className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--disabled"
       aria-disabled="true"
-      aria-label={`Epoch 2 Leaderboard, next midnight in ${hoverLabel}`}
-      title={`Next midnight in ${hoverLabel}`}
+      tabIndex={-1}
+      onClick={(e) => e.preventDefault()}
+      aria-label={`Epoch 2 Leaderboard, tomorrow midnight in ${hoverLabel}`}
+      title={`Tomorrow midnight in ${hoverLabel}`}
     >
       {labelStack}
       {arrow}
