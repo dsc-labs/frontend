@@ -70,7 +70,21 @@ const MindshareCountdown = ({ end, expiredLabel }: MindshareCountdownProps) => {
   )
 }
 
-function Epoch2LeaderboardComingSoonButton() {
+function Epoch2LeaderboardButton({ live }: { live: boolean }) {
+  if (live) {
+    return (
+      <Link
+        to="/sraaaepoch2"
+        className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn"
+      >
+        <strong>Epoch 2 Leaderboard</strong>
+        <span aria-hidden="true" className="mindshare-submit-arrow">
+          {' '}
+          →
+        </span>
+      </Link>
+    )
+  }
   return (
     <button
       type="button"
@@ -94,17 +108,24 @@ function Epoch2LeaderboardComingSoonButton() {
 }
 
 const MindshareChallenge = () => {
-  const [activeEpoch, setActiveEpoch] = useState<1 | 2>(() =>
-    Date.now() > EPOCH_1_END.getTime() ? 2 : 1,
-  )
+  const [nowMs, setNowMs] = useState(() => Date.now())
 
-  const countdownEnd = activeEpoch === 1 ? EPOCH_1_END : EPOCH_2_END
+  useEffect(() => {
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
 
-  const handleCountdownComplete = () => {
-    if (activeEpoch === 1) {
-      setActiveEpoch(2)
-    }
-  }
+  const phase = getMindshareEpochPhase(nowMs)
+  const articleEpoch = mindshareArticleEpoch(phase)
+  const countdownEndMs = mindshareCountdownEndMs(phase)
+  const epoch2LeaderboardLive = phase !== 'epoch1'
+
+  const countdownExpiredLabel =
+    phase === 'epoch3_countdown'
+      ? 'Epoch 3 has begun.'
+      : phase === 'epoch2'
+        ? 'Epoch 2 has ended.'
+        : 'Epoch 1 has ended.'
 
   return (
     <div className="mindshare-page">
@@ -133,7 +154,7 @@ const MindshareChallenge = () => {
 
         <article className="mindshare-article">
           <p>
-            Epoch {activeEpoch} is part of the <strong>Strike Robot</strong> contributor program - an initiative
+            Epoch {articleEpoch} is part of the <strong>Strike Robot</strong> contributor program - an initiative
             designed to grow the ecosystem through community-driven content and shared mindshare.
           </p>
           <p>

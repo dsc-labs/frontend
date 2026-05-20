@@ -33,8 +33,7 @@ const TRACKED_TOKEN = {
 
 type MindshareCountdownProps = {
   end: Date
-  epoch: 1 | 2
-  onComplete?: () => void
+  expiredLabel: string
 }
 
 function pad2(n: number) {
