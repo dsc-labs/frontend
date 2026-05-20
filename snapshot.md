@@ -191,10 +191,10 @@ Local dev: daily SR/score cron optional (`MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=
 These X handles are **always** on the leaderboard at **ranks 1–7** in this order, **always SR-eligible**, regardless of $SR balance:
 
 1. Goon_crypto  
-2. 0xweekend59  
-3. 100xDarren  
-4. 0xzagen  
-5. 3DMax_Virtuals  
+2. 3DMax_Virtuals  
+3. 0xzagen  
+4. 0xweekend59  
+5. 100xDarren  
 6. bizbrainzuni  
 7. office2crypto  
 
@@ -233,7 +233,7 @@ New submits get `submitted at` automatically. Older files are migrated to add em
 
 ## Operator wallet migrations (`lib/mindshareEpoch2OperatorAdjustments.ts`)
 
-Verified manual fixes (wallet change, SR checkpoint ticks, final score) are applied on every `/epoch2` read after SR enrichment. Edit `EPOCH2_OPERATOR_ADJUSTMENTS` and redeploy. Each array entry is **one competitor**; wallet “merge” only collapses duplicate rows for that same handle (e.g. two old TNr1ck wallets → one row), never two different people.
+Verified manual fixes (wallet change, SR checkpoint ticks, final score) are applied on every `/epoch2` read after SR enrichment. Edit `EPOCH2_OPERATOR_ADJUSTMENTS` and redeploy. Each array entry is **one @handle**. **Two different @handles may use the same wallet** and appear as separate rows; scoring keys competitors by `wallet + handle`. Operator wallet “merge” only collapses duplicate rows for that same handle (e.g. two old TNr1ck wallets → one @TNr1ck row).
 
 | Handle | Wallet | Checkpoints (15 May = 1 … 19 May = 5) | Score |
 | ------ | ------ | ------------------------------------- | ----- |
@@ -242,7 +242,7 @@ Verified manual fixes (wallet change, SR checkpoint ticks, final score) are appl
 | Villa_PHM | `0xf31a42744c247cde808188d171c7E9B227022dc3` | 1, 4, 5 | 196.42 |
 | phantomfills_hl | (unchanged; match by handle) | 1, 4, 5 | 103.35 |
 
-**Below top 8 (score only):** JokerIBlack 426.45, sheepmek1 401.72, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, Trong_Hatachi 317.28, hitasyurek 296.44, muhitonx 271.83, sothh84 249.17, LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28.
+**Below top 8 (score only):** JokerIBlack 426.45, sheepmek1 401.72, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, Trong_Hatachi 317.28, hitasyurek 296.44, muhitonx 81, sothh84 249.17, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 138.5. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28.
 
 Also update `mindshare_submissions.csv` (and Epoch 1 export wallet for carryover) when a wallet changes.
 

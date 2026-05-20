@@ -124,6 +124,13 @@ function walletKey(wallet: string): string {
   return wallet.trim().toLowerCase()
 }
 
+/** Same wallet + different @handle = separate competitors (shared wallet is allowed). */
+export function epoch2CompetitorKey(wallet: string, xHandleOrUsername?: string): string {
+  const wk = walletKey(wallet)
+  const h = normalizeXUsername(xHandleOrUsername ?? '')
+  return h ? `${wk}::${h}` : wk
+}
+
 /** Retweets + quote-tweets as “reposts” for engagement. */
 function retweetsForScore(m: TweetMetricsSnapshot): number {
   return m.retweetCount + m.quoteCount
@@ -283,21 +290,31 @@ function tweetIdsFromCountedPostKeys(keys: string[]): string[] {
   return ids
 }
 
-async function loadSeedUserMap(): Promise<Map<string, { wallet: string; username: string; score: number; posts: number }>> {
+type CompetitorAgg = {
+  wallet: string
+  username: string
+  xHandle?: string
+  score: number
+  posts: number
+}
+
+async function loadSeedUserMap(): Promise<Map<string, CompetitorAgg>> {
   const prev = await readEpoch2LeaderboardSnapshot()
-  const byWallet = new Map<string, { wallet: string; username: string; score: number; posts: number }>()
-  if (!prev) return byWallet
+  const byKey = new Map<string, CompetitorAgg>()
+  if (!prev) return byKey
   for (const u of prev.users) {
     const wk = walletKey(u.wallet)
     if (!wk) continue
-    byWallet.set(wk, {
+    const xHandle = normalizeXUsername(u.xHandle ?? u.username)
+    byKey.set(epoch2CompetitorKey(u.wallet, xHandle), {
       wallet: u.wallet,
       username: u.username,
+      ...(xHandle ? { xHandle } : {}),
       score: u.score,
       posts: u.postCount,
     })
   }
-  return byWallet
+  return byKey
 }
 
 /** Cumulative daily scoring: seed non-counted wallets, re-aggregate all counted posts from cache, add {@link postsToScore}. */
@@ -308,20 +325,14 @@ function scoreDailyPostsFromCache(
   cache: Epoch2MetricsCacheFile,
   defaultQ: number,
   eligibleWalletKeys: Set<string>,
-  seedByWallet: Map<string, { wallet: string; username: string; score: number; posts: number }>,
+  seedByWallet: Map<string, CompetitorAgg>,
   bootstrapPostKeys: Set<string>,
 ): { users: Epoch2ApiUser[]; engagementByTweetId: Map<string, TweetMetricsSnapshot> } {
   const engagementByTweetId = new Map<string, TweetMetricsSnapshot>()
-  const byWallet = new Map(seedByWallet)
+  const byCompetitor = new Map(seedByWallet)
 
-  const countedByWallet = new Map<string, Epoch2FlattenedPost[]>()
   for (const p of countedPostsForRecount) {
-    const list = countedByWallet.get(p.walletLower) ?? []
-    list.push(p)
-    countedByWallet.set(p.walletLower, list)
-  }
-  for (const [wk] of countedByWallet) {
-    byWallet.delete(wk)
+    byCompetitor.delete(epoch2CompetitorKey(p.wallet, p.xHandle))
   }
 
   const emptyTweetMetrics = (tweetId: string): TweetMetricsSnapshot => ({
@@ -345,15 +356,17 @@ function scoreDailyPostsFromCache(
     scoredTweetKeys.add(postKey)
     const h = normalizeXUsername(p.xHandle)
     const followers = h ? (cache.users[h]?.followersCount ?? 0) : 0
-    if (!byWallet.has(p.walletLower)) {
-      byWallet.set(p.walletLower, {
+    const rowKey = epoch2CompetitorKey(p.wallet, p.xHandle)
+    if (!byCompetitor.has(rowKey)) {
+      byCompetitor.set(rowKey, {
         wallet: p.wallet,
         username: displayUsername(p),
+        ...(h ? { xHandle: h } : {}),
         score: 0,
         posts: 0,
       })
     }
-    const agg = byWallet.get(p.walletLower)!
+    const agg = byCompetitor.get(rowKey)!
     agg.posts += 1
     const post: Epoch2PostScoreInput = {
       qualityScore: defaultQ,
@@ -376,7 +389,7 @@ function scoreDailyPostsFromCache(
   }
 
   const users = sortEpoch2UsersByEligibilityThenScore(
-    Array.from(byWallet.values())
+    Array.from(byCompetitor.values())
       .filter((u) => u.posts > 0)
       .map((u) => {
         const wk = walletKey(u.wallet)
@@ -386,6 +399,7 @@ function scoreDailyPostsFromCache(
           postCount: u.posts,
           score: Math.round(u.score * 100) / 100,
           srEligible: eligibleWalletKeys.has(wk),
+          ...(u.xHandle ? { xHandle: u.xHandle } : {}),
         }
       }),
   )
@@ -416,19 +430,20 @@ function mergeCsvSubmittersIntoEpoch2Users(
   rows: MindshareSubmissionRow[],
   eligibleWalletKeys: Set<string>,
 ): Epoch2ApiUser[] {
-  const byWallet = new Map<string, Epoch2ApiUser>()
+  const byKey = new Map<string, Epoch2ApiUser>()
   for (const u of users) {
-    const wk = walletKey(u.wallet)
-    if (wk) byWallet.set(wk, u)
+    const rk = epoch2CompetitorKey(u.wallet, u.xHandle ?? u.username)
+    if (rk) byKey.set(rk, u)
   }
 
   for (const row of rows) {
     const wk = walletKey(row.walletAddress)
     if (!wk.startsWith('0x') || wk.length !== 42) continue
     if (!extractPostUrlsFromSubmissionField(row.postSubmitted).length) continue
-    if (byWallet.has(wk)) continue
     const handle = normalizeXUsername(row.xHandle)
-    byWallet.set(wk, {
+    const rk = epoch2CompetitorKey(row.walletAddress, handle)
+    if (byKey.has(rk)) continue
+    byKey.set(rk, {
       username: displayUsername(row),
       wallet: row.walletAddress.trim(),
       postCount: 0,
@@ -438,7 +453,7 @@ function mergeCsvSubmittersIntoEpoch2Users(
     })
   }
 
-  return sortEpoch2UsersByEligibilityThenScore([...byWallet.values()])
+  return sortEpoch2UsersByEligibilityThenScore([...byKey.values()])
 }
 
 /** Score all posts in CSV from cache (legacy live rebuild). */

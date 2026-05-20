@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
+import { epoch2CompetitorKey, type Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
 import {
   EPOCH1_CARRYOVER_MIN_RANK,
@@ -152,35 +152,37 @@ export function mergeEpoch1CarryoverIntoUsers(
   prizeWinnerWallets: Set<string>,
   eligibleWalletKeys: Set<string>,
 ): Epoch2ApiUser[] {
-  const byWallet = new Map<string, Epoch2ApiUser>()
+  const byKey = new Map<string, Epoch2ApiUser>()
 
   for (const u of epoch2Users) {
     const wk = u.wallet.trim().toLowerCase()
     if (!wk.startsWith('0x')) continue
-    byWallet.set(wk, { ...u, wallet: u.wallet.trim() })
+    byKey.set(epoch2CompetitorKey(u.wallet, u.xHandle ?? u.username), { ...u, wallet: u.wallet.trim() })
   }
 
   for (const e1 of carryover) {
     if (prizeWinnerWallets.has(e1.walletLower)) continue
 
-    const existing = byWallet.get(e1.walletLower)
+    const rk = epoch2CompetitorKey(e1.wallet, e1.username)
+    const existing = byKey.get(rk)
     if (existing) {
       existing.score = Math.round((existing.score + e1.score) * 100) / 100
       existing.postCount += e1.postCount
       if (!existing.username.trim()) existing.username = displayFromEpoch1(e1)
     } else {
-      byWallet.set(e1.walletLower, {
+      byKey.set(rk, {
         username: displayFromEpoch1(e1),
         wallet: e1.wallet,
         postCount: e1.postCount,
         score: e1.score,
         srEligible: eligibleWalletKeys.has(e1.walletLower),
+        xHandle: e1.username,
       })
     }
   }
 
   return sortEpoch2UsersByEligibilityThenScore(
-    Array.from(byWallet.values()).filter((u) => u.postCount > 0 || u.score > 0),
+    Array.from(byKey.values()).filter((u) => u.postCount > 0 || u.score > 0),
   )
 }
 

@@ -20,10 +20,16 @@ export type Epoch2OperatorAdjustment = {
   checkpointSnapshots?: readonly number[]
   /** Final cumulative Epoch 2 score when set. */
   score?: number
+  /** Clear SR eligibility and checkpoint ticks (e.g. 0 score, not on leaderboard as eligible). */
+  forceNotEligible?: boolean
 }
 
 function scoreOnly(handle: string, score: number): Epoch2OperatorAdjustment {
   return { handle, score }
+}
+
+function notEligibleZero(handle: string): Epoch2OperatorAdjustment {
+  return { handle, score: 0, forceNotEligible: true }
 }
 
 /** Operator-verified wallet migrations, SR ticks, and scores (May 2026). */
@@ -64,7 +70,8 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   scoreOnly('gaogaocrypto', 338.57),
   scoreOnly('Trong_Hatachi', 317.28),
   scoreOnly('hitasyurek', 296.44),
-  scoreOnly('muhitonx', 271.83),
+  scoreOnly('muhitonx', 81),
+  notEligibleZero('captainjack125'),
   scoreOnly('sothh84', 249.17),
   scoreOnly('LongL2282268', 223.54),
   scoreOnly('dinhturin', 181.92),
@@ -73,6 +80,8 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   scoreOnly('nguyenthambt', 114.26),
   scoreOnly('Drkhaleefah2', 97.53),
   scoreOnly('nvtshop01', 80.28),
+  scoreOnly('palash433', 165.17),
+  scoreOnly('bigmanstuff0', 138.5),
 ]
 
 function userHandle(u: Epoch2ApiUser): string {
@@ -80,9 +89,8 @@ function userHandle(u: Epoch2ApiUser): string {
 }
 
 /**
- * Match one operator row to one competitor. TNr1ck and Anh_Mot0 are separate adjustments.
- * Legacy wallets only count when the X handle matches (or is missing), so a shared old
- * wallet does not merge a different person (e.g. chaselightt vs TNr1ck).
+ * Match one operator adjustment to one competitor (@handle). Multiple accounts may share
+ * a wallet on the leaderboard; legacy-wallet merge only applies to the named handle.
  */
 function matchesAdjustment(u: Epoch2ApiUser, adj: Epoch2OperatorAdjustment): boolean {
   const h = userHandle(u)
@@ -115,13 +123,33 @@ function buildMergedUser(
   adj: Epoch2OperatorAdjustment,
   nowMs: number,
 ): Epoch2ApiUser {
-  const canonicalWallet = adj.wallet?.trim() || group[0]!.wallet.trim()
+  const xHandle = normalizeXUsername(adj.handle) || (group[0] ? userHandle(group[0]) : '')
+  const canonicalWallet = adj.wallet?.trim() || group[0]?.wallet.trim() || ''
+  if (!canonicalWallet) {
+    throw new Error(`Operator adjustment for @${adj.handle} requires wallet`)
+  }
+
+  if (group.length === 0) {
+    const checkpoints = adj.checkpointSnapshots?.length
+      ? checkpointsFromSnapshots(adj.checkpointSnapshots, nowMs)
+      : undefined
+    const score = typeof adj.score === 'number' && Number.isFinite(adj.score) ? adj.score : 0
+    return {
+      username: xHandle ? `@${xHandle}` : adj.handle,
+      wallet: canonicalWallet,
+      postCount: 0,
+      score,
+      srEligible: adj.forceNotEligible ? false : Boolean(checkpoints?.some(Boolean)),
+      ...(xHandle ? { xHandle } : {}),
+      ...(checkpoints ? { checkpoints } : {}),
+    }
+  }
+
   let score = 0
   let postCount = 0
   let srEligible = false
   let srBalance: number | undefined
   let username = group[0]!.username
-  const xHandle = normalizeXUsername(adj.handle) || userHandle(group[0]!)
   let avatarUrl = group[0]!.avatarUrl
   let displayName = group[0]!.displayName
 
@@ -139,16 +167,21 @@ function buildMergedUser(
 
   if (typeof adj.score === 'number' && Number.isFinite(adj.score)) score = adj.score
 
-  const checkpoints = adj.checkpointSnapshots?.length
+  let checkpoints = adj.checkpointSnapshots?.length
     ? checkpointsFromSnapshots(adj.checkpointSnapshots, nowMs)
     : group.find((u) => u.checkpoints)?.checkpoints
+
+  if (adj.forceNotEligible) {
+    checkpoints = checkpoints?.map(() => false)
+    srEligible = false
+  }
 
   return {
     username,
     wallet: canonicalWallet,
     postCount,
     score,
-    srEligible: srEligible || Boolean(checkpoints?.some(Boolean)),
+    srEligible: adj.forceNotEligible ? false : srEligible || Boolean(checkpoints?.some(Boolean)),
     ...(xHandle ? { xHandle } : {}),
     ...(avatarUrl ? { avatarUrl } : {}),
     ...(displayName ? { displayName } : {}),
@@ -158,13 +191,17 @@ function buildMergedUser(
 }
 
 function applyScoreOnly(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment): Epoch2ApiUser[] {
-  if (adj.score === undefined || !Number.isFinite(adj.score)) return out
+  if (adj.score === undefined || !Number.isFinite(adj.score)) {
+    if (!adj.forceNotEligible) return out
+  }
   const target = normalizeXUsername(adj.handle)
   return out.map((u) => {
     if (userHandle(u) !== target) return u
+    const checkpoints = adj.forceNotEligible ? u.checkpoints?.map(() => false) : u.checkpoints
     return {
       ...u,
-      score: adj.score!,
+      ...(typeof adj.score === 'number' && Number.isFinite(adj.score) ? { score: adj.score } : {}),
+      ...(adj.forceNotEligible ? { srEligible: false, checkpoints } : {}),
       ...(target ? { xHandle: target } : {}),
     }
   })
@@ -175,7 +212,12 @@ function applyMerge(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment, nowMs: 
   for (let i = 0; i < out.length; i += 1) {
     if (matchesAdjustment(out[i]!, adj)) indices.push(i)
   }
-  if (indices.length === 0) return out
+  if (indices.length === 0) {
+    if (adj.wallet?.trim() && normalizeXUsername(adj.handle)) {
+      return [...out, buildMergedUser([], adj, nowMs)]
+    }
+    return out
+  }
 
   const group = indices.map((i) => out[i]!)
   const merged = buildMergedUser(group, adj, nowMs)
