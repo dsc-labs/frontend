@@ -12,7 +12,7 @@ This document describes **what data is frozen or refreshed on a schedule** for t
 | **Submissions** | On each form submit | `mindshare_submissions.csv` (+ `submitted at`) | Which posts exist and **when** they were submitted |
 | **Operator backfill** | Manual | Same files | Replay SR days and/or full post counting 15→19 |
 
-Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`**. It does **not** re-score on every page load.
+Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`**. It does **not** re-score on every page load. The response **excludes** anyone with **score ≤ 0** (they do not appear on the board).
 
 **Cron endpoint:** `GET` / `POST` `/api/mindshare/epoch2-sr-snapshot`  
 **Orchestrator:** `lib/mindshareEpoch2DailySnapshot.ts`
@@ -205,6 +205,8 @@ Scores for ranks 1–7 use a **fixed ladder**: each step is **+46.95** above the
 1. **Ranks 1–7** — guaranteed list above (fixed order).  
 2. **Rank 8+** — all **SR-eligible** competitors, sorted by **score** (highest first).  
 3. **Below eligible** — **not eligible** competitors, sorted by **score** (highest first).
+
+If the same @handle appears in `mindshare_submissions.csv` with **two different wallets**, only one row is shown in the top 7 (Epoch 1 export wallet wins when present); extra wallet rows are hidden so you do not see duplicate @handles further down at score 0.
 
 A high-scoring not-eligible account never ranks above an eligible account with a lower score.
 

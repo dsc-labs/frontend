@@ -485,7 +485,8 @@ async function finalizeEpoch2UsersForDisplay(
 ): Promise<Epoch2ApiUser[]> {
   const enriched = await enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
   const adjusted = applyEpoch2OperatorAdjustments(enriched, nowMs)
-  return reorderEpoch2GuaranteedTop7ForDisplay(adjusted)
+  const reordered = await reorderEpoch2GuaranteedTop7ForDisplay(adjusted)
+  return reordered.filter((u) => Number(u.score) > 0)
 }
 
 export async function getMindshareEpoch2LeaderboardForDisplay(options: {

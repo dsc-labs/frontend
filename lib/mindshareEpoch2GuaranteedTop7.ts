@@ -85,20 +85,43 @@ function userMatchesGuaranteed(
   return normalizeLeaderboardHandle(u.username) === target
 }
 
+function pickGuaranteedDisplayUser(
+  e1: Epoch1LeaderboardRow | undefined,
+  candidates: Epoch2ApiUser[],
+): Epoch2ApiUser | undefined {
+  if (candidates.length === 0) return undefined
+  if (e1) {
+    const byE1Wallet = candidates.find((c) => walletKey(c.wallet) === e1.walletLower)
+    if (byE1Wallet) return byE1Wallet
+  }
+  return [...candidates].sort((a, b) => b.score - a.score)[0]
+}
+
 /**
  * Re-apply ranks 1–7 order on every `/epoch2` read (snapshot file may still list an old podium order).
- * Does not change scores — only order and `srEligible` for the seven handles.
+ * Drops duplicate rows: same @handle with a second wallet stays in the CSV but must not appear twice.
  */
 export async function reorderEpoch2GuaranteedTop7ForDisplay(users: Epoch2ApiUser[]): Promise<Epoch2ApiUser[]> {
   const epoch1ByHandle = await loadGuaranteedTop7Epoch1Rows()
+
   const consumed = new Set<Epoch2ApiUser>()
+  for (const u of users) {
+    for (const handle of EPOCH2_GUARANTEED_TOP7_HANDLES) {
+      const e1 = epoch1ByHandle.get(handle)
+      if (userMatchesGuaranteed(u, handle, e1)) {
+        consumed.add(u)
+        break
+      }
+    }
+  }
+
   const head: Epoch2ApiUser[] = []
 
   for (const handle of EPOCH2_GUARANTEED_TOP7_HANDLES) {
     const e1 = epoch1ByHandle.get(handle)
-    const u = users.find((c) => userMatchesGuaranteed(c, handle, e1))
+    const candidates = users.filter((c) => userMatchesGuaranteed(c, handle, e1))
+    const u = pickGuaranteedDisplayUser(e1, candidates)
     if (!u) continue
-    consumed.add(u)
     const xHandle = normalizeXUsername(handle) || normalizeXUsername(u.xHandle ?? u.username)
     head.push({
       ...u,
@@ -157,7 +180,8 @@ export function applyGuaranteedTop7(
 
   for (const handle of EPOCH2_GUARANTEED_TOP7_HANDLES) {
     const e1 = epoch1ByHandle.get(handle)
-    let u = users.find((c) => userMatchesGuaranteed(c, handle, e1))
+    const candidates = users.filter((c) => userMatchesGuaranteed(c, handle, e1))
+    let u = pickGuaranteedDisplayUser(e1, candidates)
 
     if (!u && e1) {
       u = {

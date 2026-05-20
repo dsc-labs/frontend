@@ -50,16 +50,18 @@ const EPOCH1_BY_WALLET = (() => {
 
 /** Backfill profile fields when reading an older snapshot JSON (pre-xHandle). */
 export function enrichEpoch2UsersForDisplay(users: Epoch2LeaderboardUser[]): Epoch2LeaderboardUser[] {
-  return users.map((u) => {
-    if (u.xHandle?.trim()) return u
-    const wk = u.wallet.trim().toLowerCase()
-    const e1 = EPOCH1_BY_WALLET.get(wk)
-    const fromDisplay = u.username.trim().replace(/^@/, '')
-    const xHandle = e1?.xHandle || (fromDisplay && !/\s/.test(fromDisplay) ? fromDisplay : 'unknown')
-    return {
-      ...u,
-      xHandle,
-      avatarUrl: u.avatarUrl || e1?.avatarUrl,
-    }
-  })
+  return users
+    .map((u) => {
+      if (u.xHandle?.trim()) return u
+      const wk = u.wallet.trim().toLowerCase()
+      const e1 = EPOCH1_BY_WALLET.get(wk)
+      const fromDisplay = u.username.trim().replace(/^@/, '')
+      const xHandle = e1?.xHandle || (fromDisplay && !/\s/.test(fromDisplay) ? fromDisplay : 'unknown')
+      return {
+        ...u,
+        xHandle,
+        avatarUrl: u.avatarUrl || e1?.avatarUrl,
+      }
+    })
+    .filter((u) => Number(u.score) > 0)
 }
