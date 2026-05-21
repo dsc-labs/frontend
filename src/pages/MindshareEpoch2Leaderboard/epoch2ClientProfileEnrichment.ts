@@ -1,5 +1,7 @@
+import { parseSubmissionAvatarsCsv } from '../../../lib/submissionAvatarsParse'
 import type { Epoch2LeaderboardUser } from './mindshareEpoch2Data'
 import leaderboardCsv from '../../../leaderboard_export.csv?raw'
+import submissionAvatarsCsv from '../../../submission-avatars.csv?raw'
 
 type Epoch1CsvRow = {
   username: string
@@ -48,19 +50,31 @@ const EPOCH1_BY_WALLET = (() => {
   return byWallet
 })()
 
+const SUBMISSION_AVATARS_BY_USERNAME = parseSubmissionAvatarsCsv(submissionAvatarsCsv)
+
+function resolveXHandle(u: Epoch2LeaderboardUser, e1?: { xHandle: string }): string {
+  const existing = u.xHandle?.trim().replace(/^@/, '')
+  if (existing) return existing
+  if (e1?.xHandle) return e1.xHandle.replace(/^@/, '')
+  const fromDisplay = u.username.trim().replace(/^@/, '')
+  if (fromDisplay && !/\s/.test(fromDisplay)) return fromDisplay
+  return 'unknown'
+}
+
 /** Backfill profile fields when reading an older snapshot JSON (pre-xHandle). */
 export function enrichEpoch2UsersForDisplay(users: Epoch2LeaderboardUser[]): Epoch2LeaderboardUser[] {
   return users
     .map((u) => {
-      if (u.xHandle?.trim()) return u
       const wk = u.wallet.trim().toLowerCase()
       const e1 = EPOCH1_BY_WALLET.get(wk)
-      const fromDisplay = u.username.trim().replace(/^@/, '')
-      const xHandle = e1?.xHandle || (fromDisplay && !/\s/.test(fromDisplay) ? fromDisplay : 'unknown')
+      const xHandle = resolveXHandle(u, e1)
+      const handleKey = xHandle.toLowerCase()
+      const avatarUrl =
+        SUBMISSION_AVATARS_BY_USERNAME.get(handleKey) || u.avatarUrl || e1?.avatarUrl
       return {
         ...u,
         xHandle,
-        avatarUrl: u.avatarUrl || e1?.avatarUrl,
+        ...(avatarUrl ? { avatarUrl } : {}),
       }
     })
     .filter((u) => Number(u.score) > 0)

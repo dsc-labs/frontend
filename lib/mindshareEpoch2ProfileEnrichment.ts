@@ -2,6 +2,7 @@ import type { MindshareSubmissionRow } from './mindshareCsvStore'
 import type { Epoch1LeaderboardRow } from './mindshareEpoch1Carryover'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
 import type { Epoch2MetricsCacheFile } from './mindshareEpoch2MetricsCache'
+import { loadSubmissionAvatarsByUsernameSync } from './submissionAvatars'
 import { normalizeXUsername } from './xTweetMetrics'
 
 function walletKey(wallet: string): string {
@@ -27,7 +28,7 @@ function mindshareHandleByWallet(rows: MindshareSubmissionRow[]): Map<string, st
   return out
 }
 
-/** Attach X handle + avatar from X metrics cache (preferred) with Epoch 1 export fallback. */
+/** Attach X handle + avatar from submission-avatars.csv, X cache, or Epoch 1 export. */
 export function enrichEpoch2UsersWithProfiles(
   users: Epoch2ApiUser[],
   epoch1Rows: Epoch1LeaderboardRow[],
@@ -36,6 +37,7 @@ export function enrichEpoch2UsersWithProfiles(
 ): Epoch2ApiUser[] {
   const epoch1ByWallet = new Map(epoch1Rows.map((r) => [r.walletLower, r]))
   const handles = mindshareHandleByWallet(mindshareRows)
+  const submissionAvatars = loadSubmissionAvatarsByUsernameSync()
 
   return users.map((u) => {
     const wk = walletKey(u.wallet)
@@ -45,7 +47,11 @@ export function enrichEpoch2UsersWithProfiles(
     const fromDisplay = guessXHandleFromDisplayUsername(u.username)
     const xHandle = fromE1 || fromCsv || fromDisplay || 'unknown'
     const xCached = cache.users[xHandle]
-    const avatarUrl = xCached?.profileImageUrl?.trim() || e1?.avatarUrl?.trim() || undefined
+    const avatarUrl =
+      submissionAvatars.get(xHandle) ||
+      xCached?.profileImageUrl?.trim() ||
+      e1?.avatarUrl?.trim() ||
+      undefined
     const xName = xCached?.name?.trim()
     return {
       ...u,
