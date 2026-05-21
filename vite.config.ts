@@ -7,7 +7,11 @@ import { Buffer } from 'node:buffer'
 import { resolveAvatar } from './lib/avatarRequest'
 import { appendMindshareSubmissionCsv } from './lib/mindshareCsvStore'
 import { applyMindshareEpoch2Env } from './lib/mindshareEpoch2Env'
-import { isMindshareSubmissionOpen } from './lib/mindshareEpoch2Constants'
+import {
+  EPOCH2_CHECKPOINT_DAY_KEYS,
+  EPOCH2_SNAPSHOT_UTC_HOUR,
+  isMindshareSubmissionOpen,
+} from './lib/mindshareEpoch2Constants'
 import { getMindshareEpoch2LeaderboardForDisplay } from './lib/mindshareEpoch2LeaderboardBuild'
 import { runMindshareEpoch2DailySnapshot } from './lib/mindshareEpoch2DailySnapshot'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
@@ -206,14 +210,25 @@ function attachWaitlistDevCron(server: ViteDevServer | PreviewServer, loadedEnv:
   else server.httpServer?.once('listening', bind)
 }
 
-/** Next 17:00 UTC boundary from now, in milliseconds. */
-function msUntilNextUtc17(): number {
-  const now = new Date()
-  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 17, 0, 0, 0))
-  if (now.getTime() >= next.getTime()) {
-    next.setUTCDate(next.getUTCDate() + 1)
+/** Next 05:00 UTC on an Epoch 2 checkpoint tick day (15–18 + 20 May), in milliseconds. */
+function msUntilNextEpoch2CheckpointSnapshot(): number {
+  const now = Date.now()
+  for (let i = 0; i < 40; i += 1) {
+    const probe = new Date(now + i * 86_400_000)
+    const dayKey = probe.toISOString().slice(0, 10)
+    if (!(EPOCH2_CHECKPOINT_DAY_KEYS as readonly string[]).includes(dayKey)) continue
+    const target = Date.UTC(
+      probe.getUTCFullYear(),
+      probe.getUTCMonth(),
+      probe.getUTCDate(),
+      EPOCH2_SNAPSHOT_UTC_HOUR,
+      0,
+      0,
+      0,
+    )
+    if (target > now) return target - now
   }
-  return next.getTime() - now.getTime()
+  return 86_400_000
 }
 
 function mindshareEpoch2SrSnapshotDevCronEnabled(loadedEnv: Record<string, string>): boolean {
@@ -222,8 +237,8 @@ function mindshareEpoch2SrSnapshotDevCronEnabled(loadedEnv: Record<string, strin
 }
 
 /**
- * `npm run dev` / `vite preview`: optional schedule GET /api/mindshare/epoch2-sr-snapshot at each 17:00 UTC.
- * Off by default; enable: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1. Production: Vercel Cron `0 17 * * *`.
+ * `npm run dev` / `vite preview`: optional schedule GET /api/mindshare/epoch2-sr-snapshot at each 05:00 UTC checkpoint day.
+ * Off by default; enable: MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1. Production: Vercel Cron `0 5 15,16,17,18,20 5 *`.
  */
 function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewServer, loadedEnv: Record<string, string>) {
   if (!mindshareEpoch2SrSnapshotDevCronEnabled(loadedEnv)) return
@@ -275,7 +290,7 @@ function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewS
     let timeoutId: ReturnType<typeof setTimeout> | undefined
 
     const scheduleNext = () => {
-      const delay = msUntilNextUtc17()
+      const delay = msUntilNextEpoch2CheckpointSnapshot()
       timeoutId = setTimeout(() => {
         void runSnapshot().finally(() => {
           scheduleNext()
@@ -290,9 +305,9 @@ function attachMindshareEpoch2SrSnapshotDevCron(server: ViteDevServer | PreviewS
     }
     httpServer.once('close', onClose)
 
-    const nextAt = new Date(Date.now() + msUntilNextUtc17())
+    const nextAt = new Date(Date.now() + msUntilNextEpoch2CheckpointSnapshot())
     console.info(
-      `[mindshare epoch2] SR eligibility dev cron: next snapshot ~${nextAt.toISOString()} (17:00 UTC). Opt out: unset MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON or set MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED=1`,
+      `[mindshare epoch2] SR eligibility dev cron: next snapshot ~${nextAt.toISOString()} (05:00 UTC on checkpoint days). Opt out: unset MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON or set MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON_DISABLED=1`,
     )
   }
 

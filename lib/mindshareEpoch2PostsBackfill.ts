@@ -1,4 +1,4 @@
-import { EPOCH_2_END_MS } from './mindshareEpoch2Constants'
+import { EPOCH_2_END_MS, EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
 import {
   EPOCH2_CHECKPOINT_DAY_KEYS,
   loadEpoch2SrEligibilityByDay,
@@ -196,7 +196,7 @@ export async function runMindshareEpoch2PostsBackfill(options: {
       endMs: nowMs,
       eligibilityDayKey: snapshotDayKey,
     },
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
   }
 
   const dailyStatePath = await writeEpoch2DailyState({

@@ -22,7 +22,7 @@ async function runPool<T>(items: T[], concurrency: number, fn: (item: T) => Prom
 
 export type Epoch2SrEligibilityForDayResult = {
   eligibilityDayKey: string
-  /** Canonical snapshot instant (= 17:00 UTC on eligibility calendar day). */
+  /** Canonical snapshot instant (= 05:00 UTC on checkpoint day). */
   targetTimestampSec: number
   targetAtIso: string
   blockNumber: number
@@ -38,7 +38,7 @@ export type Epoch2SrEligibilityForDayResult = {
 
 /**
  * SR eligibility for one `eligibilityDayKey`: $SR balance of every mindshare CSV wallet
- * at the archive block for {@link gmt7SrEligibilitySnapshotInstantMs} (17:00 UTC snapshot).
+ * at the archive block for {@link gmt7SrEligibilitySnapshotInstantMs} (05:00 UTC checkpoint snapshot).
  */
 export async function computeEpoch2SrEligibilityForDay(options: {
   eligibilityDayKey: string

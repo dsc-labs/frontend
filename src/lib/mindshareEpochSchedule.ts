@@ -1,7 +1,7 @@
 /**
  * Mindshare challenge epoch windows.
  *
- * Event instants are unchanged from the original schedule (daily 17:00 UTC cron ticks).
+ * Epoch 2 SR/score snapshots run at 05:00 UTC on checkpoint tick days (see `lib/mindshareEpoch2Gmt7.ts`).
  * UI copy only shows `EPOCH_3_START_UTC_LABEL`; other boundaries are not labeled on the site.
  */
 
@@ -20,45 +20,35 @@ export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 /** Only user-facing schedule instant (all other boundaries stay internal). */
 export const EPOCH_3_START_UTC_LABEL = '17:00 UTC, May 23, 2026'
 
-const EPOCH2_ELIGIBILITY_DAY_OFFSET_MS = 7 * 60 * 60 * 1000
+/** Checkpoint tick days (keep in sync with `lib/mindshareEpoch2Constants.ts`). */
+const EPOCH2_CHECKPOINT_TICK_DAYS = [
+  '2026-05-15',
+  '2026-05-16',
+  '2026-05-17',
+  '2026-05-18',
+  '2026-05-20',
+] as const
+
+const EPOCH2_SNAPSHOT_UTC_HOUR = 5
 const MS_PER_DAY = 24 * 60 * 60 * 1000
 
-/** Eligibility day key `YYYY-MM-DD` for snapshot windows (aligned to 17:00 UTC cron). */
-export function epoch2EligibilityDayKeyFromMs(ms: number): string {
-  return new Date(ms + EPOCH2_ELIGIBILITY_DAY_OFFSET_MS).toISOString().slice(0, 10)
-}
-
-/** UTC instant for 17:00 UTC on eligibility day `dayKey` (start of that eligibility window). */
-export function epoch2EligibilityDayStartMs(dayKey: string): number {
-  return Date.parse(`${dayKey}T00:00:00+07:00`)
-}
-
-/**
- * Next 00:00 GMT+7 (17:00 UTC daily snapshot) strictly after `nowMs`.
- * Matches “tomorrow midnight” on the eligibility calendar (same day boundary as Epoch 2 snapshots).
- */
+/** Next 05:00 UTC checkpoint snapshot strictly after `nowMs`. */
 export function nextTomorrowGmt7MidnightMs(nowMs = Date.now()): number {
-  const dayKey = epoch2EligibilityDayKeyFromMs(nowMs)
-  let target = epoch2EligibilityDayStartMs(dayKey) + MS_PER_DAY
-  while (target <= nowMs) {
-    target += MS_PER_DAY
+  for (let i = 0; i < 32; i += 1) {
+    const probe = nowMs + i * MS_PER_DAY
+    const dayKey = new Date(probe).toISOString().slice(0, 10)
+    if (!(EPOCH2_CHECKPOINT_TICK_DAYS as readonly string[]).includes(dayKey)) continue
+    const target = Date.parse(
+      `${dayKey}T${String(EPOCH2_SNAPSHOT_UTC_HOUR).padStart(2, '0')}:00:00.000Z`,
+    )
+    if (target > nowMs) return target
   }
-  return target
+  const last = EPOCH2_CHECKPOINT_TICK_DAYS[EPOCH2_CHECKPOINT_TICK_DAYS.length - 1]!
+  return Date.parse(`${last}T${String(EPOCH2_SNAPSHOT_UTC_HOUR).padStart(2, '0')}:00:00.000Z`)
 }
 
-/** Next 17:00 UTC daily snapshot after `nowMs`. */
-export function nextDailySnapshotUtcMs(nowMs = Date.now()): number {
-  return nextTomorrowGmt7MidnightMs(nowMs)
-}
-
-/** @deprecated Use {@link epoch2EligibilityDayKeyFromMs}. */
-export const gmt7DayKeyFromMs = epoch2EligibilityDayKeyFromMs
-
-/** @deprecated Use {@link epoch2EligibilityDayStartMs}. */
-export const gmt7DayStartMs = epoch2EligibilityDayStartMs
-
-/** @deprecated Use {@link nextDailySnapshotUtcMs}. */
-export const nextGmt7MidnightMs = nextDailySnapshotUtcMs
+export const nextDailySnapshotUtcMs = nextTomorrowGmt7MidnightMs
+export const nextGmt7MidnightMs = nextTomorrowGmt7MidnightMs
 
 /**
  * Epoch 2 leaderboard table (`/sraaaepoch2`). Kept off the challenge page; use preview gate below instead.

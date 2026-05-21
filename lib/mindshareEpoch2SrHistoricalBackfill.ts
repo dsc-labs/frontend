@@ -1,4 +1,5 @@
 import { EPOCH2_CHECKPOINT_DAY_KEYS } from './mindshareEpoch2Checkpoints'
+import { EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
 import { computeEpoch2SrEligibilityForDay } from './mindshareEpoch2SrEligibilityAtDay'
 import { getServerArchiveRpcUrl } from './serverBaseRpc'
 import {
@@ -28,7 +29,7 @@ export type MindshareEpoch2SrHistoricalBackfillResult =
       rpcFailures: number
       logPath: string
       writeAction: 'appended' | 'replaced'
-      cronTimezoneNote: 'Daily snapshot at 17:00 UTC'
+      cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE
       balanceSource: 'archive-block'
     }
   | { ok: false; error: string }
@@ -88,7 +89,7 @@ export async function runMindshareEpoch2SrHistoricalBackfill(options: {
     at: computed.targetAtIso,
     recordedAt: new Date().toISOString(),
     eligibilityDayKey: computed.eligibilityDayKey,
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
     thresholdExclusive: computed.thresholdExclusive,
     totalMindshareWallets: computed.totalMindshareWallets,
     eligibleCount: computed.eligibleCount,
@@ -123,7 +124,7 @@ export async function runMindshareEpoch2SrHistoricalBackfill(options: {
     rpcFailures: computed.rpcFailures,
     logPath,
     writeAction,
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
     balanceSource: 'archive-block',
   }
 }

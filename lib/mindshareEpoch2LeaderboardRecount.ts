@@ -1,4 +1,4 @@
-import { EPOCH_2_END_MS } from './mindshareEpoch2Constants'
+import { EPOCH_2_END_MS, EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
 import {
   bootstrapPostKeySet,
   readEpoch2DailyState,
@@ -117,7 +117,7 @@ export async function runMindshareEpoch2LeaderboardRecount(options: {
     snapshotDayKey,
     isBootstrap,
     postWindow,
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
   }
 
   const dailyStatePath = await writeEpoch2DailyState({

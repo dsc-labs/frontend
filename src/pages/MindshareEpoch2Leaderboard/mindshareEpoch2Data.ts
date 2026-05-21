@@ -28,7 +28,7 @@ export type Epoch2LeaderboardUser = {
   srEligible: boolean
   /** On-chain $SR from latest daily snapshot. */
   srBalance?: number
-  /** Daily SR eligibility for 15–18 + 20 May (17:00 UTC snapshots). */
+  /** SR eligibility for 15–18 + 20 May (05:00 UTC checkpoint snapshots). */
   checkpoints?: boolean[]
 }
 

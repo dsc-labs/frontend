@@ -6,7 +6,7 @@
     },
     {
       "path": "/api/mindshare/epoch2-sr-snapshot",
-      "schedule": "0 17 * * *"
+      "schedule": "0 5 15,16,17,18,20 5 *"
     }
   ],
   "headers": [

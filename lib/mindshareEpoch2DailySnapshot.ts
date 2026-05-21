@@ -10,7 +10,8 @@ import {
   writeEpoch2LeaderboardSnapshot,
   type Epoch2LeaderboardSnapshotFile,
 } from './mindshareEpoch2DailyState'
-import { gmt7PostCountWindowForSnapshot } from './mindshareEpoch2Gmt7'
+import { EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
+import { gmt7PostCountWindowForSnapshot, isEpoch2CheckpointSnapshotDay } from './mindshareEpoch2Gmt7'
 import {
   buildMindshareEpoch2LeaderboardPayload,
   type MindshareEpoch2LeaderboardPayload,
@@ -31,9 +32,10 @@ export type MindshareEpoch2DailySnapshotResult =
   | {
       ok: true
       skipped: true
-      reason: 'epoch2-ended'
-      epoch2EndMs: number
+      reason: 'epoch2-ended' | 'not-checkpoint-day'
+      epoch2EndMs?: number
       nowMs: number
+      dayKey?: string
     }
   | {
       ok: true
@@ -50,7 +52,7 @@ export type MindshareEpoch2DailySnapshotResult =
   | { ok: false; error: string }
 
 /**
- * Daily 17:00 UTC job (two separate steps):
+ * Checkpoint-day 05:00 UTC job (two separate steps):
  * 1. SR eligibility — archive RPC balances at the snapshot block (`runMindshareEpoch2SrEligibilitySnapshot`)
  * 2. Posts + scores — eligibility-day post windows + X metrics (`buildMindshareEpoch2LeaderboardPayload`); uses SR list from step 1 only for gating
  *
@@ -67,13 +69,29 @@ export async function runMindshareEpoch2DailySnapshot(
   if (nowMs >= EPOCH_2_END_MS) {
     return { ok: true, skipped: true, reason: 'epoch2-ended', epoch2EndMs: EPOCH_2_END_MS, nowMs }
   }
+  if (!isEpoch2CheckpointSnapshotDay(nowMs)) {
+    return {
+      ok: true,
+      skipped: true,
+      reason: 'not-checkpoint-day',
+      nowMs,
+      dayKey: gmt7PostCountWindowForSnapshot(nowMs, false).snapshotDayKey,
+    }
+  }
 
   const srSnapshot = await runMindshareEpoch2SrEligibilitySnapshot(nowMs)
   if (!srSnapshot.ok) {
     return { ok: false, error: srSnapshot.error }
   }
   if (srSnapshot.skipped) {
-    return { ok: true, skipped: true, reason: 'epoch2-ended', epoch2EndMs: EPOCH_2_END_MS, nowMs }
+    return {
+      ok: true,
+      skipped: true,
+      reason: srSnapshot.reason,
+      ...(srSnapshot.reason === 'epoch2-ended' ? { epoch2EndMs: EPOCH_2_END_MS } : {}),
+      nowMs,
+      ...(srSnapshot.dayKey ? { dayKey: srSnapshot.dayKey } : {}),
+    }
   }
 
   const dailyState = await readEpoch2DailyState()
@@ -136,7 +154,7 @@ export async function runMindshareEpoch2DailySnapshot(
       endMs: postWindow.endMs,
       eligibilityDayKey: postWindow.eligibilityDayKey,
     },
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
   }
 
   const dailyStatePath = await writeEpoch2DailyState({

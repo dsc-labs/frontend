@@ -6,7 +6,8 @@ import {
   EPOCH2_MINDSHARE_SR_SNAPSHOT_THRESHOLD_EXCLUSIVE,
   EPOCH_2_END_MS,
 } from './mindshareEpoch2Constants'
-import { gmt7PostCountWindowForSnapshot } from './mindshareEpoch2Gmt7'
+import { EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
+import { gmt7PostCountWindowForSnapshot, isEpoch2CheckpointSnapshotDay } from './mindshareEpoch2Gmt7'
 import { computeEpoch2SrEligibilityForDay } from './mindshareEpoch2SrEligibilityAtDay'
 import { defaultSnapshotLogPath, writeEpoch2SrSnapshotLogLine } from './mindshareEpoch2SrSnapshotLog'
 import { getServerArchiveRpcUrl } from './serverBaseRpc'
@@ -61,15 +62,16 @@ export type MindshareEpoch2SrSnapshotResult =
   | {
       ok: true
       skipped: true
-      reason: 'epoch2-ended'
-      epoch2EndMs: number
+      reason: 'epoch2-ended' | 'not-checkpoint-day'
+      epoch2EndMs?: number
       nowMs: number
+      dayKey?: string
     }
   | {
       ok: true
       skipped: false
       atIso: string
-      cronTimezoneNote: 'Daily snapshot at 17:00 UTC'
+      cronTimezoneNote: string
       eligibilityDayKey: string
       thresholdExclusive: number
       totalMindshareWallets: number
@@ -87,7 +89,7 @@ export type MindshareEpoch2SrSnapshotResult =
   | { ok: false; error: string }
 
 /**
- * SR eligibility for `eligibilityDayKey` at the archive block for the 17:00 UTC snapshot.
+ * SR eligibility for `eligibilityDayKey` at the archive block for the 05:00 UTC checkpoint snapshot.
  * Writes checkpoint jsonl + `epoch2_sr_eligible_wallets.json` (used only for post window gating).
  *
  * Post counting/scoring is handled separately in {@link runMindshareEpoch2DailySnapshot}.
@@ -108,7 +110,17 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     return {
       ok: false,
       error:
-        'Missing BASE_ARCHIVE_RPC_URL or BASE_RPC_URL (archive RPC required for SR eligibility at 17:00 UTC snapshot)',
+        'Missing BASE_ARCHIVE_RPC_URL or BASE_RPC_URL (archive RPC required for SR eligibility at 05:00 UTC checkpoint snapshot)',
+    }
+  }
+
+  if (!isEpoch2CheckpointSnapshotDay(nowMs)) {
+    return {
+      ok: true,
+      skipped: true,
+      reason: 'not-checkpoint-day',
+      nowMs,
+      dayKey: gmt7PostCountWindowForSnapshot(nowMs, false).snapshotDayKey,
     }
   }
 
@@ -129,7 +141,7 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     at: computed.targetAtIso,
     recordedAt: runAtIso,
     eligibilityDayKey: computed.eligibilityDayKey,
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
     thresholdExclusive: computed.thresholdExclusive,
     totalMindshareWallets: computed.totalMindshareWallets,
     eligibleCount: computed.eligibleCount,
@@ -166,7 +178,7 @@ export async function runMindshareEpoch2SrEligibilitySnapshot(nowMs = Date.now()
     ok: true,
     skipped: false,
     atIso: runAtIso,
-    cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
+    cronTimezoneNote: EPOCH2_SNAPSHOT_CRON_NOTE,
     eligibilityDayKey: computed.eligibilityDayKey,
     thresholdExclusive: computed.thresholdExclusive,
     totalMindshareWallets: computed.totalMindshareWallets,

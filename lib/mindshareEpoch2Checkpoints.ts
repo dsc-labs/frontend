@@ -1,22 +1,18 @@
 import { readFile } from 'node:fs/promises'
 
+import {
+  EPOCH2_CHECKPOINT_DAY_KEYS,
+  EPOCH2_SNAPSHOT_UTC_HOUR,
+  type Epoch2CheckpointDayKey,
+} from './mindshareEpoch2Constants'
 import { EPOCH2_GUARANTEED_TOP7_HANDLES } from './mindshareEpoch2GuaranteedTop7'
 import { defaultEpoch2SrSnapshotLogPath } from './mindshareEpoch2DataPaths'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
-import { gmt7DayKeyFromMs, gmt7PreviousDayKey, gmt7SrEligibilitySnapshotInstantMs } from './mindshareEpoch2Gmt7'
+import { gmt7DayKeyFromMs, gmt7SrEligibilitySnapshotInstantMs } from './mindshareEpoch2Gmt7'
 import type { Epoch2SrEligibleWalletsFile } from './mindshareEpoch2SrSnapshot'
 import { normalizeXUsername } from './xTweetMetrics'
 
-/** Eligibility days shown as status checkpoints (15–18 + 20 May; no 19 May tick). */
-export const EPOCH2_CHECKPOINT_DAY_KEYS = [
-  '2026-05-15',
-  '2026-05-16',
-  '2026-05-17',
-  '2026-05-18',
-  '2026-05-20',
-] as const
-
-export type Epoch2CheckpointDayKey = (typeof EPOCH2_CHECKPOINT_DAY_KEYS)[number]
+export { EPOCH2_CHECKPOINT_DAY_KEYS, type Epoch2CheckpointDayKey } from './mindshareEpoch2Constants'
 
 const EPOCH2_CHECKPOINT_DATE_LABELS: Record<Epoch2CheckpointDayKey, string> = {
   '2026-05-15': '15 May 2026',
@@ -63,11 +59,23 @@ function resolveEligibilityDayKey(line: SrSnapshotLogLine): string | null {
   if (!at) return null
   const atMs = Date.parse(at)
   if (!Number.isFinite(atMs)) return null
-  const runDayGmt7 = gmt7DayKeyFromMs(atMs)
-  // First checkpoint day backfill was stored without `eligibilityDayKey` (meant that calendar day).
-  if (runDayGmt7 === EPOCH2_CHECKPOINT_DAY_KEYS[0]) return runDayGmt7
-  // Later manual/cron runs: 17:00 UTC on D records eligibility for day D−1.
-  return gmt7PreviousDayKey(runDayGmt7)
+  const runDayUtc = gmt7DayKeyFromMs(atMs)
+  const hour = new Date(atMs).getUTCHours()
+  // 05:00 UTC checkpoint cron on day D → eligibility for day D.
+  if (
+    hour >= EPOCH2_SNAPSHOT_UTC_HOUR - 1 &&
+    hour <= EPOCH2_SNAPSHOT_UTC_HOUR + 1 &&
+    (EPOCH2_CHECKPOINT_DAY_KEYS as readonly string[]).includes(runDayUtc)
+  ) {
+    return runDayUtc
+  }
+  // Legacy 17:00 UTC (+7 midnight) lines: run on calendar day D stored eligibility for D−1.
+  if (hour >= 16 && hour <= 18) {
+    const prevMs = Date.parse(`${runDayUtc}T12:00:00.000Z`) - 24 * 60 * 60 * 1000
+    return gmt7DayKeyFromMs(prevMs)
+  }
+  if (runDayUtc === EPOCH2_CHECKPOINT_DAY_KEYS[0]) return runDayUtc
+  return runDayUtc
 }
 
 /** Last SR snapshot per eligibility day (from `epoch2_sr_snapshots.jsonl`). */

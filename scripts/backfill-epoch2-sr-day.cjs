@@ -76,7 +76,7 @@ function pickLineForDay(lines, day) {
 
 function normalizeLine(raw, day) {
   return {
-    at: raw.at || new Date(`${day}T17:00:00.000Z`).toISOString(),
+    at: raw.at || new Date(`${day}T05:00:00.000Z`).toISOString(),
     eligibilityDayKey: day,
     cronTimezoneNote: 'Daily snapshot at 17:00 UTC',
     thresholdExclusive: raw.thresholdExclusive ?? 10_000,

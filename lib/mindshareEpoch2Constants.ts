@@ -16,8 +16,23 @@ export const EPOCH2_PUBLIC_ENGAGEMENT_STATS = {
 /** Score multiplier for posts counted on the **first** (bootstrap) midnight snapshot. */
 export const EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER = 5
 
+/** SR / score snapshots run at this UTC hour on {@link EPOCH2_CHECKPOINT_DAY_KEYS}. */
+export const EPOCH2_SNAPSHOT_UTC_HOUR = 5
+
+/** Eligibility days shown as status checkpoints (15–18 + 20 May; no 19 May tick). */
+export const EPOCH2_CHECKPOINT_DAY_KEYS = [
+  '2026-05-15',
+  '2026-05-16',
+  '2026-05-17',
+  '2026-05-18',
+  '2026-05-20',
+] as const
+
+export type Epoch2CheckpointDayKey = (typeof EPOCH2_CHECKPOINT_DAY_KEYS)[number]
+
 /** Written into snapshot JSON metadata. */
-export const EPOCH2_SNAPSHOT_CRON_NOTE = 'Daily snapshot at 17:00 UTC'
+export const EPOCH2_SNAPSHOT_CRON_NOTE =
+  'Checkpoint snapshots at 05:00 UTC on 15–18 + 20 May 2026 (Vercel: 0 5 15,16,17,18,20 5 *)'
 
 /** Mindshare form + API submissions (closes when Epoch 2 ends). */
 export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {

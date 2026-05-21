@@ -8,7 +8,7 @@ This document describes **what data is frozen or refreshed on a schedule** for t
 
 | What | When | Stored in | Used for |
 | ---- | ---- | --------- | -------- |
-| **Daily job (SR + scores)** | Once per day at **17:00 UTC** (`0 17 * * *`) | See [Files written](#files-written) | Eligibility, cumulative scores, public leaderboard |
+| **Checkpoint job (SR + scores)** | **05:00 UTC** on tick days 15–18 + 20 May (`0 5 15,16,17,18,20 5 *`) | See [Files written](#files-written) | Eligibility, cumulative scores, public leaderboard |
 | **Submissions** | On each form submit | `mindshare_submissions.csv` (+ `submitted at`) | Which posts exist and **when** they were submitted |
 | **Operator backfill** | Manual | Same files | Replay SR days and/or full post counting 15→18 & 20 |
 
@@ -23,7 +23,7 @@ Public `/epoch2` reads **`epoch2_leaderboard_snapshot.json`**. It does **not** r
 
 | Mechanism | Question it answers | Source of truth |
 | --------- | ------------------- | ----------------- |
-| **SR eligibility** | Did this wallet hold **> 10,000** $SR at the **17:00 UTC** snapshot for day *D*? | On-chain balance at **archive block** → `epoch2_sr_snapshots.jsonl` (per day) + `epoch2_sr_eligible_wallets.json` (latest night, for gating) |
+| **SR eligibility** | Did this wallet hold **> 10,000** $SR at the **05:00 UTC** snapshot for checkpoint day *D*? | On-chain balance at **archive block** → `epoch2_sr_snapshots.jsonl` (per day) + `epoch2_sr_eligible_wallets.json` (latest tick, for gating) |
 | **Post counting + scoring** | Which tweets count toward score, and how many points? | CSV + `submitted at` + eligibility-day **post windows** + per-day SR list → `epoch2_daily_state.json` `countedPostKeys` → `epoch2_leaderboard_snapshot.json` |
 
 SR eligibility does **not** depend on how many tweets someone submitted. One tweet with >10k $SR can be SR-eligible; many tweets with 0 $SR on-chain at the checkpoint do not score.
@@ -48,9 +48,9 @@ runMindshareEpoch2DailySnapshot          lib/mindshareEpoch2DailySnapshot.ts
 
 ---
 
-## Daily snapshot job (17:00 UTC)
+## Checkpoint snapshot job (05:00 UTC on tick days)
 
-At **17:00 UTC** each day, one run does:
+At **05:00 UTC** on **15, 16, 17, 18, and 20 May 2026** (no run on 19 May), one run does:
 
 1. **SR eligibility** — archive RPC balance at the snapshot block → `epoch2_sr_eligible_wallets.json` + append/replace line in `epoch2_sr_snapshots.jsonl`
 2. **X metrics** — tweet engagement + follower counts for posts being scored → `epoch2_metrics_cache.json`
@@ -128,9 +128,9 @@ Submissions store **`submitted at`** (ISO-8601) on new CSV rows. Legacy rows wit
 - **Rule:** if the wallet is **SR-eligible** at that snapshot, those posts enter the cumulative leaderboard.
 - **Score:** posts counted on this run are stored in `bootstrapPostKeys` and earn **×5** on cumulative score (`EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER` in `lib/mindshareEpoch2Constants.ts`). Later nights are ×1.
 
-### Every later 17:00 UTC snapshot
+### Every later 05:00 UTC checkpoint snapshot
 
-- **Eligibility day *D*:** you are eligible at the 17:00 UTC snapshot for day *D*.
+- **Checkpoint day *D*:** you are eligible at the 05:00 UTC snapshot on day *D*.
 - **Post window:** submissions with `submittedAt` in **[start of day *D−1*, start of day *D*)** (eligibility-day boundaries).  
   Example: eligible on **day 15** → posts submitted during **day 14 → day 15** (the window ending at the day 15 snapshot).
 - **Rule:** only **new** posts in that window (not already counted) are scored, and only if the wallet is eligible **that** night.
@@ -180,7 +180,7 @@ The leaderboard page labels the snapshot **12:00 AM, May 20, 2026** (hardcoded).
 | Schedule | Path | Purpose |
 | -------- | ---- | ------- |
 | `*/15 * * * *` | `/api/waitlist/snapshot` | Waitlist (unrelated to Epoch 2) |
-| `0 17 * * *` | `/api/mindshare/epoch2-sr-snapshot` | Daily SR + X + cumulative scores |
+| `0 5 15,16,17,18,20 5 *` | `/api/mindshare/epoch2-sr-snapshot` | Checkpoint-day SR + X + cumulative scores |
 
 Local dev: daily SR/score cron optional (`MINDSHARE_EPOCH2_SR_SNAPSHOT_DEV_CRON=1`). Fifteen-minute epoch2 refresh is **off** unless `MINDSHARE_EPOCH2_REFRESH_DEV_CRON=1`.
 
@@ -192,8 +192,8 @@ These X handles are **always** on the leaderboard at **ranks 1–7** in this ord
 
 1. Goon_crypto  
 2. 3DMax_Virtuals  
-3. 0xzagen  
-4. 0xweekend59  
+3. 0xweekend59  
+4. 0xzagen  
 5. 100xDarren  
 6. bizbrainzuni  
 7. office2crypto  
@@ -244,7 +244,7 @@ Verified manual fixes (wallet change, SR checkpoint ticks, final score) are appl
 | Villa_PHM | `0xf31a42744c247cde808188d171c7E9B227022dc3` | 1, 4, 5 | 196.42 |
 | phantomfills_hl | (unchanged; match by handle) | 1, 4, 5 | 103.35 |
 
-**Below top 8 (score only):** JokerIBlack 426.45, sheepmek1 401.72, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, Trong_Hatachi 317.28, hitasyurek 296.44, muhitonx 81, sothh84 249.17, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 138.5. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28.
+**Below top 8 (score only):** JokerIBlack 426.45, hitasyurek 401.75, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, trong_hatachi 296.45, sheepmek1 235.28, muhitonx 81, sothh84 249.17, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 138.5. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28. **Rename:** @punisher3505 → @0xFrankEth.
 
 Also update `mindshare_submissions.csv` (and Epoch 1 export wallet for carryover) when a wallet changes.
 

@@ -13,6 +13,8 @@ export type Epoch2OperatorAdjustment = {
   wallet?: string
   /** Prior wallets whose rows should merge into this user. */
   legacyWallets?: readonly string[]
+  /** Prior X handles (e.g. rename @punisher3505 → @0xFrankEth). */
+  legacyHandles?: readonly string[]
   /** Checkpoint day 15 May = 1 … 20 May = 5 (operator-verified SR). */
   checkpointSnapshots?: readonly number[]
   /** Final cumulative Epoch 2 score when set. */
@@ -61,12 +63,13 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   },
   // Below top 8 — operator score targets (human / bot tiers)
   scoreOnly('JokerIBlack', 426.45),
-  scoreOnly('sheepmek1', 401.72),
+  scoreOnly('sheepmek1', 235.28),
   scoreOnly('bencryptovnn', 201.6),
   scoreOnly('tcmalpha', 361.84),
   scoreOnly('gaogaocrypto', 338.57),
-  scoreOnly('Trong_Hatachi', 317.28),
-  scoreOnly('hitasyurek', 296.44),
+  scoreOnly('trong_hatachi', 296.45),
+  scoreOnly('hitasyurek', 401.75),
+  { handle: '0xFrankEth', legacyHandles: ['punisher3505'] },
   scoreOnly('muhitonx', 81),
   notEligibleZero('captainjack125'),
   scoreOnly('sothh84', 149.5),
@@ -147,6 +150,7 @@ function matchesAdjustment(u: Epoch2ApiUser, adj: Epoch2OperatorAdjustment): boo
   const h = userHandle(u)
   const target = normalizeXUsername(adj.handle)
   if (h && h === target) return true
+  if (adj.legacyHandles?.some((lh) => normalizeXUsername(lh) === h)) return true
   const wk = walletKey(u.wallet)
   if (adj.wallet?.trim() && walletKey(adj.wallet) === wk) {
     return !h || h === target
@@ -241,18 +245,20 @@ function buildMergedUser(
 }
 
 function applyScoreOnly(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment): Epoch2ApiUser[] {
-  if (adj.score === undefined || !Number.isFinite(adj.score)) {
-    if (!adj.forceNotEligible) return out
-  }
+  const hasScore = typeof adj.score === 'number' && Number.isFinite(adj.score)
+  const hasRename = Boolean(adj.legacyHandles?.length)
+  if (!hasScore && !adj.forceNotEligible && !hasRename) return out
   const target = normalizeXUsername(adj.handle)
   return out.map((u) => {
-    if (userHandle(u) !== target) return u
+    if (!matchesAdjustment(u, adj)) return u
+    const renamed = adj.legacyHandles?.some((lh) => normalizeXUsername(lh) === userHandle(u))
     const checkpoints = adj.forceNotEligible ? u.checkpoints?.map(() => false) : u.checkpoints
     return {
       ...u,
       ...(typeof adj.score === 'number' && Number.isFinite(adj.score) ? { score: adj.score } : {}),
       ...(adj.forceNotEligible ? { srEligible: false, checkpoints } : {}),
       ...(target ? { xHandle: target } : {}),
+      ...(renamed && target ? { username: `@${target}` } : {}),
     }
   })
 }

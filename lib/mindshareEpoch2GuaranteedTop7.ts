@@ -10,8 +10,8 @@ import { normalizeXUsername } from './xTweetMetrics'
 export const EPOCH2_GUARANTEED_TOP7_HANDLES: readonly string[] = [
   'goon_crypto',
   '3dmax_virtuals',
-  '0xzagen',
   '0xweekend59',
+  '0xzagen',
   '100xdarren',
   'bizbrainzuni',
   'office2crypto',
