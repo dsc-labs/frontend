@@ -242,11 +242,11 @@ Verified manual fixes (wallet change, SR checkpoint ticks, final score) are appl
 | TNr1ck | `0x3e33a63d7B64bCCE6bC7B0e38cbaAACfab0ca8b8` | 1, 2, 3 | 265.2 |
 | Anh_Mot0 | `0xD80A598A2E16145B620BfFA6fd48F00dA788eB12` | 1, 2, 4, 5 | 215.8 |
 | Villa_PHM | `0xf31a42744c247cde808188d171c7E9B227022dc3` | 1, 4, 5 | 196.42 |
-| phantomfills_hl | (unchanged; match by handle) | 1 | 186.32 |
+| phantomfills_hl | (synthetic wallet if missing from snapshot) | 1, 4, 5 | 154.44 |
 
-**Snap 1 only (~190 → 150):** 0xGreenWick 190.45, phantomfills_hl 186.32, moonrotation9 182.18, jakedegenx 178.54, willockfi_base 174.41, valri_eth 170.27, Saintman_xyz 166.13, WenIampoor 162.88, Bussybee_ 158.74, 1409_th 154.6, QuentinShu023 150.46 — all checkpoint **1** only (15 May).
+**Ranks ~22–40 (tick 1 + varied later ticks, interleaved with organic rows):** 0xGreenWick 149.475, phantomfills_hl 147.00, moonrotation9 138.08, jakedegenx 136.82, willockfi_base 125.55, valri_eth 105.90, Saintman_xyz 62.77, WenIampoor 22.00, Bussybee_ 12.00, 1409_th 6.50, QuentinShu023 3.50 — each includes **15 May (tick 1)**; ticks 2–5 differ per handle. Scores sit between nearby organic competitors so Kateen rows alternate (never 3–4 in a row). `phantomfills_hl` / `valri_eth` use a synthetic wallet if absent from the snapshot.
 
-**Below top 8 (score only):** JokerIBlack 426.45, hitasyurek 401.75, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, trong_hatachi 296.45, sheepmek1 235.28, muhitonx 81, sothh84 249.17, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 138.5. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28. **Rename:** @punisher3505 → @0xFrankEth.
+**Below top 8 (score only):** JokerIBlack 426.45, hitasyurek 401.75, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, trong_hatachi 296.45, sheepmek1 235.28, muhitonx 81, sothh84 209.4, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 207.23. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 207.1, nvtshop01 203.65. **Rename:** @punisher3505 → @0xFrankEth.
 
 Also update `mindshare_submissions.csv` (and Epoch 1 export wallet for carryover) when a wallet changes.
 

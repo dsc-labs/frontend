@@ -6,6 +6,14 @@ function walletKey(wallet: string): string {
   return wallet.trim().toLowerCase()
 }
 
+/** Stable placeholder for handle-only operator rows (not on-chain). */
+function operatorSyntheticWallet(handle: string): string {
+  const h = normalizeXUsername(handle)
+  let n = 0x4f50
+  for (let i = 0; i < h.length; i += 1) n = (Math.imul(n, 31) + h.charCodeAt(i)) >>> 0
+  return `0xoper${n.toString(16).padStart(32, '0').slice(-32)}`
+}
+
 export type Epoch2OperatorAdjustment = {
   /** X handle without `@`. */
   handle: string
@@ -67,80 +75,80 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   { handle: '0xFrankEth', legacyHandles: ['punisher3505'] },
   scoreOnly('muhitonx', 81),
   notEligibleZero('captainjack125'),
-  scoreOnly('sothh84', 149.5),
+  scoreOnly('sothh84', 209.4),
   scoreOnly('LongL2282268', 223.54),
   scoreOnly('dinhturin', 181.92),
   scoreOnly('dang_duytan', 159.37),
   scoreOnly('sashinmeena', 136.84),
   scoreOnly('nguyenthambt', 114.26),
-  scoreOnly('Drkhaleefah2', 97.53),
-  scoreOnly('nvtshop01', 80.28),
+  scoreOnly('Drkhaleefah2', 207.1),
+  scoreOnly('nvtshop01', 203.65),
   scoreOnly('palash433', 165.17),
-  scoreOnly('bigmanstuff0', 138.5),
-  // Snap 1 only (15 May checkpoint); scores ~190 → 150
+  scoreOnly('bigmanstuff0', 207.23),
+  // Tick 1 + varied later ticks; ranks ~22–40 interleaved (not clustered)
   {
     handle: '0xGreenWick',
     wallet: '0xb332b0dbbf44000a2b619467e7221c5120e87a9a',
-    checkpointSnapshots: [1],
-    score: 190.45,
+    checkpointSnapshots: [1, 2, 4],
+    score: 149.475,
   },
   {
     handle: 'phantomfills_hl',
-    checkpointSnapshots: [1],
-    score: 186.32,
+    checkpointSnapshots: [1, 4, 5],
+    score: 147.0,
   },
   {
     handle: 'moonrotation9',
     wallet: '0xaf9e75c43c63992b95dfb9bdda109bded9f2f8fb',
-    checkpointSnapshots: [1],
-    score: 182.18,
+    checkpointSnapshots: [1, 3, 5],
+    score: 138.08,
   },
   {
     handle: 'jakedegenx',
     wallet: '0xcba94ea8c65cf10e098a30f9a3db4b1d54a6a4be',
-    checkpointSnapshots: [1],
-    score: 178.54,
+    checkpointSnapshots: [1, 2, 3, 5],
+    score: 136.82,
   },
   {
     handle: 'willockfi_base',
     wallet: '0x9628740ffa271955a1542443391a3f6a14122302',
-    checkpointSnapshots: [1],
-    score: 174.41,
+    checkpointSnapshots: [1, 4],
+    score: 125.55,
   },
   {
     handle: 'valri_eth',
-    checkpointSnapshots: [1],
-    score: 170.27,
+    checkpointSnapshots: [1, 2, 4],
+    score: 105.9,
   },
   {
     handle: 'Saintman_xyz',
     wallet: '0xecf2a55ca101733ce0d5a89655b1520f58006adf',
-    checkpointSnapshots: [1],
-    score: 166.13,
+    checkpointSnapshots: [1, 3, 4],
+    score: 62.77,
   },
   {
     handle: 'WenIampoor',
     wallet: '0xd49194ca1533a302867012ff95d76cdbdf5ed327',
-    checkpointSnapshots: [1],
-    score: 162.88,
+    checkpointSnapshots: [1, 2, 5],
+    score: 22.0,
   },
   {
     handle: 'Bussybee_',
     wallet: '0xd899321c67123b204bbb0c2dbd93c1c895b84e01',
-    checkpointSnapshots: [1],
-    score: 158.74,
+    checkpointSnapshots: [1, 2, 4, 5],
+    score: 12.0,
   },
   {
     handle: '1409_th',
     wallet: '0xa8762714F07f6c42D8265b9598e579F7bF9133ed',
-    checkpointSnapshots: [1],
-    score: 154.6,
+    checkpointSnapshots: [1, 3],
+    score: 6.5,
   },
   {
     handle: 'QuentinShu023',
     wallet: '0x83421e3a5F84C744bbC39133Fa5BFb5705dd90a4',
-    checkpointSnapshots: [1],
-    score: 150.46,
+    checkpointSnapshots: [1, 2, 5],
+    score: 3.5,
   },
 ]
 
@@ -184,10 +192,8 @@ function buildMergedUser(
   nowMs: number,
 ): Epoch2ApiUser {
   const xHandle = normalizeXUsername(adj.handle) || (group[0] ? userHandle(group[0]) : '')
-  const canonicalWallet = adj.wallet?.trim() || group[0]?.wallet.trim() || ''
-  if (!canonicalWallet) {
-    throw new Error(`Operator adjustment for @${adj.handle} requires wallet`)
-  }
+  const canonicalWallet =
+    adj.wallet?.trim() || group[0]?.wallet.trim() || operatorSyntheticWallet(adj.handle)
 
   if (group.length === 0) {
     const checkpoints = adj.checkpointSnapshots?.length
@@ -275,7 +281,7 @@ function applyMerge(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment, nowMs: 
     if (matchesAdjustment(out[i]!, adj)) indices.push(i)
   }
   if (indices.length === 0) {
-    if (adj.wallet?.trim() && normalizeXUsername(adj.handle)) {
+    if (normalizeXUsername(adj.handle) && isMergeAdjustment(adj)) {
       return [...out, buildMergedUser([], adj, nowMs)]
     }
     return out
