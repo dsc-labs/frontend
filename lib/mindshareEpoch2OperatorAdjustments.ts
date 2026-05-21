@@ -1,4 +1,5 @@
 import { EPOCH2_CHECKPOINT_DAY_KEYS } from './mindshareEpoch2Checkpoints'
+import type { MindshareSubmissionRow } from './mindshareCsvStore'
 import type { Epoch2ApiUser } from './mindshareEpoch2LeaderboardBuild'
 import { normalizeXUsername } from './xTweetMetrics'
 
@@ -6,12 +7,30 @@ function walletKey(wallet: string): string {
   return wallet.trim().toLowerCase()
 }
 
-/** Stable placeholder for handle-only operator rows (not on-chain). */
-function operatorSyntheticWallet(handle: string): string {
-  const h = normalizeXUsername(handle)
-  let n = 0x4f50
-  for (let i = 0; i < h.length; i += 1) n = (Math.imul(n, 31) + h.charCodeAt(i)) >>> 0
-  return `0xoper${n.toString(16).padStart(32, '0').slice(-32)}`
+/** Latest wallet per @handle from mindshare_submissions.csv (for operator rows without `wallet`). */
+export function buildHandleWalletMapFromSubmissions(
+  rows: readonly MindshareSubmissionRow[],
+): Map<string, string> {
+  const out = new Map<string, string>()
+  for (const row of rows) {
+    const h = normalizeXUsername(row.xHandle)
+    const w = row.walletAddress.trim()
+    if (!h || !w.toLowerCase().startsWith('0x') || w.length !== 42) continue
+    out.set(h, w)
+  }
+  return out
+}
+
+function resolveOperatorWallet(
+  adj: Epoch2OperatorAdjustment,
+  group: Epoch2ApiUser[],
+  handleWallets?: ReadonlyMap<string, string>,
+): string {
+  const fromAdj = adj.wallet?.trim()
+  if (fromAdj) return fromAdj
+  const fromCsv = handleWallets?.get(normalizeXUsername(adj.handle))
+  if (fromCsv?.trim()) return fromCsv.trim()
+  return group[0]?.wallet.trim() ?? ''
 }
 
 export type Epoch2OperatorAdjustment = {
@@ -94,6 +113,7 @@ export const EPOCH2_OPERATOR_ADJUSTMENTS: readonly Epoch2OperatorAdjustment[] = 
   },
   {
     handle: 'phantomfills_hl',
+    wallet: '0x8eFA7ABa4cf8F1A5C32E068976b2dE4820504b3e',
     checkpointSnapshots: [1, 4, 5],
     score: 147.0,
   },
@@ -190,10 +210,15 @@ function buildMergedUser(
   group: Epoch2ApiUser[],
   adj: Epoch2OperatorAdjustment,
   nowMs: number,
+  handleWallets?: ReadonlyMap<string, string>,
 ): Epoch2ApiUser {
   const xHandle = normalizeXUsername(adj.handle) || (group[0] ? userHandle(group[0]) : '')
-  const canonicalWallet =
-    adj.wallet?.trim() || group[0]?.wallet.trim() || operatorSyntheticWallet(adj.handle)
+  const canonicalWallet = resolveOperatorWallet(adj, group, handleWallets)
+  if (!canonicalWallet) {
+    throw new Error(
+      `Operator adjustment for @${adj.handle} requires wallet (set wallet in EPOCH2_OPERATOR_ADJUSTMENTS or mindshare_submissions.csv)`,
+    )
+  }
 
   if (group.length === 0) {
     const checkpoints = adj.checkpointSnapshots?.length
@@ -275,20 +300,29 @@ function applyScoreOnly(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment): Ep
   })
 }
 
-function applyMerge(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment, nowMs: number): Epoch2ApiUser[] {
+function applyMerge(
+  out: Epoch2ApiUser[],
+  adj: Epoch2OperatorAdjustment,
+  nowMs: number,
+  handleWallets?: ReadonlyMap<string, string>,
+): Epoch2ApiUser[] {
   const indices: number[] = []
   for (let i = 0; i < out.length; i += 1) {
     if (matchesAdjustment(out[i]!, adj)) indices.push(i)
   }
   if (indices.length === 0) {
-    if (normalizeXUsername(adj.handle) && isMergeAdjustment(adj)) {
-      return [...out, buildMergedUser([], adj, nowMs)]
+    const canInject =
+      normalizeXUsername(adj.handle) &&
+      isMergeAdjustment(adj) &&
+      Boolean(resolveOperatorWallet(adj, [], handleWallets))
+    if (canInject) {
+      return [...out, buildMergedUser([], adj, nowMs, handleWallets)]
     }
     return out
   }
 
   const group = indices.map((i) => out[i]!)
-  const merged = buildMergedUser(group, adj, nowMs)
+  const merged = buildMergedUser(group, adj, nowMs, handleWallets)
   const insertAt = Math.min(...indices)
   const without = out.filter((_, i) => !indices.includes(i))
   return [...without.slice(0, insertAt), merged, ...without.slice(insertAt)]
@@ -298,11 +332,15 @@ function applyMerge(out: Epoch2ApiUser[], adj: Epoch2OperatorAdjustment, nowMs: 
  * Apply operator SR ticks, wallet merges, and scores without re-sorting the list
  * (ranks 1–7 stay in API order; rank 8+ sort is done on the client).
  */
-export function applyEpoch2OperatorAdjustments(users: Epoch2ApiUser[], nowMs = Date.now()): Epoch2ApiUser[] {
+export function applyEpoch2OperatorAdjustments(
+  users: Epoch2ApiUser[],
+  nowMs = Date.now(),
+  handleWallets?: ReadonlyMap<string, string>,
+): Epoch2ApiUser[] {
   let out = [...users]
   for (const adj of EPOCH2_OPERATOR_ADJUSTMENTS) {
     if (isMergeAdjustment(adj)) {
-      out = applyMerge(out, adj, nowMs)
+      out = applyMerge(out, adj, nowMs, handleWallets)
     } else {
       out = applyScoreOnly(out, adj)
     }

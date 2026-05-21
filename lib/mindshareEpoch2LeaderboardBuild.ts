@@ -26,7 +26,10 @@ import {
   loadGuaranteedTop7Wallets,
   reorderEpoch2GuaranteedTop7ForDisplay,
 } from './mindshareEpoch2GuaranteedTop7'
-import { applyEpoch2OperatorAdjustments } from './mindshareEpoch2OperatorAdjustments'
+import {
+  applyEpoch2OperatorAdjustments,
+  buildHandleWalletMapFromSubmissions,
+} from './mindshareEpoch2OperatorAdjustments'
 import { sortEpoch2UsersByEligibilityThenScore } from './mindshareEpoch2LeaderboardSort'
 import { EPOCH2_FIRST_SNAPSHOT_SCORE_MULTIPLIER, epoch2DaysRemaining } from './mindshareEpoch2Constants'
 import { applyEpoch2EngagementToStats, resolveEpoch2EngagementTotals } from './mindshareEpoch2EngagementStats'
@@ -482,9 +485,12 @@ async function finalizeEpoch2UsersForDisplay(
   users: Epoch2ApiUser[],
   eligibleSnap: Epoch2SrEligibleWalletsFile | null,
   nowMs = Date.now(),
+  csvPath?: string,
 ): Promise<Epoch2ApiUser[]> {
   const enriched = await enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
-  const adjusted = applyEpoch2OperatorAdjustments(enriched, nowMs)
+  const submissionRows = await readMindshareSubmissionsCsv(csvPath)
+  const handleWallets = buildHandleWalletMapFromSubmissions(submissionRows)
+  const adjusted = applyEpoch2OperatorAdjustments(enriched, nowMs, handleWallets)
   const reordered = await reorderEpoch2GuaranteedTop7ForDisplay(adjusted)
   return reordered.filter((u) => Number(u.score) > 0)
 }
@@ -503,7 +509,7 @@ export async function getMindshareEpoch2LeaderboardForDisplay(options: {
       const cache = await readEpoch2MetricsCache()
       const engagement = resolveEpoch2EngagementTotals(rows, cache)
       const nowMs = Date.now()
-      const users = await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap, nowMs)
+      const users = await finalizeEpoch2UsersForDisplay(snap.users, eligibleSnap, nowMs, options.csvPath)
       const participantStats = countEpoch2ParticipantStats(users)
       const totalScore = Math.round(users.reduce((s, u) => s + u.score, 0) * 100) / 100
       return {
@@ -571,7 +577,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
         })
       : await readEpoch2MetricsCache()
     users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRowsEmpty, [], cacheEmpty)
-    users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap)
+    users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap, Date.now(), options.csvPath)
     const participantStatsEmpty = countEpoch2ParticipantStats(users)
 
     return {
@@ -681,7 +687,7 @@ export async function buildMindshareEpoch2LeaderboardPayload(options: {
       })
     : cache
   users = enrichEpoch2UsersWithProfiles(users, epoch1ProfileRows, rows, cacheForProfiles)
-  users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap, nowMs)
+  users = await finalizeEpoch2UsersForDisplay(users, eligibleSnap, nowMs, options.csvPath)
   const participantStats = countEpoch2ParticipantStats(users)
   const adjustedTotalScore = users.reduce((s, u) => s + u.score, 0)
 

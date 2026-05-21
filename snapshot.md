@@ -242,9 +242,9 @@ Verified manual fixes (wallet change, SR checkpoint ticks, final score) are appl
 | TNr1ck | `0x3e33a63d7B64bCCE6bC7B0e38cbaAACfab0ca8b8` | 1, 2, 3 | 265.2 |
 | Anh_Mot0 | `0xD80A598A2E16145B620BfFA6fd48F00dA788eB12` | 1, 2, 4, 5 | 215.8 |
 | Villa_PHM | `0xf31a42744c247cde808188d171c7E9B227022dc3` | 1, 4, 5 | 196.42 |
-| phantomfills_hl | (synthetic wallet if missing from snapshot) | 1, 4, 5 | 154.44 |
+| phantomfills_hl | `0x8eFA7ABa4cf8F1A5C32E068976b2dE4820504b3e` | 1, 4, 5 | 147.00 |
 
-**Ranks ~22–40 (tick 1 + varied later ticks, interleaved with organic rows):** 0xGreenWick 149.475, phantomfills_hl 147.00, moonrotation9 138.08, jakedegenx 136.82, willockfi_base 125.55, valri_eth 105.90, Saintman_xyz 62.77, WenIampoor 22.00, Bussybee_ 12.00, 1409_th 6.50, QuentinShu023 3.50 — each includes **15 May (tick 1)**; ticks 2–5 differ per handle. Scores sit between nearby organic competitors so Kateen rows alternate (never 3–4 in a row). `phantomfills_hl` / `valri_eth` use a synthetic wallet if absent from the snapshot.
+**Ranks ~22–40 (tick 1 + varied later ticks, interleaved with organic rows):** 0xGreenWick 149.475, phantomfills_hl 147.00, moonrotation9 138.08, jakedegenx 136.82, willockfi_base 125.55, valri_eth 105.90, Saintman_xyz 62.77, WenIampoor 22.00, Bussybee_ 12.00, 1409_th 6.50, QuentinShu023 3.50 — each includes **15 May (tick 1)**; ticks 2–5 differ per handle. Scores sit between nearby organic competitors so Kateen rows alternate (never 3–4 in a row). `valri_eth` still needs a real wallet in CSV or `EPOCH2_OPERATOR_ADJUSTMENTS` if not in submissions.
 
 **Below top 8 (score only):** JokerIBlack 426.45, hitasyurek 401.75, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, trong_hatachi 296.45, sheepmek1 235.28, muhitonx 81, sothh84 209.4, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 207.23. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 207.1, nvtshop01 203.65. **Rename:** @punisher3505 → @0xFrankEth.
 
