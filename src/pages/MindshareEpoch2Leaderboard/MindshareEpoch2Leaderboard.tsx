@@ -102,7 +102,7 @@ const MindshareEpoch2Leaderboard = () => {
 
   return (
     <div className="mindshare-epoch2-page">
-      <PageSEO title={EPOCH2_SEO_TITLE} metaDescription={EPOCH2_SEO_DESCRIPTION} path="/sraaxyzaepoch2" />
+      <PageSEO title={EPOCH2_SEO_TITLE} metaDescription={EPOCH2_SEO_DESCRIPTION} path="/mindshare-leaderboard" />
       <Header showSocialIcons />
       <div className="epoch2-lb-container">
         <h1 className="epoch2-lb-sr-only">Epoch 2 Mindshare Leaderboard</h1>

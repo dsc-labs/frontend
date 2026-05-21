@@ -5,7 +5,7 @@ import Header from '../../components/common/Header/Header'
 import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
 import {
   getMindshareEpochPhase,
-  isEpoch3PreviewLinkedFromChallenge,
+  isEpoch2LeaderboardLinkedFromChallenge,
   isMindshareSubmissionOpen,
   mindshareArticleEpoch,
   mindshareChallengeTitle,
@@ -111,7 +111,7 @@ function Epoch2LeaderboardButton() {
     return () => window.clearInterval(id)
   }, [])
 
-  const previewLinked = isEpoch3PreviewLinkedFromChallenge(nowMs)
+  const leaderboardLinked = isEpoch2LeaderboardLinkedFromChallenge(nowMs)
   const hoverLabel = formatUtcCountdown(nextTomorrowGmt7MidnightMs(nowMs), nowMs)
 
   const labelStack = (
@@ -132,15 +132,14 @@ function Epoch2LeaderboardButton() {
     </span>
   )
 
-  if (previewLinked) {
+  if (leaderboardLinked) {
     return (
       <Link
-        to="/epoch3-preview"
+        to="/mindshare-leaderboard"
         className="mindshare-submit-link mindshare-leaderboard-link mindshare-epoch2-leaderboard-btn mindshare-epoch2-leaderboard-btn--live"
-        aria-label={`Epoch 3 preview, tomorrow midnight in ${hoverLabel}`}
-        title={`Tomorrow midnight in ${hoverLabel}`}
+        aria-label="Epoch 2 Leaderboard"
       >
-        {labelStack}
+        <strong>Epoch 2 Leaderboard</strong>
         {arrow}
       </Link>
     )

@@ -58,11 +58,16 @@ export function isEpoch2LeaderboardTablePublic(_nowMs = Date.now()): boolean {
 }
 
 /**
- * After Epoch 2 ends (17:00 UTC): the challenge-page “Epoch 2 Leaderboard” control links to `/epoch3-preview`.
- * The preview URL itself is always open (no redirect).
+ * After the next “tomorrow midnight” tick (05:00 UTC on a checkpoint day): the challenge-page
+ * “Epoch 2 Leaderboard” control links to `/mindshare-leaderboard`.
  */
+export function isEpoch2LeaderboardLinkedFromChallenge(nowMs = Date.now()): boolean {
+  return nowMs >= nextTomorrowGmt7MidnightMs(nowMs)
+}
+
+/** @deprecated Use {@link isEpoch2LeaderboardLinkedFromChallenge}. */
 export function isEpoch3PreviewLinkedFromChallenge(nowMs = Date.now()): boolean {
-  return nowMs >= EPOCH_2_END_MS
+  return isEpoch2LeaderboardLinkedFromChallenge(nowMs)
 }
 
 export type MindshareEpochPhase = 'epoch1' | 'epoch2' | 'epoch3_countdown' | 'epoch3'
