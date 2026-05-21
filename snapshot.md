@@ -242,7 +242,9 @@ Verified manual fixes (wallet change, SR checkpoint ticks, final score) are appl
 | TNr1ck | `0x3e33a63d7B64bCCE6bC7B0e38cbaAACfab0ca8b8` | 1, 2, 3 | 265.2 |
 | Anh_Mot0 | `0xD80A598A2E16145B620BfFA6fd48F00dA788eB12` | 1, 2, 4, 5 | 215.8 |
 | Villa_PHM | `0xf31a42744c247cde808188d171c7E9B227022dc3` | 1, 4, 5 | 196.42 |
-| phantomfills_hl | (unchanged; match by handle) | 1, 4, 5 | 103.35 |
+| phantomfills_hl | (unchanged; match by handle) | 1 | 186.32 |
+
+**Snap 1 only (~190 → 150):** 0xGreenWick 190.45, phantomfills_hl 186.32, moonrotation9 182.18, jakedegenx 178.54, willockfi_base 174.41, valri_eth 170.27, Saintman_xyz 166.13, WenIampoor 162.88, Bussybee_ 158.74, 1409_th 154.6, QuentinShu023 150.46 — all checkpoint **1** only (15 May).
 
 **Below top 8 (score only):** JokerIBlack 426.45, hitasyurek 401.75, bencryptovnn 389.36, tcmalpha 361.84, gaogaocrypto 338.57, trong_hatachi 296.45, sheepmek1 235.28, muhitonx 81, sothh84 249.17, captainjack125 0 (not eligible), palash433 165.17, bigmanstuff0 138.5. LongL2282268 223.54, dinhturin 181.92, dang_duytan 159.37, sashinmeena 136.84, nguyenthambt 114.26, Drkhaleefah2 97.53, nvtshop01 80.28. **Rename:** @punisher3505 → @0xFrankEth.
 
