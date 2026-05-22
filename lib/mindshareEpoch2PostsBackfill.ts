@@ -1,4 +1,4 @@
-import { EPOCH_2_END_MS, EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
+import { EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
 import {
   EPOCH2_CHECKPOINT_DAY_KEYS,
   loadEpoch2SrEligibilityByDay,
@@ -103,13 +103,6 @@ export function replayEpoch2CountedPostKeys(options: {
 export type MindshareEpoch2PostsBackfillResult =
   | {
       ok: true
-      skipped: true
-      reason: 'epoch2-ended'
-      epoch2EndMs: number
-      nowMs: number
-    }
-  | {
-      ok: true
       skipped: false
       replace: boolean
       srSnapshotRan: boolean
@@ -138,9 +131,6 @@ export async function runMindshareEpoch2PostsBackfill(options: {
   runSrSnapshot?: boolean
 }): Promise<MindshareEpoch2PostsBackfillResult> {
   const nowMs = options.nowMs ?? Date.now()
-  if (nowMs >= EPOCH_2_END_MS) {
-    return { ok: true, skipped: true, reason: 'epoch2-ended', epoch2EndMs: EPOCH_2_END_MS, nowMs }
-  }
 
   let srSnapshotRan = false
   if (options.runSrSnapshot) {

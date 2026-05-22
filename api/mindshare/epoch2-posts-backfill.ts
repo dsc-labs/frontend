@@ -28,6 +28,7 @@ function queryDays(req: VercelRequest): string[] | undefined {
  * - `runSr=1` — also run tonight's SR snapshot before replay
  *
  * Prerequisite: `epoch2_sr_snapshots.jsonl` has a line per day (`epoch2-sr-backfill-day`).
+ * Runs even after Epoch 2 has ended.
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET' && req.method !== 'POST') {

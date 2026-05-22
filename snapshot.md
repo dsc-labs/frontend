@@ -72,7 +72,7 @@ All operator routes use the same auth as waitlist crons: `Authorization: Bearer 
 | `/api/mindshare/epoch2-sr-backfill-day` | GET, POST | One historical SR day → jsonl (`?day=YYYY-MM-DD`, optional `&replace=1`) |
 | `/api/mindshare/epoch2-posts-backfill` | GET, POST | Replay post counting **15→19** + score all (`?replace=1`, optional `&days=…`, `&runSr=1`) |
 | `/api/mindshare/epoch2-rebuild` | GET, POST | **Full rebuild** in `data/newmindshare`: SR all days + posts + score (`?latestSr=1`, optional `&dataDir=`) |
-| `/api/mindshare/epoch2-recount` | GET, POST | Re-score existing `countedPostKeys` only; no new posts, no SR |
+| `/api/mindshare/epoch2-recount` | GET, POST | Re-score existing `countedPostKeys` only; no new posts, no SR (runs after Epoch 2 end) |
 | `/api/mindshare/test-epoch2-leaderboard` | GET | Dev/test read or `?refresh=1` rebuild |
 
 **Code paths:** `lib/mindshareEpoch2SrSnapshot.ts`, `lib/mindshareEpoch2SrHistoricalBackfill.ts`, `lib/mindshareEpoch2PostsBackfill.ts`, `lib/mindshareEpoch2LeaderboardRecount.ts`

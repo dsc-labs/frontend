@@ -1,4 +1,4 @@
-import { EPOCH_2_END_MS, EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
+import { EPOCH2_SNAPSHOT_CRON_NOTE } from './mindshareEpoch2Constants'
 import {
   bootstrapPostKeySet,
   readEpoch2DailyState,
@@ -15,13 +15,6 @@ import { flattenMindshareSubmissionPosts, postsForCountedKeys } from './mindshar
 import { readMindshareSubmissionsCsv } from './mindshareCsvStore'
 
 export type MindshareEpoch2LeaderboardRecountResult =
-  | {
-      ok: true
-      skipped: true
-      reason: 'epoch2-ended'
-      epoch2EndMs: number
-      nowMs: number
-    }
   | {
       ok: true
       skipped: false
@@ -63,10 +56,6 @@ export async function runMindshareEpoch2LeaderboardRecount(options: {
   nowMs?: number
 }): Promise<MindshareEpoch2LeaderboardRecountResult> {
   const nowMs = options.nowMs ?? Date.now()
-  if (nowMs >= EPOCH_2_END_MS) {
-    return { ok: true, skipped: true, reason: 'epoch2-ended', epoch2EndMs: EPOCH_2_END_MS, nowMs }
-  }
-
   const dailyState = await readEpoch2DailyState()
   const prevSnapshot = await readEpoch2LeaderboardSnapshot()
   const countedPostKeys = dedupeCountedKeys(dailyState.countedPostKeys)

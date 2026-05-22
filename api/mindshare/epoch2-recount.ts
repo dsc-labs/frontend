@@ -6,6 +6,7 @@ import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
  * Operator-only: re-score all posts in `epoch2_daily_state.json` `countedPostKeys`.
  * Fixes wrong `postCount` / scores when X cache was incomplete. Does **not** run SR snapshot
  * or add new posts from the current eligibility window (use `epoch2-sr-snapshot` / `epoch2-refresh` for that).
+ * Runs even after Epoch 2 has ended.
  *
  * Auth: same as `epoch2-refresh` (`CRON_SECRET` Bearer, `WAITLIST_CRON_SECRET`, or `x-cron-secret`).
  * Local: `MINDSHARE_EPOCH2_CRON_SKIP_AUTH=1`.
