@@ -77,5 +77,4 @@ export function enrichEpoch2UsersForDisplay(users: Epoch2LeaderboardUser[]): Epo
         ...(avatarUrl ? { avatarUrl } : {}),
       }
     })
-    .filter((u) => Number(u.score) > 0)
 }

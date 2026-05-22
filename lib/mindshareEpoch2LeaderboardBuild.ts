@@ -487,12 +487,14 @@ async function finalizeEpoch2UsersForDisplay(
   nowMs = Date.now(),
   csvPath?: string,
 ): Promise<Epoch2ApiUser[]> {
-  const enriched = await enrichEpoch2UsersWithCheckpointsAndSrBalance(users, eligibleSnap)
   const submissionRows = await readMindshareSubmissionsCsv(csvPath)
+  const eligibleWalletKeys = await resolveEligibleWalletKeys(submissionRows, eligibleSnap)
+  const withCsvSubmitters = mergeCsvSubmittersIntoEpoch2Users(users, submissionRows, eligibleWalletKeys)
+  const enriched = await enrichEpoch2UsersWithCheckpointsAndSrBalance(withCsvSubmitters, eligibleSnap)
   const handleWallets = buildHandleWalletMapFromSubmissions(submissionRows)
   const adjusted = applyEpoch2OperatorAdjustments(enriched, nowMs, handleWallets)
   const reordered = await reorderEpoch2GuaranteedTop7ForDisplay(adjusted)
-  return reordered.filter((u) => Number(u.score) > 0)
+  return reordered
 }
 
 export async function getMindshareEpoch2LeaderboardForDisplay(options: {

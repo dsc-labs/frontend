@@ -268,7 +268,7 @@ npx tsx scripts/check-wallet-posts.mjs "$W"
 | Symptom | Likely cause |
 | ------- | ------------- |
 | In SR jsonl but not on leaderboard | `countedPostKeys` empty or post outside window when eligible |
-| In CSV but missing after rebuild | Never SR-eligible on checkpoint nights → 0 counted posts (shows at score 0 after fix); verify with `epoch2:trace-wallet` |
+| In CSV but score 0 on board | Never SR-eligible on checkpoint nights → 0 scored posts; still listed on `/mindshare-leaderboard` with score 0; verify with `epoch2:trace-wallet` |
 | In CSV, score 0, not in SR jsonl | On-chain $SR was ≤10k at midnight checkpoints; CSV `sr balance` is not used for gating |
 | `balancesByWallet` shows `0` | Not failing SR — file lists **all** CSV wallets; check `walletsLower` |
 | Same wallet on jsonl lines 3–4 | Duplicate **manual re-runs** for the same `eligibilityDayKey` |
