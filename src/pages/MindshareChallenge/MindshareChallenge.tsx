@@ -77,7 +77,7 @@ const MindshareCountdown = ({ end, expiredLabel }: MindshareCountdownProps) => {
 
 function formatUtcCountdown(endMs: number, nowMs: number): string {
   const { days, hours, minutes, seconds, expired } = getRemaining(new Date(endMs), nowMs)
-  if (expired) return 'Updating…'
+  if (expired) return 'Epoch 2 is over'
   if (days > 0) {
     return `${pad2(days)}d ${pad2(hours)}h ${pad2(minutes)}m ${pad2(seconds)}s`
   }
