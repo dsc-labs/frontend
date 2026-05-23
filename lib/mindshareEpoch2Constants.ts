@@ -2,7 +2,7 @@
 export const EPOCH_1_END_MS = Date.parse('2026-04-22T17:00:00Z')
 export const EPOCH_2_END_MS = Date.parse('2026-05-21T00:00:00+07:00')
 export const EPOCH_2_DURATION_MS = EPOCH_2_END_MS - EPOCH_1_END_MS
-export const EPOCH_3_GAP_MS = 3 * 24 * 60 * 60 * 1000
+export const EPOCH_3_GAP_MS = 6 * 24 * 60 * 60 * 1000
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 
 /** Public `/epoch2` engagement cards (update after full metrics pass or set `MINDSHARE_EPOCH2_USE_COMPUTED_ENGAGEMENT_STATS=1`). */

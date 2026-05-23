@@ -11,14 +11,14 @@ export const EPOCH_1_END_MS = Date.parse('2026-04-22T17:00:00Z')
 /** Epoch 2 end — same instant as before UI copy changes (17:00 UTC, 20 May 2026). */
 export const EPOCH_2_END_MS = Date.parse('2026-05-21T00:00:00+07:00')
 
-/** 72 hours between Epoch 2 end and Epoch 3 start. */
-export const EPOCH_3_GAP_MS = 3 * 24 * 60 * 60 * 1000
+/** 6 days between Epoch 2 end and Epoch 3 start. */
+export const EPOCH_3_GAP_MS = 6 * 24 * 60 * 60 * 1000
 
-/** Epoch 3 start — always derived so the gap stays exactly 3×24h after Epoch 2 end. */
+/** Epoch 3 start — always derived so the gap stays exactly 6×24h after Epoch 2 end. */
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
 
 /** Only user-facing schedule instant (all other boundaries stay internal). */
-export const EPOCH_3_START_UTC_LABEL = '17:00 UTC, May 23, 2026'
+export const EPOCH_3_START_UTC_LABEL = '17:00 UTC, May 26, 2026'
 
 /** Checkpoint tick days (keep in sync with `lib/mindshareEpoch2Constants.ts`). */
 const EPOCH2_CHECKPOINT_TICK_DAYS = [
@@ -86,7 +86,7 @@ export function mindshareChallengeTitle(phase: MindshareEpochPhase): string {
     case 'epoch2':
       return 'STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH 2'
     case 'epoch3_countdown':
-      return 'Strike Robot Mindshare Challenge — Epoch 3 Starts In'
+      return 'The Race to Become a Strike Robot Contributor — Starts In'
     case 'epoch3':
       return 'STRIKE ROBOT MINDSHARE CHALLENGE - EPOCH 3'
   }
