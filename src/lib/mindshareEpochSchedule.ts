@@ -58,11 +58,11 @@ export function isEpoch2LeaderboardTablePublic(_nowMs = Date.now()): boolean {
 }
 
 /**
- * After the next “tomorrow midnight” tick (05:00 UTC on a checkpoint day): the challenge-page
- * “Epoch 2 Leaderboard” control links to `/mindshare-leaderboard`.
+ * Challenge-page “Epoch 2 Leaderboard” control links to `/mindshare-leaderboard` when true.
+ * Kept off — button stays disabled on the challenge page (`/mindshare-leaderboard` remains direct-only).
  */
-export function isEpoch2LeaderboardLinkedFromChallenge(nowMs = Date.now()): boolean {
-  return nowMs >= nextTomorrowGmt7MidnightMs(nowMs)
+export function isEpoch2LeaderboardLinkedFromChallenge(_nowMs = Date.now()): boolean {
+  return false
 }
 
 /** @deprecated Use {@link isEpoch2LeaderboardLinkedFromChallenge}. */
