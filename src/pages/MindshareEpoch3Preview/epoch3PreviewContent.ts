@@ -25,7 +25,7 @@ export const EPOCH_3_LANES: Epoch3LaneContent[] = [
     forItems: ['$SR holders', '$VVV holders', 'Long-term ecosystem supporters'],
     howItems: [
       'Hold at least 10,000 $SR or 5 $VVV to be eligible for snapshots',
-      'Points calculated based on USD value of holdings — snapshot every ~7 minutes',
+      'Points calculated based on USD value of holdings — snapshot every ~15 minutes',
       'Hold both $SR + $VVV to receive a ×1.2 points multiplier',
     ],
     scoringItems: [
