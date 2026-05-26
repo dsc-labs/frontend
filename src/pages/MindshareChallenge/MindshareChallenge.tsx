@@ -14,6 +14,7 @@ import {
   EPOCH_3_START_UTC_LABEL,
   type MindshareEpochPhase,
 } from '../../lib/mindshareEpochSchedule'
+import { MindshareEpoch3View } from '../MindshareEpoch3Preview/MindshareEpoch3View'
 import './MindshareChallenge.css'
 
 function pad2(n: number) {
@@ -340,7 +341,12 @@ const MindshareChallenge = () => {
     return () => window.clearInterval(id)
   }, [])
 
-  return <MindshareChallengeView phase={getMindshareEpochPhase(nowMs)} />
+  const phase = getMindshareEpochPhase(nowMs)
+  if (phase === 'epoch3') {
+    return <MindshareEpoch3View seoPath="/mindshare-challenge" />
+  }
+
+  return <MindshareChallengeView phase={phase} />
 }
 
 export default MindshareChallenge
