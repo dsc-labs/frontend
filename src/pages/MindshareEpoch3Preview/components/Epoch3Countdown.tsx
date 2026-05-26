@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { EPOCH_3_START_MS } from '../../../lib/mindshareEpochSchedule'
+import { EPOCH_3_END_MS, EPOCH_3_START_MS } from '../../../lib/mindshareEpochSchedule'
 
 function pad2(n: number) {
   return String(Math.max(0, n)).padStart(2, '0')
@@ -25,12 +25,15 @@ const Epoch3Countdown = () => {
     return () => window.clearInterval(id)
   }, [])
 
-  const { days, hours, minutes, seconds, expired } = getRemaining(EPOCH_3_START_MS, nowMs)
+  // Before start: countdown to Epoch 3 start.
+  // After start and before end: countdown to Epoch 3 end.
+  const targetMs = nowMs < EPOCH_3_START_MS ? EPOCH_3_START_MS : EPOCH_3_END_MS
+  const { days, hours, minutes, seconds, expired } = getRemaining(targetMs, nowMs)
 
   if (expired) {
     return (
       <p className="epoch3-countdown-expired" role="status">
-        Epoch 3 has begun.
+        Epoch 3 is over.
       </p>
     )
   }

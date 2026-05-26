@@ -114,7 +114,7 @@ export function mindshareCountdownEndMs(phase: MindshareEpochPhase): number | nu
     case 'epoch3_countdown':
       return EPOCH_3_START_MS
     case 'epoch3':
-      return null
+      return EPOCH_3_END_MS
   }
 }
 

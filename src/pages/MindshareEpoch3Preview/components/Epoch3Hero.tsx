@@ -2,7 +2,7 @@ const Epoch3Hero = () => (
   <h1 className="epoch3-hero">
     The Race to Become a Strike Robot Contributor
     <br />
-    Starts In — Epoch 3
+    Ends In — Epoch 3
   </h1>
 )
 
