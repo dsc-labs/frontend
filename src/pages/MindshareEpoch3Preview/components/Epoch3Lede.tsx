@@ -5,8 +5,8 @@ const Epoch3Lede = () => (
       identify long-term operators, builders, and ecosystem supporters who will help grow the network.
     </p>
     <p>
-      Contributors compete through two lanes: <strong>Operator Lane</strong> (content &amp; ecosystem
-      activity) and <strong>Capital Lane</strong> (holding &amp; staking). Scoring is quality-based —
+      Contributors compete through two lanes: <strong>Operator Lane</strong> (content <span className="epoch3-amp">&amp;</span> ecosystem
+      activity) and <strong>Capital Lane</strong> (holding <span className="epoch3-amp">&amp;</span> staking). Scoring is quality-based —
       not driven by likes, views, or reposts. Your SR Platform waitlist ranking also directly affects
       your final score and reward eligibility.
     </p>

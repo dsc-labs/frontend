@@ -109,6 +109,10 @@
   font-weight: 700;
 }
 
+.epoch3-amp {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+}
+
 .epoch3-btn-row {
   display: flex;
   justify-content: center;

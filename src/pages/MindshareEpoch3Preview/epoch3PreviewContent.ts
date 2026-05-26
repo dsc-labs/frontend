@@ -22,9 +22,17 @@ export const EPOCH_3_LANES: Epoch3LaneContent[] = [
   {
     name: 'Capital Lane',
     allocation: '50% allocation',
-    forItems: ['Holders & stakers', 'Long-term ecosystem supporters'],
-    howItems: ['$SR holding amount & duration', 'Staking and ecosystem support'],
-    scoringItems: ['Holding amount × duration', 'Random snapshots throughout the campaign'],
+    forItems: ['$SR holders', '$VVV holders', 'Long-term ecosystem supporters'],
+    howItems: [
+      'Hold at least 10,000 $SR or 5 $VVV to be eligible for snapshots',
+      'Points calculated based on USD value of holdings — snapshot every ~7 minutes',
+      'Hold both $SR + $VVV to receive a ×1.2 points multiplier',
+    ],
+    scoringItems: [
+      'Points accumulate per snapshot throughout the campaign',
+      'Dropping below both minimums on a snapshot yields no points for that interval',
+      'Higher cumulative points = higher rank = better reward eligibility',
+    ],
     note: 'A higher Operator Lane score increases your Capital Lane score.',
   },
 ]
