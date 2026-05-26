@@ -31,7 +31,7 @@ export const EPOCH_3_LANES: Epoch3LaneContent[] = [
     scoringItems: [
       'Points accumulate per snapshot throughout the campaign',
       'Dropping below both minimums on a snapshot yields no points for that interval',
-      'Higher cumulative points = higher rank = better reward eligibility',
+      'Higher cumulative points = higher rank.',
     ],
     note: 'A higher Operator Lane score increases your Capital Lane score.',
   },
