@@ -84,11 +84,11 @@ function formatUtcCountdown(endMs: number, nowMs: number): string {
   return `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}`
 }
 
-function SubmitMindshareLink({ open }: { open: boolean }) {
+function SubmitMindshareLink({ open, label = 'Submit Your Mindshare' }: { open: boolean; label?: string }) {
   if (open) {
     return (
       <Link to="/mindshare-submit" className="mindshare-submit-link">
-        <strong>Submit Your Mindshare</strong>
+        <strong>{label}</strong>
         <span aria-hidden="true" className="mindshare-submit-arrow">
           {' '}
           →
@@ -98,7 +98,7 @@ function SubmitMindshareLink({ open }: { open: boolean }) {
   }
   return (
     <button type="button" className="mindshare-submit-link mindshare-submit-link--closed" disabled>
-      <strong>Submit Your Mindshare</strong>
+      <strong>{label}</strong>
     </button>
   )
 }
@@ -268,7 +268,14 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
           <MindshareChallengeIntro phase={phase} />
 
           <div className="mindshare-submit-row">
-            <SubmitMindshareLink open={submissionsOpen} />
+            <SubmitMindshareLink
+              open={submissionsOpen}
+              label={
+                phase === 'epoch3_countdown' || phase === 'epoch3'
+                  ? 'Submit Your Contribution'
+                  : 'Submit Your Mindshare'
+              }
+            />
             <Epoch2LeaderboardButton />
           </div>
 
@@ -309,7 +316,14 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
 
           <h3>Submit your contribution via the form below</h3>
           <div className="mindshare-submit-row">
-            <SubmitMindshareLink open={submissionsOpen} />
+            <SubmitMindshareLink
+              open={submissionsOpen}
+              label={
+                phase === 'epoch3_countdown' || phase === 'epoch3'
+                  ? 'Submit Your Contribution'
+                  : 'Submit Your Mindshare'
+              }
+            />
             <Epoch2LeaderboardButton />
           </div>
         </article>

@@ -13,6 +13,7 @@ dist-ssr
 *.local
 .env
 mindshare_submissions.csv
+mindshare_submissions_3.csv
 
 # Waitlist durable files (JSON default + optional CSV mirror)
 waitlist_state.json

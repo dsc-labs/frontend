@@ -1,6 +1,11 @@
 import { existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 
+import {
+  isEpoch2MindshareSubmissionOpen,
+  isEpoch3MindshareSubmissionOpen,
+} from './mindshareEpoch2Constants'
+
 /**
  * Epoch 2 snapshot JSON/jsonl (SR, leaderboard, daily state, metrics cache).
  * Hardcoded — live submissions stay at repo-root `mindshare_submissions.csv`.
@@ -12,6 +17,7 @@ export const PRODUCTION_EPOCH2_SNAPSHOT_DIR = EPOCH2_SNAPSHOT_DATA_DIR
 
 const EPOCH2_FILE_NAMES = {
   submissionsCsv: 'mindshare_submissions.csv',
+  submissionsCsvEpoch3: 'mindshare_submissions_3.csv',
   dailyState: 'epoch2_daily_state.json',
   leaderboardSnapshot: 'epoch2_leaderboard_snapshot.json',
   metricsCache: 'epoch2_metrics_cache.json',
@@ -26,13 +32,27 @@ export function epoch2DataRoot(): string {
   return EPOCH2_SNAPSHOT_DATA_DIR
 }
 
-/** Live form CSV at repo root (not under `data/newmindshare`). */
+/** Live Epoch 1–2 form CSV at repo root (not under `data/newmindshare`). */
 export function defaultMindshareSubmissionsCsvPath(): string {
   const custom = process.env.MINDSHARE_SUBMISSIONS_CSV_PATH?.trim()
   if (custom) return resolve(custom)
   const inSnapshotDir = resolve(EPOCH2_SNAPSHOT_DATA_DIR, EPOCH2_FILE_NAMES.submissionsCsv)
   if (existsSync(inSnapshotDir)) return inSnapshotDir
   return resolve(process.cwd(), EPOCH2_FILE_NAMES.submissionsCsv)
+}
+
+/** Live Epoch 3 form CSV at repo root. */
+export function defaultMindshareSubmissions3CsvPath(): string {
+  const custom = process.env.MINDSHARE_SUBMISSIONS_3_CSV_PATH?.trim()
+  if (custom) return resolve(custom)
+  return resolve(process.cwd(), EPOCH2_FILE_NAMES.submissionsCsvEpoch3)
+}
+
+/** Target CSV for the active submission window, or `null` when closed. */
+export function resolveActiveMindshareSubmissionsCsvPath(nowMs = Date.now()): string | null {
+  if (isEpoch3MindshareSubmissionOpen(nowMs)) return defaultMindshareSubmissions3CsvPath()
+  if (isEpoch2MindshareSubmissionOpen(nowMs)) return defaultMindshareSubmissionsCsvPath()
+  return null
 }
 
 export function defaultEpoch2DailyStatePath(): string {

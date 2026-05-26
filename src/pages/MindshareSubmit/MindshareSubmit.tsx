@@ -275,7 +275,11 @@ const MindshareSubmit = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!submissionsOpen) {
-      setSubmitMessage('Epoch 2 submissions are closed. New entries open with Epoch 3.')
+      setSubmitMessage(
+        phase === 'epoch3'
+          ? 'Epoch 3 submissions are closed.'
+          : `Submissions open at ${EPOCH_3_START_UTC_LABEL}.`,
+      )
       return
     }
     if (!xProfile?.username || !walletAddress) {
@@ -434,19 +438,18 @@ const MindshareSubmit = () => {
             <div className="mindshare-submit-protocol-title">SUBMISSION REQUIREMENTS</div>
             <div className="mindshare-submit-protocol-grid">
               <p>
-                <strong>01. ELIGIBILITY:</strong> Eligible contributors must have a verified X account older than 3
-                months and hold at least 10,000 $SR during random snapshots.
+                <strong>01. HOLDING REQUIREMENT:</strong> Contributors must hold at least 10,000 $SR during random
+                snapshots.
               </p>
               <p>
-                <strong>03. REVIEW:</strong> Accounts and content with high AI-generated signals will not be
-                prioritized in the evaluation process.
+                <strong>02. WAITLIST REQUIREMENT:</strong> Participants must join the SR Platform Waitlist.
               </p>
               <p>
-                <strong>02. FORMAT:</strong> All content must be created around Strike Robot and be relevant to its
-                ecosystem.
+                <strong>03. ACCOUNT REQUIREMENT:</strong> X accounts must be verified and active for at least 3 months.
               </p>
               <p>
-                <strong>04. SUBMISSION:</strong> You must submit all of your posts for tracking and evaluation.
+                <strong>04. SUBMISSION REQUIREMENT:</strong> All contribution posts must be submitted through the
+                official submission form.
               </p>
             </div>
           </section>
@@ -454,10 +457,14 @@ const MindshareSubmit = () => {
           {!submissionsOpen ? (
             <div className="mindshare-submit-closed-panel" role="status">
               <p className="mindshare-submit-closed">
-                Epoch 2 submissions are closed. The countdown above runs until Epoch 3 begins at{' '}
-                {EPOCH_3_START_UTC_LABEL}.
+                {phase === 'epoch3'
+                  ? 'Epoch 3 submissions are closed.'
+                  : `Submissions open at ${EPOCH_3_START_UTC_LABEL}. The countdown above runs until then.`}
               </p>
-              <Link to="/mindshare-challenge" className="mindshare-submit-actions-link">
+              <Link
+                to={phase === 'epoch3_countdown' ? '/epoch3-preview' : '/mindshare-challenge'}
+                className="mindshare-submit-actions-link"
+              >
                 Back to challenge
               </Link>
             </div>

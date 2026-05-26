@@ -11,11 +11,24 @@ export const EPOCH_1_END_MS = Date.parse('2026-04-22T17:00:00Z')
 /** Epoch 2 end — same instant as before UI copy changes (17:00 UTC, 20 May 2026). */
 export const EPOCH_2_END_MS = Date.parse('2026-05-21T00:00:00+07:00')
 
+const MS_PER_DAY = 24 * 60 * 60 * 1000
+
 /** 6 days between Epoch 2 end and Epoch 3 start. */
-export const EPOCH_3_GAP_MS = 6 * 24 * 60 * 60 * 1000
+export const EPOCH_3_GAP_MS = 6 * MS_PER_DAY
 
 /** Epoch 3 start — always derived so the gap stays exactly 6×24h after Epoch 2 end. */
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
+
+/** Epoch 3 campaign length (matches preview copy). */
+export const EPOCH_3_DURATION_MS = 60 * MS_PER_DAY
+
+export const EPOCH_3_END_MS = EPOCH_3_START_MS + EPOCH_3_DURATION_MS
+
+/**
+ * Epoch 3 form + CSV unlock at GMT+7 midnight when the campaign day begins
+ * (same instant as `EPOCH_3_START_MS` / `EPOCH_3_START_UTC_LABEL`).
+ */
+export const EPOCH_3_SUBMISSION_OPEN_MS = EPOCH_3_START_MS
 
 /** Only user-facing schedule instant (all other boundaries stay internal). */
 export const EPOCH_3_START_UTC_LABEL = '17:00 UTC, May 26, 2026'
@@ -30,7 +43,6 @@ const EPOCH2_CHECKPOINT_TICK_DAYS = [
 ] as const
 
 const EPOCH2_SNAPSHOT_UTC_HOUR = 5
-const MS_PER_DAY = 24 * 60 * 60 * 1000
 
 /** Next 05:00 UTC checkpoint snapshot strictly after `nowMs`. */
 export function nextTomorrowGmt7MidnightMs(nowMs = Date.now()): number {
@@ -113,12 +125,22 @@ export function mindshareArticleEpoch(phase: MindshareEpochPhase): 1 | 2 | 3 {
   return 3
 }
 
-/** True while Epoch 1–2 accept new CSV rows (closes at `EPOCH_2_END_MS`). */
-export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
+/** True while Epoch 1–2 accept new rows into `mindshare_submissions.csv`. */
+export function isEpoch2MindshareSubmissionOpen(nowMs = Date.now()): boolean {
   return nowMs < EPOCH_2_END_MS
 }
 
-/** @deprecated Prefer {@link isMindshareSubmissionOpen}. */
-export function isEpoch2MindshareSubmissionOpen(phase: MindshareEpochPhase): boolean {
+/** True while Epoch 3 accepts new rows into `mindshare_submissions_3.csv`. */
+export function isEpoch3MindshareSubmissionOpen(nowMs = Date.now()): boolean {
+  return nowMs >= EPOCH_3_SUBMISSION_OPEN_MS && nowMs < EPOCH_3_END_MS
+}
+
+/** True when either epoch submission window is active. */
+export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
+  return isEpoch2MindshareSubmissionOpen(nowMs) || isEpoch3MindshareSubmissionOpen(nowMs)
+}
+
+/** @deprecated Prefer {@link isEpoch2MindshareSubmissionOpen}. */
+export function isEpoch2MindshareSubmissionOpenForPhase(phase: MindshareEpochPhase): boolean {
   return phase === 'epoch1' || phase === 'epoch2'
 }

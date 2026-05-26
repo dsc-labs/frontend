@@ -4,6 +4,11 @@ export const EPOCH_2_END_MS = Date.parse('2026-05-21T00:00:00+07:00')
 export const EPOCH_2_DURATION_MS = EPOCH_2_END_MS - EPOCH_1_END_MS
 export const EPOCH_3_GAP_MS = 6 * 24 * 60 * 60 * 1000
 export const EPOCH_3_START_MS = EPOCH_2_END_MS + EPOCH_3_GAP_MS
+const MS_PER_DAY = 24 * 60 * 60 * 1000
+export const EPOCH_3_DURATION_MS = 60 * MS_PER_DAY
+export const EPOCH_3_END_MS = EPOCH_3_START_MS + EPOCH_3_DURATION_MS
+/** Same instant as `EPOCH_3_START_MS` (GMT+7 midnight when Epoch 3 day begins). */
+export const EPOCH_3_SUBMISSION_OPEN_MS = EPOCH_3_START_MS
 
 /** Public `/epoch2` engagement cards (update after full metrics pass or set `MINDSHARE_EPOCH2_USE_COMPUTED_ENGAGEMENT_STATS=1`). */
 export const EPOCH2_PUBLIC_ENGAGEMENT_STATS = {
@@ -34,9 +39,18 @@ export type Epoch2CheckpointDayKey = (typeof EPOCH2_CHECKPOINT_DAY_KEYS)[number]
 export const EPOCH2_SNAPSHOT_CRON_NOTE =
   'Checkpoint snapshots at 05:00 UTC on 15–18 + 20 May 2026 (Vercel: 0 5 15,16,17,18,20 5 *)'
 
-/** Mindshare form + API submissions (closes when Epoch 2 ends). */
-export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
+/** Epoch 1–2 form + API → `mindshare_submissions.csv`. */
+export function isEpoch2MindshareSubmissionOpen(nowMs = Date.now()): boolean {
   return nowMs < EPOCH_2_END_MS
+}
+
+/** Epoch 3 form + API → `mindshare_submissions_3.csv`. */
+export function isEpoch3MindshareSubmissionOpen(nowMs = Date.now()): boolean {
+  return nowMs >= EPOCH_3_SUBMISSION_OPEN_MS && nowMs < EPOCH_3_END_MS
+}
+
+export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
+  return isEpoch2MindshareSubmissionOpen(nowMs) || isEpoch3MindshareSubmissionOpen(nowMs)
 }
 
 export function epoch2DaysRemaining(nowMs = Date.now()): number {

@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { PrivyClient } from '@privy-io/server-auth'
 import { appendMindshareSubmissionCsv } from '../../lib/mindshareCsvStore'
 import { isMindshareSubmissionOpen } from '../../lib/mindshareEpoch2Constants'
+import { resolveActiveMindshareSubmissionsCsvPath } from '../../lib/mindshareEpoch2DataPaths'
 
 function getPrivyClient(): PrivyClient | null {
   const appId = process.env.PRIVY_APP_ID
@@ -46,8 +47,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return
   }
 
-  if (!isMindshareSubmissionOpen()) {
-    sendJson(res, 403, { error: 'Epoch 2 submissions are closed (after 17:00 UTC cutoff). New entries open with Epoch 3.' })
+  const csvPath = resolveActiveMindshareSubmissionsCsvPath()
+  if (!csvPath || !isMindshareSubmissionOpen()) {
+    sendJson(res, 403, {
+      error:
+        'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026.',
+    })
     return
   }
 
@@ -84,7 +89,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         postSubmitted: mindshareUrls,
         srBalance,
       },
-      process.env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+      csvPath,
     )
     sendJson(res, 200, {
       ok: true,

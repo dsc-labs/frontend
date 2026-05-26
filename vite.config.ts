@@ -12,6 +12,7 @@ import {
   EPOCH2_SNAPSHOT_UTC_HOUR,
   isMindshareSubmissionOpen,
 } from './lib/mindshareEpoch2Constants'
+import { resolveActiveMindshareSubmissionsCsvPath } from './lib/mindshareEpoch2DataPaths'
 import { getMindshareEpoch2LeaderboardForDisplay } from './lib/mindshareEpoch2LeaderboardBuild'
 import { runMindshareEpoch2DailySnapshot } from './lib/mindshareEpoch2DailySnapshot'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
@@ -801,12 +802,14 @@ export default defineConfig(({ mode }) => {
                   return
                 }
 
-                if (!isMindshareSubmissionOpen()) {
+                const csvPath = resolveActiveMindshareSubmissionsCsvPath()
+                if (!csvPath || !isMindshareSubmissionOpen()) {
                   res.statusCode = 403
                   res.setHeader('Content-Type', 'application/json; charset=utf-8')
                   res.end(
                     JSON.stringify({
-                      error: 'Epoch 2 submissions are closed (after 17:00 UTC cutoff). New entries open with Epoch 3.',
+                      error:
+                        'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026 (GMT+7 midnight).',
                     }),
                   )
                   return
@@ -820,7 +823,7 @@ export default defineConfig(({ mode }) => {
                     postSubmitted: mindshareUrls,
                     srBalance,
                   },
-                  env.MINDSHARE_SUBMISSIONS_CSV_PATH,
+                  csvPath,
                 )
 
                 res.statusCode = 200
