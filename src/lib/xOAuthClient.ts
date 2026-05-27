@@ -100,7 +100,7 @@ export async function startXOAuthPkceFlow(
     code_challenge_method: 'S256',
   })
 
-  window.location.assign(`https://twitter.com/i/oauth2/authorize?${params.toString()}`)
+  window.location.assign(`https://x.com/i/oauth2/authorize?${params.toString()}`)
 }
 
 export async function exchangeCodeForProfile(args: {
