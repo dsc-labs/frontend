@@ -8,7 +8,7 @@ export const SITE_META_DESCRIPTION =
   'Strike Robot builds the intelligence and infrastructure layer for the next generation of physical AI.'
 
 /** Shared SEO for every route except `/sr-platform` — edit here only */
-export const DEFAULT_SEO_TITLE = 'About StrikeRobot — The intelligence layer for physical AI'
+export const DEFAULT_SEO_TITLE = 'Strike Robot builds the intelligence and infrastructure layer for the next generation of physical AI'
 export const DEFAULT_SEO_DESCRIPTION = SITE_META_DESCRIPTION
 
 /** `/sr-platform` only — customize title in HomeMain.tsx */

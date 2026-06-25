@@ -14,7 +14,7 @@ export default function StrikeAbout() {
     <StrikeLayout>
       <PageSEO
         path="/"
-        title="About StrikeRobot — The intelligence layer for physical AI"
+        title="Strike Robot builds the intelligence and infrastructure layer for the next generation of physical AI"
         metaDescription={DEFAULT_SEO_DESCRIPTION}
       />
       <Navbar />
