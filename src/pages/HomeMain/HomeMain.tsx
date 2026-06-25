@@ -130,7 +130,7 @@ const HomeMain = () => {
   /** Which gated JOIN WAITLIST control is hovered (label → "Coming soon"). */
   const [gatedWaitlistHover, setGatedWaitlistHover] = useState<'hero' | 'about' | null>(null)
 
-  /** `/test` bypasses launch gate; `/sr-platform` uses fixed launch time. */
+  /** `/test` bypasses launch gate; `/join` uses fixed launch time. */
   const waitlistUnlocked = isTestRoute || waitlistLive
 
   useEffect(() => {
@@ -152,7 +152,7 @@ const HomeMain = () => {
       <PageSEO
         title={SR_PLATFORM_SEO_TITLE}
         metaDescription={SR_PLATFORM_SEO_DESCRIPTION}
-        path="/sr-platform"
+        path={isTestRoute ? '/test' : '/join'}
       />
       <main className="home-main-content">
         <Header showSocialIcons />

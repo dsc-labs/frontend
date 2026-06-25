@@ -18,7 +18,29 @@ export default function Link({ href, children, onClick, ...rest }: LinkProps) {
     )
   }
 
+  if (href.startsWith('/simulation/')) {
+    return (
+      <a href={href} onClick={onClick} {...rest}>
+        {children}
+      </a>
+    )
+  }
+
   if (href.startsWith('/#')) {
+    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+      onClick?.(e)
+      e.preventDefault()
+      navigateApp(href, navigate, window.location.pathname)
+    }
+    return (
+      <a href={href} onClick={handleClick} {...rest}>
+        {children}
+      </a>
+    )
+  }
+
+  const hashAt = href.indexOf('#')
+  if (hashAt > 0 && href.startsWith('/')) {
     const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
       onClick?.(e)
       e.preventDefault()

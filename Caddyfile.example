@@ -1,0 +1,30 @@
+# Example for self-hosted strikerobot.ai (Ubuntu + Caddy).
+#
+# Option A (simplest — how it likely ran before):
+#   npm run build && npm run start   # vite preview on 127.0.0.1:3000
+#   Caddy proxies everything to Node (static + /waitlist API).
+#
+# strikerobot.ai {
+#   reverse_proxy 127.0.0.1:3000
+# }
+#
+# Option B: Caddy serves dist/ directly; only API goes to Node.
+#   npm run start must stay running for /waitlist/*.
+#
+# strikerobot.ai {
+#   root * /home/ubuntu/frontend/dist
+#   handle /waitlist* {
+#     reverse_proxy 127.0.0.1:3000
+#   }
+#   handle /api/waitlist* {
+#     reverse_proxy 127.0.0.1:3000
+#   }
+#   handle {
+#     try_files {path} /index.html
+#     file_server
+#   }
+# }
+#
+# Run Node under systemd (recommended):
+#   sudo cp deploy/strikerobot.service.example /etc/systemd/system/strikerobot.service
+#   sudo systemctl enable --now strikerobot

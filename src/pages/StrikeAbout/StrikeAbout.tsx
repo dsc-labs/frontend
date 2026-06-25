@@ -13,7 +13,7 @@ export default function StrikeAbout() {
   return (
     <StrikeLayout>
       <PageSEO
-        path="/about"
+        path="/"
         title="About StrikeRobot — The intelligence layer for physical AI"
         metaDescription="StrikeRobot builds the intelligence and infrastructure layer for the next generation of physical AI — giving robots the spatial understanding to act in the real world."
       />

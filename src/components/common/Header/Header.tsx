@@ -59,7 +59,7 @@ const Header = ({ showSocialIcons = true }: HeaderProps) => {
 
                 <div className="header-right">
                     <Link
-                        to="/sr-platform"
+                        to="/join"
                         className="header-mindshare-button"
                         aria-label="Open SR Platform waitlist"
                     >

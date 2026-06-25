@@ -1,0 +1,16 @@
+[Unit]
+Description=StrikeRobot frontend (vite preview — static + waitlist API)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/frontend
+Environment=NODE_ENV=production
+EnvironmentFile=-/home/ubuntu/frontend/.env
+ExecStart=/usr/bin/npm run start
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

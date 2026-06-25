@@ -17,7 +17,7 @@ const PRODUCT_LINKS = [
   {
     label: "SR Platform",
     description: "Generates physics-valid simulation environments, produce 3D assets",
-    href: "/",
+    href: "/sr-platform",
   },
   {
     label: "SR Agentic",

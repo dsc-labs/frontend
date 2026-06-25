@@ -30,15 +30,17 @@ export async function fetchResolvedSrVvvUsd(state: WaitlistState): Promise<{
   const cachedSr = state.lastUsdPrices?.srUsd
   const cachedVvv = state.lastUsdPrices?.vvvUsd
 
+  const envSr = Number(process.env.SR_USD_PRICE)
+  const envVvv = Number(process.env.VVV_USD_PRICE)
   const resolvedSr = resolveUsdPrice({
     dexPrice: dexSr,
     cachedPrice: cachedSr,
-    envPrice: 0,
+    envPrice: Number.isFinite(envSr) && envSr > 0 ? envSr : 0,
   })
   const resolvedVvv = resolveUsdPrice({
     dexPrice: dexVvv,
     cachedPrice: cachedVvv,
-    envPrice: 0,
+    envPrice: Number.isFinite(envVvv) && envVvv > 0 ? envVvv : 0,
   })
 
   return { resolvedSr, resolvedVvv, dexSr, dexVvv }

@@ -13,14 +13,14 @@ type NavLinkItem =
 
 const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
   const navLinks: NavLinkItem[] = [
-    { to: '/', label: 'SR Platform' },
-    { to: '/agentic', label: 'SR Agentic' },
-    { to: '/sr-platform', label: 'SR Platform Waitlist' },
+    { to: '/', label: 'About' },
+    { to: '/sr-platform', label: 'SR Platform' },
+    { to: '/join', label: 'SR Platform Waitlist' },
     {
       href: 'https://app.virtuals.io/virtuals/70972',
       label: 'SR Token',
     },
-    { to: '/about', label: 'About' },
+    { to: '/agentic', label: 'SR Agentic' },
     {
       href: 'https://github.com/orgs/StrikeRobot/repositories',
       label: 'Public Repos',

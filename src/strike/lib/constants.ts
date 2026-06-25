@@ -1,4 +1,5 @@
 import { EXTERNAL_LINKS, ROUTES } from "./navigate";
+import { BRAND_SOCIALS } from "./socialLinks";
 
 export const SITE_NAME = "STRIKE ROBOT";
 
@@ -7,13 +8,13 @@ export const SITE_DESCRIPTION =
   "SR Platform generates physics-valid simulation environments, production-grade 3D assets, and training-ready datasets — from a single natural language description.";
 
 export const NAV_LINKS = [
-  { label: "About", href: ROUTES.about },
-  { label: "Product", href: ROUTES.home, hasDropdown: true },
-  { label: "Simulation", href: "/#cta" },
+  { label: "About", href: ROUTES.home },
+  { label: "Product", href: ROUTES.srPlatform, hasDropdown: true },
+  { label: "Simulation", href: ROUTES.simulation },
 ];
 
 export const NAV_CTA = "Create with SR Platform";
-export const NAV_CTA_HREF = ROUTES.srPlatform;
+export const NAV_CTA_HREF = ROUTES.waitlist;
 
 export const VIDEOS = {
   hero: "/Video/Comp%202.mp4",
@@ -33,9 +34,9 @@ export const HERO = {
   description:
     "SR Platform generates physics-valid simulation environments, production-grade 3D assets, and training-ready datasets — from a single natural language description",
   ctaPrimary: "Create with SR Platform",
-  ctaPrimaryHref: ROUTES.srPlatform,
+  ctaPrimaryHref: ROUTES.waitlist,
   ctaSecondary: "Read about SR Platform",
-  ctaSecondaryHref: ROUTES.about,
+  ctaSecondaryHref: ROUTES.home,
 };
 
 export const FEATURES_SECTION = {
@@ -43,7 +44,7 @@ export const FEATURES_SECTION = {
   description:
     "Introducing SR Platform — our first-generation platform for building rich, persistent 3D spaces with high visual fidelity and spatial accuracy, designed for users to navigate, shape, and experience as their own.",
   cta: "Create with SR Platform",
-  ctaHref: ROUTES.srPlatform,
+  ctaHref: ROUTES.waitlist,
 };
 
 export const FEATURES = [
@@ -109,10 +110,10 @@ export const VIDEO_CTA = {
   background: "/Vid.png",
   wordmark: "sr platform",
   cta: "Create with SR Platform",
-  ctaHref: ROUTES.srPlatform,
+  ctaHref: ROUTES.waitlist,
   rotatingBadge: "STRIKE ROBOT • STRIKE ROBOT • STRIKE ROBOT • STRIKE ROBOT • ",
   sidebarLinks: [
-    { label: "About", href: ROUTES.about },
+    { label: "About", href: ROUTES.home },
     { label: "SR Platform", href: ROUTES.srPlatform },
     { label: "SR Agentic", href: ROUTES.agentic },
     { label: "Mindshare", href: ROUTES.mindshareChallenge },
@@ -129,32 +130,27 @@ export const CTA_VARIANTS: Record<
   platform: {
     wordmark: "sr platform",
     cta: "Create with SR Platform",
-    ctaHref: ROUTES.srPlatform,
+    ctaHref: ROUTES.waitlist,
     subtitleLines: ["Build physical AI with"],
   },
   agentic: {
     wordmark: "sr agentic",
     cta: "Build with SR Agentic",
-    ctaHref: ROUTES.srPlatform,
+    ctaHref: ROUTES.waitlist,
     subtitleLines: ["Give your robots", "real-world judgment with"],
   },
   about: {
     wordmark: "physical ai",
     cta: "Create with SR Platform",
-    ctaHref: ROUTES.srPlatform,
+    ctaHref: ROUTES.waitlist,
     subtitleLines: ["Let's build the future of"],
   },
 };
 
 export const FOOTER = {
   copyright:
-    "© 2026 DSC Labs. All rights reserved. SR Platform™ is a trademark of DSC Labs.",
-  socials: [
-    { label: "X", href: EXTERNAL_LINKS.x },
-    { label: "Instagram", href: EXTERNAL_LINKS.x },
-    { label: "Facebook", href: EXTERNAL_LINKS.x },
-    { label: "Discord", href: EXTERNAL_LINKS.x },
-  ],
+    "© 2026 Strike Robot. All rights reserved. SR Platform™ is a trademark of Strike Robot.",
+  socials: [...BRAND_SOCIALS],
 };
 
 // ---------------- AGENTIC PAGE (/agentic) ----------------
@@ -167,7 +163,7 @@ export const AGENTIC_HERO = {
   description:
     "SR Agentic builds task-shaped spatial understanding on the fly — and adapts the instant the world changes. No universal map to maintain, no stale world model to fight.",
   ctaPrimary: "Build with Agentic",
-  ctaPrimaryHref: ROUTES.srPlatform,
+  ctaPrimaryHref: ROUTES.waitlist,
   ctaSecondary: "Read about proposal",
   ctaSecondaryHref: EXTERNAL_LINKS.docs,
   videoCaption:
@@ -318,12 +314,7 @@ export const ABOUT_HERO = {
   description:
     "StrikeRobot builds the intelligence and infrastructure layer for the next generation of physical AI — giving robots the spatial understanding to act in the real world, and giving the teams that build them the tools to get there faster.",
   image: "/about/hero-hands.png",
-  socials: [
-    { label: "X", href: EXTERNAL_LINKS.x },
-    { label: "Instagram", href: EXTERNAL_LINKS.x },
-    { label: "Facebook", href: EXTERNAL_LINKS.x },
-    { label: "Discord", href: EXTERNAL_LINKS.x },
-  ],
+  socials: [...BRAND_SOCIALS],
 };
 
 type MissionRun = { text: string; bold?: boolean };

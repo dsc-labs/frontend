@@ -126,6 +126,34 @@ function formatRemainingHms(msRemaining: number): string {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
 }
 
+/** Match `lib/waitlistCalculator.applySnapshotToUser` — portfolio USD ÷ 60, ×1.2 when holding both tokens. */
+function waitlistPointsPerMinute(
+  srUnits: number,
+  vvvUnits: number,
+  srUsdPrice: number,
+  vvvUsdPrice: number,
+): number {
+  const portfolioUsd = srUnits * srUsdPrice + vvvUnits * vvvUsdPrice
+  const multiplier = srUnits > 0 && vvvUnits > 0 ? 1.2 : 1
+  return (portfolioUsd / 60) * multiplier
+}
+
+function livePointsEstimate(params: {
+  cumulativePoints: number
+  srUnits: number
+  vvvUnits: number
+  srUsdPrice: number
+  vvvUsdPrice: number
+  serverUsdPerMinute: number
+  minutesSinceSnapshot: number
+}): number {
+  const pricesLive = params.srUsdPrice > 0 || params.vvvUsdPrice > 0
+  const perMinute = pricesLive
+    ? waitlistPointsPerMinute(params.srUnits, params.vvvUnits, params.srUsdPrice, params.vvvUsdPrice)
+    : params.serverUsdPerMinute
+  return params.cumulativePoints + perMinute * params.minutesSinceSnapshot
+}
+
 export default function WaitlistPopup({
   onClose,
   useTestRegisterApi = false,
@@ -154,7 +182,7 @@ export default function WaitlistPopup({
   const [sessionStartMs, setSessionStartMs] = useState<number | null>(null)
   const [srUsdPrice, setSrUsdPrice] = useState(0)
   const [vvvUsdPrice, setVvvUsdPrice] = useState(0)
-  const [, setLiveTick] = useState(0)
+  const [nowMs, setNowMs] = useState(() => Date.now())
   const { address, shortAddress, hasProvider, connect, disconnect } = useEip1193Wallet()
 
   useEffect(() => {
@@ -256,7 +284,7 @@ export default function WaitlistPopup({
 
   useEffect(() => {
     if (step !== 2 && !(step === 3 && registered)) return
-    const id = window.setInterval(() => setLiveTick((n) => n + 1), 2000)
+    const id = window.setInterval(() => setNowMs(Date.now()), 1000)
     return () => window.clearInterval(id)
   }, [step, registered])
 
@@ -318,36 +346,46 @@ export default function WaitlistPopup({
     eligible &&
     emailOk
 
-  const nowMs = Date.now()
   const existingSrBal = existingFromServer ? parsedFinite(existingFromServer.user.latestSrBalance) : 0
   const existingVvvBal = existingFromServer ? parsedFinite(existingFromServer.user.latestVvvBalance) : 0
-  const existingUsdPerMinLive = existingSrBal * srUsdPrice + existingVvvBal * vvvUsdPrice
   const existingLastSnapMs =
     isExistingWallet && existingFromServer?.user.lastSnapshotAt
       ? Date.parse(existingFromServer.user.lastSnapshotAt)
       : Number.NaN
   const existingMinutesSinceSnapshot =
     Number.isFinite(existingLastSnapMs) ? Math.max(0, (nowMs - existingLastSnapMs) / 60_000) : 0
+  const previewMinutesInWindow = Math.max(0, (nowMs - currentSnapshotStartMsFromNow(nowMs)) / 60_000)
+  const livePerMinuteFromWallet = waitlistPointsPerMinute(srBalance, vvvBalance, srUsdPrice, vvvUsdPrice)
+  const livePerMinuteFromServerUser =
+    isExistingWallet && existingFromServer
+      ? waitlistPointsPerMinute(existingSrBal, existingVvvBal, srUsdPrice, vvvUsdPrice) ||
+        existingFromServer.user.latestUsdPerMinute
+      : 0
   const livePtsStep2 =
     isExistingWallet && existingFromServer
       ? userAccruesWaitlistPoints(existingFromServer.user)
-        ? existingFromServer.user.cumulativePoints + existingUsdPerMinLive * existingMinutesSinceSnapshot
+        ? livePointsEstimate({
+            cumulativePoints: existingFromServer.user.cumulativePoints,
+            srUnits: existingSrBal,
+            vvvUnits: existingVvvBal,
+            srUsdPrice,
+            vvvUsdPrice,
+            serverUsdPerMinute: existingFromServer.user.latestUsdPerMinute,
+            minutesSinceSnapshot: existingMinutesSinceSnapshot,
+          })
         : 0
       : useTestRegisterApi
         ? 0
         : !eligible
           ? 0
-          : (srBalance * srUsdPrice + vvvBalance * vvvUsdPrice) *
-            Math.max(0, (nowMs - currentSnapshotStartMsFromNow(nowMs)) / 60_000)
-  const usdPerMinPreview = srBalance * srUsdPrice + vvvBalance * vvvUsdPrice
-  const usdPerMinServer =
-    isExistingWallet && existingFromServer
-      ? existingUsdPerMinLive
-      : usdPerMinPreview
-  const displayUsdPerMin = isExistingWallet && existingFromServer ? usdPerMinServer : usdPerMinPreview
+          : livePerMinuteFromWallet * previewMinutesInWindow
   /** Step 2 card: no “accrual” preview until wallet meets join rules (new wallets only). */
   const displayUsdPerMinCard =
-    isExistingWallet && existingFromServer ? displayUsdPerMin : eligible ? usdPerMinPreview : 0
+    isExistingWallet && existingFromServer
+      ? livePerMinuteFromServerUser
+      : eligible
+        ? livePerMinuteFromWallet
+        : 0
   const showX12BonusPill = eligible && srBalance > 0 && vvvBalance > 0
   const holdAnchorMs =
     isExistingWallet && existingFromServer

@@ -2,9 +2,11 @@ import type { NavigateFunction } from 'react-router-dom'
 
 export const ROUTES = {
   home: '/',
-  about: '/about',
+  about: '/',
   agentic: '/agentic',
   srPlatform: '/sr-platform',
+  simulation: '/simulation/app/',
+  waitlist: '/join',
   mindshareChallenge: '/mindshare-challenge',
   mindshareSubmit: '/mindshare-submit',
 } as const
@@ -32,6 +34,11 @@ export function navigateApp(href: string, navigate: NavigateFunction, pathname: 
     return
   }
 
+  if (href.startsWith('/simulation/')) {
+    window.location.assign(href)
+    return
+  }
+
   if (href.startsWith('/#')) {
     const hash = href.slice(1)
     const base = href.split('#')[0] || '/'
@@ -40,6 +47,19 @@ export function navigateApp(href: string, navigate: NavigateFunction, pathname: 
       return
     }
     navigate(base)
+    window.setTimeout(() => scrollToHash(hash), 120)
+    return
+  }
+
+  const hashAt = href.indexOf('#')
+  if (hashAt > 0 && href.startsWith('/')) {
+    const base = href.slice(0, hashAt) || '/'
+    const hash = href.slice(hashAt)
+    if (pathname === base) {
+      scrollToHash(hash)
+      return
+    }
+    navigate(`${base}${hash}`)
     window.setTimeout(() => scrollToHash(hash), 120)
     return
   }

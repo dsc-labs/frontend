@@ -15,7 +15,7 @@ export default function StrikeLanding() {
   return (
     <StrikeLayout>
       <PageSEO
-        path="/"
+        path="/sr-platform"
         title={`${SITE_NAME} — The 3D spatial creation platform for intelligent robots`}
         metaDescription={SITE_DESCRIPTION}
       />

@@ -38,12 +38,8 @@
       "destination": "/api/waitlist/stats"
     },
     {
-      "source": "/sr-platform",
-      "destination": "/sr-platform/index.html"
-    },
-    {
-      "source": "/test",
-      "destination": "/sr-platform/index.html"
+      "source": "/join/waitlist-stats",
+      "destination": "/api/waitlist/stats"
     },
     {
       "source": "/((?!api/).*)",

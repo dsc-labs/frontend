@@ -18,7 +18,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const user = await getWaitlistUser(walletAddress, process.env.WAITLIST_STATE_PATH)
   if (!user) {
-    sendJson(res, 404, { error: 'User not found' })
+    // Not an error — wallet simply hasn't joined yet. 200 avoids red entries in DevTools.
+    sendJson(res, 200, { ok: true, registered: false, user: null, rank: null, leaderboard: [] })
     return
   }
 
