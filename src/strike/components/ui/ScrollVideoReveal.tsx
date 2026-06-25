@@ -26,8 +26,8 @@ export function ScrollVideoReveal({
   targetRef,
 }: ScrollVideoRevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const internalRef = useRef<HTMLDivElement | null>(null);
-  const containerRef = targetRef ?? internalRef;
+  const internalRef = useRef<HTMLDivElement>(null);
+  const containerRef = (targetRef ?? internalRef) as React.RefObject<HTMLElement>;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
