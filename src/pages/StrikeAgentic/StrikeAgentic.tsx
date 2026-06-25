@@ -9,7 +9,7 @@ import { AgenticOEMs } from '@/components/sections/agentic/AgenticOEMs'
 import { CTA } from '@/components/sections/CTA'
 import { Footer } from '@/components/sections/Footer'
 import { StrikeLayout } from '../../strike/StrikeLayout'
-import { PageSEO } from '../../components/common/PageSEO/PageSEO'
+import { PageSEO, DEFAULT_SEO_DESCRIPTION } from '../../components/common/PageSEO/PageSEO'
 
 export default function StrikeAgentic() {
   return (
@@ -17,7 +17,7 @@ export default function StrikeAgentic() {
       <PageSEO
         path="/agentic"
         title="SR Agentic — Ephemeral intelligence for robots"
-        metaDescription="SR Agentic builds task-shaped spatial understanding on the fly — and adapts the instant the world changes. Task-Conditioned Scene Graph navigation for the real world."
+        metaDescription={DEFAULT_SEO_DESCRIPTION}
       />
       <div className="relative">
         <StickyHeroBackground />

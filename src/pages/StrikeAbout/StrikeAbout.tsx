@@ -7,7 +7,7 @@ import { AboutPartners } from '@/components/sections/about/AboutPartners'
 import { CTA } from '@/components/sections/CTA'
 import { Footer } from '@/components/sections/Footer'
 import { StrikeLayout } from '../../strike/StrikeLayout'
-import { PageSEO } from '../../components/common/PageSEO/PageSEO'
+import { PageSEO, DEFAULT_SEO_DESCRIPTION } from '../../components/common/PageSEO/PageSEO'
 
 export default function StrikeAbout() {
   return (
@@ -15,7 +15,7 @@ export default function StrikeAbout() {
       <PageSEO
         path="/"
         title="About StrikeRobot — The intelligence layer for physical AI"
-        metaDescription="StrikeRobot builds the intelligence and infrastructure layer for the next generation of physical AI — giving robots the spatial understanding to act in the real world."
+        metaDescription={DEFAULT_SEO_DESCRIPTION}
       />
       <Navbar />
       <div className="relative">

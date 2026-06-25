@@ -3,15 +3,17 @@ import { Helmet } from 'react-helmet-async'
 /** Production site origin — used for canonical and Open Graph URLs */
 export const SITE_ORIGIN = 'https://strikerobot.ai'
 
+/** Shared meta description for every route (browser tab / OG / Twitter). */
+export const SITE_META_DESCRIPTION =
+  'Strike Robot builds the intelligence and infrastructure layer for the next generation of physical AI.'
+
 /** Shared SEO for every route except `/sr-platform` — edit here only */
 export const DEFAULT_SEO_TITLE = 'About StrikeRobot — The intelligence layer for physical AI'
-export const DEFAULT_SEO_DESCRIPTION =
-  'StrikeRobot builds the intelligence and infrastructure layer for the next generation of physical AI — giving robots the spatial understanding to act in the real world.'
+export const DEFAULT_SEO_DESCRIPTION = SITE_META_DESCRIPTION
 
-/** `/sr-platform` only — customize in HomeMain.tsx */
+/** `/sr-platform` only — customize title in HomeMain.tsx */
 export const SR_PLATFORM_SEO_TITLE = 'SR Platform — AI Robotics Training'
-export const SR_PLATFORM_SEO_DESCRIPTION =
-  'SR Platform is an embodied AI training stack. It transforms real-world data into executable robot policies.'
+export const SR_PLATFORM_SEO_DESCRIPTION = SITE_META_DESCRIPTION
 
 export type PageSEOProps = {
   /** Short page title (brand suffix added automatically unless title already includes STRIKEROBOT) */

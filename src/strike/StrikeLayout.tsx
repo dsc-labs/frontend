@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from 'react'
 import { useLocation } from 'react-router-dom'
 import { scrollToHash } from '@/lib/navigate'
 import { SmoothScroll } from '@/components/ui/SmoothScroll'
+import { WaitlistPopupProvider } from '@/context/WaitlistPopupContext'
 import '@/fonts.css'
 import './globals.css'
 
@@ -23,5 +24,9 @@ export function StrikeLayout({ children }: StrikeLayoutProps) {
     return () => window.clearTimeout(id)
   }, [pathname, hash])
 
-  return <SmoothScroll>{children}</SmoothScroll>
+  return (
+    <WaitlistPopupProvider>
+      <SmoothScroll>{children}</SmoothScroll>
+    </WaitlistPopupProvider>
+  )
 }

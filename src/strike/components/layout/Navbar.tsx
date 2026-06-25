@@ -7,6 +7,7 @@ import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform, use
 import { ChevronDown, X, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_CTA, NAV_CTA_HREF, NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { isWaitlistHref, useWaitlistPopup } from "@/context/WaitlistPopupContext";
 import { navigateApp } from "@/lib/navigate";
 import { PillButtonCta } from "@/components/ui/PillButton";
 import { StarBorderLayer } from "@/components/ui/StarBorder";
@@ -254,19 +255,23 @@ function MobileMenuButton({
   );
 }
 
+const NAVBAR_LOGO_SRC = "/logo-vertical-black.png";
+const NAVBAR_LOGO_WIDTH = 1024;
+const NAVBAR_LOGO_HEIGHT = 418;
+
 function MobileLogo({ onClick }: { onClick?: () => void }) {
   return (
     <Link
       href="/"
-      className="flex w-[84px] items-center"
+      className="flex w-[100px] items-center"
       aria-label={SITE_NAME}
       onClick={onClick}
     >
       <Image
-        src="/Logo.png"
+        src={NAVBAR_LOGO_SRC}
         alt={SITE_NAME}
-        width={84}
-        height={32}
+        width={NAVBAR_LOGO_WIDTH}
+        height={NAVBAR_LOGO_HEIGHT}
         className="h-8 w-auto"
         priority
       />
@@ -355,6 +360,7 @@ function MobileScrollHeader({
 export function Navbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const waitlistPopup = useWaitlistPopup();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [desktopProductOpen, setDesktopProductOpen] = useState(false);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
@@ -416,6 +422,10 @@ export function Navbar() {
   };
 
   const navigateTo = (href: string) => {
+    if (isWaitlistHref(href)) {
+      waitlistPopup?.openWaitlistPopup();
+      return;
+    }
     navigateApp(href, navigate, pathname);
   };
 
@@ -444,10 +454,10 @@ export function Navbar() {
             aria-label={SITE_NAME}
           >
             <Image
-              src="/Logo.png"
+              src={NAVBAR_LOGO_SRC}
               alt={SITE_NAME}
-              width={116}
-              height={44}
+              width={NAVBAR_LOGO_WIDTH}
+              height={NAVBAR_LOGO_HEIGHT}
               className="h-11 w-auto"
               priority
             />

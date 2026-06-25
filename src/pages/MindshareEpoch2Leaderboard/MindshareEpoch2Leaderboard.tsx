@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Header from '../../components/common/Header/Header'
-import { PageSEO } from '../../components/common/PageSEO/PageSEO'
+import { PageSEO, SITE_META_DESCRIPTION } from '../../components/common/PageSEO/PageSEO'
 import type {
   Epoch2CheckpointColumn,
   Epoch2LeaderboardApiPayload,
@@ -14,8 +14,6 @@ import { enrichEpoch2UsersForDisplay } from './epoch2ClientProfileEnrichment'
 import './MindshareEpoch2Leaderboard.css'
 
 const EPOCH2_SEO_TITLE = 'Mindshare Challenge — Epoch 2 Leaderboard'
-const EPOCH2_SEO_DESCRIPTION =
-  'Epoch 2 mindshare leaderboard: participants, engagement, and ranked scores for the StrikeRobot mindshare challenge.'
 
 function leaderboardApiUrl(): string {
   const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '')
@@ -102,7 +100,7 @@ const MindshareEpoch2Leaderboard = () => {
 
   return (
     <div className="mindshare-epoch2-page">
-      <PageSEO title={EPOCH2_SEO_TITLE} metaDescription={EPOCH2_SEO_DESCRIPTION} path="/mindshare-leaderboard" />
+      <PageSEO title={EPOCH2_SEO_TITLE} metaDescription={SITE_META_DESCRIPTION} path="/mindshare-leaderboard" />
       <Header showSocialIcons />
       <div className="epoch2-lb-container">
         <h1 className="epoch2-lb-sr-only">Epoch 2 Mindshare Leaderboard</h1>

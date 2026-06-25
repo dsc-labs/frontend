@@ -8,8 +8,8 @@ import { Pricing } from '@/components/sections/Pricing'
 import { CTA } from '@/components/sections/CTA'
 import { Footer } from '@/components/sections/Footer'
 import { StrikeLayout } from '../../strike/StrikeLayout'
-import { PageSEO } from '../../components/common/PageSEO/PageSEO'
-import { SITE_DESCRIPTION, SITE_NAME } from '@/lib/constants'
+import { PageSEO, DEFAULT_SEO_DESCRIPTION } from '../../components/common/PageSEO/PageSEO'
+import { SITE_NAME } from '@/lib/constants'
 
 export default function StrikeLanding() {
   return (
@@ -17,7 +17,7 @@ export default function StrikeLanding() {
       <PageSEO
         path="/sr-platform"
         title={`${SITE_NAME} — The 3D spatial creation platform for intelligent robots`}
-        metaDescription={SITE_DESCRIPTION}
+        metaDescription={DEFAULT_SEO_DESCRIPTION}
       />
       <Navbar />
       <div className="relative">

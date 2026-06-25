@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navigateApp } from "@/lib/navigate";
+import { isWaitlistHref, useWaitlistPopup } from "@/context/WaitlistPopupContext";
 import { StarBorderLayer } from "@/components/ui/StarBorder";
 
 const darkGradient =
@@ -57,9 +58,14 @@ function StarRimCover({ background }: { background: string }) {
 function usePillNavigate(href?: string, onClick?: () => void) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const waitlistPopup = useWaitlistPopup();
 
   return () => {
     onClick?.();
+    if (isWaitlistHref(href)) {
+      waitlistPopup?.openWaitlistPopup();
+      return;
+    }
     if (href) navigateApp(href, navigate, pathname);
   };
 }
@@ -150,23 +156,24 @@ export function PillButtonCta({
   children,
   showShadow = false,
   href,
+  onClick,
 }: {
   className?: string;
   children: React.ReactNode;
   showShadow?: boolean;
   href?: string;
+  onClick?: () => void;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const motionProps = useTapMotion(prefersReducedMotion);
   const [hovered, setHovered] = useState(false);
   const starSpeed = hovered ? STAR_SPEED_HOVER : STAR_SPEED;
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const handleClick = usePillNavigate(href, onClick);
 
   return (
     <motion.button
       type="button"
-      onClick={() => href && navigateApp(href, navigate, pathname)}
+      onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(

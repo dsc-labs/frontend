@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../../components/common/Header/Header'
-import { DefaultPageSEO, PageSEO } from '../../components/common/PageSEO/PageSEO'
+import { DefaultPageSEO, PageSEO, SITE_META_DESCRIPTION } from '../../components/common/PageSEO/PageSEO'
 import {
   getMindshareEpochPhase,
   isMindshareSubmissionOpen,
@@ -168,7 +168,7 @@ export function MindshareChallengeView({ phase, seoPath = '/mindshare-challenge'
         <PageSEO
           path={seoPath}
           title="Epoch 3 Preview — Mindshare Challenge"
-          metaDescription={`Preview of the Epoch 3 mindshare challenge page. Epoch 3 begins at ${EPOCH_3_START_UTC_LABEL}.`}
+          metaDescription={SITE_META_DESCRIPTION}
           noIndex
         />
       ) : (
