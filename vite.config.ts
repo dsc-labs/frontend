@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import type { Connect, PreviewServer, ViteDevServer } from 'vite'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
+import path from 'node:path'
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { Buffer } from 'node:buffer'
@@ -632,6 +633,13 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src/strike'),
+        'next/image': path.resolve(__dirname, 'src/strike/shims/Image.tsx'),
+        'next/link': path.resolve(__dirname, 'src/strike/shims/Link.tsx'),
+      },
+    },
     plugins: [
       react(),
       {
@@ -775,6 +783,20 @@ export default defineConfig(({ mode }) => {
                 res.end('Method Not Allowed')
                 return
               }
+
+              const skipAuth = env.MINDSHARE_SUBMIT_SKIP_AUTH === '1' && !process.env.VERCEL
+              if (!skipAuth) {
+                const cronSecret = env.CRON_SECRET?.trim()
+                const auth = (req.headers['authorization'] as string | undefined) ?? ''
+                const bearer = /^Bearer\s+(.+)$/i.exec(auth)?.[1]?.trim() ?? ''
+                if (!cronSecret || bearer !== cronSecret) {
+                  res.statusCode = 401
+                  res.setHeader('Content-Type', 'application/json')
+                  res.end(JSON.stringify({ error: 'Unauthorized' }))
+                  return
+                }
+              }
+
               try {
                 const raw = await readHttpBody(req)
                 const json = JSON.parse(raw || '{}') as {
@@ -793,12 +815,7 @@ export default defineConfig(({ mode }) => {
                 if (!name || !xHandle || !mindshareUrls || !rewardWalletAddress) {
                   res.statusCode = 400
                   res.setHeader('Content-Type', 'application/json')
-                  res.end(
-                    JSON.stringify({
-                      error:
-                        'Missing required fields: name, xHandle, mindshareUrls, rewardWalletAddress',
-                    }),
-                  )
+                  res.end(JSON.stringify({ error: 'Missing required fields: name, xHandle, mindshareUrls, rewardWalletAddress' }))
                   return
                 }
 
@@ -806,26 +823,14 @@ export default defineConfig(({ mode }) => {
                 if (!csvPath || !isMindshareSubmissionOpen()) {
                   res.statusCode = 403
                   res.setHeader('Content-Type', 'application/json; charset=utf-8')
-                  res.end(
-                    JSON.stringify({
-                      error:
-                        'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026 (GMT+7 midnight).',
-                    }),
-                  )
+                  res.end(JSON.stringify({ error: 'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026 (GMT+7 midnight).' }))
                   return
                 }
 
                 const result = await appendMindshareSubmissionCsv(
-                  {
-                    xHandle,
-                    walletAddress: rewardWalletAddress,
-                    name,
-                    postSubmitted: mindshareUrls,
-                    srBalance,
-                  },
+                  { xHandle, walletAddress: rewardWalletAddress, name, postSubmitted: mindshareUrls, srBalance },
                   csvPath,
                 )
-
                 res.statusCode = 200
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
                 res.end(JSON.stringify({ ok: true, file: result.filePath }))

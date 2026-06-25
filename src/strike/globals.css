@@ -1,0 +1,290 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 89.8%;
+    --foreground: 240 15% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 15% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 15% 6%;
+    --primary: 249 88% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 93%;
+    --secondary-foreground: 240 15% 6%;
+    --muted: 0 0% 93%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 187 100% 33%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 82%;
+    --input: 0 0% 82%;
+    --ring: 249 88% 63%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html:has(body.strike-site) {
+    background-color: #E5E5E5;
+    scroll-padding-top: 7rem;
+  }
+
+  body.strike-site {
+    background-color: #E5E5E5;
+    color: #000000;
+    font-family: var(--font-golos-text), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background-color: rgba(0, 0, 0, 0.12);
+    color: #000000;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #E5E5E5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(108, 99, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(108, 99, 255, 0.55);
+  }
+}
+
+@layer utilities {
+  .glow-primary {
+    box-shadow: 0 0 24px rgba(108, 99, 255, 0.25), 0 0 60px rgba(108, 99, 255, 0.08);
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 24px rgba(0, 153, 170, 0.25), 0 0 60px rgba(0, 153, 170, 0.08);
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #6C63FF 0%, #0099AA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-warm {
+    background: linear-gradient(135deg, #0F0F1A 0%, #6C63FF 60%, #0099AA 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Card scrollbar — black 30% thumb (Figma), overrides the global purple one */
+  .card-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #0000004d transparent;
+  }
+
+  .card-scroll::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .card-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .card-scroll::-webkit-scrollbar-thumb {
+    background: #0000004d;
+    border-radius: 8px;
+  }
+
+  /* White card surface — stands out against #E5E5E5 background */
+  .surface-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(108, 99, 255, 0.10);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .surface-card-hover {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .surface-card-hover:hover {
+    border-color: rgba(108, 99, 255, 0.32);
+    box-shadow: 0 8px 32px rgba(108, 99, 255, 0.10), 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Section tints — slightly lighter/darker than #E5E5E5 */
+  .section-tint {
+    background: #EFEFEF;
+  }
+
+  .section-tint-alt {
+    background: #E5E5E5;
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  /* Defer rendering của section off-screen — browser skip paint/layout
+     khi section nằm ngoài viewport. Khi user cuộn tới, browser render
+     bình thường. Có contain-intrinsic-size để giữ chiều cao ước tính,
+     tránh layout shift / scroll jump. */
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
+
+  .main-section-fade {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .agentic-watermark-marquee {
+    animation: agenticWatermarkMarquee 32s linear infinite;
+  }
+
+  @keyframes agenticWatermarkMarquee {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-25%);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .main-section-fade {
+    mask-image: linear-gradient(180deg, transparent 0px, black 100px, black 100%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 100px, black 100%);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-mobile-pill {
+    border-width: 1.4px !important;
+    border-radius: 24px !important;
+  }
+}
+
+/* Star-border shine for CTA pills — traveling glow (reactbits StarBorder) */
+.border-gradient-bottom,
+.border-gradient-top {
+  position: absolute;
+  width: 300%;
+  height: 50%;
+  opacity: 0.7;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: normal;
+}
+.border-gradient-bottom {
+  bottom: -12px;
+  right: -250%;
+  animation-name: star-movement-bottom;
+}
+.border-gradient-top {
+  top: -12px;
+  left: -250%;
+  animation-name: star-movement-top;
+}
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 0;
+  }
+}
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 0;
+  }
+}
+
+/* Desktop nav dropdown item hover */
+.nav-dropdown-item:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(197, 209, 208, 0.2) 0%,
+    rgba(97, 107, 101, 0.2) 100%
+  );
+}
+
+/* Mobile partner-logo marquee (two opposite-direction rows) */
+.marquee-track-left {
+  animation: marquee-left 30s linear infinite;
+}
+.marquee-track-right {
+  animation: marquee-right 30s linear infinite;
+}
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -4,9 +4,9 @@ import { Helmet } from 'react-helmet-async'
 export const SITE_ORIGIN = 'https://strikerobot.ai'
 
 /** Shared SEO for every route except `/sr-platform` — edit here only */
-export const DEFAULT_SEO_TITLE = 'Humanoid Intelligence Platform for Physical AI BPO'
+export const DEFAULT_SEO_TITLE = 'STRIKE ROBOT — The 3D spatial creation platform for intelligent robots'
 export const DEFAULT_SEO_DESCRIPTION =
-  'An embodied AI platform training humanoid robots to perceive, reason, and act in high-risk environments. Simulation, data infrastructure, and deployment for embodied AI.'
+  'SR Platform generates physics-valid simulation environments, production-grade 3D assets, and training-ready datasets — from a single natural language description.'
 
 /** `/sr-platform` only — customize in HomeMain.tsx */
 export const SR_PLATFORM_SEO_TITLE = 'SR Platform — AI Robotics Training'

@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@font-face {
+  font-family: 'SuperGround';
+  src: url('/font/SuperGround-L3XZ4.ttf') format('truetype');
+  font-display: swap;
+}
+
+:root {
+  --font-golos-text: 'Golos Text', sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', monospace;
+  --font-super-ground: 'SuperGround', sans-serif;
+}

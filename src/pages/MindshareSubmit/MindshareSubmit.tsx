@@ -462,7 +462,7 @@ const MindshareSubmit = () => {
                   : `Submissions open at ${EPOCH_3_START_UTC_LABEL}. The countdown above runs until then.`}
               </p>
               <Link
-                to={phase === 'epoch3_countdown' ? '/epoch3-preview' : '/mindshare-challenge'}
+                to="/mindshare-challenge"
                 className="mindshare-submit-actions-link"
               >
                 Back to challenge

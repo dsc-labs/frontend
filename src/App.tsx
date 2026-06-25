@@ -1,20 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { createContext, useCallback, useContext } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { PrivyProvider } from '@privy-io/react-auth'
-import Home from './pages/Home/Home'
+import StrikeLanding from './pages/StrikeLanding/StrikeLanding'
+import StrikeAbout from './pages/StrikeAbout/StrikeAbout'
+import StrikeAgentic from './pages/StrikeAgentic/StrikeAgentic'
 import HomeMain from './pages/HomeMain/HomeMain'
-import About from './pages/About/About'
-import DataPlatform from './pages/DataPlatform/DataPlatform'
-import UseCases from './pages/UseCases/UseCases'
-import TechnologyStack from './pages/TechnologyStack/TechnologyStack'
 import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
-import MindshareEpoch3Preview from './pages/MindshareEpoch3Preview/MindshareEpoch3Preview'
-import Partners from './pages/Partners/Partners'
-import Models from './pages/Models/Models'
-import Leaderboard from './pages/Leaderboard/Leaderboard'
 import MindshareSubmit from './pages/MindshareSubmit/MindshareSubmit'
-import MindshareEpoch2Leaderboard from './pages/MindshareEpoch2Leaderboard/MindshareEpoch2Leaderboard'
-import LoadingScreen from './components/common/LoadingScreen/LoadingScreen'
 import './App.css'
 
 export const PrivyResetContext = createContext<() => void>(() => {})
@@ -29,60 +21,42 @@ function clearPrivyStorage() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
-  const [privyKey, setPrivyKey] = useState(0)
-
-  useEffect(() => {
-    if (isLoading) {
-      document.documentElement.classList.add('loading')
-    } else {
-      document.documentElement.classList.remove('loading')
-    }
-  }, [isLoading])
-
-  const handleLoadingComplete = () => setIsLoading(false)
-
   const resetPrivy = useCallback(() => {
     clearPrivyStorage()
-    setPrivyKey((k) => k + 1)
+    window.location.reload()
   }, [])
 
   return (
-    <>
-      <LoadingScreen onComplete={handleLoadingComplete} />
-      {!isLoading && (
-        <PrivyResetContext.Provider value={resetPrivy}>
-          <PrivyProvider
-            key={privyKey}
-            appId={import.meta.env.VITE_PRIVY_APP_ID as string}
-            config={{
-              loginMethods: ['wallet'],
-              appearance: { theme: 'dark' },
-              embeddedWallets: { ethereum: { createOnLogin: 'off' } },
-            }}
-          >
-            <Router>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/sr-platform" element={<HomeMain />} />
-                <Route path="/test" element={<HomeMain />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/data-platform" element={<DataPlatform />} />
-                <Route path="/use-cases" element={<UseCases />} />
-                <Route path="/technology-stack" element={<TechnologyStack />} />
-                <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
-                <Route path="/epoch3-preview" element={<MindshareEpoch3Preview />} />
-                <Route path="/mindshare-leaderboard" element={<MindshareEpoch2Leaderboard />} />
-                <Route path="/partners" element={<Partners />} />
-                <Route path="/models" element={<Models />} />
-                <Route path="/leaderboard" element={<Leaderboard />} />
-                <Route path="/mindshare-submit" element={<MindshareSubmit />} />
-              </Routes>
-            </Router>
-          </PrivyProvider>
-        </PrivyResetContext.Provider>
-      )}
-    </>
+    <PrivyResetContext.Provider value={resetPrivy}>
+      <PrivyProvider
+        appId={import.meta.env.VITE_PRIVY_APP_ID as string}
+        config={{
+          loginMethods: ['wallet'],
+          appearance: { theme: 'dark' },
+          embeddedWallets: { ethereum: { createOnLogin: 'off' } },
+        }}
+      >
+        <Router>
+          <Routes>
+            <Route path="/" element={<StrikeLanding />} />
+            <Route path="/about" element={<StrikeAbout />} />
+            <Route path="/agentic" element={<StrikeAgentic />} />
+            <Route path="/sr-platform" element={<HomeMain />} />
+            <Route path="/test" element={<HomeMain />} />
+            <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
+            <Route path="/mindshare-submit" element={<MindshareSubmit />} />
+            <Route path="/epoch3-preview" element={<Navigate to="/mindshare-challenge" replace />} />
+            <Route path="/mindshare-leaderboard" element={<Navigate to="/mindshare-challenge" replace />} />
+            <Route path="/leaderboard" element={<Navigate to="/mindshare-challenge" replace />} />
+            <Route path="/data-platform" element={<Navigate to="/" replace />} />
+            <Route path="/use-cases" element={<Navigate to="/" replace />} />
+            <Route path="/technology-stack" element={<Navigate to="/" replace />} />
+            <Route path="/partners" element={<Navigate to="/" replace />} />
+            <Route path="/models" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </PrivyProvider>
+    </PrivyResetContext.Provider>
   )
 }
 

@@ -1,24 +1,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { PrivyClient } from '@privy-io/server-auth'
 import { appendMindshareSubmissionCsv } from '../../lib/mindshareCsvStore'
 import { isMindshareSubmissionOpen } from '../../lib/mindshareEpoch2Constants'
 import { resolveActiveMindshareSubmissionsCsvPath } from '../../lib/mindshareEpoch2DataPaths'
-
-function getPrivyClient(): PrivyClient | null {
-  const appId = process.env.PRIVY_APP_ID
-  const appSecret = process.env.PRIVY_APP_SECRET
-  if (!appId || !appSecret) return null
-  return new PrivyClient(appId, appSecret)
-}
-
-const privyClient = getPrivyClient()
+import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
 
 type SubmitBody = {
   name?: string
   xHandle?: string
   mindshareUrls?: string
   rewardWalletAddress?: string
-  /** Human-readable SR balance at submit time (optional). */
   srBalance?: string
 }
 
@@ -28,30 +18,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return
   }
 
-  if (!privyClient) {
-    sendJson(res, 503, { error: 'Server auth not configured (missing PRIVY_APP_ID or PRIVY_APP_SECRET)' })
-    return
-  }
-
-  const authHeader = typeof req.headers.authorization === 'string' ? req.headers.authorization : ''
-  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : ''
-  if (!token) {
-    sendJson(res, 401, { error: 'Missing authorization token' })
-    return
-  }
-
-  try {
-    await privyClient.verifyAuthToken(token)
-  } catch {
-    sendJson(res, 401, { error: 'Invalid or expired authorization token' })
+  if (!isVercelCronAuthorizedRequest(req, { skipAuthEnvName: 'MINDSHARE_SUBMIT_SKIP_AUTH' })) {
+    sendJson(res, 401, { error: 'Unauthorized' })
     return
   }
 
   const csvPath = resolveActiveMindshareSubmissionsCsvPath()
   if (!csvPath || !isMindshareSubmissionOpen()) {
     sendJson(res, 403, {
-      error:
-        'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026.',
+      error: 'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026.',
     })
     return
   }
@@ -91,10 +66,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       },
       csvPath,
     )
-    sendJson(res, 200, {
-      ok: true,
-      file: result.filePath,
-    })
+    sendJson(res, 200, { ok: true, file: result.filePath })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Failed to append CSV row'
     sendJson(res, 500, { error: message })
