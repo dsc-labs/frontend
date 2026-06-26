@@ -10,6 +10,12 @@ const WAITLIST_API_BASE = (import.meta.env.VITE_WAITLIST_API_BASE as string | un
 const SR_TOKEN = { address: '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9', decimals: 18 } as const
 const VVV_TOKEN = { address: '0xacfE6019Ed1A7Dc6f7B508C02d1b04ec88cC21bf', decimals: 18 } as const
 const WAITLIST_CAPACITY = 5000
+/** UI-only: show waitlist rank 50 places lower than the server value (rank 10 → 60). */
+const WAITLIST_DISPLAY_RANK_OFFSET = 50
+
+function displayWaitlistRank(rank: number): number {
+  return Math.max(1, Math.min(WAITLIST_CAPACITY, rank + WAITLIST_DISPLAY_RANK_OFFSET))
+}
 const SNAPSHOT_INTERVAL_MS = 15 * 60 * 1000
 
 type Step = 1 | 2 | 3
@@ -475,8 +481,8 @@ export default function WaitlistPopup({
   const waitlistPositionDisplay = !regAccrues
     ? '—'
     : serverRank != null
-      ? `#${serverRank}`
-      : `#${displayWaitlistSlot(livePtsStep3, address)}`
+      ? `#${displayWaitlistRank(serverRank)}`
+      : `#${displayWaitlistRank(displayWaitlistSlot(livePtsStep3, address))}`
   const pointsDisplay = livePtsStep3.toFixed(4)
   const serverPointsDisplay = serverPoints.toFixed(4)
 
@@ -564,7 +570,9 @@ export default function WaitlistPopup({
                     {userAccruesWaitlistPoints(existingFromServer.user) ? (
                       <>
                         Confirmed: {existingFromServer.user.cumulativePoints.toFixed(4)} pts
-                        {existingFromServer.rank != null ? ` · Rank #${existingFromServer.rank}` : ''}
+                        {existingFromServer.rank != null
+                          ? ` · Rank #${displayWaitlistRank(existingFromServer.rank)}`
+                          : ''}
                       </>
                     ) : (
                       <>
