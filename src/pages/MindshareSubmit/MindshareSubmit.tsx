@@ -147,8 +147,8 @@ const MindshareSubmit = () => {
         : 'Epoch 1 has ended.'
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const { getAccessToken } = usePrivy()
-  const { address, hasProvider, connect, disconnect } = useEip1193Wallet()
+  const { getAccessToken, authenticated, ready: privyReady } = usePrivy()
+  const { address, connect, disconnect } = useEip1193Wallet()
   const [xProfile, setXProfile] = useState<XOAuthStoredProfile | null>(() => readStoredXProfile())
   const [xBusy, setXBusy] = useState(false)
   const [submitBusy, setSubmitBusy] = useState(false)
@@ -234,7 +234,8 @@ const MindshareSubmit = () => {
   }
 
   const walletAddress = address
-  const isIdentityLinked = !!xProfile && !!walletAddress
+  const isIdentityLinked = Boolean(xProfile?.username && walletAddress)
+
   useEffect(() => {
     if (!walletAddress) {
       setTokenBalance(null)
@@ -270,10 +271,11 @@ const MindshareSubmit = () => {
     return () => {
       cancelled = true
     }
-  }, [walletAddress, BASE_RPC_URL])
+  }, [walletAddress])
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const submitEntry = async () => {
+    if (submitBusy) return
+
     if (!submissionsOpen) {
       setSubmitMessage(
         phase === 'epoch3'
@@ -282,39 +284,64 @@ const MindshareSubmit = () => {
       )
       return
     }
-    if (!xProfile?.username || !walletAddress) {
-      setSubmitMessage('Please connect both X and Wallet before submitting.')
+
+    if (!form.mindshareUrls.trim()) {
+      setSubmitMessage('Paste at least one post URL before submitting.')
       return
     }
+
+    if (!xProfile?.username) {
+      setSubmitMessage('Connect X before submitting.')
+      return
+    }
+
+    if (!walletAddress) {
+      setSubmitMessage('Connect your wallet before submitting.')
+      if (privyReady) void connect()
+      return
+    }
+
     setSubmitBusy(true)
-    setSubmitMessage(null)
+    setSubmitMessage('Submitting…')
+
     try {
-      const token = await getAccessToken()
-      if (!token) {
-        setSubmitMessage('Submit failed: Could not get auth token. Please reconnect your wallet.')
-        return
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+
+      if (privyReady && authenticated) {
+        try {
+          const token = await Promise.race([
+            getAccessToken(),
+            new Promise<never>((_, reject) => {
+              window.setTimeout(() => reject(new Error('auth timeout')), 5000)
+            }),
+          ])
+          if (token) headers.Authorization = `Bearer ${token}`
+        } catch {
+          /* Public form — API accepts submissions without a bearer token. */
+        }
       }
+
       const srBalance =
         tokenBalance !== null
           ? formatTokenBalance(tokenBalance, TRACKED_TOKEN.decimals)
           : tokenError
             ? 'N/A'
             : ''
+
       const payload = {
-        ...form,
+        mindshareUrls: form.mindshareUrls.trim(),
         name: xProfile.name?.trim() || `@${xProfile.username}`,
         xHandle: `@${xProfile.username}`,
         rewardWalletAddress: walletAddress,
         srBalance,
       }
+
       const res = await fetch('/api/mindshare/submit', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        headers,
         body: JSON.stringify(payload),
       })
+
       const text = await res.text()
       let json: { ok?: boolean; error?: string } = {}
       try {
@@ -322,9 +349,11 @@ const MindshareSubmit = () => {
       } catch {
         /* no-op */
       }
+
       if (!res.ok || !json.ok) {
         throw new Error(json.error || text || `HTTP ${res.status}`)
       }
+
       setSubmitMessage('Submitted successfully. Your entry has been saved.')
       setForm((prev) => ({ ...prev, mindshareUrls: '' }))
     } catch (err: unknown) {
@@ -333,6 +362,11 @@ const MindshareSubmit = () => {
     } finally {
       setSubmitBusy(false)
     }
+  }
+
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    void submitEntry()
   }
 
   return (
@@ -373,7 +407,7 @@ const MindshareSubmit = () => {
                 </span>
                 <span className="mindshare-submit-identity-line">
                   <span
-                    className={`mindshare-submit-identity-label ${xProfile ? 'is-unlocked' : ''}`}
+                    className={`mindshare-submit-identity-label ${walletAddress ? 'is-unlocked' : ''}`}
                   >
                     Wallet:
                   </span>{' '}
@@ -401,8 +435,8 @@ const MindshareSubmit = () => {
                   type="button"
                   className="mindshare-submit-identity-btn"
                   onClick={() => void connect()}
-                  disabled={!hasProvider}
-                  title={!hasProvider ? 'No EIP-1193 wallet in this browser' : undefined}
+                  disabled={!privyReady}
+                  title={!privyReady ? 'Wallet service is loading…' : undefined}
                 >
                   Connect Wallet
                 </button>
@@ -469,7 +503,7 @@ const MindshareSubmit = () => {
               </Link>
             </div>
           ) : (
-            <form className="mindshare-submit-form" onSubmit={onSubmit}>
+            <form className="mindshare-submit-form" onSubmit={onSubmit} noValidate>
               <label className="mindshare-submit-field">
                 <span>Submit your mindshare about Strike Robot *</span>
                 <textarea
@@ -477,21 +511,44 @@ const MindshareSubmit = () => {
                   rows={7}
                   value={form.mindshareUrls}
                   onChange={(e) => setForm((prev) => ({ ...prev, mindshareUrls: e.target.value }))}
-                  required
                 />
               </label>
 
+              {!isIdentityLinked ? (
+                <p className="mindshare-submit-identity-hint">
+                  Connect X and your wallet above to enable Submit Entry.
+                </p>
+              ) : null}
+
               <div className="mindshare-submit-actions">
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={() => void submitEntry()}
                   disabled={submitBusy || !isIdentityLinked}
-                  title={!isIdentityLinked ? 'Connect X and wallet before submitting' : undefined}
+                  aria-busy={submitBusy}
+                  title={
+                    !isIdentityLinked
+                      ? 'Connect X and your wallet first'
+                      : !form.mindshareUrls.trim()
+                        ? 'Paste at least one post URL'
+                        : undefined
+                  }
                 >
-                  {submitBusy ? 'Submitting...' : 'Submit Entry'}
+                  {submitBusy ? 'Submitting…' : 'Submit Entry'}
                 </button>
                 <Link to="/mindshare-challenge">Back to challenge</Link>
               </div>
-              {submitMessage ? <p className="mindshare-submit-status">{submitMessage}</p> : null}
+              {submitMessage ? (
+                <p
+                  className={`mindshare-submit-status${
+                    submitMessage.startsWith('Submit failed') ? ' is-error' : ''
+                  }${submitMessage.startsWith('Submitted') ? ' is-success' : ''}`}
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  {submitMessage}
+                </p>
+              ) : null}
             </form>
           )}
         </section>

@@ -2,7 +2,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { appendMindshareSubmissionCsv } from '../../lib/mindshareCsvStore'
 import { isMindshareSubmissionOpen } from '../../lib/mindshareEpoch2Constants'
 import { resolveActiveMindshareSubmissionsCsvPath } from '../../lib/mindshareEpoch2DataPaths'
-import { verifyPrivyBearerRequest } from '../../lib/privyServerAuth'
+import { verifyPrivyBearerRequest, extractBearerToken } from '../../lib/privyServerAuth'
 
 type SubmitBody = {
   name?: string
@@ -18,8 +18,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return
   }
 
+  const bearer = extractBearerToken(req)
   const skipAuth = process.env.MINDSHARE_SUBMIT_SKIP_AUTH === '1' && !process.env.VERCEL
-  if (!skipAuth) {
+  if (bearer && !skipAuth) {
     const auth = await verifyPrivyBearerRequest(req)
     if (!auth.ok) {
       sendJson(res, auth.status, { error: auth.error })

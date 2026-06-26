@@ -341,10 +341,19 @@ a.mindshare-submit-identity-btn {
 }
 
 .mindshare-submit-status {
-  margin: 4px 0 0;
-  font-size: 12px;
+  margin: 8px 0 0;
+  font-size: 13px;
   line-height: 1.45;
   color: #1a1a1a;
+  font-weight: 600;
+}
+
+.mindshare-submit-status.is-error {
+  color: #9b1c1c;
+}
+
+.mindshare-submit-status.is-success {
+  color: #146c2e;
 }
 
 .mindshare-submit-identity-hint {
