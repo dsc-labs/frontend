@@ -425,7 +425,7 @@ const HomeMain = () => {
         <div className="footer-inner">
           <div className="footer-top">
             <div className="footer-col footer-brand">
-              <img src="/update.png" alt="Logo" />
+              <img src="/logo-vertical-black.png" alt="Logo" className="footer-logo" />
             </div>
           </div>
 

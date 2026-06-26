@@ -484,7 +484,8 @@ const MindshareSubmit = () => {
               <div className="mindshare-submit-actions">
                 <button
                   type="submit"
-                  disabled={submitBusy}
+                  disabled={submitBusy || !isIdentityLinked}
+                  title={!isIdentityLinked ? 'Connect X and wallet before submitting' : undefined}
                 >
                   {submitBusy ? 'Submitting...' : 'Submit Entry'}
                 </button>

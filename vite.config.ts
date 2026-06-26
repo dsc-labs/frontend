@@ -6,14 +6,11 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { Buffer } from 'node:buffer'
 import { resolveAvatar } from './lib/avatarRequest'
-import { appendMindshareSubmissionCsv } from './lib/mindshareCsvStore'
 import { applyMindshareEpoch2Env } from './lib/mindshareEpoch2Env'
 import {
   EPOCH2_CHECKPOINT_DAY_KEYS,
   EPOCH2_SNAPSHOT_UTC_HOUR,
-  isMindshareSubmissionOpen,
 } from './lib/mindshareEpoch2Constants'
-import { resolveActiveMindshareSubmissionsCsvPath } from './lib/mindshareEpoch2DataPaths'
 import { getMindshareEpoch2LeaderboardForDisplay } from './lib/mindshareEpoch2LeaderboardBuild'
 import { runMindshareEpoch2DailySnapshot } from './lib/mindshareEpoch2DailySnapshot'
 import { exchangeTwitterOAuth2Code } from './lib/xTwitterOAuthExchange'
@@ -74,6 +71,14 @@ async function incomingToVercelRequest(req: IncomingMessage, host: string): Prom
 function parsePositiveInt(raw: string | undefined, fallback: number) {
   const n = Number(raw)
   return Number.isFinite(n) && n > 0 ? Math.floor(n) : fallback
+}
+
+function applyPrivyEnvToProcess(fromLoadedEnv: Record<string, string>) {
+  const keys = ['PRIVY_APP_ID', 'PRIVY_APP_SECRET', 'MINDSHARE_SUBMIT_SKIP_AUTH'] as const
+  for (const k of keys) {
+    const v = fromLoadedEnv[k]?.trim()
+    if (v && !process.env[k]?.trim()) process.env[k] = v
+  }
 }
 
 /** `.env` is not on `process.env` for Vite middleware; copy waitlist-related keys for local API routes. */
@@ -780,62 +785,21 @@ export default defineConfig(({ mode }) => {
             if (pathname.startsWith('/api/mindshare/submit')) {
               if (req.method !== 'POST') {
                 res.statusCode = 405
+                res.setHeader('Allow', 'POST')
                 res.end('Method Not Allowed')
                 return
               }
 
-              const skipAuth = env.MINDSHARE_SUBMIT_SKIP_AUTH === '1' && !process.env.VERCEL
-              if (!skipAuth) {
-                const cronSecret = env.CRON_SECRET?.trim()
-                const auth = (req.headers['authorization'] as string | undefined) ?? ''
-                const bearer = /^Bearer\s+(.+)$/i.exec(auth)?.[1]?.trim() ?? ''
-                if (!cronSecret || bearer !== cronSecret) {
-                  res.statusCode = 401
-                  res.setHeader('Content-Type', 'application/json')
-                  res.end(JSON.stringify({ error: 'Unauthorized' }))
-                  return
-                }
-              }
-
               try {
-                const raw = await readHttpBody(req)
-                const json = JSON.parse(raw || '{}') as {
-                  name?: string
-                  xHandle?: string
-                  mindshareUrls?: string
-                  rewardWalletAddress?: string
-                  srBalance?: string
-                }
-
-                const name = (json.name ?? '').trim()
-                const xHandle = (json.xHandle ?? '').trim()
-                const mindshareUrls = (json.mindshareUrls ?? '').trim()
-                const rewardWalletAddress = (json.rewardWalletAddress ?? '').trim()
-                const srBalance = (json.srBalance ?? '').trim()
-                if (!name || !xHandle || !mindshareUrls || !rewardWalletAddress) {
-                  res.statusCode = 400
-                  res.setHeader('Content-Type', 'application/json')
-                  res.end(JSON.stringify({ error: 'Missing required fields: name, xHandle, mindshareUrls, rewardWalletAddress' }))
-                  return
-                }
-
-                const csvPath = resolveActiveMindshareSubmissionsCsvPath()
-                if (!csvPath || !isMindshareSubmissionOpen()) {
-                  res.statusCode = 403
-                  res.setHeader('Content-Type', 'application/json; charset=utf-8')
-                  res.end(JSON.stringify({ error: 'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026 (GMT+7 midnight).' }))
-                  return
-                }
-
-                const result = await appendMindshareSubmissionCsv(
-                  { xHandle, walletAddress: rewardWalletAddress, name, postSubmitted: mindshareUrls, srBalance },
-                  csvPath,
-                )
-                res.statusCode = 200
-                res.setHeader('Content-Type', 'application/json; charset=utf-8')
-                res.end(JSON.stringify({ ok: true, file: result.filePath }))
+                applyPrivyEnvToProcess(env)
+                applyMindshareEpoch2Env(env)
+                const handler = (await import('./api/mindshare/submit')).default
+                const host = req.headers.host ?? 'localhost'
+                const vercelReq = await incomingToVercelRequest(req, host)
+                const vercelRes = patchVercelResponse(res)
+                await handler(vercelReq, vercelRes)
               } catch (e: unknown) {
-                const message = e instanceof Error ? e.message : 'Failed to append CSV row'
+                const message = e instanceof Error ? e.message : 'Mindshare submit failed'
                 res.statusCode = 500
                 res.setHeader('Content-Type', 'application/json; charset=utf-8')
                 res.end(JSON.stringify({ error: message }))
