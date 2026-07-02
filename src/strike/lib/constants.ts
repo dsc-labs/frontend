@@ -16,8 +16,11 @@ export const NAV_LINKS = [
 export const NAV_CTA = "Create with SR Platform";
 export const NAV_CTA_HREF = ROUTES.srPlatformApp;
 
+/** Bump `?v=` when replacing in-place so browsers fetch the new file. */
+const HERO_VIDEO_V = "2";
+
 export const VIDEOS = {
-  hero: "/Video/Comp%202.mp4",
+  hero: `/Video/Comp%202.mp4?v=${HERO_VIDEO_V}`,
   featureEditor: "/Video/Comp%201.mp4",
   communityExplore: "/Video/Community%20Creation.mp4",
   communityBlog: "/Video/Blog-Articles.mp4",
@@ -157,6 +160,7 @@ export const FOOTER = {
 
 export const AGENTIC_HERO = {
   wordmark: "SR\nAGENTIC",
+  videoSrc: "/Video/Comp%202-old.mp4",
   badge: "Task-Conditioned Scene Graph Navigation",
   headlinePrefix: "Ephemeral intelligence for robots that ",
   headlineAccent: "act in the real world.",

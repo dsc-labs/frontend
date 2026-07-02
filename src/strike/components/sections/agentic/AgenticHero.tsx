@@ -6,7 +6,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { AGENTIC_HERO, VIDEOS } from "@/lib/constants";
+import { AGENTIC_HERO } from "@/lib/constants";
 import { PillButton } from "@/components/ui/PillButton";
 import { AutoplayVideo } from "@/components/ui/AutoplayVideo";
 import { ScrollVideoReveal } from "@/components/ui/ScrollVideoReveal";
@@ -140,7 +140,7 @@ export function AgenticHero() {
       >
         <div className="relative aspect-[1632/720] overflow-hidden rounded-3xl border border-black/10 bg-black/5 shadow-[0_32px_90px_rgba(0,0,0,0.18)]">
           <AutoplayVideo
-            src={VIDEOS.hero}
+            src={AGENTIC_HERO.videoSrc}
             ariaLabel="SR Agentic robotics task demonstration"
             loadOnScroll
             mobileTapFullscreen
