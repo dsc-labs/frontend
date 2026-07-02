@@ -5,11 +5,17 @@ export const ROUTES = {
   about: '/',
   agentic: '/agentic',
   srPlatform: '/sr-platform',
-  simulation: '/simulation/app/',
+  srPlatformApp: '/sr-platform/app/',
+  simulation: '/sr-platform/app/',
   waitlist: '/join',
   mindshareChallenge: '/mindshare-challenge',
   mindshareSubmit: '/mindshare-submit',
 } as const
+
+/** Paths served by the proxied Eastworlds app — need full page navigation. */
+export function isProxiedAppHref(href: string) {
+  return href.startsWith('/sr-platform/app') || href.startsWith('/simulation/')
+}
 
 export const EXTERNAL_LINKS = {
   x: 'https://x.com/StrikeRobot_ai',
@@ -34,7 +40,7 @@ export function navigateApp(href: string, navigate: NavigateFunction, pathname: 
     return
   }
 
-  if (href.startsWith('/simulation/')) {
+  if (isProxiedAppHref(href)) {
     window.location.assign(href)
     return
   }

@@ -1,6 +1,6 @@
 import { Link as RouterLink, useNavigate, type LinkProps as RouterLinkProps } from 'react-router-dom'
 import type { AnchorHTMLAttributes, MouseEvent, ReactNode } from 'react'
-import { navigateApp } from '@/lib/navigate'
+import { isProxiedAppHref, navigateApp } from '@/lib/navigate'
 
 type LinkProps = Omit<RouterLinkProps, 'to'> & {
   href: string
@@ -18,7 +18,7 @@ export default function Link({ href, children, onClick, ...rest }: LinkProps) {
     )
   }
 
-  if (href.startsWith('/simulation/')) {
+  if (isProxiedAppHref(href)) {
     return (
       <a href={href} onClick={onClick} {...rest}>
         {children}

@@ -14,7 +14,7 @@ export const NAV_LINKS = [
 ];
 
 export const NAV_CTA = "Create with SR Platform";
-export const NAV_CTA_HREF = ROUTES.waitlist;
+export const NAV_CTA_HREF = ROUTES.srPlatformApp;
 
 export const VIDEOS = {
   hero: "/Video/Comp%202.mp4",
@@ -34,7 +34,7 @@ export const HERO = {
   description:
     "SR Platform generates physics-valid simulation environments, production-grade 3D assets, and training-ready datasets — from a single natural language description",
   ctaPrimary: "Create with SR Platform",
-  ctaPrimaryHref: ROUTES.waitlist,
+  ctaPrimaryHref: ROUTES.srPlatformApp,
   ctaSecondary: "Read about SR Platform",
   ctaSecondaryHref: ROUTES.home,
 };
@@ -44,7 +44,7 @@ export const FEATURES_SECTION = {
   description:
     "Introducing SR Platform — our first-generation platform for building rich, persistent 3D spaces with high visual fidelity and spatial accuracy, designed for users to navigate, shape, and experience as their own.",
   cta: "Create with SR Platform",
-  ctaHref: ROUTES.waitlist,
+  ctaHref: ROUTES.srPlatformApp,
 };
 
 export const FEATURES = [
@@ -110,7 +110,7 @@ export const VIDEO_CTA = {
   background: "/Vid.png",
   wordmark: "sr platform",
   cta: "Create with SR Platform",
-  ctaHref: ROUTES.waitlist,
+  ctaHref: ROUTES.srPlatformApp,
   rotatingBadge: "STRIKE ROBOT • STRIKE ROBOT • STRIKE ROBOT • STRIKE ROBOT • ",
   sidebarLinks: [
     { label: "About", href: ROUTES.home },
@@ -130,7 +130,7 @@ export const CTA_VARIANTS: Record<
   platform: {
     wordmark: "sr platform",
     cta: "Create with SR Platform",
-    ctaHref: ROUTES.waitlist,
+    ctaHref: ROUTES.srPlatformApp,
     subtitleLines: ["Build physical AI with"],
   },
   agentic: {
@@ -142,7 +142,7 @@ export const CTA_VARIANTS: Record<
   about: {
     wordmark: "physical ai",
     cta: "Create with SR Platform",
-    ctaHref: ROUTES.waitlist,
+    ctaHref: ROUTES.srPlatformApp,
     subtitleLines: ["Let's build the future of"],
   },
 };
