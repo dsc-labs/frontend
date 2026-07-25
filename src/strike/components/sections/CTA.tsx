@@ -7,7 +7,7 @@ import { PillButtonCta } from "@/components/ui/PillButton";
 import { CircularText } from "@/components/ui/CircularText";
 import { fadeUp } from "@/components/animations/fadeUp";
 import { staggerContainer } from "@/components/animations/stagger";
-import { isMindsharePagesOpen } from "../../../../lib/mindshareEpochSchedule";
+import { isMindsharePagesOpen } from "../../../lib/mindshareEpochSchedule";
 
 type CTAProps = {
   variant?: CtaVariant;
