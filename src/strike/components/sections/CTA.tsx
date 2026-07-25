@@ -7,6 +7,7 @@ import { PillButtonCta } from "@/components/ui/PillButton";
 import { CircularText } from "@/components/ui/CircularText";
 import { fadeUp } from "@/components/animations/fadeUp";
 import { staggerContainer } from "@/components/animations/stagger";
+import { isMindsharePagesOpen } from "../../../../lib/mindshareEpochSchedule";
 
 type CTAProps = {
   variant?: CtaVariant;
@@ -16,6 +17,9 @@ export function CTA({ variant = "platform" }: CTAProps) {
   const prefersReducedMotion = useReducedMotion();
   const { wordmark, cta, ctaHref, subtitleLines } = CTA_VARIANTS[variant];
   const [wordmarkPrimary, wordmarkSecondary] = wordmark.split(" ");
+  const sidebarLinks = VIDEO_CTA.sidebarLinks.filter(
+    (link) => link.label !== "Mindshare" || isMindsharePagesOpen(),
+  );
 
   return (
     <section
@@ -99,7 +103,7 @@ export function CTA({ variant = "platform" }: CTAProps) {
             variants={prefersReducedMotion ? {} : fadeUp}
             className="z-10 mt-10 flex w-full flex-col gap-6 text-[16px] tracking-[-0.16px] text-white/70 md:absolute md:bottom-10 md:left-6 md:mt-0 md:w-auto md:flex-col md:gap-4 md:text-[13px] md:tracking-normal md:text-white/75 lg:left-12"
           >
-            {VIDEO_CTA.sidebarLinks.map((link) => (
+            {sidebarLinks.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}

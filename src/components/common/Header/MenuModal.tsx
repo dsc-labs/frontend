@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { isMindsharePagesOpen } from '../../../lib/mindshareEpochSchedule'
 import './MenuModal.css'
 
 interface MenuModalProps {
@@ -29,8 +30,12 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
       href: 'https://arxiv.org/abs/2603.25353',
       label: 'Publications',
     },
-    { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
-    { to: '/mindshare-submit', label: 'Mindshare Submit' },
+    ...(isMindsharePagesOpen()
+      ? ([
+          { to: '/mindshare-challenge', label: 'Mindshare Challenge' },
+          { to: '/mindshare-submit', label: 'Mindshare Submit' },
+        ] as NavLinkItem[])
+      : []),
   ]
 
   return (

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext } from 'react'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { PrivyProvider } from '@privy-io/react-auth'
 import StrikeLanding from './pages/StrikeLanding/StrikeLanding'
@@ -7,6 +7,8 @@ import StrikeAgentic from './pages/StrikeAgentic/StrikeAgentic'
 import HomeMain from './pages/HomeMain/HomeMain'
 import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
 import MindshareSubmit from './pages/MindshareSubmit/MindshareSubmit'
+import { MindsharePageGate } from './components/common/MindsharePageGate/MindsharePageGate'
+import { isMindsharePagesOpen } from './lib/mindshareEpochSchedule'
 import './App.css'
 
 export const PrivyResetContext = createContext<() => void>(() => {})
@@ -18,6 +20,17 @@ function clearPrivyStorage() {
       localStorage.removeItem(key)
     }
   })
+}
+
+function MindshareAliasRedirect() {
+  const [open, setOpen] = useState(() => isMindsharePagesOpen())
+
+  useEffect(() => {
+    const id = window.setInterval(() => setOpen(isMindsharePagesOpen()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
+  return <Navigate to={open ? '/mindshare-challenge' : '/'} replace />
 }
 
 function App() {
@@ -44,11 +57,25 @@ function App() {
             <Route path="/agentic" element={<StrikeAgentic />} />
             <Route path="/join" element={<HomeMain />} />
             <Route path="/test" element={<HomeMain />} />
-            <Route path="/mindshare-challenge" element={<MindshareChallenge />} />
-            <Route path="/mindshare-submit" element={<MindshareSubmit />} />
-            <Route path="/epoch3-preview" element={<Navigate to="/mindshare-challenge" replace />} />
-            <Route path="/mindshare-leaderboard" element={<Navigate to="/mindshare-challenge" replace />} />
-            <Route path="/leaderboard" element={<Navigate to="/mindshare-challenge" replace />} />
+            <Route
+              path="/mindshare-challenge"
+              element={
+                <MindsharePageGate>
+                  <MindshareChallenge />
+                </MindsharePageGate>
+              }
+            />
+            <Route
+              path="/mindshare-submit"
+              element={
+                <MindsharePageGate>
+                  <MindshareSubmit />
+                </MindsharePageGate>
+              }
+            />
+            <Route path="/epoch3-preview" element={<MindshareAliasRedirect />} />
+            <Route path="/mindshare-leaderboard" element={<MindshareAliasRedirect />} />
+            <Route path="/leaderboard" element={<MindshareAliasRedirect />} />
             <Route path="/data-platform" element={<Navigate to="/sr-platform" replace />} />
             <Route path="/use-cases" element={<Navigate to="/sr-platform" replace />} />
             <Route path="/technology-stack" element={<Navigate to="/sr-platform" replace />} />

@@ -140,6 +140,14 @@ export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
   return isEpoch2MindshareSubmissionOpen(nowMs) || isEpoch3MindshareSubmissionOpen(nowMs)
 }
 
+/**
+ * Public challenge + submit pages stay up through Epoch 3, then redirect home
+ * at `EPOCH_3_END_MS` (midnight GMT+7, 26 Jul 2026).
+ */
+export function isMindsharePagesOpen(nowMs = Date.now()): boolean {
+  return nowMs < EPOCH_3_END_MS
+}
+
 /** @deprecated Prefer {@link isEpoch2MindshareSubmissionOpen}. */
 export function isEpoch2MindshareSubmissionOpenForPhase(phase: MindshareEpochPhase): boolean {
   return phase === 'epoch1' || phase === 'epoch2'

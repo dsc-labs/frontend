@@ -53,6 +53,11 @@ export function isMindshareSubmissionOpen(nowMs = Date.now()): boolean {
   return isEpoch2MindshareSubmissionOpen(nowMs) || isEpoch3MindshareSubmissionOpen(nowMs)
 }
 
+/** Aligns with `src/lib/mindshareEpochSchedule.ts` — pages redirect home after Epoch 3 ends. */
+export function isMindsharePagesOpen(nowMs = Date.now()): boolean {
+  return nowMs < EPOCH_3_END_MS
+}
+
 export function epoch2DaysRemaining(nowMs = Date.now()): number {
   const t = EPOCH_2_END_MS - nowMs
   if (t <= 0) return 0

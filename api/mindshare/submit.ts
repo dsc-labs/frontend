@@ -31,7 +31,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const csvPath = resolveActiveMindshareSubmissionsCsvPath()
   if (!csvPath || !isMindshareSubmissionOpen()) {
     sendJson(res, 403, {
-      error: 'Submissions are closed. Epoch 3 entries open at 17:00 UTC, May 26, 2026.',
+      error: 'Submissions are closed. The Mindshare Challenge has ended.',
     })
     return
   }
