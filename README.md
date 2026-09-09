@@ -1,135 +1,91 @@
-# MMA Robot Landing Page
+# Strike Robot frontend
 
-Dự án landing page được xây dựng với React + TypeScript + Vite, tối ưu cho animation nặng.
+React + TypeScript + Vite site for [strikerobot.ai](https://strikerobot.ai) (About, SR Platform, SR Agentic).
 
-## Công nghệ sử dụng
-
-- **React 18** - UI framework
-- **TypeScript** - Type safety
-- **Vite** - Build tool nhanh
-- **Framer Motion** - Animation library cho React
-- **GSAP** - Animation library mạnh mẽ cho animation phức tạp
-- **Lottie React** - Hỗ trợ animation Lottie
-- **React Router DOM** - Routing cho SPA
-
-## Cài đặt
+## Setup
 
 ```bash
 npm install
-```
-
-## Chạy dự án
-
-```bash
-npm run dev
-```
-
-Dự án sẽ chạy tại `http://localhost:3000`
-
-## Build
-
-```bash
+npm run dev    # http://localhost:3000
 npm run build
 ```
 
-## Cấu trúc thư mục
+Env vars: [`.env.example`](./.env.example). Runtime data under `data/` is server-owned — see [`data/README.md`](./data/README.md).
 
-```
-src/
-  ├── components/     # Các component React
-  │   ├── Navigation.tsx
-  │   ├── Logo.tsx
-  │   ├── HeroSection.tsx
-  │   ├── VideoCard.tsx
-  │   └── SocialIcons.tsx
-  ├── pages/          # Các trang của website
-  │   ├── Home.tsx           # Trang chủ
-  │   ├── About.tsx          # ABOUT / WHAT WE DO
-  │   ├── DataPlatform.tsx   # DECENTRALIZED DATA PLATFORM
-  │   ├── UseCases.tsx       # USE CASES
-  │   ├── TechnologyStack.tsx # TECHNOLOGY STACK
-  │   └── Partners.tsx       # OUR PARTNERS
-  ├── animations/     # Các animation utilities
-  ├── styles/         # CSS/SCSS files
-  ├── assets/         # Images, videos, etc.
-  ├── App.tsx         # Component chính với routing
-  ├── main.tsx        # Entry point
-  └── index.css       # Global styles
-```
+## Public routes
 
-## Routing
+| Path | Status |
+| ---- | ------ |
+| `/` | About |
+| `/sr-platform` | SR Platform landing |
+| `/agentic` | SR Agentic landing |
+| `/join`, `/test` | **Closed** — redirect to `/` |
+| `/mindshare-challenge`, `/mindshare-submit` | **Closed** after Epoch 3 end — redirect to `/` |
+| `/mindshare-leaderboard`, `/leaderboard`, `/epoch3-preview` | Alias → home when mindshare is closed |
+| `/data-platform`, `/use-cases`, `/technology-stack`, `/models` | Redirect → `/sr-platform` |
+| `/about`, `/partners` | Redirect → `/` |
 
-Dự án sử dụng React Router với 6 trang:
+Hero videos: `/sr-platform` uses `public/Video/Comp 2.mp4`; `/agentic` uses `public/Video/Comp 2-old.mp4`.
 
-- `/` - Home (Trang chủ)
-- `/about` - ABOUT / WHAT WE DO
-- `/data-platform` - DECENTRALIZED DATA PLATFORM
-- `/use-cases` - USE CASES
-- `/technology-stack` - TECHNOLOGY STACK
-- `/partners` - OUR PARTNERS
+## Closed programs (Epoch 3 end)
 
-## Animation Libraries
+Both public campaigns ended at **midnight GMT+7, 26 Jul 2026** (`EPOCH_3_END_MS` / `WAITLIST_PAGES_END_MS`).
 
-### Framer Motion
-Sử dụng cho các animation React components:
-```tsx
-import { motion } from 'framer-motion'
-```
+### Mindshare
 
-### GSAP
-Sử dụng cho các animation phức tạp và timeline:
-```tsx
-import { gsap } from 'gsap'
-```
+- Gate: function `isMindsharePagesOpen` in file `src/lib/mindshareEpochSchedule.ts`
+- Pages redirect home; submit API rejects when the window is closed
+- Keep in sync with file `lib/mindshareEpoch2Constants.ts`
 
-### Lottie
-Sử dụng cho các animation JSON:
-```tsx
-import Lottie from 'lottie-react'
-```
+### SR Platform waitlist (points)
 
-## Mindshare Epoch 2 (`/epoch2`)
+- Gate: function `isWaitlistPagesOpen` in files `src/lib/srPlatformWaitlistLaunch.ts` and `lib/waitlistPages.ts`
+- `/join` and `/test` redirect home; waitlist popup does not open
+- All waitlist APIs return `403` when closed:
+  - `POST /waitlist/register`, `POST /waitlist/register-test`
+  - `GET /waitlist/status`, `GET /waitlist/prices`, `GET /waitlist` (stats)
+  - `GET`/`POST /api/waitlist/snapshot` (no-op when closed; Vercel waitlist cron removed)
 
-Public leaderboard is served from **`data/newmindshare/epoch2_leaderboard_snapshot.json`** (not live X on every page load).
+Rewrites for `/waitlist/*` remain in `vercel.json` so closed handlers still answer.
+
+## Mindshare Epoch 2 (operator / archive)
+
+Public leaderboard UI is no longer linked; snapshot tooling remains for operators.
 
 | Doc | Contents |
 | --- | -------- |
-| [`snapshot.md`](./snapshot.md) | Daily cron, SR vs posts, files, operator APIs, backfill runbook |
-| [`score.md`](./score.md) | Quality rubric, follower multiplier, per-post formula |
+| [`snapshot.md`](./snapshot.md) | Daily cron, SR vs posts, files, operator APIs |
+| [`score.md`](./score.md) | Quality rubric and per-post formula |
+| [`data/newmindshare/README.md`](./data/newmindshare/README.md) | Snapshot layout |
 
-### Routes
+Snapshots live in `data/newmindshare/` (not committed). Live submissions CSV is at repo root (`mindshare_submissions.csv` / `_3`).
 
-- `/epoch2` — Epoch 2 leaderboard UI
-- `/api/mindshare/submit` — append `mindshare_submissions.csv`
-- `/api/mindshare/epoch2-leaderboard` — read snapshot JSON
+### Operator APIs / scripts
 
-### Daily job (production)
+| Endpoint / script | Purpose |
+| ----------------- | ------- |
+| `GET /api/mindshare/test-epoch2-leaderboard` | Read leaderboard snapshot JSON |
+| `POST /api/mindshare/submit` | Append submission CSV (closed after Epoch 3) |
+| Cron `GET /api/mindshare/epoch2-sr-snapshot` | Checkpoint SR snapshot (see `vercel.json`) |
+| `npm run epoch2:rebuild` | Full SR + post replay |
+| `npm run epoch2:posts-backfill` | Replay post counting |
+| `npm run epoch2:sr-backfill-day` | One historical SR day |
+| `npm run epoch2:recount` | Re-score existing keys |
+| `npm run epoch2:check-sr` / `epoch2:trace-wallet` | Debug helpers |
 
-**17:00 UTC** daily: `GET` / `POST` `/api/mindshare/epoch2-sr-snapshot`
-
-1. SR eligibility at archive block for 17:00 UTC → `epoch2_sr_eligible_wallets.json`
-2. Count + score new posts in the current eligibility window → `epoch2_daily_state.json`, `epoch2_leaderboard_snapshot.json`
-
-Requires `CRON_SECRET` (Bearer), `TWITTER_BEARER_TOKEN`, `BASE_ARCHIVE_RPC_URL`.
-
-### Operator scripts (`npm run`)
-
-| Script | Purpose |
-| ------ | ------- |
-| `epoch2:rebuild` | Full SR + post replay → `data/newmindshare/` (reads root CSV) |
-| `epoch2:posts-backfill -- --replace` | Replay post counting for days **15→18 & 20**, then score all |
-| `epoch2:sr-backfill-day -- --day 2026-05-16 --replace` | One historical SR checkpoint line (archive RPC) |
-| `epoch2:recount` | Re-score existing `countedPostKeys` only |
-| `epoch2:check-sr -- <handle\|0x…> [--chain]` | SR checkpoints per day vs jsonl / chain |
-| `epoch2:trace-wallet -- <handle\|0x…>` | CSV + SR jsonl + leaderboard + daily state |
-| `epoch2:check-wallet` | Post count / scoring debug (see `scripts/check-wallet-posts.mjs`) |
-
-**Production:** live CSV at repo root; snapshots hardcoded to **`data/newmindshare/`** (not committed). See [`data/newmindshare/README.md`](./data/newmindshare/README.md).
+Requires `CRON_SECRET`, `TWITTER_BEARER_TOKEN`, `BASE_ARCHIVE_RPC_URL` where applicable.
 
 ```bash
 curl -sS -X POST "http://127.0.0.1:4022/api/mindshare/epoch2-rebuild?latestSr=1" \
   -H "Authorization: Bearer $CRON_SECRET"
 ```
 
-See [`snapshot.md`](./snapshot.md) for endpoint query params and file layout. Env vars: [`.env.example`](./.env.example).
+## Stack
 
+- React 18, TypeScript, Vite
+- Framer Motion, GSAP, Lottie
+- React Router, Privy (wallet login on waitlist/mindshare flows)
+
+## PII / history
+
+Waitlist `state.json` and related dumps must not be committed. See [`scripts/purge-pii-from-history.md`](./scripts/purge-pii-from-history.md) if they appear in git history.

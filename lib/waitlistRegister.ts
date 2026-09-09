@@ -10,6 +10,7 @@ import {
 import { fetchResolvedSrVvvUsd, WAITLIST_SR_TOKEN, WAITLIST_VVV_TOKEN } from './waitlistPricing'
 import { getServerBaseRpcUrl } from './serverBaseRpc'
 import { isLikelyEthAddress, readWaitlistState, writeWaitlistState, type WaitlistUser } from './waitlistStore'
+import { isWaitlistPagesOpen, WAITLIST_CLOSED_ERROR } from './waitlistPages'
 
 const MIN_SR_UNITS = 10000
 const MIN_VVV_UNITS = 5
@@ -51,6 +52,11 @@ export async function handleWaitlistRegister(
   try {
     if (req.method !== 'POST') {
       res.status(405).setHeader('Allow', 'POST').end('Method Not Allowed')
+      return
+    }
+
+    if (!isWaitlistPagesOpen()) {
+      sendJson(res, 403, { error: WAITLIST_CLOSED_ERROR })
       return
     }
 

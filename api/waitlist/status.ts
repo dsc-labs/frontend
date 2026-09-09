@@ -1,10 +1,16 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { getWaitlistUser, readWaitlistState } from '../../lib/waitlistStore'
 import { topUsersByPoints } from '../../lib/waitlistCalculator'
+import { isWaitlistPagesOpen, WAITLIST_CLOSED_ERROR } from '../../lib/waitlistPages'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'GET') {
     res.status(405).setHeader('Allow', 'GET').end('Method Not Allowed')
+    return
+  }
+
+  if (!isWaitlistPagesOpen()) {
+    sendJson(res, 403, { error: WAITLIST_CLOSED_ERROR })
     return
   }
 

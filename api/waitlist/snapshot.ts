@@ -4,6 +4,7 @@ import { fetchResolvedSrVvvUsd, WAITLIST_SR_TOKEN, WAITLIST_VVV_TOKEN } from '..
 import { getServerBaseRpcUrl } from '../../lib/serverBaseRpc'
 import { readWaitlistState, writeWaitlistState } from '../../lib/waitlistStore'
 import { isVercelCronAuthorizedRequest } from '../../lib/vercelCronAuth'
+import { isWaitlistPagesOpen, WAITLIST_CLOSED_ERROR } from '../../lib/waitlistPages'
 
 /**
  * Optional lock for /api/waitlist/snapshot.
@@ -19,6 +20,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
   if (!isVercelCronAuthorizedRequest(req)) {
     sendJson(res, 401, { error: 'Unauthorized snapshot request' })
+    return
+  }
+
+  if (!isWaitlistPagesOpen()) {
+    sendJson(res, 403, { error: WAITLIST_CLOSED_ERROR, skipped: true })
     return
   }
 

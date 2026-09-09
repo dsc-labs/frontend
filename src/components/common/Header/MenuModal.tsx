@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { isMindsharePagesOpen } from '../../../lib/mindshareEpochSchedule'
+import { isWaitlistPagesOpen } from '../../../lib/srPlatformWaitlistLaunch'
 import './MenuModal.css'
 
 interface MenuModalProps {
@@ -16,7 +17,9 @@ const MenuModal = ({ isOpen, onClose }: MenuModalProps) => {
   const navLinks: NavLinkItem[] = [
     { to: '/', label: 'About' },
     { to: '/sr-platform', label: 'SR Platform' },
-    { to: '/join', label: 'SR Platform Waitlist' },
+    ...(isWaitlistPagesOpen()
+      ? ([{ to: '/join', label: 'SR Platform Waitlist' }] as NavLinkItem[])
+      : []),
     {
       href: 'https://app.virtuals.io/virtuals/70972',
       label: 'SR Token',

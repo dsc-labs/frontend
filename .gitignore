@@ -15,6 +15,17 @@ dist-ssr
 mindshare_submissions.csv
 mindshare_submissions_3.csv
 
+# Runtime data is server-owned, never versioned. Server is source of truth;
+# copy down with rsync when a local snapshot is needed. See data/README.md.
+
+# Legacy root-level data dumps (contain user PII — also purge from history)
+state.json
+leaderboard.csv
+leaderboard_export.csv
+epoch2_leaderboard.csv
+epoch2_top2.csv
+epoch2_mindshare_data.zip
+
 # Waitlist durable files (JSON default + optional CSV mirror)
 waitlist_state.json
 data/waitlist/state.json
@@ -25,14 +36,9 @@ data/newmindshare/*
 !data/newmindshare/.gitkeep
 !data/newmindshare/README.md
 
-# Mindshare: ignore runtime/cache; keep backups + daily snapshots in git
+# Mindshare runtime/cache/snapshots/backups — server-owned, never commit
 data/mindshare/*
 !data/mindshare/.gitkeep
-!data/mindshare/backups/
-!data/mindshare/backups/**
-!data/mindshare/epoch2_daily_snapshots.jsonl
-!data/mindshare/epoch2_daily_state.json
-!data/mindshare/epoch2_leaderboard_snapshot.json
 
 # Editor directories and files
 .vscode/*

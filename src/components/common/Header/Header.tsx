@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Logo from '../Logo/Logo'
 import SocialIcons from '../../Home/SocialIcons/SocialIcons'
 import MenuModal from './MenuModal'
+import { isWaitlistPagesOpen } from '../../../lib/srPlatformWaitlistLaunch'
 import './Header.css'
 
 interface HeaderProps {
@@ -58,13 +59,15 @@ const Header = ({ showSocialIcons = true }: HeaderProps) => {
                 <Logo />
 
                 <div className="header-right">
-                    <Link
-                        to="/join"
-                        className="header-mindshare-button"
-                        aria-label="Open SR Platform waitlist"
-                    >
-                        SR Platform Waitlist
-                    </Link>
+                    {isWaitlistPagesOpen() ? (
+                        <Link
+                            to="/join"
+                            className="header-mindshare-button"
+                            aria-label="Open SR Platform waitlist"
+                        >
+                            SR Platform Waitlist
+                        </Link>
+                    ) : null}
                     {/* Navigation ẩn mặc định, chỉ truy cập qua plugin button */}
                     <button
                         type="button"

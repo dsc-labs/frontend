@@ -4,7 +4,6 @@ import { PrivyProvider } from '@privy-io/react-auth'
 import StrikeLanding from './pages/StrikeLanding/StrikeLanding'
 import StrikeAbout from './pages/StrikeAbout/StrikeAbout'
 import StrikeAgentic from './pages/StrikeAgentic/StrikeAgentic'
-import HomeMain from './pages/HomeMain/HomeMain'
 import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
 import MindshareSubmit from './pages/MindshareSubmit/MindshareSubmit'
 import { MindsharePageGate } from './components/common/MindsharePageGate/MindsharePageGate'
@@ -55,8 +54,8 @@ function App() {
             <Route path="/about" element={<Navigate to="/" replace />} />
             <Route path="/sr-platform" element={<StrikeLanding />} />
             <Route path="/agentic" element={<StrikeAgentic />} />
-            <Route path="/join" element={<HomeMain />} />
-            <Route path="/test" element={<HomeMain />} />
+            <Route path="/join" element={<Navigate to="/" replace />} />
+            <Route path="/test" element={<Navigate to="/" replace />} />
             <Route
               path="/mindshare-challenge"
               element={

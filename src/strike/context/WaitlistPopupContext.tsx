@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { useLocation } from 'react-router-dom'
 import WaitlistPopup from '../../components/common/WaitlistPopup/WaitlistPopup'
-import { isSrPlatformWaitlistLive } from '../../lib/srPlatformWaitlistLaunch'
+import { isSrPlatformWaitlistLive, isWaitlistPagesOpen } from '../../lib/srPlatformWaitlistLaunch'
 import { ROUTES } from '@/lib/navigate'
 
 type WaitlistPopupContextValue = {
@@ -23,15 +23,21 @@ export function WaitlistPopupProvider({ children }: { children: ReactNode }) {
   const isTestRoute = pathname === '/test' || pathname === '/test/'
   const [isOpen, setIsOpen] = useState(false)
   const [waitlistLive, setWaitlistLive] = useState(() => isSrPlatformWaitlistLive())
-  const waitlistUnlocked = isTestRoute || waitlistLive
+  const [pagesOpen, setPagesOpen] = useState(() => isWaitlistPagesOpen())
+  const waitlistUnlocked = pagesOpen && (isTestRoute || waitlistLive)
 
   useEffect(() => {
-    if (isTestRoute || waitlistLive) return
+    const id = window.setInterval(() => setPagesOpen(isWaitlistPagesOpen()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
+
+  useEffect(() => {
+    if (!pagesOpen || isTestRoute || waitlistLive) return
     const id = window.setInterval(() => {
       if (isSrPlatformWaitlistLive()) setWaitlistLive(true)
     }, 1000)
     return () => window.clearInterval(id)
-  }, [isTestRoute, waitlistLive])
+  }, [isTestRoute, waitlistLive, pagesOpen])
 
   const openWaitlistPopup = useCallback(() => {
     if (!waitlistUnlocked) return
