@@ -5,6 +5,7 @@ export const ROUTES = {
   about: '/',
   agentic: '/agentic',
   srPlatform: '/sr-platform',
+  api: '/api',
   srPlatformApp: '/sr-platform/app/',
   simulation: '/sr-platform/app/',
   waitlist: '/join',
