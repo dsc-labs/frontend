@@ -260,6 +260,24 @@
   tab-size: 2;
 }
 
+.strike-api__syntax--comment,
+.strike-api__syntax--flag {
+  color: #64748b;
+}
+
+.strike-api__syntax--keyword,
+.strike-api__syntax--number {
+  color: #f472b6;
+}
+
+.strike-api__syntax--string {
+  color: #7dd3fc;
+}
+
+.strike-api__syntax--status {
+  color: #10b981;
+}
+
 .strike-api__section {
   padding: 104px 0;
   border-bottom: 1px solid var(--api-line);

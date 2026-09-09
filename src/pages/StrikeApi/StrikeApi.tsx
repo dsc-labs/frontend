@@ -23,6 +23,7 @@ import {
 } from '../../strike/components/animations/stagger'
 import { EXTERNAL_LINKS } from '../../strike/lib/navigate'
 import { ApiCodeTabs, CodeCopyButton } from './ApiCodeTabs'
+import { SyntaxHighlightedCode } from './SyntaxHighlightedCode'
 import {
   API_CAPABILITIES,
   API_ENDPOINTS,
@@ -134,7 +135,7 @@ export default function StrikeApi() {
               </div>
               <div className="strike-api__code-panel">
                 <pre>
-                  <code>{HERO_QUICKSTART}</code>
+                  <SyntaxHighlightedCode code={HERO_QUICKSTART} language="curl" />
                 </pre>
               </div>
             </motion.div>

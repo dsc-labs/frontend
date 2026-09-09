@@ -5,6 +5,7 @@ import {
   API_LANGUAGES,
   type ApiLanguage,
 } from './apiContent'
+import { SyntaxHighlightedCode } from './SyntaxHighlightedCode'
 
 type CodeCopyButtonProps = {
   value: string
@@ -102,7 +103,7 @@ export function ApiCodeTabs() {
         className="strike-api__code-panel"
       >
         <pre>
-          <code>{activeSample.code}</code>
+          <SyntaxHighlightedCode code={activeSample.code} language={activeLanguage} />
         </pre>
       </div>
     </div>
