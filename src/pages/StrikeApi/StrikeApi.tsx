@@ -12,8 +12,15 @@ import {
   SquareTerminal,
   WalletCards,
 } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { StrikeLayout } from '../../strike/StrikeLayout'
 import { PageSEO } from '../../components/common/PageSEO/PageSEO'
+import { fadeUp, fadeUpScale } from '../../strike/components/animations/fadeUp'
+import {
+  staggerContainer,
+  staggerContainerFast,
+  staggerItem,
+} from '../../strike/components/animations/stagger'
 import { EXTERNAL_LINKS } from '../../strike/lib/navigate'
 import { ApiCodeTabs, CodeCopyButton } from './ApiCodeTabs'
 import {
@@ -57,6 +64,13 @@ function SectionHeading({
 }
 
 export default function StrikeApi() {
+  const prefersReducedMotion = useReducedMotion()
+  const reveal = prefersReducedMotion ? {} : fadeUp
+  const revealScale = prefersReducedMotion ? {} : fadeUpScale
+  const stagger = prefersReducedMotion ? {} : staggerContainer
+  const staggerFast = prefersReducedMotion ? {} : staggerContainerFast
+  const staggerCard = prefersReducedMotion ? {} : staggerItem
+
   return (
     <StrikeLayout>
       <PageSEO
@@ -67,20 +81,25 @@ export default function StrikeApi() {
       <Navbar />
       <main className="strike-api">
         <section className="strike-api__hero">
-          <div className="strike-api__container strike-api__hero-grid">
-            <div className="strike-api__hero-copy">
-              <div className="strike-api__version">
+          <motion.div
+            className="strike-api__container strike-api__hero-grid"
+            variants={stagger}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div className="strike-api__hero-copy" variants={staggerFast}>
+              <motion.div className="strike-api__version" variants={reveal}>
                 <span aria-hidden="true" />
                 <strong>SR PLATFORM API</strong>
                 <i aria-hidden="true" />
                 <small>v1.2.0</small>
-              </div>
-              <h1>Bring SR Platform into your own workflow.</h1>
-              <p className="strike-api__lede">
+              </motion.div>
+              <motion.h1 variants={reveal}>Bring SR Platform into your own workflow.</motion.h1>
+              <motion.p className="strike-api__lede" variants={reveal}>
                 Developers can programmatically generate simulation environments and assets,
                 track generation jobs, and retrieve outputs through the SR Platform API.
-              </p>
-              <div className="strike-api__actions">
+              </motion.p>
+              <motion.div className="strike-api__actions" variants={reveal}>
                 <a className="strike-api__button strike-api__button--primary" href="#api-preview">
                   Explore SR Platform API
                   <ArrowRight aria-hidden="true" />
@@ -89,8 +108,8 @@ export default function StrikeApi() {
                   View Documentation
                   <BookOpen aria-hidden="true" />
                 </a>
-              </div>
-              <dl className="strike-api__telemetry">
+              </motion.div>
+              <motion.dl className="strike-api__telemetry" variants={reveal}>
                 <div>
                   <dt>LATENCY SLA</dt>
                   <dd>&lt; 140ms</dd>
@@ -103,10 +122,13 @@ export default function StrikeApi() {
                   <dt>AVAILABILITY</dt>
                   <dd>99.99% Core</dd>
                 </div>
-              </dl>
-            </div>
+              </motion.dl>
+            </motion.div>
 
-            <div className="strike-api__terminal strike-api__terminal--hero">
+            <motion.div
+              className="strike-api__terminal strike-api__terminal--hero"
+              variants={revealScale}
+            >
               <div className="strike-api__terminal-header">
                 <div className="strike-api__terminal-title">
                   <span aria-hidden="true" />
@@ -121,22 +143,32 @@ export default function StrikeApi() {
                   <code>{HERO_QUICKSTART}</code>
                 </pre>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
-        <section className="strike-api__section">
+        <motion.section
+          className="strike-api__section"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+        >
           <div className="strike-api__container">
             <SectionHeading
               eyebrow="Capabilities"
               title="Architected for programmatic physical AI pipelines."
               description="From parametric scene generation to sensor-rigged artifact delivery, integrate high-fidelity spatial generation directly into your reinforcement learning pipelines."
             />
-            <div className="strike-api__capability-grid">
+            <motion.div className="strike-api__capability-grid" variants={staggerFast}>
               {API_CAPABILITIES.map((capability) => {
                 const Icon = CAPABILITY_ICONS[capability.id]
                 return (
-                  <article className="strike-api__capability-card" key={capability.id}>
+                  <motion.article
+                    className="strike-api__capability-card"
+                    key={capability.id}
+                    variants={staggerCard}
+                  >
                     <div>
                       <span className="strike-api__icon-box">
                         <Icon aria-hidden="true" />
@@ -145,16 +177,20 @@ export default function StrikeApi() {
                       <p>{capability.description}</p>
                     </div>
                     <span className="strike-api__card-meta">{capability.meta}</span>
-                  </article>
+                  </motion.article>
                 )
               })}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section
+        <motion.section
           id="how-it-works"
           className="strike-api__section strike-api__section--subtle"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
         >
           <div className="strike-api__container">
             <SectionHeading
@@ -162,9 +198,13 @@ export default function StrikeApi() {
               title="How It Works"
               description="A predictable asynchronous operational lifecycle designed for fault-tolerant simulation pipelines."
             />
-            <div className="strike-api__steps">
+            <motion.div className="strike-api__steps" variants={staggerFast}>
               {API_STEPS.map((step) => (
-                <article className="strike-api__step" key={step.number}>
+                <motion.article
+                  className="strike-api__step"
+                  key={step.number}
+                  variants={staggerCard}
+                >
                   <div className="strike-api__step-topline">
                     <span>{step.number}</span>
                     <span className={'strike-api__method strike-api__method--' + step.methodTone}>
@@ -173,49 +213,69 @@ export default function StrikeApi() {
                   </div>
                   <h3>{step.title}</h3>
                   <p>{step.description}</p>
-                </article>
+                </motion.article>
               ))}
-            </div>
-            <ApiCodeTabs />
+            </motion.div>
+            <motion.div variants={revealScale}>
+              <ApiCodeTabs />
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="strike-api__section">
+        <motion.section
+          className="strike-api__section"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+        >
           <div className="strike-api__container">
             <SectionHeading
               eyebrow="Security & Scale"
               title="Built for Production Workflows"
               description="Enterprise security primitives built directly into every protocol call."
             />
-            <div className="strike-api__security-grid">
+            <motion.div className="strike-api__security-grid" variants={staggerFast}>
               {API_SECURITY_FEATURES.map((feature) => {
                 const Icon = SECURITY_ICONS[feature.id]
                 return (
-                  <article className="strike-api__security-card" key={feature.id}>
+                  <motion.article
+                    className="strike-api__security-card"
+                    key={feature.id}
+                    variants={staggerCard}
+                  >
                     <div>
                       <Icon aria-hidden="true" />
                       <h3>{feature.title}</h3>
                     </div>
                     <p>{feature.description}</p>
-                  </article>
+                  </motion.article>
                 )
               })}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section id="api-preview" className="strike-api__section">
+        <motion.section
+          id="api-preview"
+          className="strike-api__section"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+        >
           <div className="strike-api__container">
             <SectionHeading
               eyebrow="Endpoint Reference"
               title="API Preview"
               description="Deterministic REST primitives adhering strictly to OpenAPI 3.1 specifications."
             />
-            <div className="strike-api__endpoints">
+            <motion.div className="strike-api__endpoints" variants={staggerFast}>
               {API_ENDPOINTS.map((endpoint) => (
-                <div
+                <motion.div
                   className="strike-api__endpoint"
                   key={endpoint.method + '-' + endpoint.path}
+                  variants={staggerCard}
                 >
                   <div>
                     <span
@@ -229,9 +289,9 @@ export default function StrikeApi() {
                     <code>{endpoint.path}</code>
                   </div>
                   <p>{endpoint.description}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
             <a
               className="strike-api__text-link"
               href={EXTERNAL_LINKS.docs}
@@ -242,9 +302,15 @@ export default function StrikeApi() {
               <ArrowRight aria-hidden="true" />
             </a>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="strike-api__cta-section">
+        <motion.section
+          className="strike-api__cta-section"
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-100px' }}
+        >
           <div className="strike-api__container">
             <div className="strike-api__cta">
               <span className="strike-api__cta-icon">
@@ -271,7 +337,7 @@ export default function StrikeApi() {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
       </main>
       <Footer />
     </StrikeLayout>

@@ -9,7 +9,7 @@
   --api-code-bar: #15181e;
   --api-blue: #1268ff;
   min-height: 100vh;
-  background: var(--api-surface);
+  background: #e5e5e5;
   color: var(--api-ink);
   font-family: var(--font-golos-text), sans-serif;
   font-size: 16px;
@@ -34,7 +34,8 @@
 
 .strike-api__hero {
   padding: 164px 0 96px;
-  border-bottom: 1px solid var(--api-line);
+  border-bottom: 1px solid #d4d4d4;
+  background: #e5e5e5;
 }
 
 .strike-api__hero-grid {
@@ -153,6 +154,10 @@
   transform: translateY(-1px);
 }
 
+.strike-api__button:not(:disabled):active {
+  transform: translateY(0) scale(0.98);
+}
+
 .strike-api__button--primary:hover {
   background: #29292c;
 }
@@ -212,7 +217,7 @@
 }
 
 .strike-api__terminal--hero {
-  box-shadow: 0 22px 58px rgba(10, 12, 16, 0.14);
+  box-shadow: 0 22px 58px rgba(49, 67, 68, 0.14);
 }
 
 .strike-api__terminal-header {
@@ -288,10 +293,11 @@
 .strike-api__section {
   padding: 104px 0;
   border-bottom: 1px solid var(--api-line);
+  background: var(--api-surface);
 }
 
 .strike-api__section--subtle {
-  background: var(--api-subtle);
+  background: #efefef;
 }
 
 .strike-api__section-heading {
@@ -338,6 +344,14 @@
   border-right: 1px solid var(--api-line-strong);
   border-bottom: 1px solid var(--api-line-strong);
   background: #fff;
+  transition: background-color 220ms ease, border-color 220ms ease;
+}
+
+.strike-api__capability-card:hover,
+.strike-api__security-card:hover,
+.strike-api__endpoint:hover {
+  border-color: #b9b9bd;
+  background: #f8f8f8;
 }
 
 .strike-api__icon-box {
@@ -483,6 +497,7 @@
   padding: 28px;
   border-right: 1px solid var(--api-line);
   border-bottom: 1px solid var(--api-line);
+  transition: background-color 220ms ease, border-color 220ms ease;
 }
 
 .strike-api__security-card > div {
@@ -506,6 +521,7 @@
   align-items: center;
   gap: 30px;
   border-bottom: 1px solid var(--api-line-strong);
+  transition: background-color 220ms ease, border-color 220ms ease;
 }
 
 .strike-api__endpoint > div {
@@ -544,7 +560,7 @@
 
 .strike-api__cta-section {
   padding: 32px 0;
-  background: #fff;
+  background: #e5e5e5;
 }
 
 .strike-api__cta {
@@ -762,7 +778,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .strike-api__button {
+  .strike-api__button,
+  .strike-api__capability-card,
+  .strike-api__security-card,
+  .strike-api__endpoint {
     transition: none;
   }
 }
