@@ -88,12 +88,6 @@ export default function StrikeApi() {
             animate="visible"
           >
             <motion.div className="strike-api__hero-copy" variants={staggerFast}>
-              <motion.div className="strike-api__version" variants={reveal}>
-                <span aria-hidden="true" />
-                <strong>SR PLATFORM API</strong>
-                <i aria-hidden="true" />
-                <small>v1.2.0</small>
-              </motion.div>
               <motion.h1 variants={reveal}>Bring SR Platform into your own workflow.</motion.h1>
               <motion.p className="strike-api__lede" variants={reveal}>
                 Developers can programmatically generate simulation environments and assets,

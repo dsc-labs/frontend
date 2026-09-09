@@ -49,7 +49,6 @@
   max-width: 720px;
 }
 
-.strike-api__version,
 .strike-api__eyebrow,
 .strike-api__card-meta,
 .strike-api__step-topline,
@@ -57,35 +56,6 @@
 .strike-api__terminal,
 .strike-api__endpoint code {
   font-family: var(--font-jetbrains-mono), monospace;
-}
-
-.strike-api__version {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  color: #34343a;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-}
-
-.strike-api__version span {
-  width: 7px;
-  height: 7px;
-  border: 1px solid var(--api-ink);
-  background: var(--api-ink);
-  box-shadow: inset 0 0 0 2px #fff;
-}
-
-.strike-api__version i {
-  width: 1px;
-  height: 13px;
-  background: var(--api-line-strong);
-}
-
-.strike-api__version small {
-  color: var(--api-muted);
-  font-size: inherit;
 }
 
 .strike-api h1,
