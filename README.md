@@ -19,6 +19,7 @@ Env vars: [`.env.example`](./.env.example). Runtime data under `data/` is server
 | `/` | About |
 | `/sr-platform` | SR Platform landing |
 | `/agentic` | SR Agentic landing |
+| `/api` | SR Platform Developer API hub |
 | `/join`, `/test` | **Closed** — redirect to `/` |
 | `/mindshare-challenge`, `/mindshare-submit` | **Closed** after Epoch 3 end — redirect to `/` |
 | `/mindshare-leaderboard`, `/leaderboard`, `/epoch3-preview` | Alias → home when mindshare is closed |
