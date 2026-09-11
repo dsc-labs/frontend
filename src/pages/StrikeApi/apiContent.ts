@@ -33,19 +33,24 @@ export type ApiEndpoint = {
   description: string
 }
 
+const API_BASE = 'https://strikerobot.ai/sr-platform/app/api/v1'
+
 export const HERO_QUICKSTART = [
-  '# 1. Initialize environment generation',
-  'curl -X POST https://api.strikerobot.ai/v1/environments \\',
-  '  -H "Authorization: Bearer $SR_API_KEY" \\',
+  '# Create an environment generation operation',
+  `curl --fail-with-body -X POST "${API_BASE}/environments" \\`,
+  '  -H "Authorization: Bearer your_api_key_here" \\',
+  "  -H \"Idempotency-Key: $(python3 -c 'import uuid; print(uuid.uuid4())')\" \\",
   '  -H "Content-Type: application/json" \\',
-  "  -d '{",
-  '    "scene_type": "industrial_warehouse",',
-  '    "physics_rigor": "deterministic",',
-  '    "sensors": ["lidar_3d", "depth_stereo"]',
+  "  --data '{",
+  '    "prompt": "Create a warehouse aisle with inspection markers.",',
+  '    "robotId": "inspection_cart",',
+  '    "model": "venice/openai-gpt-54-mini",',
+  '    "useForge": true',
   "  }'",
   '',
-  '# Response: 202 Accepted',
-  '{ "operation_id": "op_89f029bc", "status": "QUEUED" }',
+  '# Response: HTTP 202 Accepted',
+  '{ "id": "op_01J8Y0K72Q9T3V6M4R2S1N5P8A",',
+  '  "type": "environment.create", "status": "queued", "creditCost": 25 }',
 ].join('\n')
 
 export const API_LANGUAGES: ApiLanguage[] = ['curl', 'python', 'node']
@@ -55,20 +60,20 @@ export const API_CODE_SAMPLES: Record<ApiLanguage, ApiCodeSample> = {
     id: 'curl',
     label: 'cURL',
     code: [
-      '# Poll operation progress via GET until status == COMPLETED',
-      'curl -X GET \\',
-      '  https://api.strikerobot.ai/v1/operations/op_89f029bc \\',
-      '  -H "Authorization: Bearer $SR_API_KEY"',
+      '# Poll until status is completed, failed, or cancelled',
+      `curl --fail-with-body "${API_BASE}/operations/op_01J8Y0K72Q9T3V6M4R2S1N5P8A" \\`,
+      '  -H "Authorization: Bearer your_api_key_here"',
       '',
-      '# Response: 200 OK',
+      '# A completed operation contains download URLs',
       '{',
-      '  "operation_id": "op_89f029bc",',
-      '  "status": "COMPLETED",',
-      '  "progress": 1.0,',
-      '  "artifacts": {',
-      '    "usd_url": "https://cdn.strikerobot.ai/artifacts/scene_9821.usda",',
-      '    "gltf_url": "https://cdn.strikerobot.ai/artifacts/scene_9821.gltf",',
-      '    "collision_mesh": "https://cdn.strikerobot.ai/artifacts/collision_9821.obj"',
+      '  "id": "op_01J8Y0K72Q9T3V6M4R2S1N5P8A",',
+      '  "type": "environment.create",',
+      '  "status": "completed",',
+      '  "creditCost": 25,',
+      '  "result": {',
+      '    "id": "env_01J8Y0R25M6T4Q9S7N3P1K8V2C",',
+      '    "type": "environment",',
+      '    "contentUrl": "/v1/environments/env_01J8Y0R25M6T4Q9S7N3P1K8V2C/content"',
       '  }',
       '}',
     ].join('\n'),
@@ -77,36 +82,37 @@ export const API_CODE_SAMPLES: Record<ApiLanguage, ApiCodeSample> = {
     id: 'python',
     label: 'Python',
     code: [
-      'from strikerobot import StrikeClient',
+      'import requests',
       '',
-      'client = StrikeClient(api_key="sr_live_secret")',
-      '',
-      '# Submit asynchronous generation task',
-      'op = client.environments.create(',
-      '    scene_type="industrial_warehouse",',
-      '    sensors=["lidar_3d", "depth_stereo"]',
+      `url = "${API_BASE}/operations/"`,
+      'operation_id = "op_01J8Y0K72Q9T3V6M4R2S1N5P8A"',
+      'response = requests.get(',
+      '    url + operation_id,',
+      '    headers={"Authorization": "Bearer your_api_key_here"},',
+      '    timeout=30,',
       ')',
-      '',
-      '# Block until completion (or use streaming client.events)',
-      'result = op.wait_for_completion(timeout_sec=120)',
-      'print(f"Artifacts ready: {result.artifacts.usd_url}")',
+      'response.raise_for_status()',
+      'operation = response.json()',
+      'print(operation["status"])',
+      'if operation["status"] == "completed":',
+      '    print(operation["result"]["contentUrl"])',
     ].join('\n'),
   },
   node: {
     id: 'node',
     label: 'Node.js',
     code: [
-      "import { StrikeClient } from '@strikerobot/sdk';",
-      '',
-      'const strike = new StrikeClient({ apiKey: process.env.SR_API_KEY });',
-      '',
-      'const operation = await strike.environments.create({',
-      "  sceneType: 'industrial_warehouse',",
-      "  sensors: ['lidar_3d', 'depth_stereo'],",
+      `const base = "${API_BASE}";`,
+      'const operationId = "op_01J8Y0K72Q9T3V6M4R2S1N5P8A";',
+      'const response = await fetch(`${base}/operations/${operationId}`, {',
+      '  headers: { Authorization: "Bearer your_api_key_here" },',
       '});',
-      '',
-      'const completed = await operation.pollUntilComplete();',
-      'console.log(completed.artifacts.usdUrl);',
+      'if (!response.ok) throw new Error(`HTTP ${response.status}`);',
+      'const operation = await response.json();',
+      'console.log(operation.status);',
+      'if (operation.status === "completed") {',
+      '  console.log(operation.result.contentUrl);',
+      '}',
     ].join('\n'),
   },
 }
@@ -114,24 +120,24 @@ export const API_CODE_SAMPLES: Record<ApiLanguage, ApiCodeSample> = {
 export const API_CAPABILITIES: ApiCapability[] = [
   {
     id: 'generate',
-    title: 'Generate',
+    title: 'Generate environments and assets',
     description:
-      'Create simulation environments and assets directly from your application using multimodal prompts or strict parametric constraints.',
-    meta: 'REST / PYTHON SDK',
+      'Create environments from prompts. Create 3D assets from text prompts or reference images.',
+    meta: 'JSON / MULTIPART',
   },
   {
     id: 'track',
-    title: 'Track',
+    title: 'Track durable operations',
     description:
-      'Run long-generation tasks asynchronously and follow their status through polling or server-sent events with granular stage telemetry.',
-    meta: 'SSE / WEBHOOKS',
+      'Generation runs asynchronously. Poll an operation or subscribe to Server-Sent Events for status changes.',
+    meta: 'POLL / SSE',
   },
   {
     id: 'retrieve',
-    title: 'Retrieve',
+    title: 'Retrieve generated output',
     description:
-      'Download completed environments, assets, metadata, and available previews across universal robotics interchange formats.',
-    meta: 'USD / GLTF / MESH',
+      'Read resource metadata, then download environment content or generated asset files and previews.',
+    meta: 'ENVIRONMENT / STL / GLB',
   },
 ]
 
@@ -140,25 +146,25 @@ export const API_STEPS: ApiStep[] = [
     number: 'STEP 01',
     method: 'POST',
     methodTone: 'post',
-    title: 'Submit Request',
+    title: 'Submit a generation request',
     description:
-      'POST payload with environment parameters, prompt, asset config, and physics constraints.',
+      'Send an API key and a unique Idempotency-Key. The API validates access, model availability, and credits.',
   },
   {
     number: 'STEP 02',
     method: 'SSE / POLL',
     methodTone: 'stream',
-    title: 'Track Operation',
+    title: 'Track the operation',
     description:
-      'Stream SSE status or poll operationId until status resolves to COMPLETED.',
+      'Use the returned operation ID until its status becomes completed, failed, or cancelled.',
   },
   {
     number: 'STEP 03',
     method: 'GET',
     methodTone: 'get',
-    title: 'Retrieve Output',
+    title: 'Download the result',
     description:
-      'Fetch glTF/USD assets, collision meshes, sensory metadata, and high-resolution spatial manifests.',
+      'After completion, use contentUrl for the primary output. Asset operations can also return visualUrl for GLB.',
   },
 ]
 
@@ -167,25 +173,25 @@ export const API_SECURITY_FEATURES: ApiSecurityFeature[] = [
     id: 'auth',
     title: 'Bearer API authentication',
     description:
-      'Standard Authorization header with instant key revocation and cryptographic rotating secrets.',
+      'Create and revoke API keys in SR Platform. Store each secret on your server because it appears only once.',
   },
   {
     id: 'scope',
-    title: 'Scoped API keys',
+    title: 'Scoped generation access',
     description:
-      'Granular read, generate, and admin permissions partitioned strictly per project or microservice.',
+      'Limit a key to environment generation, asset generation, or both capabilities.',
   },
   {
     id: 'retry',
-    title: 'Idempotent requests',
+    title: 'Idempotent create requests',
     description:
-      'Safe network retries utilizing client-supplied Idempotency-Key headers.',
+      'Retry the same request with its original Idempotency-Key to receive the same operation without another charge.',
   },
   {
     id: 'credits',
     title: 'Shared account credits',
     description:
-      'Unified billing and compute credit pool synchronized across web studio and API usage.',
+      'API and website generations use the same credit balance. Model access and cost follow your account tier.',
   },
 ]
 
@@ -193,21 +199,31 @@ export const API_ENDPOINTS: ApiEndpoint[] = [
   {
     method: 'POST',
     path: '/v1/environments',
-    description: 'Generate procedural robotics environments',
+    description: 'Queue environment generation from a prompt',
   },
   {
     method: 'POST',
     path: '/v1/assets',
-    description: 'Generate specialized 3D simulation assets',
-  },
-  {
-    method: 'GET',
-    path: '/v1/operations/{operationId}',
-    description: 'Inspect async job status and telemetry',
+    description: 'Queue asset generation from text or an image',
   },
   {
     method: 'GET',
     path: '/v1/models',
-    description: 'List supported foundation simulation models',
+    description: 'List models available to the account tier',
+  },
+  {
+    method: 'GET',
+    path: '/v1/operations/{operationId}',
+    description: 'Read operation status and its completed result',
+  },
+  {
+    method: 'GET',
+    path: '/v1/operations/{operationId}/events',
+    description: 'Stream operation updates with Server-Sent Events',
+  },
+  {
+    method: 'GET',
+    path: '/v1/assets/{assetId}/visual',
+    description: 'Download the optional GLB visual for an asset',
   },
 ]

@@ -1,30 +1,26 @@
-# Example for self-hosted strikerobot.ai (Ubuntu + Caddy).
-#
-# Option A (simplest — how it likely ran before):
-#   npm run build && npm run start   # vite preview on 127.0.0.1:3000
-#   Caddy proxies everything to Node (static + /waitlist API).
-#
-# strikerobot.ai {
-#   reverse_proxy 127.0.0.1:3000
-# }
-#
-# Option B: Caddy serves dist/ directly; only API goes to Node.
-#   npm run start must stay running for /waitlist/*.
-#
-# strikerobot.ai {
-#   root * /home/ubuntu/frontend/dist
-#   handle /waitlist* {
-#     reverse_proxy 127.0.0.1:3000
-#   }
-#   handle /api/waitlist* {
-#     reverse_proxy 127.0.0.1:3000
-#   }
-#   handle {
-#     try_files {path} /index.html
-#     file_server
-#   }
-# }
-#
-# Run Node under systemd (recommended):
-#   sudo cp deploy/strikerobot.service.example /etc/systemd/system/strikerobot.service
-#   sudo systemctl enable --now strikerobot
+# Example configuration for strikerobot.ai.
+# The landing-page process listens on 127.0.0.1:3000.
+
+strikerobot.ai {
+	# Keep the public strikerobot.ai URL while SR Platform runs on Eastworlds.
+	# These response headers let Paddle load and open its checkout window.
+	handle /sr-platform/app/* {
+		header {
+			-Cross-Origin-Embedder-Policy
+			Cross-Origin-Opener-Policy "same-origin-allow-popups"
+		}
+
+		reverse_proxy https://eastworlds.strikerobot.ai {
+			header_up Host eastworlds.strikerobot.ai
+		}
+	}
+
+	# Serve the landing page and its Vite middleware routes.
+	handle {
+		reverse_proxy 127.0.0.1:3000
+	}
+}
+
+# Validate and reload after copying this configuration to the server:
+#   sudo caddy validate --config /etc/caddy/Caddyfile
+#   sudo systemctl reload caddy

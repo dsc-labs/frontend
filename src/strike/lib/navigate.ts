@@ -22,6 +22,7 @@ export const EXTERNAL_LINKS = {
   x: 'https://x.com/StrikeRobot_ai',
   github: 'https://github.com/strikerobot',
   docs: 'https://strikerobot.gitbook.io/strikerobot',
+  srPlatformDeveloperApi: 'https://strikerobot.ai/sr-platform/app/developer-api',
 } as const
 
 export function scrollToHash(hash: string) {

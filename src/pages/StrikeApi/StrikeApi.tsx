@@ -91,11 +91,14 @@ export default function StrikeApi() {
             <motion.div className="strike-api__hero-copy" variants={staggerFast}>
               <motion.h1 variants={reveal}>Bring SR Platform into your own workflow.</motion.h1>
               <motion.p className="strike-api__lede" variants={reveal}>
-                Developers can programmatically generate simulation environments and assets,
-                track generation jobs, and retrieve outputs through the SR Platform API.
+                Generate simulation environments and 3D assets from your server. Each request
+                returns an operation you can track to completion.
               </motion.p>
               <motion.div className="strike-api__actions" variants={reveal}>
-                <a className="strike-api__button strike-api__button--primary" href="#api-preview">
+                <a
+                  className="strike-api__button strike-api__button--primary"
+                  href={EXTERNAL_LINKS.srPlatformDeveloperApi}
+                >
                   Explore SR Platform API
                   <ArrowRight aria-hidden="true" />
                 </a>
@@ -106,16 +109,16 @@ export default function StrikeApi() {
               </motion.div>
               <motion.dl className="strike-api__telemetry" variants={reveal}>
                 <div>
-                  <dt>LATENCY SLA</dt>
-                  <dd>&lt; 140ms</dd>
+                  <dt>WORKFLOW</dt>
+                  <dd>Async operations</dd>
                 </div>
                 <div>
-                  <dt>COMPATIBILITY</dt>
-                  <dd>USD / GLTF / URDF</dd>
+                  <dt>INPUTS</dt>
+                  <dd>Prompt / Image</dd>
                 </div>
                 <div>
-                  <dt>AVAILABILITY</dt>
-                  <dd>99.99% Core</dd>
+                  <dt>BILLING</dt>
+                  <dd>Shared credits</dd>
                 </div>
               </motion.dl>
             </motion.div>
@@ -152,8 +155,8 @@ export default function StrikeApi() {
           <div className="strike-api__container">
             <SectionHeading
               eyebrow="Capabilities"
-              title="Architected for programmatic physical AI pipelines."
-              description="From parametric scene generation to sensor-rigged artifact delivery, integrate high-fidelity spatial generation directly into your reinforcement learning pipelines."
+              title="Generation tools for your application"
+              description="Use the same environment and asset generation capabilities available in SR Platform through a stable HTTP API."
             />
             <motion.div className="strike-api__capability-grid" variants={staggerFast}>
               {API_CAPABILITIES.map((capability) => {
@@ -190,8 +193,8 @@ export default function StrikeApi() {
           <div className="strike-api__container">
             <SectionHeading
               eyebrow="Integration Flow"
-              title="How It Works"
-              description="A predictable asynchronous operational lifecycle designed for fault-tolerant simulation pipelines."
+              title="Generate and retrieve in three steps"
+              description="Create requests return immediately with a durable operation. Track that operation before downloading its result."
             />
             <motion.div className="strike-api__steps" variants={staggerFast}>
               {API_STEPS.map((step) => (
@@ -226,9 +229,9 @@ export default function StrikeApi() {
         >
           <div className="strike-api__container">
             <SectionHeading
-              eyebrow="Security & Scale"
-              title="Built for Production Workflows"
-              description="Enterprise security primitives built directly into every protocol call."
+              eyebrow="Access & billing"
+              title="Controls for server integrations"
+              description="Protect credentials, restrict generation access, retry safely, and use the same credits as SR Platform."
             />
             <motion.div className="strike-api__security-grid" variants={staggerFast}>
               {API_SECURITY_FEATURES.map((feature) => {
@@ -262,8 +265,8 @@ export default function StrikeApi() {
           <div className="strike-api__container">
             <SectionHeading
               eyebrow="Endpoint Reference"
-              title="API Preview"
-              description="Deterministic REST primitives adhering strictly to OpenAPI 3.1 specifications."
+              title="Developer API endpoints"
+              description="Version 1 exposes generation resources, model discovery, operation tracking, and result downloads."
             />
             <motion.div className="strike-api__endpoints" variants={staggerFast}>
               {API_ENDPOINTS.map((endpoint) => (
@@ -289,7 +292,7 @@ export default function StrikeApi() {
             </motion.div>
             <a
               className="strike-api__text-link"
-              href={EXTERNAL_LINKS.docs}
+              href={EXTERNAL_LINKS.srPlatformDeveloperApi}
               target="_blank"
               rel="noreferrer"
             >
@@ -317,7 +320,10 @@ export default function StrikeApi() {
                 or Physical AI workflow.
               </p>
               <div className="strike-api__actions">
-                <a className="strike-api__button strike-api__button--primary" href="#api-preview">
+                <a
+                  className="strike-api__button strike-api__button--primary"
+                  href={EXTERNAL_LINKS.srPlatformDeveloperApi}
+                >
                   Explore SR Platform API
                 </a>
                 <button
