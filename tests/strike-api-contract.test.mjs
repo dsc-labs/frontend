@@ -35,7 +35,7 @@ test('all Developer API calls to action use the in-platform reference', async ()
 
   assert.match(
     navigation,
-    /srPlatformDeveloperApi:\s*'https:\/\/strikerobot\.ai\/sr-platform\/app\/developer-api'/,
+    /srPlatformDeveloperApi:\s*'https:\/\/strikerobot\.ai\/sr-platform\/app\/docs\/api'/,
   )
   assert.equal((page.match(/EXTERNAL_LINKS\.srPlatformDeveloperApi/g) ?? []).length, 3)
 })
