@@ -20,6 +20,8 @@ Env vars: [`.env.example`](./.env.example). Runtime data under `data/` is server
 | `/sr-platform` | SR Platform landing |
 | `/agentic` | SR Agentic landing |
 | `/api` | SR Platform Developer API hub |
+| `/token` | SR Token supply dashboard (preview data in Stage 1) |
+| `/token/burns` | SR Token burn tracker (preview data in Stage 1) |
 | `/join`, `/test` | **Closed** — redirect to `/` |
 | `/mindshare-challenge`, `/mindshare-submit` | **Closed** after Epoch 3 end — redirect to `/` |
 | `/mindshare-leaderboard`, `/leaderboard`, `/epoch3-preview` | Alias → home when mindshare is closed |
@@ -27,6 +29,8 @@ Env vars: [`.env.example`](./.env.example). Runtime data under `data/` is server
 | `/about`, `/partners` | Redirect → `/` |
 
 Hero videos: `/sr-platform` uses `public/Video/Comp 2.mp4`; `/agentic` uses `public/Video/Comp 2-old.mp4`.
+
+The Token pages use illustrative, clearly labelled preview metrics until the on-chain data service is connected.
 
 ## Closed programs (Epoch 3 end)
 

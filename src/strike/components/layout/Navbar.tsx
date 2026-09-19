@@ -312,7 +312,7 @@ function MobileScrollHeader({
 
   return (
     <motion.div
-      className="pointer-events-auto px-3 md:hidden"
+      className="pointer-events-auto px-3 lg:hidden"
       style={{ paddingTop, paddingBottom }}
     >
       <div className="relative">
@@ -444,10 +444,10 @@ export function Navbar() {
       <header className="pointer-events-none fixed left-0 right-0 top-0 z-[1000]">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-[env(safe-area-inset-top)] bg-[#E5E5E5] md:hidden"
+          className="pointer-events-none absolute inset-x-0 top-0 h-[env(safe-area-inset-top)] bg-[#E5E5E5] lg:hidden"
         />
         {/* Desktop */}
-        <div className="pointer-events-auto relative mx-auto hidden w-full items-center justify-between gap-6 p-6 md:flex">
+        <div className="pointer-events-auto relative mx-auto hidden w-full items-center justify-between gap-6 p-6 lg:flex">
           <Link
             href="/"
             className="flex flex-1 items-center"
@@ -593,7 +593,7 @@ export function Navbar() {
             role="dialog"
             aria-modal="true"
             aria-label="Main menu"
-            className="fixed inset-0 isolate z-[1001] flex flex-col gap-3 overflow-hidden p-3 md:hidden"
+            className="fixed inset-0 isolate z-[1001] flex flex-col gap-3 overflow-hidden p-3 lg:hidden"
             style={{
               background:
                 "linear-gradient(180deg, #1f1f1f 0%, #0a0a0a 100%)",

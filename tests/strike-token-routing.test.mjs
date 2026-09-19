@@ -17,3 +17,10 @@ test('token routes and global navigation are registered together', async () => {
   assert.match(app, /path="\/token"/)
   assert.match(app, /path="\/token\/burns"/)
 })
+
+test('global navigation uses the mobile menu until the extra token item fits', async () => {
+  const navbar = await read('src/strike/components/layout/Navbar.tsx')
+  assert.match(navbar, /hidden w-full items-center justify-between gap-6 p-6 lg:flex/)
+  assert.match(navbar, /pointer-events-auto px-3 lg:hidden/)
+  assert.match(navbar, /z-\[1001\] flex flex-col gap-3 overflow-hidden p-3 lg:hidden/)
+})

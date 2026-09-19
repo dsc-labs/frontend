@@ -65,7 +65,7 @@ export interface BurnEvent {
   readonly type: BurnType
   readonly transactionHash: string
   readonly transactionUrl: string | null
-  readonly status: 'verified'
+  readonly status: 'preview' | 'verified'
 }
 
 export interface BurnActivityPoint {
