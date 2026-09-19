@@ -5,6 +5,7 @@ export const ROUTES = {
   about: '/',
   agentic: '/agentic',
   srPlatform: '/sr-platform',
+  api: '/api',
   srPlatformApp: '/sr-platform/app/',
   simulation: '/sr-platform/app/',
   waitlist: '/join',
@@ -21,6 +22,7 @@ export const EXTERNAL_LINKS = {
   x: 'https://x.com/StrikeRobot_ai',
   github: 'https://github.com/strikerobot',
   docs: 'https://strikerobot.gitbook.io/strikerobot',
+  srPlatformDeveloperApi: 'https://strikerobot.ai/sr-platform/app/docs/api',
 } as const
 
 export function scrollToHash(hash: string) {

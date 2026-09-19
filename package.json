@@ -19,7 +19,8 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "vite preview --host 127.0.0.1 --port ${PORT:-3000}"
+    "start": "vite preview --host 127.0.0.1 --port ${PORT:-3000}",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@privy-io/react-auth": "^3.22.1",

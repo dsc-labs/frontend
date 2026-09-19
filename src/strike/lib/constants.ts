@@ -11,6 +11,7 @@ export const NAV_LINKS = [
   { label: "About", href: ROUTES.home },
   { label: "Product", href: ROUTES.srPlatform, hasDropdown: true },
   { label: "Simulation", href: ROUTES.simulation },
+  { label: "API", href: ROUTES.api },
 ];
 
 export const NAV_CTA = "Create with SR Platform";
