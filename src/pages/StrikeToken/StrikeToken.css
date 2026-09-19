@@ -345,7 +345,6 @@
 }
 
 .strike-token__metrics--burn { margin-bottom: 0; }
-.strike-token__metrics--burn > div { padding-block: 28px; }
 .strike-token__history-section { scroll-margin-top: 110px; }
 .strike-token__section-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; }
 .strike-token__filters { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
