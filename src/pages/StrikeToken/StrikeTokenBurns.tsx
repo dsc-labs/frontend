@@ -1,79 +1,50 @@
-import { useMemo, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowDown, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowDown, ArrowRight, ArrowUpRight, Info } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { fadeUp } from '../../strike/components/animations/fadeUp'
 import { staggerContainerFast, staggerItem } from '../../strike/components/animations/stagger'
 import { ROUTES } from '../../strike/lib/navigate'
-import { BurnActivityChart } from './TokenCharts'
-import { filterBurnEvents, historyWithinDays, historyWithinYear } from './tokenChartData'
 import { TokenPageShell } from './TokenPageShell'
 import { TokenBurnHeroVisual } from './TokenHeroVisuals'
-import { formatCompactTokenAmount, formatPercent, formatTokenAmount, formatUtcDate, shortenHex } from './tokenFormat'
-import { BURN_PAGE_PREVIEW } from './tokenPreviewData'
-import type { BurnRange, BurnType } from './tokenTypes'
 
-const preview = BURN_PAGE_PREVIEW
+const contractUrl = 'https://basescan.org/token/0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9'
 
-const burnTypeLabels: Record<BurnType, string> = {
-  'protocol-buyback': 'Protocol Buyback',
-  'scheduled-reduction': 'Scheduled Supply Reduction',
-}
-
-const filters: readonly { value: 'all' | BurnType; label: string }[] = [
-  { value: 'all', label: 'All Burns' },
-  { value: 'protocol-buyback', label: 'Protocol Buyback' },
-  { value: 'scheduled-reduction', label: 'Scheduled Supply Reduction' },
-]
-
-const burnSteps = [
+const verificationSteps = [
   {
     index: '01',
-    phase: 'Trigger',
-    title: 'A burn event is initiated',
-    description: 'A token holder or authorized protocol action initiates a burn transaction.',
-    detail: 'On-chain action',
+    phase: 'Define',
+    title: 'Confirm the burn rule',
+    description: 'The token team identifies which contract actions or destinations count as an SR burn.',
+    detail: 'Official mechanism',
   },
   {
     index: '02',
-    phase: 'Execute',
-    title: 'The amount is validated',
-    description: 'The transaction is checked against the token contract and the sender balance.',
-    detail: 'Transaction check',
+    phase: 'Scope',
+    title: 'Set the event coverage',
+    description: 'Deployment block and accepted event types define which transactions need to be indexed.',
+    detail: 'Complete range',
   },
   {
     index: '03',
-    phase: 'Burn',
-    title: 'Tokens reach a burn destination',
-    description: 'Tokens are removed from usable supply according to the confirmed contract rules.',
-    detail: 'Supply impact',
+    phase: 'Check',
+    title: 'Verify transactions',
+    description: 'Sample transactions and their supply impact are checked against Base records.',
+    detail: 'On-chain evidence',
   },
   {
     index: '04',
-    phase: 'Verify',
-    title: 'The transfer is recorded on-chain',
-    description: 'A confirmed transaction and block record allow independent verification.',
-    detail: 'Public record',
+    phase: 'Publish',
+    title: 'Show confirmed burns',
+    description: 'Only independently verifiable amounts, dates and transaction links will appear here.',
+    detail: 'Transparent reporting',
   },
 ] as const
-
-function activityForRange(range: BurnRange) {
-  if (range === '7d') return historyWithinDays(preview.activity, 7)
-  if (range === '30d') return historyWithinDays(preview.activity, 30)
-  if (range === '90d') return historyWithinDays(preview.activity, 90)
-  if (range === '1y') return historyWithinYear(preview.activity)
-  return [...preview.activity]
-}
 
 export default function StrikeTokenBurns() {
   const reduceMotion = useReducedMotion()
   const reveal = reduceMotion ? {} : fadeUp
   const stagger = reduceMotion ? {} : staggerContainerFast
   const item = reduceMotion ? {} : staggerItem
-  const [activeFilter, setActiveFilter] = useState<'all' | BurnType>('all')
-  const [range, setRange] = useState<BurnRange>('30d')
-  const visibleEvents = useMemo(() => filterBurnEvents(preview.events, activeFilter), [activeFilter])
-  const activity = useMemo(() => activityForRange(range), [range])
 
   return (
     <TokenPageShell
@@ -82,19 +53,19 @@ export default function StrikeTokenBurns() {
         <motion.section className="strike-token__hero strike-token__hero--burn" variants={reveal} initial="hidden" animate="visible">
           <div className="strike-token__hero-copy">
             <h1>Burn Tracker</h1>
-            <p>Follow illustrative SR token burns and see how supply changes across the preview timeline.</p>
+            <p>SR burn activity will appear here once the official mechanism and transactions can be verified on Base.</p>
             <div className="strike-token__actions">
               <Link className="strike-token__button strike-token__button--primary" to={ROUTES.token}>
                 Explore Token Dashboard <ArrowRight aria-hidden="true" />
               </Link>
               <a className="strike-token__button strike-token__button--secondary" href="#latest-burn">
-                View Latest Burn <ArrowDown aria-hidden="true" />
+                Burn data status <ArrowDown aria-hidden="true" />
               </a>
             </div>
-            <dl className="strike-token__hero-facts" aria-label="Burn preview details">
+            <dl className="strike-token__hero-facts" aria-label="Burn data status">
               <div><dt>Network</dt><dd>Base</dd></div>
-              <div><dt>Events</dt><dd>{preview.summary.transactionCount} examples</dd></div>
-              <div><dt>Data</dt><dd>Preview only</dd></div>
+              <div><dt>Events</dt><dd>Not verified</dd></div>
+              <div><dt>Data</dt><dd>Pending rules</dd></div>
             </dl>
           </div>
           <TokenBurnHeroVisual />
@@ -103,96 +74,34 @@ export default function StrikeTokenBurns() {
     >
       <div className="strike-token__container strike-token__page strike-token__burn-page">
         <motion.dl className="strike-token__metrics strike-token__metrics--burn" variants={reveal} initial="hidden" animate="visible">
-          <div>
-            <dt>Total burned</dt>
-            <dd>{formatTokenAmount(preview.summary.totalBurned)} <small>SR</small></dd>
-            <p>Removed in preview data</p>
-          </div>
-          <div>
-            <dt>Supply burned</dt>
-            <dd>{formatPercent(preview.summary.burnedPercentage)}</dd>
-            <p>Of initial preview supply</p>
-          </div>
-          <div>
-            <dt>Burned last 30 days</dt>
-            <dd>{formatTokenAmount(preview.summary.burned30Days)} <small>SR</small></dd>
-            <p>Preview trailing 30-day window</p>
-          </div>
-          <div>
-            <dt>Burn transactions</dt>
-            <dd>{preview.summary.transactionCount}</dd>
-            <p>Example event count</p>
-          </div>
+          <div><dt>Total burned</dt><dd>—</dd><p>Not yet verified</p></div>
+          <div><dt>Supply burned</dt><dd>—</dd><p>Not yet verified</p></div>
+          <div><dt>Burned last 30 days</dt><dd>—</dd><p>Not yet verified</p></div>
+          <div><dt>Burn transactions</dt><dd>—</dd><p>Not yet verified</p></div>
         </motion.dl>
 
         <motion.section className="strike-token__section strike-token__history-section" id="latest-burn" variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
-          <div className="strike-token__section-row">
-            <header className="strike-token__section-heading">
-              <h2>Burn history</h2>
-              <p>Example events for layout preview. Live transactions will be verifiable.</p>
-            </header>
-            <div className="strike-token__filters" role="group" aria-label="Burn type filter">
-              {filters.map((filter) => (
-                <button
-                  key={filter.value}
-                  type="button"
-                  className={activeFilter === filter.value ? 'is-active' : undefined}
-                  aria-pressed={activeFilter === filter.value}
-                  onClick={() => setActiveFilter(filter.value)}
-                >
-                  {filter.label}
-                </button>
-              ))}
+          <header className="strike-token__section-heading">
+            <h2>Burn history</h2>
+            <p>Transactions will be listed only after the official SR burn mechanism is confirmed.</p>
+          </header>
+          <div className="strike-token__history-panel strike-token__history-panel--unverified" role="status" aria-label="Burn history">
+            <Info aria-hidden="true" />
+            <div>
+              <strong>Not yet verified</strong>
+              <p>We need the official burn rule and a confirmed transaction before showing burn amounts or explorer links.</p>
             </div>
-          </div>
-          <div className="strike-token__history-panel">
-            <div className="strike-token__table-scroll" role="region" aria-label="Burn history" tabIndex={0}>
-              <table className="strike-token__table">
-                <thead>
-                  <tr>
-                    <th scope="col">Date &amp; UTC time</th>
-                    <th scope="col">Amount burned</th>
-                    <th scope="col">Burn type</th>
-                    <th scope="col">Transaction hash</th>
-                    <th scope="col">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {visibleEvents.map((event) => (
-                    <tr key={event.id}>
-                      <td><time dateTime={event.timestamp}>{formatUtcDate(event.timestamp)}</time></td>
-                      <td className="strike-token__table-amount">{formatTokenAmount(event.amount)} SR</td>
-                      <td><span className={`strike-token__type is-${event.type}`}>{burnTypeLabels[event.type]}</span></td>
-                      <td>
-                        {event.transactionUrl ? (
-                          <a href={event.transactionUrl} target="_blank" rel="noreferrer" aria-label={`View transaction ${event.transactionHash} on BaseScan (opens in a new tab)`}>
-                            {shortenHex(event.transactionHash)} <ArrowUpRight aria-hidden="true" />
-                          </a>
-                        ) : (
-                          <span title="Example transaction, no on-chain link">{shortenHex(event.transactionHash)} <small>Preview</small></span>
-                        )}
-                      </td>
-                      <td><span className="strike-token__status-text">Preview</span></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {visibleEvents.length === 0 && <p className="strike-token__empty">No burns match this filter in the preview.</p>}
-            <div className="strike-token__table-footer">
-              <span>Showing {visibleEvents.length} of {preview.events.length} example events</span>
-              <span>Live explorer links arrive with verified data</span>
-            </div>
+            <a href={contractUrl} target="_blank" rel="noreferrer">View SR contract <ArrowUpRight aria-hidden="true" /></a>
           </div>
         </motion.section>
 
         <motion.section className="strike-token__section strike-token__steps-section" variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-80px' }}>
           <header className="strike-token__section-heading">
             <h2>How burns work</h2>
-            <p>Burns are recorded on-chain and can be independently verified after confirmation.</p>
+            <p>What must be checked before burn activity can be reported reliably.</p>
           </header>
           <motion.div className="strike-token__steps" variants={stagger}>
-            {burnSteps.map((step) => (
+            {verificationSteps.map((step) => (
               <motion.article key={step.index} variants={item}>
                 <div className="strike-token__step-top"><span>{step.index}</span><span>{step.phase}</span></div>
                 <h3>{step.title}</h3>
@@ -207,26 +116,29 @@ export default function StrikeTokenBurns() {
           <div className="strike-token__section-row">
             <header className="strike-token__section-heading">
               <h2>Burn activity</h2>
-              <p>See how tokens are removed from the preview supply over time.</p>
+              <p>No estimated activity curve is shown while the burn feed remains unverified.</p>
             </header>
             <dl className="strike-token__activity-stats">
-              <div><dt>24H</dt><dd>{formatCompactTokenAmount(preview.summary.burned24Hours)}</dd></div>
-              <div><dt>7D</dt><dd>{formatCompactTokenAmount(preview.summary.burned7Days)}</dd></div>
-              <div><dt>30D</dt><dd>{formatCompactTokenAmount(preview.summary.burned30Days)}</dd></div>
-              <div><dt>All time</dt><dd>{formatCompactTokenAmount(preview.summary.totalBurned)}</dd></div>
+              <div><dt>24H</dt><dd>—</dd></div>
+              <div><dt>7D</dt><dd>—</dd></div>
+              <div><dt>30D</dt><dd>—</dd></div>
+              <div><dt>All time</dt><dd>—</dd></div>
             </dl>
           </div>
-          <BurnActivityChart points={activity} range={range} onRangeChange={setRange} />
-          <div className="strike-token__activity-caption">
-            <span>Example burn events, not indexed chain records.</span>
-            <span>Last block update: unavailable in preview</span>
+          <div className="strike-token__chart-card strike-token__chart-card--burn strike-token__chart-card--unverified" role="status">
+            <span>Burn activity</span>
+            <div className="strike-token__unverified strike-token__unverified--plain">
+              <Info aria-hidden="true" />
+              <div><strong>Activity not yet verified</strong><p>Verified events and a cumulative chart will appear here once the burn source is documented.</p></div>
+            </div>
           </div>
+          <div className="strike-token__activity-caption"><span>Unverified figures are intentionally hidden.</span><span>Base Mainnet</span></div>
         </motion.section>
 
         <motion.aside className="strike-token__back-cta" variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <div>
-            <h2>Looking for the full token overview?</h2>
-            <p>View supply, circulating supply, distribution, and token information on the Token Dashboard.</p>
+            <h2>Looking for the token overview?</h2>
+            <p>View the verified contract supply and token information on the Token Dashboard.</p>
           </div>
           <Link className="strike-token__button strike-token__button--primary" to={ROUTES.token}>
             Back to Token Dashboard <ArrowRight aria-hidden="true" />

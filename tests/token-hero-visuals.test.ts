@@ -4,12 +4,6 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { TokenBurnHeroVisual, TokenSupplyHeroVisual } from '../src/pages/StrikeToken/TokenHeroVisuals'
 import type { TokenOverviewResponse } from '../lib/tokenOverviewTypes'
 
-function secondPointX(markup: string) {
-  const coordinates = markup.match(/<polyline points="([^"]+)"/)
-  assert.ok(coordinates, 'hero visualization has a line')
-  return Number(coordinates[1].split(' ')[1].split(',')[0])
-}
-
 const live: TokenOverviewResponse = {
   status: 'live', source: 'onchain',
   token: {
@@ -28,9 +22,10 @@ test('supply hero labels the verified one-billion total without preview allocati
   assert.doesNotMatch(markup, /Preview data|<polyline|strike-token__hero-allocation/)
 })
 
-test('burn preview line places samples according to their UTC timestamps', () => {
+test('burn hero reports unverified data without preview burn totals or a chart', () => {
   const markup = renderToStaticMarkup(TokenBurnHeroVisual())
-  assert.ok(secondPointX(markup) > 120 && secondPointX(markup) < 140)
+  assert.match(markup, /Not yet verified/)
+  assert.doesNotMatch(markup, /Preview data|14\.85M|<polyline|Latest preview event/)
 })
 
 test('supply hero does not claim on-chain data while loading', () => {

@@ -371,6 +371,12 @@
 .strike-token__filters button.is-active { border-color: #19191c; background: #19191c; color: #fff; }
 .strike-token__filters button:not(.is-active):hover { border-color: #98979a; color: var(--token-ink); }
 .strike-token__history-panel { overflow: hidden; border: 1px solid var(--token-line); background: var(--token-surface); }
+.strike-token__history-panel--unverified { display: flex; min-height: 258px; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; text-align: center; }
+.strike-token__history-panel--unverified > svg { width: 24px; height: 24px; margin-bottom: 14px; color: #85858a; stroke-width: 1.4; }
+.strike-token__history-panel--unverified strong { font-size: 17px; font-weight: 600; }
+.strike-token__history-panel--unverified p { max-width: 490px; margin-top: 8px; color: var(--token-muted); font-size: 12px; line-height: 1.6; }
+.strike-token__history-panel--unverified a { display: inline-flex; align-items: center; gap: 5px; margin-top: 17px; color: var(--token-ink); font-size: 11px; font-weight: 600; text-decoration: none; }
+.strike-token__history-panel--unverified a svg { width: 13px; height: 13px; }
 .strike-token__table-scroll { max-width: 100%; overflow-x: auto; }
 .strike-token__table { width: 100%; min-width: 870px; border-collapse: collapse; text-align: left; }
 .strike-token__table th { height: 45px; padding: 0 15px; background: #f8f8fa; color: var(--token-faint); font-family: var(--font-jetbrains-mono), monospace; font-size: 9px; font-weight: 550; letter-spacing: .045em; text-transform: uppercase; }

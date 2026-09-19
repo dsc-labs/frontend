@@ -32,9 +32,11 @@ test('burn tracker includes the required history, explanation, and activity area
   assert.match(page, /Burn history/)
   assert.match(page, /How burns work/)
   assert.match(page, /Burn activity/)
-  assert.match(page, /aria-label="Burn history"/)
+  assert.match(page, /Not yet verified/)
+  assert.match(page, /Explore Token Dashboard/)
   assert.match(page, /Back to Token Dashboard/)
-  assert.match(page, /transactionUrl\s*\?/) // only verified live events can link to the explorer
+  assert.doesNotMatch(page, /BURN_PAGE_PREVIEW|Protocol Buyback|Scheduled Supply Reduction/)
+  assert.doesNotMatch(page, /<BurnActivityChart|<tbody>|Preview data/)
 })
 
 test('token uses a split hero without a sticky tab layer', async () => {
