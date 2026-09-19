@@ -1,39 +1,31 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ArrowUpRight, Check, Copy, Info, TriangleAlert } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { fadeUp } from '../../strike/components/animations/fadeUp'
 import { staggerContainerFast } from '../../strike/components/animations/stagger'
 import { ROUTES } from '../../strike/lib/navigate'
-import { SupplyHistoryChart } from './TokenCharts'
-import { historyWithinDays, historyWithinYear } from './tokenChartData'
 import { TokenPageShell } from './TokenPageShell'
 import { TokenSupplyHeroVisual } from './TokenHeroVisuals'
-import { formatPercent, formatTokenAmount } from './tokenFormat'
-import { TOKEN_OVERVIEW_PREVIEW } from './tokenPreviewData'
-import type { TokenRange } from './tokenTypes'
+import { formatTokenAmount, formatUtcDate } from './tokenFormat'
+import { useTokenOverview } from './useTokenOverview'
 
-const overview = TOKEN_OVERVIEW_PREVIEW
-
-function historyForRange(range: TokenRange) {
-  if (range === '30d') return historyWithinDays(overview.history, 30)
-  if (range === '90d') return historyWithinDays(overview.history, 90)
-  if (range === '1y') return historyWithinYear(overview.history)
-  return [...overview.history]
-}
+const CONTRACT_ADDRESS = '0x10c56F005a379f8eAfc88ff5c3f40d30F0031AC9'
+const contractUrl = `https://basescan.org/token/${CONTRACT_ADDRESS}`
 
 export default function StrikeTokenDashboard() {
   const reduceMotion = useReducedMotion()
-  const [range, setRange] = useState<TokenRange>('1y')
   const [copied, setCopied] = useState(false)
+  const { state, data, retry } = useTokenOverview()
+  const live = state === 'live' ? data : null
   const reveal = reduceMotion ? {} : fadeUp
   const stagger = reduceMotion ? {} : staggerContainerFast
-  const history = useMemo(() => historyForRange(range), [range])
-  const contractUrl = `https://basescan.org/token/${overview.token.contractAddress}`
+  const totalSupply = live ? formatTokenAmount(live.supply.totalSupply) : '—'
+  const updatedAt = live ? formatUtcDate(live.updatedAt) : '—'
 
   const copyAddress = async () => {
     try {
-      await navigator.clipboard.writeText(overview.token.contractAddress)
+      await navigator.clipboard.writeText(CONTRACT_ADDRESS)
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1800)
     } catch {
@@ -48,7 +40,7 @@ export default function StrikeTokenDashboard() {
         <motion.section className="strike-token__hero" variants={reveal} initial="hidden" animate="visible">
           <div className="strike-token__hero-copy">
             <h1>Strike Robot Token</h1>
-            <p>A clear view of token supply, distribution, and on-chain activity across the Strike Robot ecosystem.</p>
+            <p>A clear view of verified token supply and contract information across the Strike Robot ecosystem.</p>
             <div className="strike-token__actions">
               <Link className="strike-token__button strike-token__button--primary" to={ROUTES.tokenBurns}>
                 Explore Burn Tracker <ArrowRight aria-hidden="true" />
@@ -57,90 +49,63 @@ export default function StrikeTokenDashboard() {
                 View Contract <ArrowUpRight aria-hidden="true" strokeWidth={1.75} />
               </a>
             </div>
-            <dl className="strike-token__hero-facts" aria-label="Token preview details">
+            <dl className="strike-token__hero-facts" aria-label="Token details">
               <div><dt>Network</dt><dd>Base</dd></div>
               <div><dt>Standard</dt><dd>ERC-20</dd></div>
-              <div><dt>Data</dt><dd>Preview only</dd></div>
+              <div><dt>Data</dt><dd>{state === 'live' ? 'On-chain' : state === 'loading' ? 'Loading…' : 'Unavailable'}</dd></div>
             </dl>
           </div>
-          <TokenSupplyHeroVisual />
+          <TokenSupplyHeroVisual data={live} state={state} />
         </motion.section>
       )}
     >
-      <motion.div
-        className="strike-token__container strike-token__page"
-        variants={stagger}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.dl className="strike-token__metrics" variants={reveal}>
+      <motion.div className="strike-token__container strike-token__page" variants={stagger} initial="hidden" animate="visible">
+        {state === 'error' && (
+          <div className="strike-token__error" role="alert">
+            <span>On-chain data is temporarily unavailable.</span>
+            <button type="button" onClick={retry}>Try again <ArrowRight aria-hidden="true" /></button>
+          </div>
+        )}
+
+        <motion.dl className="strike-token__metrics" variants={reveal} aria-live="polite">
           <div>
-            <dt>Current supply</dt>
-            <dd>{formatTokenAmount(overview.supply.currentSupply)} <small>SR</small></dd>
-            <p>Total supply after preview burns</p>
+            <dt>Current total supply</dt>
+            <dd>{totalSupply} {live && <small>SR</small>}</dd>
+            <p>{live ? `On-chain data · Block ${live.indexedBlock.toLocaleString('en-US')}` : state === 'loading' ? 'Loading on-chain data' : 'Data unavailable'}</p>
           </div>
-          <div>
-            <dt>Circulating supply</dt>
-            <dd>{formatTokenAmount(overview.supply.circulatingSupply)} <small>SR</small></dd>
-            <p>Unlocked and publicly available</p>
-          </div>
-          <div className="is-accent">
-            <dt>Total burned</dt>
-            <dd>{formatTokenAmount(overview.supply.totalBurned)} <small>SR</small></dd>
-            <p>Permanently removed in preview data</p>
-          </div>
-          <div>
-            <dt>Circulating</dt>
-            <dd>{formatPercent(overview.supply.circulatingPercentage)}</dd>
-            <p>Of current preview supply</p>
-          </div>
+          <div><dt>Circulating supply</dt><dd>—</dd><p>Not yet verified</p></div>
+          <div><dt>Total burned</dt><dd>—</dd><p>Not yet verified</p></div>
+          <div><dt>Circulating</dt><dd>—</dd><p>Not yet verified</p></div>
         </motion.dl>
 
         <motion.section className="strike-token__section" variants={reveal}>
           <header className="strike-token__section-heading">
             <h2>Token supply</h2>
-            <p>See how the preview supply is distributed across the Strike Robot ecosystem.</p>
+            <p>Confirmed contract supply is shown separately from allocation figures that still require official wallet classifications.</p>
           </header>
           <div className="strike-token__supply-grid">
             <article className="strike-token__panel strike-token__distribution">
-              <div className="strike-token__panel-heading">
-                <span>Supply distribution</span>
-                <span>Preview breakdown</span>
+              <div className="strike-token__panel-heading"><span>Supply distribution</span><span>Awaiting classification</span></div>
+              <div className="strike-token__unverified" role="status">
+                <Info aria-hidden="true" />
+                <div>
+                  <strong>Not yet verified</strong>
+                  <p>Circulating, locked and treasury wallet balances need an official classification before we can show a distribution.</p>
+                </div>
               </div>
-              <div className="strike-token__allocation" aria-label="Token supply distribution">
-                {overview.distribution.map((item) => (
-                  <span
-                    key={item.id}
-                    className={`is-${item.id}`}
-                    style={{ width: `${item.percentage}%` }}
-                    title={`${item.label}: ${formatPercent(item.percentage)}`}
-                  />
-                ))}
-              </div>
-              <div className="strike-token__allocation-axis"><span>0%</span><span>Supply allocation</span><span>100%</span></div>
-              <div className="strike-token__distribution-grid">
-                {overview.distribution.map((item) => (
-                  <div key={item.id}>
-                    <span className={`strike-token__swatch is-${item.id}`} aria-hidden="true" />
-                    <span>{item.label}</span>
-                    <small>{formatPercent(item.percentage)}</small>
-                    <strong>{formatTokenAmount(item.amount)} SR</strong>
-                  </div>
-                ))}
-              </div>
-              <footer><span>Deterministic preview segments</span><span>Typed fixture</span></footer>
+              <footer><span>No estimated allocation shown</span><span>Base Mainnet</span></footer>
             </article>
 
             <article className="strike-token__panel strike-token__summary">
-              <div className="strike-token__panel-heading"><span>Supply summary</span><span>Preview</span></div>
+              <div className="strike-token__panel-heading"><span>Supply summary</span><span>{live ? 'On-chain' : 'Unavailable'}</span></div>
               <dl>
-                <div><dt>Initial supply</dt><dd>{formatTokenAmount(overview.supply.initialSupply)} SR</dd></div>
-                <div><dt>Current supply</dt><dd>{formatTokenAmount(overview.supply.currentSupply)} SR</dd></div>
-                <div><dt>Circulating supply</dt><dd>{formatTokenAmount(overview.supply.circulatingSupply)} SR</dd></div>
-                <div className="is-accent"><dt>Total burned</dt><dd>{formatTokenAmount(overview.supply.totalBurned)} SR</dd></div>
-                <div><dt>Last updated</dt><dd>Preview fixture</dd></div>
+                <div><dt>Initial supply</dt><dd>Not yet verified</dd></div>
+                <div><dt>Current total supply</dt><dd>{totalSupply} {live && 'SR'}</dd></div>
+                <div><dt>Circulating supply</dt><dd>Not yet verified</dd></div>
+                <div><dt>Total burned</dt><dd>Not yet verified</dd></div>
+                <div><dt>Block time</dt><dd>{updatedAt}</dd></div>
               </dl>
-              <Link className="strike-token__panel-link" to={ROUTES.tokenBurns}>View burn history <ArrowRight aria-hidden="true" /></Link>
+              <Link className="strike-token__panel-link" to={ROUTES.tokenBurns}>Burn data status <ArrowRight aria-hidden="true" /></Link>
             </article>
           </div>
         </motion.section>
@@ -148,29 +113,35 @@ export default function StrikeTokenDashboard() {
         <motion.section className="strike-token__section" variants={reveal}>
           <header className="strike-token__section-heading">
             <h2>Supply over time</h2>
-            <p>Track how the supply composition changes across the preview timeline.</p>
+            <p>A historical chart will appear when verified supply snapshots are available.</p>
           </header>
-          <SupplyHistoryChart points={history} range={range} onRangeChange={setRange} />
+          <div className="strike-token__chart-card strike-token__chart-card--unverified" role="status">
+            <span>Historical supply</span>
+            <div className="strike-token__unverified strike-token__unverified--plain">
+              <Info aria-hidden="true" />
+              <div><strong>History not yet indexed</strong><p>No preview timeline or estimated supply curve is shown as live data.</p></div>
+            </div>
+          </div>
         </motion.section>
 
         <motion.section className="strike-token__section strike-token__section--last" variants={reveal}>
           <header className="strike-token__section-heading">
             <h2>Token details</h2>
-            <p>Contract specifications and verification information.</p>
+            <p>Contract information read from Base Mainnet.</p>
           </header>
           <article className="strike-token__panel strike-token__details">
             <dl className="strike-token__detail-grid">
-              <div><dt>Token</dt><dd>{overview.token.name}</dd></div>
-              <div><dt>Symbol</dt><dd>{overview.token.symbol}</dd></div>
-              <div><dt>Network</dt><dd>{overview.token.network} <small>Mainnet</small></dd></div>
-              <div><dt>Token standard</dt><dd>{overview.token.standard}</dd></div>
-              <div><dt>Initial supply</dt><dd>{formatTokenAmount(overview.supply.initialSupply)} SR</dd></div>
-              <div className="is-unconfirmed"><dt>Verification status</dt><dd><Info aria-hidden="true" /> {overview.token.verificationStatus}</dd></div>
+              <div><dt>Token</dt><dd>{live?.token.name ?? '—'}</dd></div>
+              <div><dt>Symbol</dt><dd>{live?.token.symbol ?? '—'}</dd></div>
+              <div><dt>Network</dt><dd>Base <small>Mainnet</small></dd></div>
+              <div><dt>Token standard</dt><dd>{live?.token.standard ?? '—'}</dd></div>
+              <div><dt>Decimals</dt><dd>{live?.token.decimals ?? '—'}</dd></div>
+              <div className="is-unconfirmed"><dt>Tokenomics</dt><dd><Info aria-hidden="true" /> Not yet verified</dd></div>
             </dl>
             <div className="strike-token__contract">
               <span>Contract address</span>
               <div>
-                <code>{overview.token.contractAddress}</code>
+                <code>{CONTRACT_ADDRESS}</code>
                 <button type="button" onClick={copyAddress} aria-label="Copy contract address">
                   {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
                   {copied ? 'Copied' : 'Copy'}

@@ -1,5 +1,7 @@
-import { BURN_PAGE_PREVIEW, TOKEN_OVERVIEW_PREVIEW } from './tokenPreviewData'
+import { BURN_PAGE_PREVIEW } from './tokenPreviewData'
 import { formatCompactTokenAmount, formatPercent, formatTokenAmount, formatUtcDate } from './tokenFormat'
+import type { TokenOverviewResponse } from '../../../lib/tokenOverviewTypes'
+import type { TokenLoad } from './useTokenOverview'
 
 function PreviewLine({ points: data, variant }: { points: { timestamp: string; value: string }[]; variant: 'supply' | 'burn' }) {
   const numbers = data.map((point) => Number(point.value))
@@ -26,31 +28,30 @@ function PreviewLine({ points: data, variant }: { points: { timestamp: string; v
   )
 }
 
-export function TokenSupplyHeroVisual() {
-  const { supply, distribution, history } = TOKEN_OVERVIEW_PREVIEW
+export function TokenSupplyHeroVisual({ data, state }: { data: TokenOverviewResponse | null; state: TokenLoad['state'] }) {
+  const live = state === 'live' && data !== null ? data : null
 
   return (
-    <div className="strike-token__hero-visual" aria-label="Token supply preview">
-      <div className="strike-token__hero-visual-top"><span>Token supply</span><span>Preview data</span></div>
+    <div className={`strike-token__hero-visual${state === 'loading' ? ' strike-token__loading' : ''}`} aria-label="Token supply" aria-live="polite">
+      <div className="strike-token__hero-visual-top"><span>Token supply</span><span>{live ? 'On-chain data' : state === 'loading' ? 'Loading…' : 'Unavailable'}</span></div>
       <div className="strike-token__hero-visual-main">
-        <div><strong>{formatCompactTokenAmount(supply.currentSupply)} <small>SR</small></strong><span>Current supply</span></div>
+        <div><strong>{live ? formatCompactTokenAmount(live.supply.totalSupply) : '—'} {live && <small>SR</small>}</strong><span>Current total supply</span></div>
         <dl>
-          <div><dt>Initial supply</dt><dd>{formatCompactTokenAmount(supply.initialSupply)} SR</dd></div>
-          <div><dt>Circulating</dt><dd>{formatPercent(supply.circulatingPercentage)}</dd></div>
-          <div><dt>Total burned</dt><dd>{formatCompactTokenAmount(supply.totalBurned)} SR</dd></div>
+          <div><dt>Initial supply</dt><dd>—</dd></div>
+          <div><dt>Circulating</dt><dd>—</dd></div>
+          <div><dt>Total burned</dt><dd>—</dd></div>
         </dl>
       </div>
       <div className="strike-token__hero-visual-divider" />
-      <div className="strike-token__hero-visual-caption"><span>Supply allocation</span><span>Of initial preview supply</span></div>
-      <div className="strike-token__hero-allocation" aria-label="Preview supply allocation">
-        {distribution.map((item) => <span key={item.id} className={`is-${item.id}`} style={{ width: `${item.percentage}%` }} title={`${item.label}: ${formatPercent(item.percentage)}`} />)}
+      <div className="strike-token__hero-visual-caption"><span>Supply allocation</span><span>Not yet verified</span></div>
+      <div className="strike-token__hero-unverified">
+        <span>—</span><p>Official wallet classification is needed to show allocation.</p>
       </div>
-      <div className="strike-token__hero-legend">
-        {distribution.map((item) => <span key={item.id}>{item.label} <b>{formatPercent(item.percentage)}</b></span>)}
+      <div className="strike-token__hero-visual-caption strike-token__hero-visual-caption--chart"><span>Supply history</span><span>Not yet indexed</span></div>
+      <div className="strike-token__hero-history-empty">
+        <span>Historical snapshots are not available yet.</span>
       </div>
-      <div className="strike-token__hero-visual-caption strike-token__hero-visual-caption--chart"><span>Current supply over time</span><span>Preview history</span></div>
-      <PreviewLine points={history.map((point) => ({ timestamp: point.timestamp, value: point.currentSupply }))} variant="supply" />
-      <div className="strike-token__hero-chart-axis"><span>{history[0].label}</span><span>{history[history.length - 1].label}</span></div>
+      <div className="strike-token__hero-chart-axis"><span>{live ? `Block ${live.indexedBlock.toLocaleString('en-US')}` : 'Base Mainnet'}</span><span>{live ? 'Latest verified read' : 'No snapshot'}</span></div>
     </div>
   )
 }
