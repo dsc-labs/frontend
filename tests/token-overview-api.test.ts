@@ -3,6 +3,7 @@ import test from 'node:test'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import type { TokenOverviewResponse } from '../lib/tokenOverviewTypes.ts'
 import { createTokenOverviewHandler } from '../api/token/overview.ts'
+import { readTokenOverview } from '../lib/tokenOnchainOverview.ts'
 
 const fakeOverview: TokenOverviewResponse = {
   status: 'live',
@@ -85,5 +86,17 @@ test('provider error returns safe 503 without the secret URL', async () => {
     assert.equal(state.statusCode, 503)
     assert.equal(headers.get('cache-control'), 'no-store')
     assert.doesNotMatch(state.body, /private-key|example\.invalid/)
+  })
+})
+
+test('malformed RPC envelope returns only safe 503 and no stale token figures', async () => {
+  await withRpcEnv('https://example.invalid/private-key', async () => {
+    const { response, state } = fakeResponse()
+    const invalidRpc = (async () => Response.json({ jsonrpc: '2.0', id: 99, result: '0x2105' })) as typeof fetch
+    const handler = createTokenOverviewHandler((url) => readTokenOverview(url, invalidRpc))
+    await handler({ method: 'GET' } as VercelRequest, response)
+    assert.equal(state.statusCode, 503)
+    assert.deepEqual(JSON.parse(state.body), { error: 'TOKEN_DATA_UNAVAILABLE' })
+    assert.doesNotMatch(state.body, /private-key|totalSupply|Strike Robot/)
   })
 })

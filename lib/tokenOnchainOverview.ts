@@ -12,15 +12,54 @@ async function rpc<T>(transport: typeof fetch, url: string, method: string, para
     signal: AbortSignal.timeout(8000),
   })
   if (!response.ok) throw new Error(`RPC ${method} failed`)
-  const body = await response.json() as { result?: T; error?: unknown }
-  if (body.error || body.result === undefined || body.result === null) throw new Error(`RPC ${method} failed`)
-  return body.result
+  const maxBytes = method === 'eth_getBlockByNumber' ? 1_048_576 : 8_192
+  const declaredLength = Number(response.headers.get('content-length'))
+  if (Number.isFinite(declaredLength) && declaredLength > maxBytes) throw new Error('RPC response too large')
+  if (!response.body) throw new Error(`RPC ${method} returned no body`)
+  const reader = response.body.getReader()
+  const chunks: Uint8Array[] = []
+  let bytes = 0
+  let complete = false
+  try {
+    while (!complete) {
+      const chunk = await reader.read()
+      if (chunk.done) {
+        complete = true
+        continue
+      }
+      bytes += chunk.value.byteLength
+      if (bytes > maxBytes) {
+        await reader.cancel()
+        throw new Error('RPC response too large')
+      }
+      chunks.push(chunk.value)
+    }
+  } finally {
+    reader.releaseLock()
+  }
+  let body: unknown
+  try {
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks))
+    body = JSON.parse(text)
+  } catch {
+    throw new Error(`RPC ${method} returned invalid JSON`)
+  }
+  if (typeof body !== 'object' || body === null || Array.isArray(body)) throw new Error(`RPC ${method} returned invalid envelope`)
+  const envelope = body as { jsonrpc?: unknown; id?: unknown; result?: T; error?: unknown }
+  const hasResult = Object.prototype.hasOwnProperty.call(envelope, 'result')
+  const hasError = Object.prototype.hasOwnProperty.call(envelope, 'error')
+  if (envelope.jsonrpc !== '2.0' || envelope.id !== 1 || hasResult === hasError || hasError || envelope.result == null) {
+    throw new Error(`RPC ${method} returned invalid envelope`)
+  }
+  return envelope.result
 }
 
-function hexNumber(raw: string): number {
-  if (typeof raw !== 'string' || !/^0x[0-9a-fA-F]+$/.test(raw)) throw new Error('Invalid ABI hex')
+function hexQuantity(raw: string): number {
+  if (typeof raw !== 'string' || !/^0x(?:0|[1-9a-fA-F][0-9a-fA-F]{0,15})$/.test(raw)) {
+    throw new Error('Invalid RPC quantity')
+  }
   const value = Number(BigInt(raw))
-  if (!Number.isSafeInteger(value) || value < 0) throw new Error('Invalid ABI integer')
+  if (!Number.isSafeInteger(value) || value < 0) throw new Error('Invalid RPC quantity')
   return value
 }
 
@@ -32,13 +71,22 @@ function uint256(raw: string): bigint {
 function abiString(raw: string): string {
   if (typeof raw !== 'string' || !/^0x(?:[0-9a-fA-F]{2})+$/.test(raw)) throw new Error('Invalid ABI string')
   const body = raw.slice(2)
-  const offset = hexNumber(`0x${body.slice(0, 64)}`) * 2
-  if (offset !== 64 || body.length < offset + 64) throw new Error('Invalid ABI string offset')
-  const length = hexNumber(`0x${body.slice(offset, offset + 64)}`)
-  if (length < 1 || length > 128 || body.length < offset + 64 + length * 2) {
+  if (body.length < 128 || Number(uint256(`0x${body.slice(0, 64)}`)) !== 32) {
+    throw new Error('Invalid ABI string offset')
+  }
+  const length = Number(uint256(`0x${body.slice(64, 128)}`))
+  const expectedLength = 128 + Math.ceil(length / 32) * 64
+  if (!Number.isSafeInteger(length) || length < 1 || length > 128 || body.length !== expectedLength) {
     throw new Error('Invalid ABI string length')
   }
-  const value = Buffer.from(body.slice(offset + 64, offset + 64 + length * 2), 'hex').toString('utf8')
+  const dataEnd = 128 + length * 2
+  if (!/^0*$/.test(body.slice(dataEnd))) throw new Error('Invalid ABI string padding')
+  let value: string
+  try {
+    value = new TextDecoder('utf-8', { fatal: true }).decode(Buffer.from(body.slice(128, dataEnd), 'hex'))
+  } catch {
+    throw new Error('Invalid ABI UTF-8')
+  }
   if (!value.trim()) throw new Error('Invalid ABI string value')
   return value
 }
@@ -60,11 +108,11 @@ export async function readTokenOverview(
   }
 
   const blockTag = await rpc<string>(transport, rpcUrl, 'eth_blockNumber', [])
-  const indexedBlock = hexNumber(blockTag)
+  const indexedBlock = hexQuantity(blockTag)
   if (indexedBlock === 0) throw new Error('Invalid Base block')
   const block = await rpc<{ number: string; timestamp: string }>(transport, rpcUrl, 'eth_getBlockByNumber', [blockTag, false])
-  if (hexNumber(block.number) !== indexedBlock) throw new Error('Mismatched Base block')
-  const timestamp = hexNumber(block.timestamp)
+  if (hexQuantity(block.number) !== indexedBlock) throw new Error('Mismatched Base block')
+  const timestamp = hexQuantity(block.timestamp)
   const date = new Date(timestamp * 1000)
   if (timestamp === 0 || !Number.isFinite(date.getTime())) throw new Error('Invalid Base timestamp')
 

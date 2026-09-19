@@ -75,3 +75,61 @@ test('propagates transport failure without returning preview data', async () => 
   const transport = (async () => { throw new Error('network unavailable') }) as typeof fetch
   await assert.rejects(readTokenOverview(rpcUrl, transport), /network unavailable/)
 })
+
+test('rejects ABI strings with missing padding or invalid UTF-8', async () => {
+  const missingPadding = abiString('Strike Robot').slice(0, -2)
+  const { transport: truncated } = fakeRpc({ '0x06fdde03': missingPadding })
+  await assert.rejects(readTokenOverview(rpcUrl, truncated), /ABI/)
+
+  const valid = abiString('SR')
+  const invalidUtf8 = `${valid.slice(0, 130)}ff${valid.slice(132)}`
+  const { transport: invalid } = fakeRpc({ '0x95d89b41': invalidUtf8 })
+  await assert.rejects(readTokenOverview(rpcUrl, invalid), /UTF-8|ABI/)
+})
+
+test('rejects oversized ABI result and noncanonical block quantity', async () => {
+  const oversized = `${abiString('SR')}${'00'.repeat(64 * 1024)}`
+  const { transport: large } = fakeRpc({ '0x95d89b41': oversized })
+  await assert.rejects(readTokenOverview(rpcUrl, large), /large|ABI/i)
+
+  const { transport: leadingZero } = fakeRpc({ eth_blockNumber: '0x000311e111' })
+  await assert.rejects(readTokenOverview(rpcUrl, leadingZero), /quantity|ABI/i)
+})
+
+test('rejects malformed JSON-RPC envelope instead of treating it as live', async () => {
+  const { transport: regular } = fakeRpc()
+  const wrongEnvelope = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const request = JSON.parse(String(init?.body)) as { method: string }
+    if (request.method === 'eth_chainId') return Response.json({ jsonrpc: '1.0', id: 999, result: '0x2105' })
+    return regular(input, init)
+  }) as typeof fetch
+  await assert.rejects(readTokenOverview(rpcUrl, wrongEnvelope), /RPC/)
+})
+
+test('rejects one failed contract call and invalid decimals', async () => {
+  const { transport: regular } = fakeRpc()
+  const failedSupply = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const request = JSON.parse(String(init?.body)) as { method: string; params: { data?: string }[] }
+    if (request.method === 'eth_call' && request.params[0]?.data === '0x18160ddd') {
+      return Response.json({ jsonrpc: '2.0', id: 1, error: { code: -32000, message: 'call failed' } })
+    }
+    return regular(input, init)
+  }) as typeof fetch
+  await assert.rejects(readTokenOverview(rpcUrl, failedSupply), /RPC/)
+
+  const { transport: badDecimals } = fakeRpc({ '0x313ce567': uint(255n) })
+  await assert.rejects(readTokenOverview(rpcUrl, badDecimals), /decimals/)
+})
+
+test('rejects aborted provider request and over-limit streamed JSON', async () => {
+  const aborted = (async () => { throw new DOMException('request timed out', 'AbortError') }) as typeof fetch
+  await assert.rejects(readTokenOverview(rpcUrl, aborted), /timed out/)
+
+  const huge = (async () => new Response(JSON.stringify({ jsonrpc: '2.0', id: 1, result: 'x'.repeat(9_000) }))) as typeof fetch
+  await assert.rejects(readTokenOverview(rpcUrl, huge), /too large/)
+})
+
+test('rejects invalid block timestamp instead of attaching a false freshness date', async () => {
+  const { transport } = fakeRpc({ eth_getBlockByNumber: { number: blockTag, timestamp: '0x00' } })
+  await assert.rejects(readTokenOverview(rpcUrl, transport), /quantity/)
+})
