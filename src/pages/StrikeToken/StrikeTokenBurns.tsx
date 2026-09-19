@@ -8,6 +8,7 @@ import { ROUTES } from '../../strike/lib/navigate'
 import { BurnActivityChart } from './TokenCharts'
 import { filterBurnEvents, historyWithinDays, historyWithinYear } from './tokenChartData'
 import { TokenPageShell } from './TokenPageShell'
+import { TokenBurnHeroVisual } from './TokenHeroVisuals'
 import { formatCompactTokenAmount, formatPercent, formatTokenAmount, formatUtcDate, shortenHex } from './tokenFormat'
 import { BURN_PAGE_PREVIEW } from './tokenPreviewData'
 import type { BurnRange, BurnType } from './tokenTypes'
@@ -75,19 +76,32 @@ export default function StrikeTokenBurns() {
   const activity = useMemo(() => activityForRange(range), [range])
 
   return (
-    <TokenPageShell activeTab="burns">
-      <div className="strike-token__container strike-token__page strike-token__burn-page">
+    <TokenPageShell
+      activeTab="burns"
+      hero={(
         <motion.section className="strike-token__hero strike-token__hero--burn" variants={reveal} initial="hidden" animate="visible">
-          <div className="strike-token__eyebrow strike-token__eyebrow--plain">Burn Tracker / Preview activity</div>
-          <h1>Track every token burn.</h1>
-          <p>Monitor tokens removed from supply and verify each confirmed burn directly on-chain.</p>
-          <div className="strike-token__actions">
-            <a className="strike-token__button strike-token__button--primary" href="#latest-burn">
-              View Latest Burn <ArrowDown aria-hidden="true" />
-            </a>
+          <div className="strike-token__hero-copy">
+            <h1>Burn Tracker</h1>
+            <p>Follow illustrative SR token burns and see how supply changes across the preview timeline.</p>
+            <div className="strike-token__actions">
+              <Link className="strike-token__button strike-token__button--primary" to={ROUTES.token}>
+                Explore Token Dashboard <ArrowRight aria-hidden="true" />
+              </Link>
+              <a className="strike-token__button strike-token__button--secondary" href="#latest-burn">
+                View Latest Burn <ArrowDown aria-hidden="true" />
+              </a>
+            </div>
+            <dl className="strike-token__hero-facts" aria-label="Burn preview details">
+              <div><dt>Network</dt><dd>Base</dd></div>
+              <div><dt>Events</dt><dd>{preview.summary.transactionCount} examples</dd></div>
+              <div><dt>Data</dt><dd>Preview only</dd></div>
+            </dl>
           </div>
+          <TokenBurnHeroVisual />
         </motion.section>
-
+      )}
+    >
+      <div className="strike-token__container strike-token__page strike-token__burn-page">
         <motion.dl className="strike-token__metrics strike-token__metrics--burn" variants={reveal} initial="hidden" animate="visible">
           <div>
             <dt>Total burned</dt>

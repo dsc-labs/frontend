@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, AnimatePresence, useScroll, useTransform, useSpring, useMotionTemplate } from "framer-motion";
-import { ChevronDown, X, ArrowRight } from "lucide-react";
+import { ChevronDown, X, ArrowRight, ChartNoAxesCombined, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_CTA, NAV_CTA_HREF, NAV_LINKS, SITE_NAME } from "@/lib/constants";
 import { isWaitlistHref, useWaitlistPopup } from "@/context/WaitlistPopupContext";
@@ -25,6 +25,11 @@ const PRODUCT_LINKS = [
     description: "Builds task-shaped spatial understanding on the fly — and adapts instantly",
     href: "/agentic",
   },
+];
+
+const TOKEN_LINKS = [
+  { label: "Token Dashboard", description: "Supply, distribution, and contract details", href: "/token", icon: ChartNoAxesCombined },
+  { label: "Burn Tracker", description: "Burn history and supply impact", href: "/token/burns", icon: Flame },
 ];
 
 function ProductCubeIcon({ className }: { className?: string }) {
@@ -362,11 +367,12 @@ export function Navbar() {
   const { pathname } = useLocation();
   const waitlistPopup = useWaitlistPopup();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [desktopProductOpen, setDesktopProductOpen] = useState(false);
-  const [mobileProductOpen, setMobileProductOpen] = useState(false);
+  const [desktopDropdown, setDesktopDropdown] = useState<"Product" | "Token" | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<"Product" | "Token" | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const restoringDropdownFocusRef = useRef(false);
 
-  const productCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+  const dropdownCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
   );
 
@@ -392,34 +398,85 @@ export function Navbar() {
   }, [mobileOpen]);
 
   useEffect(() => {
-    if (!mobileOpen) setMobileProductOpen(false);
+    if (!mobileOpen) setMobileDropdown(null);
   }, [mobileOpen]);
 
   useEffect(() => {
     return () => {
-      if (productCloseTimerRef.current) {
-        clearTimeout(productCloseTimerRef.current);
+      if (dropdownCloseTimerRef.current) {
+        clearTimeout(dropdownCloseTimerRef.current);
       }
     };
   }, []);
 
-  const openProductDropdown = () => {
-    if (productCloseTimerRef.current) {
-      clearTimeout(productCloseTimerRef.current);
-      productCloseTimerRef.current = null;
+  const openDropdown = (name: "Product" | "Token") => {
+    if (dropdownCloseTimerRef.current) {
+      clearTimeout(dropdownCloseTimerRef.current);
+      dropdownCloseTimerRef.current = null;
     }
-    setDesktopProductOpen(true);
+    setDesktopDropdown(name);
   };
 
-  const closeProductDropdown = () => {
-    if (productCloseTimerRef.current) {
-      clearTimeout(productCloseTimerRef.current);
+  const closeDropdown = () => {
+    if (dropdownCloseTimerRef.current) {
+      clearTimeout(dropdownCloseTimerRef.current);
     }
-    productCloseTimerRef.current = setTimeout(
-      () => setDesktopProductOpen(false),
+    dropdownCloseTimerRef.current = setTimeout(
+      () => setDesktopDropdown(null),
       120
     );
   };
+
+  const focusFirstDropdownLink = (name: "Product" | "Token") => {
+    requestAnimationFrame(() => {
+      document.querySelector<HTMLAnchorElement>(`[data-navbar-dropdown="${name}"] a`)?.focus();
+    });
+  };
+
+  const handleDropdownKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    name: "Product" | "Token"
+  ) => {
+    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openDropdown(name);
+      focusFirstDropdownLink(name);
+    } else if (event.key === "Tab" && !event.shiftKey && desktopDropdown === name) {
+      event.preventDefault();
+      document.querySelector<HTMLAnchorElement>(`[data-navbar-dropdown="${name}"] a`)?.focus();
+    }
+  };
+
+  const handleDropdownLinkKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    name: "Product" | "Token"
+  ) => {
+    if (event.key !== "Tab") return;
+    const links = Array.from(event.currentTarget.querySelectorAll<HTMLAnchorElement>("a"));
+    if (event.shiftKey && event.target === links[0]) {
+      event.preventDefault();
+      document.querySelector<HTMLButtonElement>(`[data-navbar-trigger="${name}"]`)?.focus();
+    } else if (!event.shiftKey && event.target === links[links.length - 1]) {
+      event.preventDefault();
+      setDesktopDropdown(null);
+      const next = name === "Product"
+        ? document.querySelector<HTMLButtonElement>(`[data-navbar-trigger="Simulation"]`)
+        : document.querySelector<HTMLButtonElement>(`[data-navbar-cta] button`);
+      next?.focus();
+    }
+  };
+
+  useEffect(() => {
+    const onEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !desktopDropdown) return;
+      restoringDropdownFocusRef.current = true;
+      document.querySelector<HTMLButtonElement>(`[data-navbar-trigger="${desktopDropdown}"]`)?.focus();
+      restoringDropdownFocusRef.current = false;
+      setDesktopDropdown(null);
+    };
+    window.addEventListener("keydown", onEscape);
+    return () => window.removeEventListener("keydown", onEscape);
+  }, [desktopDropdown]);
 
   const navigateTo = (href: string) => {
     if (isWaitlistHref(href)) {
@@ -430,7 +487,7 @@ export function Navbar() {
   };
 
   const handleItemClick = (_label: string, href: string) => {
-    setDesktopProductOpen(false);
+    setDesktopDropdown(null);
     navigateTo(href);
   };
 
@@ -465,7 +522,10 @@ export function Navbar() {
 
           <div
             className="relative flex-shrink-0"
-            onMouseLeave={closeProductDropdown}
+            onMouseLeave={closeDropdown}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) closeDropdown();
+            }}
           >
           <GlassPill radius={24} className="rounded-[24px]">
             <div
@@ -474,26 +534,30 @@ export function Navbar() {
             >
               <nav className="flex items-center gap-[6px]" aria-label="Main navigation">
                 {NAV_LINKS.filter((item) => item.label !== "Home").map((item) => {
-                  const isProduct = item.label === "Product";
+                  const isDropdown = item.label === "Product" || item.label === "Token";
                   // Black pill only while a dropdown tab is open; otherwise default.
-                  const isHighlighted = isProduct && desktopProductOpen;
+                  const isHighlighted = isDropdown && desktopDropdown === item.label;
                   return (
                     <button
                       key={item.label}
+                      data-navbar-trigger={item.label}
                       onMouseEnter={
-                        isProduct
-                          ? openProductDropdown
-                          : () => setDesktopProductOpen(false)
+                        isDropdown
+                          ? () => openDropdown(item.label as "Product" | "Token")
+                          : () => setDesktopDropdown(null)
                       }
-                      onFocus={isProduct ? openProductDropdown : undefined}
+                      onFocus={isDropdown ? () => {
+                        if (!restoringDropdownFocusRef.current) openDropdown(item.label as "Product" | "Token");
+                      } : undefined}
+                      onKeyDown={isDropdown ? (event) => handleDropdownKeyDown(event, item.label as "Product" | "Token") : undefined}
                       onClick={() => {
-                        if (isProduct) {
-                          openProductDropdown();
+                        if (isDropdown) {
+                          openDropdown(item.label as "Product" | "Token");
                           return;
                         }
                         handleItemClick(item.label, item.href);
                       }}
-                      aria-expanded={isProduct ? desktopProductOpen : undefined}
+                      aria-expanded={isDropdown ? desktopDropdown === item.label : undefined}
                       className={cn(
                         "relative flex cursor-pointer select-none items-center gap-2 overflow-hidden rounded-full px-4 py-2 font-sans text-sm font-medium leading-none tracking-normal transition-[color,background-color,padding] duration-200",
                         isHighlighted
@@ -525,9 +589,10 @@ export function Navbar() {
             </div>
           </GlassPill>
           <AnimatePresence>
-            {desktopProductOpen && (
+            {desktopDropdown === "Product" && (
               <motion.div
                 key="desktop-product-dropdown"
+                data-navbar-dropdown="Product"
                 className="absolute left-1/2 top-[58px] z-20 w-max max-w-[min(400px,calc(100vw-96px))] overflow-hidden rounded-[24px] border-[1.4px] p-4"
                 style={{
                   background:
@@ -542,15 +607,16 @@ export function Navbar() {
                 animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
                 exit={{ opacity: 0, y: -8, scale: 0.98, x: "-50%" }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
-                onMouseEnter={openProductDropdown}
-                onMouseLeave={closeProductDropdown}
+                onMouseEnter={() => openDropdown("Product")}
+                onMouseLeave={closeDropdown}
+                onKeyDown={(event) => handleDropdownLinkKeyDown(event, "Product")}
               >
                 <div className="flex flex-col">
                   {PRODUCT_LINKS.map((product, i) => (
                     <Link
                       key={product.label}
                       href={product.href}
-                      onClick={() => setDesktopProductOpen(false)}
+                      onClick={() => setDesktopDropdown(null)}
                       className="nav-dropdown-item group flex items-center gap-4 rounded-[18px] px-2 py-4 transition-colors duration-200"
                     >
                       {i === 1 ? (
@@ -571,11 +637,54 @@ export function Navbar() {
                 </div>
               </motion.div>
             )}
+            {desktopDropdown === "Token" && (
+              <motion.div
+                key="desktop-token-dropdown"
+                data-navbar-dropdown="Token"
+                className="absolute right-0 top-[58px] z-20 w-[370px] max-w-[calc(100vw-96px)] overflow-hidden rounded-[24px] border-[1.4px] p-3"
+                style={{
+                  background: "linear-gradient(90.64deg, #FFFFFF 4.23%, rgba(255,255,255,0.8) 56%, rgba(223,227,230,0.8) 99.91%)",
+                  borderColor: "#D9D9D9",
+                  boxShadow: "0 12px 50px 8px rgba(0,0,0,0.10), inset 0 -2px 4px rgba(255,255,255,0.30), inset 0 4px 6px rgba(255,255,255,0.20)",
+                  backdropFilter: "blur(30px)",
+                  WebkitBackdropFilter: "blur(30px)",
+                }}
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.18 }}
+                onMouseEnter={() => openDropdown("Token")}
+                onMouseLeave={closeDropdown}
+                onKeyDown={(event) => handleDropdownLinkKeyDown(event, "Token")}
+              >
+                {TOKEN_LINKS.map((token) => {
+                  const Icon = token.icon;
+                  return (
+                    <Link
+                      key={token.label}
+                      href={token.href}
+                      onClick={() => setDesktopDropdown(null)}
+                      aria-current={pathname === token.href ? "page" : undefined}
+                      className="nav-dropdown-item group flex items-center gap-4 rounded-[18px] px-3 py-4 transition-colors duration-200"
+                    >
+                      <span className="flex size-12 shrink-0 items-center justify-center rounded-[12px] border border-black/10 bg-white/70">
+                        <Icon className="size-5 text-[#314344]" strokeWidth={1.5} aria-hidden="true" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="mb-1.5 block font-sans text-[17px] font-semibold leading-none text-black">{token.label}</span>
+                        <span className="block font-sans text-[13px] leading-[18px] text-[#777]">{token.description}</span>
+                      </span>
+                      <ArrowRight className="size-4 shrink-0 text-[#777] transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                    </Link>
+                  );
+                })}
+              </motion.div>
+            )}
           </AnimatePresence>
           </div>
 
-          <div className="flex flex-1 items-center justify-end">
-            <PillButtonCta className="font-medium" href={NAV_CTA_HREF}>{NAV_CTA}</PillButtonCta>
+          <div data-navbar-cta className="flex flex-1 items-center justify-end">
+            <PillButtonCta className="shrink-0 whitespace-nowrap font-medium" href={NAV_CTA_HREF}>{NAV_CTA}</PillButtonCta>
           </div>
         </div>
 
@@ -645,22 +754,22 @@ export function Navbar() {
               </div>
             </GlassPill>
 
-            <div className="relative flex min-h-0 w-full flex-1 flex-col justify-between">
-              <nav className="w-full px-2" aria-label="Mobile navigation">
+            <div className="relative flex min-h-0 w-full flex-1 flex-col justify-between overflow-y-auto overscroll-contain">
+              <nav className="w-full shrink-0 px-2" aria-label="Mobile navigation">
                 {NAV_LINKS.map((item, idx) => {
-                  const isProduct = item.label === "Product";
+                  const isDropdown = item.label === "Product" || item.label === "Token";
                   return (
                     <div key={item.label}>
                       <button
                         type="button"
                         onClick={() => {
-                          if (isProduct) {
-                            setMobileProductOpen((open) => !open);
+                          if (isDropdown) {
+                            setMobileDropdown((open) => open === item.label ? null : item.label as "Product" | "Token");
                             return;
                           }
                           handleMobileItemClick(item.label, item.href);
                         }}
-                        aria-expanded={isProduct ? mobileProductOpen : undefined}
+                        aria-expanded={isDropdown ? mobileDropdown === item.label : undefined}
                         className={cn(
                           "flex w-full cursor-pointer items-center gap-6 px-3 py-5 text-left text-[20px] tracking-[-0.2px] text-white",
                           idx > 0 && "border-t border-white/10"
@@ -671,18 +780,18 @@ export function Navbar() {
                           <ChevronDown
                             className={cn(
                               "size-4 text-white transition-transform duration-200",
-                              isProduct && mobileProductOpen && "rotate-180"
+                              isDropdown && mobileDropdown === item.label && "rotate-180"
                             )}
                             strokeWidth={2}
                             aria-hidden="true"
                           />
                         )}
                       </button>
-                      {isProduct && (
+                      {isDropdown && (
                         <AnimatePresence initial={false}>
-                          {mobileProductOpen && (
+                          {mobileDropdown === item.label && (
                             <motion.div
-                              key="mobile-product-links"
+                              key={`mobile-${item.label.toLowerCase()}-links`}
                               className="overflow-hidden"
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
@@ -691,7 +800,7 @@ export function Navbar() {
                                 duration: prefersReducedMotion ? 0 : 0.22,
                               }}
                             >
-                              {PRODUCT_LINKS.map((product) => (
+                              {(item.label === "Product" ? PRODUCT_LINKS : TOKEN_LINKS).map((product) => (
                                 <Link
                                   key={product.label}
                                   href={product.href}
@@ -710,7 +819,7 @@ export function Navbar() {
                 })}
               </nav>
 
-              <div className="flex h-[110px] w-full items-center justify-center">
+              <div className="flex h-[110px] w-full shrink-0 items-center justify-center">
                 <button
                   type="button"
                   onClick={() => {

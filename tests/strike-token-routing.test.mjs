@@ -13,7 +13,7 @@ test('token routes and global navigation are registered together', async () => {
 
   assert.match(navigate, /token:\s*'\/token'/)
   assert.match(navigate, /tokenBurns:\s*'\/token\/burns'/)
-  assert.match(constants, /\{ label: "Token", href: ROUTES\.token \}/)
+  assert.match(constants, /\{ label: "Token", href: ROUTES\.token, hasDropdown: true \}/)
   assert.match(app, /path="\/token"/)
   assert.match(app, /path="\/token\/burns"/)
 })

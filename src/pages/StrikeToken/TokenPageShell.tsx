@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
 import { Footer } from '@/components/sections/Footer'
 import { Navbar } from '@/components/layout/Navbar'
 import { ROUTES } from '@/lib/navigate'
@@ -9,10 +8,11 @@ import './StrikeToken.css'
 
 type TokenPageShellProps = {
   activeTab: 'dashboard' | 'burns'
+  hero: ReactNode
   children: ReactNode
 }
 
-export function TokenPageShell({ activeTab, children }: TokenPageShellProps) {
+export function TokenPageShell({ activeTab, hero, children }: TokenPageShellProps) {
   const isDashboard = activeTab === 'dashboard'
 
   return (
@@ -28,26 +28,8 @@ export function TokenPageShell({ activeTab, children }: TokenPageShellProps) {
       />
       <Navbar />
       <main className="strike-token">
-        <div className="strike-token__subnav-wrap">
-          <div className="strike-token__container strike-token__subnav">
-            <nav aria-label="Token navigation">
-              <Link
-                to={ROUTES.token}
-                className={isDashboard ? 'is-active' : undefined}
-                aria-current={isDashboard ? 'page' : undefined}
-              >
-                Token Dashboard
-              </Link>
-              <Link
-                to={ROUTES.tokenBurns}
-                className={!isDashboard ? 'is-active' : undefined}
-                aria-current={!isDashboard ? 'page' : undefined}
-              >
-                Burn Tracker
-              </Link>
-            </nav>
-            <span className="strike-token__status">Preview data</span>
-          </div>
+        <div className="strike-token__hero-band">
+          <div className="strike-token__container">{hero}</div>
         </div>
         {children}
       </main>

@@ -12,7 +12,7 @@ export const NAV_LINKS = [
   { label: "Product", href: ROUTES.srPlatform, hasDropdown: true },
   { label: "Simulation", href: ROUTES.simulation },
   { label: "API", href: ROUTES.api },
-  { label: "Token", href: ROUTES.token },
+  { label: "Token", href: ROUTES.token, hasDropdown: true },
 ];
 
 export const NAV_CTA = "Create with SR Platform";

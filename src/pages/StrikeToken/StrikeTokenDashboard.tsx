@@ -8,6 +8,7 @@ import { ROUTES } from '../../strike/lib/navigate'
 import { SupplyHistoryChart } from './TokenCharts'
 import { historyWithinDays, historyWithinYear } from './tokenChartData'
 import { TokenPageShell } from './TokenPageShell'
+import { TokenSupplyHeroVisual } from './TokenHeroVisuals'
 import { formatPercent, formatTokenAmount } from './tokenFormat'
 import { TOKEN_OVERVIEW_PREVIEW } from './tokenPreviewData'
 import type { TokenRange } from './tokenTypes'
@@ -41,36 +42,37 @@ export default function StrikeTokenDashboard() {
   }
 
   return (
-    <TokenPageShell activeTab="dashboard">
+    <TokenPageShell
+      activeTab="dashboard"
+      hero={(
+        <motion.section className="strike-token__hero" variants={reveal} initial="hidden" animate="visible">
+          <div className="strike-token__hero-copy">
+            <h1>Strike Robot Token</h1>
+            <p>A clear view of token supply, distribution, and on-chain activity across the Strike Robot ecosystem.</p>
+            <div className="strike-token__actions">
+              <Link className="strike-token__button strike-token__button--primary" to={ROUTES.tokenBurns}>
+                Explore Burn Tracker <ArrowRight aria-hidden="true" />
+              </Link>
+              <a className="strike-token__button strike-token__button--secondary" href={contractUrl} target="_blank" rel="noreferrer">
+                View Contract <ArrowUpRight aria-hidden="true" strokeWidth={1.75} />
+              </a>
+            </div>
+            <dl className="strike-token__hero-facts" aria-label="Token preview details">
+              <div><dt>Network</dt><dd>Base</dd></div>
+              <div><dt>Standard</dt><dd>ERC-20</dd></div>
+              <div><dt>Data</dt><dd>Preview only</dd></div>
+            </dl>
+          </div>
+          <TokenSupplyHeroVisual />
+        </motion.section>
+      )}
+    >
       <motion.div
         className="strike-token__container strike-token__page"
         variants={stagger}
         initial="hidden"
         animate="visible"
       >
-        <motion.section className="strike-token__hero" variants={reveal}>
-          <div className="strike-token__eyebrow">
-            <span>Token dashboard</span>
-            <span aria-hidden="true">/</span>
-            <strong>Base contract</strong>
-          </div>
-          <h1>Strike Robot Token</h1>
-          <p>
-            A transparent view of token supply, distribution, and on-chain activity across the
-            Strike Robot ecosystem.
-          </p>
-          <div className="strike-token__actions">
-            <a className="strike-token__button strike-token__button--primary" href={contractUrl} target="_blank" rel="noreferrer">
-              View Contract
-              <ArrowUpRight aria-hidden="true" strokeWidth={1.75} />
-            </a>
-            <Link className="strike-token__button strike-token__button--secondary" to={ROUTES.tokenBurns}>
-              Open Burn Tracker
-              <ArrowRight aria-hidden="true" strokeWidth={1.75} />
-            </Link>
-          </div>
-        </motion.section>
-
         <motion.dl className="strike-token__metrics" variants={reveal}>
           <div>
             <dt>Current supply</dt>
