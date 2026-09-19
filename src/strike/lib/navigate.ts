@@ -6,6 +6,8 @@ export const ROUTES = {
   agentic: '/agentic',
   srPlatform: '/sr-platform',
   api: '/api',
+  token: '/token',
+  tokenBurns: '/token/burns',
   srPlatformApp: '/sr-platform/app/',
   simulation: '/sr-platform/app/',
   waitlist: '/join',

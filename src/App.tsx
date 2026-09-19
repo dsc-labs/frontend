@@ -5,6 +5,8 @@ import StrikeLanding from './pages/StrikeLanding/StrikeLanding'
 import StrikeAbout from './pages/StrikeAbout/StrikeAbout'
 import StrikeAgentic from './pages/StrikeAgentic/StrikeAgentic'
 import StrikeApi from './pages/StrikeApi/StrikeApi'
+import StrikeTokenDashboard from './pages/StrikeToken/StrikeTokenDashboard'
+import StrikeTokenBurns from './pages/StrikeToken/StrikeTokenBurns'
 import MindshareChallenge from './pages/MindshareChallenge/MindshareChallenge'
 import MindshareSubmit from './pages/MindshareSubmit/MindshareSubmit'
 import { MindsharePageGate } from './components/common/MindsharePageGate/MindsharePageGate'
@@ -56,6 +58,8 @@ function App() {
             <Route path="/sr-platform" element={<StrikeLanding />} />
             <Route path="/agentic" element={<StrikeAgentic />} />
             <Route path="/api" element={<StrikeApi />} />
+            <Route path="/token" element={<StrikeTokenDashboard />} />
+            <Route path="/token/burns" element={<StrikeTokenBurns />} />
             <Route path="/join" element={<Navigate to="/" replace />} />
             <Route path="/test" element={<Navigate to="/" replace />} />
             <Route
