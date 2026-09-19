@@ -559,7 +559,7 @@ async function serveEpoch2RefreshIfMatched(
   return true
 }
 
-/** Dev + preview: handle /api/waitlist/* (Vite does not run this on production static hosting). */
+/** Dev + preview: handle waitlist and token APIs (production uses Vercel functions). */
 async function serveWaitlistApiIfMatched(
   req: IncomingMessage,
   res: ServerResponse,
@@ -572,7 +572,9 @@ async function serveWaitlistApiIfMatched(
     pathname.startsWith('/waitlist-stats/') ||
     pathname === '/sr-platform/waitlist-stats' ||
     pathname.startsWith('/sr-platform/waitlist-stats/')
+  const isTokenOverview = pathname === '/api/token/overview'
   if (
+    !isTokenOverview &&
     !pathname.startsWith('/api/waitlist/') &&
     !pathname.startsWith('/waitlist/') &&
     pathname !== '/waitlist' &&
@@ -582,7 +584,9 @@ async function serveWaitlistApiIfMatched(
   applyWaitlistEnvToProcess(env)
   let handler: ((req: VercelRequest, res: VercelResponse) => Promise<void>) | undefined
   try {
-    if (
+    if (isTokenOverview) {
+      handler = (await import('./api/token/overview')).default
+    } else if (
       pathname.startsWith('/api/waitlist/register-test') ||
       pathname.startsWith('/waitlist/register-test')
     ) {
@@ -620,7 +624,7 @@ async function serveWaitlistApiIfMatched(
     const vercelRes = patchVercelResponse(res)
     await handler(vercelReq, vercelRes)
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : 'Waitlist API error'
+    const message = isTokenOverview ? 'Token API error' : e instanceof Error ? e.message : 'Waitlist API error'
     if (!res.headersSent && !res.writableEnded) {
       res.statusCode = 500
       res.setHeader('Content-Type', 'application/json; charset=utf-8')
@@ -951,4 +955,3 @@ export default defineConfig(({ mode }) => {
     },
   }
 })
-

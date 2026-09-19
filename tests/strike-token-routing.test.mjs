@@ -24,3 +24,9 @@ test('global navigation uses the mobile menu until the extra token item fits', a
   assert.match(navbar, /pointer-events-auto px-3 lg:hidden/)
   assert.match(navbar, /z-\[1001\] flex flex-col gap-3 overflow-hidden p-3 lg:hidden/)
 })
+
+test('Vite dev server dispatches the exact token overview API path', async () => {
+  const config = await read('vite.config.ts')
+  assert.match(config, /pathname === '\/api\/token\/overview'/)
+  assert.match(config, /import\('\.\/api\/token\/overview'\)/)
+})
